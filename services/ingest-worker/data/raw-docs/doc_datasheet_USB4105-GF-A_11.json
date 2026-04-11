@@ -1,0 +1,17 @@
+{
+  "id": "doc_datasheet_USB4105-GF-A_11",
+  "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
+  "sourceType": "datasheet",
+  "manufacturer": "Amphenol",
+  "partFamily": "USB-C",
+  "mpn": "USB4105-GF-A",
+  "revision": "Rev 1.2",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "secondary",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture datasheet for USB4105-GF-A",
+    "rawContent": "USB4105-GF-A — USB Type-C Receptacle Connector\nDatasheet — Rev 1.2\n\nDescription\nThe USB4105-GF-A is a USB Type-C (USB-C) surface-mount receptacle connector by Amphenol.\nSupports USB 2.0 (480 Mbps) and USB 3.1 Gen 2 (10 Gbps) data rates.\nSupports USB Power Delivery up to 100W (20V/5A) and Alternate Modes.\n\nAbsolute Maximum Ratings\nRated voltage: 20 V DC (VBUS)\nRated current: 5 A per contact (VBUS and GND)\nContact resistance: 30 mΩ max\nInsulation resistance: 1000 MΩ min\nWithstanding voltage: 500 V AC (1 minute)\nOperating temperature: -40 to 85 °C\nMating cycles: 10,000 min\n\nRecommended Operating Conditions\nVBUS voltage: 5 V (default), up to 20 V (USB PD)\nSignal pairs: CC1/CC2 (configuration channel), D+/D- (USB 2.0), TX/RX pairs (USB 3.x)\nSBU1/SBU2: Sideband use pins (for Alternate Modes like DisplayPort)\n\nPin Description (USB-C receptacle, looking into the connector)\nA1: GND    A2: SSTXp1  A3: SSTXn1  A4: VBUS  A5: CC1   A6: Dp1   A7: Dn1   A8: SBU1   A9: VBUS   A10: SSRXn2  A11: SSRXp2  A12: GND\nB1: GND    B2: SSRXp1  B3: SSRXn1  B4: VBUS  B5: CC2   B6: Dp2   B7: Dn2   B8: SBU2   B9: VBUS   B10: SSTXn2  B11: SSTXp2  B12: GND\n\nNote: Pin assignment is symmetric to support reversible plug orientation.\n\nRecommended PCB Layout\nFootprint: SMT, 0.5mm pitch (signal), through-hole shields.\nKeep differential pairs (TX, RX, D+/D-) impedance matched at 90Ω.\nRoute USB 2.0 D+/D- as differential pair, length matched within 0.25mm.\nRoute USB 3.x TX/RX pairs as differential pairs, length matched within 0.15mm.\nPlace ESD protection on all signal pins, close to connector.\nVBUS traces: Use wide traces or copper pour rated for 5A.\nAdd 10kΩ pull-down resistors (5.1kΩ for default USB) on CC1 and CC2 to GND.\n\nPackage Outline\nConnector type: USB Type-C female receptacle, right-angle or vertical.\nMounting: SMT with through-hole mounting tabs for mechanical strength.\nBody dimensions: 8.94 x 7.35 mm (typical for 16-pin SMT)\nRecommended land pattern per Amphenol drawing."
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

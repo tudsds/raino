@@ -1,0 +1,29 @@
+{
+  "name": "@raino/ingest-worker",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "test:unit": "vitest run --reporter=verbose",
+    "clean": "rm -rf dist",
+    "ingest:bootstrap": "tsx src/cli/bootstrap.ts",
+    "ingest:validate": "tsx src/cli/validate.ts",
+    "ingest:report": "tsx src/cli/report.ts"
+  },
+  "dependencies": {
+    "@raino/core": "workspace:*",
+    "@raino/rag": "workspace:*",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0",
+    "tsx": "^4.19.0"
+  }
+}

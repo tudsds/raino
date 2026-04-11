@@ -1,0 +1,17 @@
+{
+  "id": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+  "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+  "sourceType": "datasheet",
+  "manufacturer": "Abracon",
+  "partFamily": "ABM8",
+  "mpn": "ABM8-16.000MHZ-B2-T",
+  "revision": "Rev 2",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture datasheet for ABM8-16.000MHZ-B2-T",
+    "rawContent": "ABM8-16.000MHZ-B2-T — Quartz Crystal\nDatasheet — Rev 2\n\nDescription\nThe ABM8-16.000MHZ-B2-T is a surface-mount quartz crystal unit operating at 16.000 MHz\nin a compact ceramic package. Designed for microcontroller clock applications.\n\nAbsolute Maximum Ratings\nStorage temperature range: -55 to 125 °C\nDrive level: 500 µW max\n\nRecommended Operating Conditions\nNominal frequency: 16.000 MHz\nOperating temperature range: -40 to 85 °C (standard), -40 to 125 °C (extended)\nFrequency tolerance at 25°C: ±30 ppm (B2 variant)\nFrequency stability over temperature: ±50 ppm (-40 to 85°C)\nLoad capacitance (CL): 20 pF\nEquivalent series resistance (ESR): Max 60 Ω\nShunt capacitance (C0): Max 7 pF\nMotional capacitance (C1): Typ 7 fF\nDrive level: 100 µW typ, 500 µW max\nAging (first year): ±3 ppm\n\nPower Requirements\nDrive level: 100 µW recommended (no DC power supply needed — passive component)\n\nPin Description\nSMD 4-pad ceramic package:\nPad 1: Crystal terminal 1 (no polarity)\nPad 2: Crystal terminal 2 (no polarity)\nPad 3: Mechanical ground / NC (connect to ground plane)\nPad 4: Mechanical ground / NC (connect to ground plane)\n\nClock Tree\nWhen used with STM32F4 HSE oscillator circuit:\nExternal load capacitors required: CL_calc = 2 × (CL_spec - C_stray)\n  = 2 × (20 - 7) = 26 pF → use 27 pF standard value (or 22pF for 3.3V CMOS)\nFeedback resistor: Internal to STM32 oscillator cell.\nSeries resistor: Not needed for ABM8 at 16 MHz with STM32F4.\nDrive level from MCU: Typically 200-500 µW — within ABM8 rating.\n\nRecommended PCB Layout\nPlace crystal as close to MCU oscillator pins as possible (within 10mm).\nRoute crystal traces away from high-frequency digital signals.\nGround pads 3 and 4 to ground plane for mechanical stability and noise shielding.\nKeep load capacitors close to crystal (within 5mm of crystal pads).\nAvoid running other signal traces between crystal pads and MCU oscillator pins.\nUse a ground guard ring around crystal circuit on the component layer.\n\nPackage Outline\nPackage type: SMD ceramic, 4-pad\nDimensions: 3.2 × 2.5 × 0.7 mm\nPad layout: 2 active pads (diagonal) + 2 ground pads\n  Marking: Frequency and lot code on top surface"
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

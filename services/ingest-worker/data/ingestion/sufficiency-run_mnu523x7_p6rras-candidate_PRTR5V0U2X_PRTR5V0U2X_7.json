@@ -1,0 +1,136 @@
+{
+  "runId": "run_mnu523x7_p6rras",
+  "candidateId": "candidate_PRTR5V0U2X_PRTR5V0U2X_7",
+  "checks": [
+    {
+      "category": "official_documents",
+      "check": "official_datasheet_exists",
+      "passed": true,
+      "details": "Official datasheet found for PRTR5V0U2X"
+    },
+    {
+      "category": "official_documents",
+      "check": "application_note_exists",
+      "passed": false,
+      "details": "No application note found for complex part PRTR5V0U2X",
+      "requiredAction": "Fetch application note for PRTR5V0U2X"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_data_exists",
+      "passed": false,
+      "details": "No procurement data found for PRTR5V0U2X",
+      "requiredAction": "Resolve procurement data for PRTR5V0U2X"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_manufacturer_present",
+      "passed": false,
+      "details": "manufacturer missing — no procurement data available",
+      "requiredAction": "Resolve manufacturer for PRTR5V0U2X"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_mpn_present",
+      "passed": false,
+      "details": "mpn missing — no procurement data available",
+      "requiredAction": "Resolve mpn for PRTR5V0U2X"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_package_present",
+      "passed": false,
+      "details": "package missing — no procurement data available",
+      "requiredAction": "Resolve package for PRTR5V0U2X"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_stock_present",
+      "passed": false,
+      "details": "stock missing — no procurement data available",
+      "requiredAction": "Resolve stock for PRTR5V0U2X"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_unitPrice_present",
+      "passed": false,
+      "details": "unitPrice missing — no procurement data available",
+      "requiredAction": "Resolve unitPrice for PRTR5V0U2X"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_moq_present",
+      "passed": false,
+      "details": "moq missing — no procurement data available",
+      "requiredAction": "Resolve moq for PRTR5V0U2X"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_distributorSku_present",
+      "passed": false,
+      "details": "distributorSku missing — no procurement data available",
+      "requiredAction": "Resolve distributorSku for PRTR5V0U2X"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_lifecycle_present",
+      "passed": false,
+      "details": "lifecycle missing — no procurement data available",
+      "requiredAction": "Resolve lifecycle for PRTR5V0U2X"
+    },
+    {
+      "category": "design_integration",
+      "check": "approved_footprint_exists",
+      "passed": false,
+      "details": "No footprint found for PRTR5V0U2X",
+      "requiredAction": "Generate or approve footprint for PRTR5V0U2X"
+    },
+    {
+      "category": "design_integration",
+      "check": "kicad_field_mapping_exists",
+      "passed": false,
+      "details": "No KiCad field mapping found for PRTR5V0U2X",
+      "requiredAction": "Create KiCad field mapping for PRTR5V0U2X"
+    },
+    {
+      "category": "consistency",
+      "check": "no_placeholder_critical_parts",
+      "passed": true,
+      "details": "No placeholder content detected for PRTR5V0U2X"
+    },
+    {
+      "category": "consistency",
+      "check": "no_package_mismatch",
+      "passed": true,
+      "details": "Package information consistent across documents"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "reference_topology_instantiable",
+      "passed": true,
+      "details": "Reference topology available for PRTR5V0U2X"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "bom_emittable_without_placeholders",
+      "passed": true,
+      "details": "BOM can be emitted without critical placeholders for PRTR5V0U2X"
+    }
+  ],
+  "overallPass": false,
+  "gaps": [
+    "Fetch application note for PRTR5V0U2X",
+    "Resolve procurement data for PRTR5V0U2X",
+    "Resolve manufacturer for PRTR5V0U2X",
+    "Resolve mpn for PRTR5V0U2X",
+    "Resolve package for PRTR5V0U2X",
+    "Resolve stock for PRTR5V0U2X",
+    "Resolve unitPrice for PRTR5V0U2X",
+    "Resolve moq for PRTR5V0U2X",
+    "Resolve distributorSku for PRTR5V0U2X",
+    "Resolve lifecycle for PRTR5V0U2X",
+    "Generate or approve footprint for PRTR5V0U2X",
+    "Create KiCad field mapping for PRTR5V0U2X"
+  ],
+  "generatedAt": 1775900085749
+}

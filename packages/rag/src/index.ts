@@ -1,0 +1,50 @@
+// ── @raino/rag — Barrel Exports ───────────────────────────────────────────────
+
+// Storage types
+export type {
+  SourceType,
+  TrustLevel,
+  ChunkType,
+  DocumentRecord,
+  ChunkMetadata,
+  ChunkRecord,
+  EmbeddingRecord,
+  RetrievalResult,
+} from './storage/types.js';
+
+// Storage interfaces
+export type { DocumentStore, ChunkStore, VectorStore } from './storage/interfaces.js';
+
+// Memory store implementations
+export {
+  MemoryDocumentStore,
+  MemoryChunkStore,
+  MemoryVectorStore,
+} from './storage/memory-store.js';
+
+// Chunking engine
+export { chunkDocument } from './chunking/engine.js';
+export type { ChunkingOptions } from './chunking/engine.js';
+
+// Section detection
+export { detectSections } from './chunking/section-detector.js';
+export type { SectionBoundary } from './chunking/section-detector.js';
+
+// Embedding contracts
+export type { EmbeddingGenerator } from './embeddings/contracts.js';
+
+// Mock embedding generator
+export { MockEmbeddingGenerator } from './embeddings/mock-generator.js';
+
+// Retrieval engine
+export { RetrievalEngine } from './retrieval/engine.js';
+export type { RetrievalOptions, RetrievalDeps } from './retrieval/engine.js';
+
+// Pipeline types
+export type {
+  PipelineStage,
+  PipelineStageStatus,
+  PipelineResult,
+  PipelineConfig,
+  PipelineRunResult,
+} from './pipeline/types.js';

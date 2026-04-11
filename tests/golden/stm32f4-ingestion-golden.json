@@ -1,0 +1,35 @@
+{
+  "family": "STM32F4",
+  "manufacturer": "STMicroelectronics",
+  "mpns": ["STM32F407VGT6", "STM32F401CCU6"],
+  "expectedDocuments": {
+    "datasheet": { "required": true, "minPages": 1 },
+    "errata": { "required": true, "minItems": 1 },
+    "app_note": { "required": true },
+    "package_doc": { "required": true }
+  },
+  "expectedChunkTypes": [
+    "absolute_max_ratings",
+    "recommended_operating_conditions",
+    "power_requirements",
+    "pin_description",
+    "boot_configuration",
+    "clock_tree",
+    "usb_guidelines",
+    "recommended_pcb_layout",
+    "package_outline",
+    "errata_item"
+  ],
+  "sufficiencyExpectations": {
+    "shouldPass": true,
+    "requiredChecks": [
+      "Official datasheet exists",
+      "Errata exists",
+      "Application note for complex part",
+      "Package/land-pattern documentation",
+      "Procurement data available",
+      "KiCad field mapping exists",
+      "Alternate exists"
+    ]
+  }
+}

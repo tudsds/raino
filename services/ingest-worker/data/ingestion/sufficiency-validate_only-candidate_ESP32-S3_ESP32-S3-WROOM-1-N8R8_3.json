@@ -1,0 +1,152 @@
+{
+  "runId": "validate_only",
+  "candidateId": "candidate_ESP32-S3_ESP32-S3-WROOM-1-N8R8_3",
+  "checks": [
+    {
+      "category": "official_documents",
+      "check": "official_datasheet_exists",
+      "passed": true,
+      "details": "Official datasheet found for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "official_documents",
+      "check": "application_note_exists",
+      "passed": true,
+      "details": "Application note found for complex part ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "official_documents",
+      "check": "package_documentation_exists",
+      "passed": false,
+      "details": "No package documentation found for ESP32-S3-WROOM-1-N8R8",
+      "requiredAction": "Fetch package documentation for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_data_exists",
+      "passed": false,
+      "details": "No procurement data found for ESP32-S3-WROOM-1-N8R8",
+      "requiredAction": "Resolve procurement data for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_manufacturer_present",
+      "passed": false,
+      "details": "manufacturer missing — no procurement data available",
+      "requiredAction": "Resolve manufacturer for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_mpn_present",
+      "passed": false,
+      "details": "mpn missing — no procurement data available",
+      "requiredAction": "Resolve mpn for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_package_present",
+      "passed": false,
+      "details": "package missing — no procurement data available",
+      "requiredAction": "Resolve package for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_stock_present",
+      "passed": false,
+      "details": "stock missing — no procurement data available",
+      "requiredAction": "Resolve stock for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_unitPrice_present",
+      "passed": false,
+      "details": "unitPrice missing — no procurement data available",
+      "requiredAction": "Resolve unitPrice for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_moq_present",
+      "passed": false,
+      "details": "moq missing — no procurement data available",
+      "requiredAction": "Resolve moq for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_distributorSku_present",
+      "passed": false,
+      "details": "distributorSku missing — no procurement data available",
+      "requiredAction": "Resolve distributorSku for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_lifecycle_present",
+      "passed": false,
+      "details": "lifecycle missing — no procurement data available",
+      "requiredAction": "Resolve lifecycle for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "design_integration",
+      "check": "approved_footprint_exists",
+      "passed": false,
+      "details": "No footprint found for ESP32-S3-WROOM-1-N8R8",
+      "requiredAction": "Generate or approve footprint for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "design_integration",
+      "check": "kicad_field_mapping_exists",
+      "passed": false,
+      "details": "No KiCad field mapping found for ESP32-S3-WROOM-1-N8R8",
+      "requiredAction": "Create KiCad field mapping for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "design_integration",
+      "check": "alternate_part_exists",
+      "passed": false,
+      "details": "No alternate parts found for ESP32-S3-WROOM-1-N8R8",
+      "requiredAction": "Identify alternate parts for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "consistency",
+      "check": "no_placeholder_critical_parts",
+      "passed": true,
+      "details": "No placeholder content detected for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "consistency",
+      "check": "no_package_mismatch",
+      "passed": true,
+      "details": "Package information consistent across documents"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "reference_topology_instantiable",
+      "passed": false,
+      "details": "No reference topology found for ESP32-S3-WROOM-1-N8R8",
+      "requiredAction": "Find or create reference topology for ESP32-S3-WROOM-1-N8R8"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "bom_emittable_without_placeholders",
+      "passed": true,
+      "details": "BOM can be emitted without critical placeholders for ESP32-S3-WROOM-1-N8R8"
+    }
+  ],
+  "overallPass": false,
+  "gaps": [
+    "Fetch package documentation for ESP32-S3-WROOM-1-N8R8",
+    "Resolve procurement data for ESP32-S3-WROOM-1-N8R8",
+    "Resolve manufacturer for ESP32-S3-WROOM-1-N8R8",
+    "Resolve mpn for ESP32-S3-WROOM-1-N8R8",
+    "Resolve package for ESP32-S3-WROOM-1-N8R8",
+    "Resolve stock for ESP32-S3-WROOM-1-N8R8",
+    "Resolve unitPrice for ESP32-S3-WROOM-1-N8R8",
+    "Resolve moq for ESP32-S3-WROOM-1-N8R8",
+    "Resolve distributorSku for ESP32-S3-WROOM-1-N8R8",
+    "Resolve lifecycle for ESP32-S3-WROOM-1-N8R8",
+    "Generate or approve footprint for ESP32-S3-WROOM-1-N8R8",
+    "Create KiCad field mapping for ESP32-S3-WROOM-1-N8R8",
+    "Identify alternate parts for ESP32-S3-WROOM-1-N8R8",
+    "Find or create reference topology for ESP32-S3-WROOM-1-N8R8"
+  ],
+  "generatedAt": 1775886026492
+}

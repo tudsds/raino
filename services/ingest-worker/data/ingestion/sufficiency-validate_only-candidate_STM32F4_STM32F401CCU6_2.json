@@ -1,0 +1,166 @@
+{
+  "runId": "validate_only",
+  "candidateId": "candidate_STM32F4_STM32F401CCU6_2",
+  "checks": [
+    {
+      "category": "official_documents",
+      "check": "official_datasheet_exists",
+      "passed": true,
+      "details": "Official datasheet found for STM32F401CCU6"
+    },
+    {
+      "category": "official_documents",
+      "check": "errata_exists",
+      "passed": true,
+      "details": "Errata document found for STM32F401CCU6"
+    },
+    {
+      "category": "official_documents",
+      "check": "application_note_exists",
+      "passed": false,
+      "details": "No application note found for complex part STM32F401CCU6",
+      "requiredAction": "Fetch application note for STM32F401CCU6"
+    },
+    {
+      "category": "official_documents",
+      "check": "package_documentation_exists",
+      "passed": false,
+      "details": "No package documentation found for STM32F401CCU6",
+      "requiredAction": "Fetch package documentation for STM32F401CCU6"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_data_exists",
+      "passed": false,
+      "details": "No procurement data found for STM32F401CCU6",
+      "requiredAction": "Resolve procurement data for STM32F401CCU6"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_manufacturer_present",
+      "passed": false,
+      "details": "manufacturer missing — no procurement data available",
+      "requiredAction": "Resolve manufacturer for STM32F401CCU6"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_mpn_present",
+      "passed": false,
+      "details": "mpn missing — no procurement data available",
+      "requiredAction": "Resolve mpn for STM32F401CCU6"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_package_present",
+      "passed": false,
+      "details": "package missing — no procurement data available",
+      "requiredAction": "Resolve package for STM32F401CCU6"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_stock_present",
+      "passed": false,
+      "details": "stock missing — no procurement data available",
+      "requiredAction": "Resolve stock for STM32F401CCU6"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_unitPrice_present",
+      "passed": false,
+      "details": "unitPrice missing — no procurement data available",
+      "requiredAction": "Resolve unitPrice for STM32F401CCU6"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_moq_present",
+      "passed": false,
+      "details": "moq missing — no procurement data available",
+      "requiredAction": "Resolve moq for STM32F401CCU6"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_distributorSku_present",
+      "passed": false,
+      "details": "distributorSku missing — no procurement data available",
+      "requiredAction": "Resolve distributorSku for STM32F401CCU6"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_lifecycle_present",
+      "passed": false,
+      "details": "lifecycle missing — no procurement data available",
+      "requiredAction": "Resolve lifecycle for STM32F401CCU6"
+    },
+    {
+      "category": "design_integration",
+      "check": "approved_footprint_exists",
+      "passed": false,
+      "details": "No footprint found for STM32F401CCU6",
+      "requiredAction": "Generate or approve footprint for STM32F401CCU6"
+    },
+    {
+      "category": "design_integration",
+      "check": "kicad_field_mapping_exists",
+      "passed": false,
+      "details": "No KiCad field mapping found for STM32F401CCU6",
+      "requiredAction": "Create KiCad field mapping for STM32F401CCU6"
+    },
+    {
+      "category": "design_integration",
+      "check": "alternate_part_exists",
+      "passed": false,
+      "details": "No alternate parts found for STM32F401CCU6",
+      "requiredAction": "Identify alternate parts for STM32F401CCU6"
+    },
+    {
+      "category": "consistency",
+      "check": "no_datasheet_errata_contradiction",
+      "passed": true,
+      "details": "No detected contradiction between datasheet and errata"
+    },
+    {
+      "category": "consistency",
+      "check": "no_placeholder_critical_parts",
+      "passed": true,
+      "details": "No placeholder content detected for STM32F401CCU6"
+    },
+    {
+      "category": "consistency",
+      "check": "no_package_mismatch",
+      "passed": true,
+      "details": "Package information consistent across documents"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "reference_topology_instantiable",
+      "passed": false,
+      "details": "No reference topology found for STM32F401CCU6",
+      "requiredAction": "Find or create reference topology for STM32F401CCU6"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "bom_emittable_without_placeholders",
+      "passed": true,
+      "details": "BOM can be emitted without critical placeholders for STM32F401CCU6"
+    }
+  ],
+  "overallPass": false,
+  "gaps": [
+    "Fetch application note for STM32F401CCU6",
+    "Fetch package documentation for STM32F401CCU6",
+    "Resolve procurement data for STM32F401CCU6",
+    "Resolve manufacturer for STM32F401CCU6",
+    "Resolve mpn for STM32F401CCU6",
+    "Resolve package for STM32F401CCU6",
+    "Resolve stock for STM32F401CCU6",
+    "Resolve unitPrice for STM32F401CCU6",
+    "Resolve moq for STM32F401CCU6",
+    "Resolve distributorSku for STM32F401CCU6",
+    "Resolve lifecycle for STM32F401CCU6",
+    "Generate or approve footprint for STM32F401CCU6",
+    "Create KiCad field mapping for STM32F401CCU6",
+    "Identify alternate parts for STM32F401CCU6",
+    "Find or create reference topology for STM32F401CCU6"
+  ],
+  "generatedAt": 1775886026492
+}

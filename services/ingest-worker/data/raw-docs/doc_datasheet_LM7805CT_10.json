@@ -1,0 +1,17 @@
+{
+  "id": "doc_datasheet_LM7805CT_10",
+  "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+  "sourceType": "datasheet",
+  "manufacturer": "Texas Instruments",
+  "partFamily": "LM78xx",
+  "mpn": "LM7805CT",
+  "revision": "Rev J",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture datasheet for LM7805CT",
+    "rawContent": "LM7805CT — Positive Voltage Regulator\nDatasheet — Rev J\n\nDescription\nThe LM7805CT is a positive voltage regulator that provides a fixed 5.0V output\nfrom an unregulated DC input. Available in TO-220 package. Output current up to 1.5A\nwith adequate heatsinking.\n\nAbsolute Maximum Ratings\nInput voltage: -0.3 to 35 V\nPower dissipation: Internally limited (thermal shutdown at ~150°C)\nOperating junction temperature range: -40 to 125 °C\nStorage temperature range: -65 to 150 °C\nLead temperature (soldering, 10 sec): 260 °C\n\nRecommended Operating Conditions\nInput voltage: 7.0 to 25 V (for 5V output)\nOutput voltage: 4.8 to 5.2 V (typ 5.0 V)\nOutput current: 0 to 1.5 A\nJunction temperature: -40 to 125 °C\nDropout voltage: 2.0 V typical (7V input minimum for 5V output)\n\nPower Requirements\nQuiescent current: Typ 5 mA (max 8 mA)\nGround pin current: Typ 5 mA\nRipple rejection: Typ 73 dB at 120 Hz\n\nPin Description\nTO-220 package (3 pins):\nPin 1: Input (unregulated DC input, 7-25V)\nPin 2: Ground (common, connected to tab)\nPin 3: Output (regulated 5.0V DC)\n\nThermal Characteristics\nThermal resistance junction-to-case (RθJC): 4 °C/W\nThermal resistance junction-to-ambient (RθJA): 54 °C/W (TO-220, no heatsink)\nWith heatsink: RθJA = RθJC + RθCS + RθSA\n\nRecommended PCB Layout\nPlace input capacitor (0.33µF ceramic) close to input pin.\nPlace output capacitor (0.1µF ceramic) close to output pin.\nUse wide traces for input and output to minimize voltage drop.\nGround tab to copper pour for thermal dissipation.\nAdd thermal vias under tab if using multilayer board.\n\nReference Circuit\nInput: 7-25V DC → Input capacitor 0.33µF (ceramic, close to pin) → LM7805CT → Output capacitor 0.1µF (ceramic) → 5.0V output\nFor higher stability: Add 1µF tantalum on output.\nFor noise-sensitive applications: Add LC filter on output.\nInput bulk capacitor: 100µF electrolytic recommended if source is far from regulator."
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,34 @@
+node_modules/
+dist/
+.next/
+.turbo/
+out/
+build/
+*.tsbuildinfo
+
+.env
+.env.local
+.env.production
+.env.staging
+
+coverage/
+.nyc_output/
+
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+.DS_Store
+Thumbs.db
+
+.vercel/
+
+# Embeddings / vector data
+data/embeddings/
+data/vectors/
+
+# Raw documents cache
+data/raw-docs/
+
+# Ingestion outputs
+data/ingestion/

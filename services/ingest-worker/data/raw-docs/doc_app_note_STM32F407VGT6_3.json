@@ -1,0 +1,17 @@
+{
+  "id": "doc_app_note_STM32F407VGT6_3",
+  "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
+  "sourceType": "app_note",
+  "manufacturer": "STMicroelectronics",
+  "partFamily": "STM32F4",
+  "mpn": "STM32F407VGT6",
+  "revision": "1.0",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture app_note for STM32F407VGT6",
+    "rawContent": "AN4206 — Getting Started with STM32F407 Hardware Development\n\nApplication Note — Hardware Design Guide\n\nOverview\nThis application note provides guidance for designing hardware with the STM32F407VGT6.\n\nPower Supply Design\nUse a single 3.3V rail when possible. The STM32F407 requires:\n- VDD: 1.8V to 3.6V (main digital supply)\n- VDDA: 1.8V to 3.6V (analog supply, must equal VDD for full ADC performance)\n- VBAT: 1.65V to 3.6V (RTC backup, can connect to VDD if not using battery backup)\n- VDDUSB: 3.0V to 3.6V (can connect to VDD when USB not used in device mode)\n\nClock Selection\nFor USB operation: Must use HSE crystal (not HSI). Recommended 8 MHz.\nFor general operation: HSI (16 MHz internal RC) is sufficient if USB not used and accuracy\nrequirements are met (±1% at 25°C).\n\nReset Circuit\nConnect 10kΩ pull-up to VDD and 100nF capacitor to ground on NRST pin.\nFor manual reset: Add push-button from NRST to ground.\nNRST is also the JTAG/SWD reset — ensure JTAG/SWD connector accesses this pin.\n\nBoot Configuration\nDefault: BOOT0 = LOW (pulled down with 10kΩ). Boots from main flash.\nFor bootloader access: Add a jumper or button to pull BOOT0 HIGH at reset.\nPB2 (BOOT1) can be permanently pulled LOW for flash/system memory boot options.\n\nUSB Hardware\nPA11 (DM) and PA12 (DP) are dedicated USB pins — no alternate function mapping needed.\nRoute as differential pair: 90Ω impedance, matched length within 0.5mm.\nAdd ESD protection: PRTR5V0U2X or equivalent on DP/DM near connector.\nVBUS pin (PA9) for device mode detection — add voltage divider if VBUS may exceed 3.6V.\n\nDebug Connector\nStandard ARM 10-pin (0.05\" pitch) or 20-pin (0.1\" pitch) JTAG/SWD connector.\nMinimum pins needed for SWD: VDD, GND, SWDIO (PA13), SWCLK (PA14), NRST.\nSWO (PB3) optional for ITM trace output."
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

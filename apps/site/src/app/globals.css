@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-tertiary: #1a1a24;
+  --bg-elevated: #22222e;
+  --fg-primary: #e4e4e7;
+  --fg-secondary: #a1a1aa;
+  --fg-muted: #71717a;
+  --accent-cyan: #00f0ff;
+  --accent-purple: #8b5cf6;
+  --accent-magenta: #ff00aa;
+  --accent-green: #00ff88;
+  --accent-amber: #ffaa00;
+  --accent-red: #ff3366;
+  --border-primary: #27272a;
+  --border-secondary: #3f3f46;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--fg-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Neon glow utility */
+.neon-glow {
+  box-shadow:
+    0 0 10px rgba(0, 240, 255, 0.3),
+    0 0 40px rgba(0, 240, 255, 0.1);
+}
+
+.neon-glow-purple {
+  box-shadow:
+    0 0 10px rgba(139, 92, 246, 0.3),
+    0 0 40px rgba(139, 92, 246, 0.1);
+}
+
+.neon-text {
+  text-shadow:
+    0 0 10px rgba(0, 240, 255, 0.5),
+    0 0 40px rgba(0, 240, 255, 0.2);
+}
+
+/* Circuit grid background */
+.circuit-grid {
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #00f0ff, #8b5cf6, #ff00aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

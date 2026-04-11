@@ -1,0 +1,17 @@
+{
+  "id": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+  "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+  "sourceType": "datasheet",
+  "manufacturer": "Espressif",
+  "partFamily": "ESP32-S3",
+  "mpn": "ESP32-S3-WROOM-1-N8",
+  "revision": "Rev 1.5",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture datasheet for ESP32-S3-WROOM-1-N8",
+    "rawContent": "ESP32-S3-WROOM-1-N8 — Wi-Fi + BLE Module\nDatasheet — Rev 1.5\n\nDescription\nThe ESP32-S3-WROOM-1-N8 is a Wi-Fi + Bluetooth LE MCU module based on ESP32-S3\nwith 8MB flash (no PSRAM). Dual-core Xtensa LX7 at up to 240 MHz.\n\nAbsolute Maximum Ratings\nSupply voltage (3V3): -0.3 to 3.6 V\nInput voltage on IO pins: -0.3 to 3.6 V\nStorage temperature: -40 to 85 °C\n\nRecommended Operating Conditions\nSupply voltage (3V3): 3.0 to 3.6 V (typ 3.3 V)\nOperating temperature: -40 to 85 °C\n\nPower Requirements\nActive mode (Wi-Fi + BLE, 240 MHz): Typ 185 mA peak\nActive mode (CPU only, 240 MHz): Typ 45 mA\nDeep sleep: Typ 7 µA\n\nPin Description\nSame pinout as ESP32-S3-WROOM-1-N8R8 (36 GPIO exposed).\nIO35-IO42: Not available (used for internal flash only).\n\nBoot Configuration\nSame as ESP32-S3-WROOM-1-N8R8.\n\nPackage Outline\nModule dimensions: 18.0 x 25.5 x 3.1 mm (same as N8R8 variant)\nWeight: ~2.8g"
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "doc_app_note_ESP32-S3-WROOM-1-N8R8_8",
+  "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/app_note",
+  "sourceType": "app_note",
+  "manufacturer": "Espressif",
+  "partFamily": "ESP32-S3",
+  "mpn": "ESP32-S3-WROOM-1-N8R8",
+  "revision": "1.0",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture app_note for ESP32-S3-WROOM-1-N8R8",
+    "rawContent": "ESP32-S3 Hardware Design Guidelines — Application Note\n\nPower Supply\nUse a stable 3.3V supply capable of delivering at least 500mA peak.\nRecommended: AMS1117-3.3 (1A LDO) or equivalent for prototyping.\nFor production: Use a switching regulator (e.g. SY8089) for efficiency.\nAdd 10µF ceramic + 100µF electrolytic at the module's 3V3 input.\nRoute supply traces with adequate width (min 0.5mm for 500mA).\n\nAntenna Design\nThe WROOM module has an onboard PCB antenna.\nKeep the antenna area completely clear: no copper, components, or metal within 15mm.\nAntenna orientation: module should be mounted so the antenna edge faces away from\nground planes and metal chassis.\nFor external antenna: Use IPEX connector variant of the module.\n\nStrapping Pin Handling\nIO0: Add 10kΩ pull-up to 3V3. Add a button/headers to pull LOW for programming.\nIO3: Leave floating or weak pull-up (10kΩ to 3V3).\nIO45: Leave floating for normal operation.\nIO46: Leave floating or connect 10kΩ pull-up to 3V3.\nAll strapping pins must be stable during power-on reset.\n\nFlash/PSRAM\nThe N8R8 variant includes 8MB Quad SPI flash and 8MB Octal SPI PSRAM.\nBoth are internal to the module — no external connections needed.\nDo not attempt to access the SPI bus externally while module is operating.\nMemory map: Flash at 0x0, PSRAM mapped to data memory region.\n\nDebugging\nUse built-in USB JTAG (IO18/IO19) or external JTAG adapter.\nUSB CDC provides serial console on same USB connection as JTAG.\nFor UART-only debugging: Connect IO43 (TX) and IO44 (RX) to USB-UART adapter."
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "doc_errata_STM32F401CCU6_6",
+  "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
+  "sourceType": "errata",
+  "manufacturer": "STMicroelectronics",
+  "partFamily": "STM32F4",
+  "mpn": "STM32F401CCU6",
+  "revision": "Rev 2",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture errata for STM32F401CCU6",
+    "rawContent": "STM32F401CCU6 — Errata Sheet — Rev 2\n\nSilicon Revision B (Device Revision 2)\n\nErrata Item: I2C analog filter may lock up under specific noise conditions\nWorkaround: Disable analog filter and use digital filter only (DNF > 0).\nSeverity: Low. Occurs only in high-noise environments.\n\nErrata Item: RTC calendar may be incorrect after power-on if BYPSHAD not set\nWorkaround: Set BYPSHAD bit or read shadow registers twice with delay.\nSeverity: Low."
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

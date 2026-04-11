@@ -1,0 +1,31 @@
+{
+  "projectId": "550e8400-e29b-41d4-a716-446655440000",
+  "components": {
+    "designAutomationFee": 500,
+    "engineeringReviewFee": 300,
+    "pcbFabricationEstimate": 25,
+    "componentsEstimate": 25.6,
+    "assemblyEstimate": 0.5,
+    "qaPackagingHandling": 150,
+    "contingency": 100.11,
+    "margin": 150.17
+  },
+  "expectedResults": {
+    "lowQuote": 808.3,
+    "midQuote": 1010.38,
+    "highQuote": 1262.98
+  },
+  "bomRows": [
+    { "reference": "U1", "mpn": "STM32F407VGT6", "unitPrice": 12.5, "quantity": 1 },
+    { "reference": "U2", "mpn": "AMS1117-3.3", "unitPrice": 0.5, "quantity": 2 },
+    { "reference": "U3", "mpn": "ESP32-S3-WROOM-1-N8", "unitPrice": 3.2, "quantity": 1 },
+    { "reference": "Y1", "mpn": "ABM8-16.000MHZ", "unitPrice": 0.8, "quantity": 1 },
+    { "reference": "C1-C10", "mpn": "100nF-0402", "unitPrice": 0.01, "quantity": 10 }
+  ],
+  "assumptions": [
+    "Quantity: 100 units",
+    "All pricing from fixture data",
+    "PCB size estimated from BOM complexity",
+    "Assembly cost per component: $0.05"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "doc_errata_STM32F407VGT6_2",
+  "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+  "sourceType": "errata",
+  "manufacturer": "STMicroelectronics",
+  "partFamily": "STM32F4",
+  "mpn": "STM32F407VGT6",
+  "revision": "Rev 3",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture errata for STM32F407VGT6",
+    "rawContent": "STM32F407VGT6 — Errata Sheet — Rev 3\n\nSilicon Revision Z (Device Revision 3)\n\nErrata Item: USART cannot be used in synchronous mode at maximum APB frequency\nWorkaround: Reduce APB clock frequency below 26 MHz when using synchronous mode.\nSeverity: Medium. Affects USART in synchronous (clocked) mode only.\n\nErrata Item: I2C may not release SDA line after NACK in master mode\nWorkaround: Software reset of I2C peripheral after detecting bus stuck condition.\nSeverity: Low. Only occurs after specific NACK timing.\n\nErrata Item: ADC inaccurate when converting immediately after another ADC\nWorkaround: Insert delay of at least 3 µs between consecutive ADC conversions on different ADCs.\nSeverity: Low. Only in triple-interleaved mode at maximum speed.\n\nErrata Item: USB OTG may lose SOF under heavy bus load\nWorkaround: Enable SOF threshold interrupt and handle within 5 µs.\nSeverity: Medium. Occurs only in host mode with multiple devices.\n\nErrata Item: RTC initialization may fail if backup domain write protection not fully removed\nWorkaround: Perform two consecutive writes to DBP bit with 2 APB clock cycle delay.\nSeverity: Low. Only during first RTC configuration after power-on.\n\nDevice Revision History\nRev Z (3): Production silicon. All errata listed above apply.\nRev Y (2): Engineering sample. Do not use for production.\nRev X (1): Initial engineering sample. Not for production."
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

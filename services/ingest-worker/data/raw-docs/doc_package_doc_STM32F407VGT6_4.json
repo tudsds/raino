@@ -1,0 +1,17 @@
+{
+  "id": "doc_package_doc_STM32F407VGT6_4",
+  "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
+  "sourceType": "package_doc",
+  "manufacturer": "STMicroelectronics",
+  "partFamily": "STM32F4",
+  "mpn": "STM32F407VGT6",
+  "revision": "1.0",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture package_doc for STM32F407VGT6",
+    "rawContent": "STM32F407VGT6 — Package Documentation — LQFP100\n\nPackage Type: LQFP100 (Low-profile Quad Flat Package)\nBody Size: 14.0 x 14.0 mm\nLead Count: 100\nLead Pitch: 0.50 mm\nPackage Thickness: 1.40 mm max\nLead Width: 0.22 mm\nLead Length: 1.0 mm\n\nPin 1 Identification: Notch on pin 1 side + dot on pin 1 corner\n\nLand Pattern (Footprint)\nPad size: 0.60 x 1.80 mm (per lead)\nPad pitch: 0.50 mm\nPad center to package edge: 0.75 mm\nThermal pad: None (LQFP uses leads for thermal dissipation)\nSolder paste stencil: 0.125 mm thickness recommended\n\nSoldering Profile (Pb-free)\nPreheat: 150-200°C, 60-120 seconds\nRamp-up rate: 1-3°C/s\nPeak temperature: 260°C max (245-255°C recommended)\nTime above 217°C: 60-150 seconds\nCooling rate: 1-4°C/s\n\nMoisture Sensitivity Level: MSL3 (168h floor life at 30°C/85%RH)\n\nTape and Reel\nTape width: 24 mm\nReel diameter: 330 mm\nDevices per reel: 1000"
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

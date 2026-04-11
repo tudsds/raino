@@ -1,0 +1,337 @@
+{
+  "projectId": "example-001",
+  "name": "ESP32 Sensor Hub",
+  "version": "1.0.0",
+  "status": "quoting",
+  "currentStep": 9,
+  "totalSteps": 12,
+  "createdAt": "2024-01-15T00:00:00.000Z",
+  "updatedAt": "2024-01-18T00:00:00.000Z",
+
+  "spec": {
+    "title": "ESP32 Sensor Hub",
+    "description": "Multi-sensor data acquisition board with WiFi and Bluetooth connectivity for industrial IoT environmental monitoring applications.",
+    "formFactor": {
+      "type": "custom-pcb",
+      "dimensions": {
+        "length": 55,
+        "width": 40,
+        "unit": "mm"
+      },
+      "layers": 4,
+      "thickness": 1.6,
+      "surfaceFinish": "ENIG"
+    },
+    "requirements": [
+      "ESP32-S3 wireless MCU with WiFi and BLE 5.0",
+      "18650 Li-ion battery powered with integrated charging",
+      "3+ month battery life target on a single cell",
+      "SCD40 CO2 sensor (0 to 40000 ppm range)",
+      "SGP40 VOC sensor with self-calibrating air quality index",
+      "BME280 temperature, humidity, and barometric pressure sensor",
+      "Deep sleep power management for extended deployment",
+      "500 unit initial production run"
+    ],
+    "constraints": [
+      "Maximum board area: 2500 mm squared",
+      "Operating temperature range: -20 to 85 degrees Celsius",
+      "All sensors on I2C bus with independent addressing",
+      "Battery charging circuit with over-charge and over-discharge protection"
+    ],
+    "interfaces": [
+      {
+        "type": "wireless",
+        "protocol": "WiFi 802.11 b/g/n",
+        "description": "Primary data uplink"
+      },
+      {
+        "type": "wireless",
+        "protocol": "Bluetooth 5.0 LE",
+        "description": "Local configuration and provisioning"
+      },
+      {
+        "type": "physical",
+        "protocol": "I2C",
+        "description": "Sensor bus (SCD40, SGP40, BME280)"
+      },
+      {
+        "type": "power",
+        "protocol": "USB-C",
+        "description": "Battery charging input (5V)"
+      }
+    ],
+    "powerBudget": {
+      "input": "USB-C 5V for charging, 18650 Li-ion (3.0 to 4.2V) for operation",
+      "targetAverageDraw": "2 mA in deep sleep with periodic sensor readings",
+      "peakDraw": "300 mA during WiFi transmission bursts"
+    }
+  },
+
+  "architecture": {
+    "templateId": "iot-sensor-hub-v1",
+    "templateName": "Battery-Powered IoT Sensor Hub",
+    "description": "Reference architecture for low-power wireless sensor nodes with multiple I2C environmental sensors and single-cell Li-ion power management.",
+    "blocks": [
+      {
+        "id": "mcu",
+        "name": "Wireless MCU",
+        "role": "Central processor, wireless communication, sensor polling, and sleep scheduling",
+        "selectedPart": {
+          "mpn": "ESP32-S3-WROOM-1-N8",
+          "manufacturer": "Espressif",
+          "package": "SMD-38",
+          "description": "Wi-Fi + Bluetooth 5.0 MCU Module"
+        }
+      },
+      {
+        "id": "co2-sensor",
+        "name": "CO2 Sensor",
+        "role": "Ambient CO2 concentration measurement",
+        "selectedPart": {
+          "mpn": "SCD40-D-R2",
+          "manufacturer": "Sensirion",
+          "package": "LGA-10",
+          "description": "CO2 Sensor"
+        }
+      },
+      {
+        "id": "voc-sensor",
+        "name": "VOC Sensor",
+        "role": "Volatile organic compound detection and air quality index output",
+        "selectedPart": {
+          "mpn": "SGP40-D-R4",
+          "manufacturer": "Sensirion",
+          "package": "DFN-6",
+          "description": "VOC Sensor"
+        }
+      },
+      {
+        "id": "env-sensor",
+        "name": "Environmental Sensor",
+        "role": "Combined temperature, humidity, and barometric pressure sensing",
+        "selectedPart": {
+          "mpn": "BME280",
+          "manufacturer": "Bosch",
+          "package": "LGA-8",
+          "description": "Temp/Humidity/Pressure Sensor"
+        }
+      },
+      {
+        "id": "power-mgmt",
+        "name": "Power Management",
+        "role": "Li-ion battery charging, over-current protection, and battery disconnect via MOSFET load switch",
+        "selectedPart": {
+          "mpn": "TP4056",
+          "manufacturer": "NanJing TopPower",
+          "package": "SOP-8",
+          "description": "Li-ion Battery Charger"
+        }
+      }
+    ]
+  },
+
+  "bom": {
+    "items": [
+      {
+        "id": "bom-001",
+        "ref": "U1",
+        "value": "ESP32-S3-WROOM-1",
+        "mpn": "ESP32-S3-WROOM-1-N8",
+        "manufacturer": "Espressif",
+        "package": "SMD-38",
+        "quantity": 1,
+        "unitPrice": 2.45,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "low",
+        "description": "Wi-Fi + Bluetooth 5.0 MCU Module"
+      },
+      {
+        "id": "bom-002",
+        "ref": "U2",
+        "value": "SCD40",
+        "mpn": "SCD40-D-R2",
+        "manufacturer": "Sensirion",
+        "package": "LGA-10",
+        "quantity": 1,
+        "unitPrice": 15.2,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "medium",
+        "description": "CO2 Sensor"
+      },
+      {
+        "id": "bom-003",
+        "ref": "U3",
+        "value": "SGP40",
+        "mpn": "SGP40-D-R4",
+        "manufacturer": "Sensirion",
+        "package": "DFN-6",
+        "quantity": 1,
+        "unitPrice": 3.8,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "low",
+        "description": "VOC Sensor"
+      },
+      {
+        "id": "bom-004",
+        "ref": "U4",
+        "value": "BME280",
+        "mpn": "BME280",
+        "manufacturer": "Bosch",
+        "package": "LGA-8",
+        "quantity": 1,
+        "unitPrice": 2.15,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "low",
+        "description": "Temp/Humidity/Pressure Sensor"
+      },
+      {
+        "id": "bom-005",
+        "ref": "U5",
+        "value": "TP4056",
+        "mpn": "TP4056",
+        "manufacturer": "NanJing TopPower",
+        "package": "SOP-8",
+        "quantity": 1,
+        "unitPrice": 0.35,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "low",
+        "description": "Li-ion Battery Charger"
+      },
+      {
+        "id": "bom-006",
+        "ref": "Q1,Q2",
+        "value": "SI2301CDS",
+        "mpn": "SI2301CDS-T1-GE3",
+        "manufacturer": "Vishay",
+        "package": "SOT-23",
+        "quantity": 2,
+        "unitPrice": 0.12,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "low",
+        "description": "P-Channel MOSFET"
+      },
+      {
+        "id": "bom-007",
+        "ref": "R1-R10",
+        "value": "10k",
+        "mpn": "RC0603FR-0710KL",
+        "manufacturer": "Yageo",
+        "package": "0603",
+        "quantity": 10,
+        "unitPrice": 0.01,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "low",
+        "description": "10k Resistor"
+      },
+      {
+        "id": "bom-008",
+        "ref": "C1-C8",
+        "value": "10uF",
+        "mpn": "CL10A106KP8NNNC",
+        "manufacturer": "Samsung",
+        "package": "0603",
+        "quantity": 8,
+        "unitPrice": 0.03,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "low",
+        "description": "10uF Ceramic Capacitor"
+      },
+      {
+        "id": "bom-009",
+        "ref": "L1",
+        "value": "4.7uH",
+        "mpn": "LQM18FN4R7M00D",
+        "manufacturer": "Murata",
+        "package": "0603",
+        "quantity": 1,
+        "unitPrice": 0.18,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "medium",
+        "description": "Power Inductor"
+      },
+      {
+        "id": "bom-010",
+        "ref": "D1",
+        "value": "MBR120",
+        "mpn": "MBR120VLSFT1G",
+        "manufacturer": "onsemi",
+        "package": "SOD-123",
+        "quantity": 1,
+        "unitPrice": 0.28,
+        "currency": "USD",
+        "lifecycle": "active",
+        "risk": "low",
+        "description": "Schottky Diode"
+      }
+    ],
+    "totalCost": 28.73,
+    "currency": "USD",
+    "lineCount": 10,
+    "isEstimate": true
+  },
+
+  "quote": {
+    "bands": [
+      {
+        "tier": "low",
+        "unitPrice": 18.5,
+        "moq": 1000,
+        "nreCost": 2500,
+        "toolingCost": 800,
+        "leadTimeWeeks": 4,
+        "confidence": 0.75
+      },
+      {
+        "tier": "mid",
+        "unitPrice": 22.3,
+        "moq": 500,
+        "nreCost": 2500,
+        "toolingCost": 800,
+        "leadTimeWeeks": 4,
+        "confidence": 0.85
+      },
+      {
+        "tier": "high",
+        "unitPrice": 28.75,
+        "moq": 100,
+        "nreCost": 2500,
+        "toolingCost": 800,
+        "leadTimeWeeks": 6,
+        "confidence": 0.9
+      }
+    ],
+    "assumptions": [
+      "1.6mm FR-4 PCB, 4 layers",
+      "ENIG surface finish",
+      "Standard PCB tolerances",
+      "All components sourced from authorized distributors",
+      "Production in China (standard lead times)",
+      "Functional test included"
+    ],
+    "includedScope": [
+      "PCB fabrication (4-layer)",
+      "Component sourcing",
+      "PCB assembly (SMT)",
+      "Functional testing",
+      "Packaging"
+    ],
+    "excludedScope": [
+      "Firmware development",
+      "Custom test fixtures",
+      "Certification (FCC, CE)",
+      "Shipping and duties"
+    ],
+    "isEstimate": true,
+    "generatedAt": "2024-01-18T00:00:00.000Z",
+    "validUntil": "2024-02-18T00:00:00.000Z"
+  }
+}

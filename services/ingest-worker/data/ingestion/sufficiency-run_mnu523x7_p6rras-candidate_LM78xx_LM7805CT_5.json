@@ -1,0 +1,136 @@
+{
+  "runId": "run_mnu523x7_p6rras",
+  "candidateId": "candidate_LM78xx_LM7805CT_5",
+  "checks": [
+    {
+      "category": "official_documents",
+      "check": "official_datasheet_exists",
+      "passed": true,
+      "details": "Official datasheet found for LM7805CT"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_data_exists",
+      "passed": false,
+      "details": "No procurement data found for LM7805CT",
+      "requiredAction": "Resolve procurement data for LM7805CT"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_manufacturer_present",
+      "passed": false,
+      "details": "manufacturer missing — no procurement data available",
+      "requiredAction": "Resolve manufacturer for LM7805CT"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_mpn_present",
+      "passed": false,
+      "details": "mpn missing — no procurement data available",
+      "requiredAction": "Resolve mpn for LM7805CT"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_package_present",
+      "passed": false,
+      "details": "package missing — no procurement data available",
+      "requiredAction": "Resolve package for LM7805CT"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_stock_present",
+      "passed": false,
+      "details": "stock missing — no procurement data available",
+      "requiredAction": "Resolve stock for LM7805CT"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_unitPrice_present",
+      "passed": false,
+      "details": "unitPrice missing — no procurement data available",
+      "requiredAction": "Resolve unitPrice for LM7805CT"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_moq_present",
+      "passed": false,
+      "details": "moq missing — no procurement data available",
+      "requiredAction": "Resolve moq for LM7805CT"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_distributorSku_present",
+      "passed": false,
+      "details": "distributorSku missing — no procurement data available",
+      "requiredAction": "Resolve distributorSku for LM7805CT"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_lifecycle_present",
+      "passed": false,
+      "details": "lifecycle missing — no procurement data available",
+      "requiredAction": "Resolve lifecycle for LM7805CT"
+    },
+    {
+      "category": "design_integration",
+      "check": "approved_footprint_exists",
+      "passed": false,
+      "details": "No footprint found for LM7805CT",
+      "requiredAction": "Generate or approve footprint for LM7805CT"
+    },
+    {
+      "category": "design_integration",
+      "check": "kicad_field_mapping_exists",
+      "passed": false,
+      "details": "No KiCad field mapping found for LM7805CT",
+      "requiredAction": "Create KiCad field mapping for LM7805CT"
+    },
+    {
+      "category": "design_integration",
+      "check": "alternate_part_exists",
+      "passed": false,
+      "details": "No alternate parts found for LM7805CT",
+      "requiredAction": "Identify alternate parts for LM7805CT"
+    },
+    {
+      "category": "consistency",
+      "check": "no_placeholder_critical_parts",
+      "passed": true,
+      "details": "No placeholder content detected for LM7805CT"
+    },
+    {
+      "category": "consistency",
+      "check": "no_package_mismatch",
+      "passed": true,
+      "details": "Package information consistent across documents"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "reference_topology_instantiable",
+      "passed": true,
+      "details": "Reference topology available for LM7805CT"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "bom_emittable_without_placeholders",
+      "passed": true,
+      "details": "BOM can be emitted without critical placeholders for LM7805CT"
+    }
+  ],
+  "overallPass": false,
+  "gaps": [
+    "Resolve procurement data for LM7805CT",
+    "Resolve manufacturer for LM7805CT",
+    "Resolve mpn for LM7805CT",
+    "Resolve package for LM7805CT",
+    "Resolve stock for LM7805CT",
+    "Resolve unitPrice for LM7805CT",
+    "Resolve moq for LM7805CT",
+    "Resolve distributorSku for LM7805CT",
+    "Resolve lifecycle for LM7805CT",
+    "Generate or approve footprint for LM7805CT",
+    "Create KiCad field mapping for LM7805CT",
+    "Identify alternate parts for LM7805CT"
+  ],
+  "generatedAt": 1775900085749
+}

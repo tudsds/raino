@@ -1,0 +1,71 @@
+{
+  "runId": "run_mntwoicn_tgbmmi",
+  "seedVersion": "0.1.0",
+  "mode": "fixture",
+  "status": "completed",
+  "totalDuration": 250,
+  "candidateCount": 8,
+  "documentCount": 13,
+  "chunkCount": 153,
+  "embeddingCount": 153,
+  "sufficiencyPassCount": 0,
+  "sufficiencyFailCount": 8,
+  "stages": [
+    {
+      "stage": "candidate_discovery",
+      "status": "success",
+      "inputCount": 6,
+      "outputCount": 8,
+      "duration": 1
+    },
+    {
+      "stage": "doc_fetch",
+      "status": "success",
+      "inputCount": 8,
+      "outputCount": 13,
+      "duration": 0
+    },
+    {
+      "stage": "raw_store",
+      "status": "success",
+      "inputCount": 13,
+      "outputCount": 13,
+      "duration": 166
+    },
+    {
+      "stage": "normalization",
+      "status": "success",
+      "inputCount": 13,
+      "outputCount": 13,
+      "duration": 2
+    },
+    {
+      "stage": "chunking",
+      "status": "success",
+      "inputCount": 13,
+      "outputCount": 153,
+      "duration": 29
+    },
+    {
+      "stage": "metadata_enrichment",
+      "status": "success",
+      "inputCount": 153,
+      "outputCount": 153,
+      "duration": 12
+    },
+    {
+      "stage": "embedding",
+      "status": "success",
+      "inputCount": 153,
+      "outputCount": 153,
+      "duration": 8
+    },
+    {
+      "stage": "vector_store",
+      "status": "success",
+      "inputCount": 153,
+      "outputCount": 153,
+      "duration": 24
+    }
+  ]
+}

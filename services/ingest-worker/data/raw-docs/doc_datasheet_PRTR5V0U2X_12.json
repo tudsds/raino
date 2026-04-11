@@ -1,0 +1,17 @@
+{
+  "id": "doc_datasheet_PRTR5V0U2X_12",
+  "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+  "sourceType": "datasheet",
+  "manufacturer": "NXP",
+  "partFamily": "PRTR5V0U2X",
+  "mpn": "PRTR5V0U2X",
+  "revision": "Rev 3",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture datasheet for PRTR5V0U2X",
+    "rawContent": "PRTR5V0U2X — Ultra Low Capacitance Dual TVS/ESD Protection Diode\nDatasheet — Rev 3\n\nDescription\nThe PRTR5V0U2X is a bi-directional ESD protection diode array designed to protect\nhigh-speed data lines (USB 2.0, HDMI, etc.) from Electrostatic Discharge (ESD),\nElectrical Fast Transients (EFT), and surge events.\n\nAbsolute Maximum Ratings\nReverse working voltage (VRWM): 5.0 V\nBreakdown voltage (VBR): Min 6.0 V, Typ 6.7 V\nClamping voltage at IPP=3A (VC): Max 12 V\nPeak pulse power (8/20µs): 80 W\nESD protection: IEC 61000-4-2, ±15 kV (air), ±8 kV (contact)\nEFT protection: IEC 61000-4-4, 40 A (5/50 ns)\n\nRecommended Operating Conditions\nOperating voltage: 0 to 5.5 V (any line to GND)\nOperating temperature: -40 to 125 °C\nJunction temperature: -40 to 125 °C\n\nPower Requirements\nLeakage current at VRWM: Max 1 µA (typ 0.1 µA)\n\nPin Description\nSOT-143 package (4 pins):\nPin 1: I/O1 (protected line 1, connects to USB D+)\nPin 2: GND (ground)\nPin 3: I/O2 (protected line 2, connects to USB D-)\nPin 4: VCC (positive supply rail, connects to protected bus voltage or VBUS)\n\nElectrical Characteristics\nCapacitance (line-to-line): Typ 0.8 pF (at 1 MHz, VR = 0 V)\nCapacitance (line-to-GND): Typ 2.5 pF\nClamping voltage (IPP=1A): Typ 7.5 V\nDynamic resistance: Typ 0.5 Ω\n\nRecommended PCB Layout\nPlace as close to the USB connector as possible (within 5mm).\nRoute protected traces through the ESD diode before reaching the IC.\nKeep stub lengths from protected line to diode under 2mm.\nConnect GND pin directly to solid ground plane.\nConnect VCC pin to VBUS or leave floating (depends on application).\n\nReference Circuit\nFor USB 2.0 protection:\nUSB_DP → Pin 1 (I/O1)\nUSB_DM → Pin 3 (I/O2)\nPin 2 (GND) → Ground plane\nPin 4 (VCC) → VBUS (5V)\nPlace within 3mm of USB connector for best protection.\n\nPackage Outline\nPackage: SOT-143 (also known as SOT-343)\nDimensions: 2.9 x 1.5 x 1.1 mm\nPitch: 0.95 mm (gull wing leads)\nLand pattern: 4 pads, 0.55 x 0.75 mm each"
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

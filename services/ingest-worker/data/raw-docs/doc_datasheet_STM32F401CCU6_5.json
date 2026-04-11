@@ -1,0 +1,17 @@
+{
+  "id": "doc_datasheet_STM32F401CCU6_5",
+  "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+  "sourceType": "datasheet",
+  "manufacturer": "STMicroelectronics",
+  "partFamily": "STM32F4",
+  "mpn": "STM32F401CCU6",
+  "revision": "Rev 4",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture datasheet for STM32F401CCU6",
+    "rawContent": "STM32F401CCU6 — ARM Cortex-M4 Microcontroller\nDatasheet — Production Data — Rev 4\n\nDescription\nThe STM32F401CCU6 is a cost-effective ARM Cortex-M4 32-bit RISC core operating at up to 84 MHz.\nIt features FPU, DSP instructions, and ART Accelerator. Available in UFQFPN48 package.\n\nAbsolute Maximum Ratings\nSupply voltage (VDD): -0.3 to 4.0 V\nInput voltage on 5V tolerant pins: -0.3 to VDD+4.0 V\nOperating temperature range: -40 to 85 °C\nStorage temperature range: -65 to 150 °C\nESD protection: 2000 V HBM\n\nRecommended Operating Conditions\nVDD: 1.7 to 3.6 V (typ 3.3V)\nVDDA: 1.7 to 3.6 V (must equal VDD for ADC accuracy)\nVBAT: 1.7 to 3.6 V\n\nPower Requirements\nRun mode at 84 MHz: Typ 36 mA\nSleep mode at 84 MHz: Typ 8 mA\nStop mode: Typ 12 µA\nStandby mode: Typ 1.5 µA\n\nPin Description\nUFQFPN48 package (48 pins).\nPin 1: VBAT\nPin 2: PC13 (RTC_AF1)\nPin 5: PA0 (WKUP/USART2_CTS/ADC_IN0/TIM5_CH1/TIM2_CH1)\nPin 7: PA2 (USART2_TX/ADC_IN2/TIM5_CH3/TIM2_CH3/TIM9_CH1)\nPin 10: PA5 (SPI1_SCK/ADC_IN5/TIM2_CH1)\nPin 12: PA7 (SPI1_MOSI/ADC_IN7/TIM3_CH2/TIM1_CH1N)\nPin 17: PA9 (USART1_TX/TIM1_CH2/I2C3_SMBA)\nPin 18: PA10 (USART1_RX/TIM1_CH3/I2C3_SDA)\nPin 20: BOOT0\nPin 22: PB3 (SPI1_SCK/I2C2_SDA/TIM2_CH2/TRACESWO)\nPin 44: PA13 (SWDIO)\nPin 45: VSS\nPin 46: VDD\nPin 47: PA14 (SWCLK)\nPin 48: PA15 (SPI1_NSS/TIM2_CH1_ETR)\n\nBoot Configuration\nBOOT0 = 0: Main Flash memory at 0x08000000\nBOOT0 = 1: System memory (bootloader) at 0x1FFF0000\n\nClock Tree\nHSI: 16 MHz RC oscillator (±1% at 25°C)\nHSE: 4-26 MHz external crystal/clock\nSystem clock via PLL: Max 84 MHz\nAPB1: Max 42 MHz\nAPB2: Max 84 MHz\n\nPackage Outline\nPackage: UFQFPN48, 7x7 mm body, 0.5 mm pitch.\nThermal resistance: 45 °C/W on 4-layer PCB.\nExposed pad on bottom for ground connection and thermal dissipation."
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

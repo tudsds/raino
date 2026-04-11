@@ -1,0 +1,2601 @@
+[
+  {
+    "id": "chunk_pn1w8o_0",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "STM32F407VGT6 — ARM Cortex-M4 Microcontroller\nDatasheet — Production Data — Rev 5\n\nDescription\nThe STM32F407VGT6 is a high-performance ARM Cortex-M4 32-bit RISC core operating at up to 168 MHz.\nIt features floating point unit (FPU), DSP instructions, and an adaptive real-time accelerator (ART Accelerator).",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_aoh73k_1",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Absolute Maximum Ratings",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_75wuq0_2",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Supply voltage (VDD): -0.3 to 4.0 V\nInput voltage on any pin (5V tolerant): -0.3 to VDD+4.0 V\nOperating temperature range: -40 to 85 °C (industrial), -40 to 105 °C (extended)\nStorage temperature range: -65 to 150 °C\nMaximum junction temperature: 150 °C\nESD protection: 2000 V HBM, 500 V CDM",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_75wupz_3",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Recommended Operating Conditions\nParameter: VDD (main supply) — Min 1.8 V, Typ 3.3 V, Max 3.6 V\nParameter: VDDA (analog supply) — Min 1.8 V, Typ 3.3 V, Max 3.6 V\nParameter: VBAT (backup supply) — Min 1.65 V, Typ 3.0 V, Max 3.6 V\nParameter: VDDUSB — Min 3.0 V, Typ 3.3 V, Max 3.6 V\nParameter: I/O voltage — Min 1.62 V, Max VDD+0.3 V\nAmbient operating temperature: -40 to 85 °C (industrial grade)",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB"
+      ],
+      "voltageDomain": "3.3V"
+    }
+  },
+  {
+    "id": "chunk_f49kfe_4",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Power Requirements",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_f49kff_5",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Supply current (Run mode, 168 MHz, all peripherals enabled): Typ 93 mA",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_f49kfg_6",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Supply current (Run mode, 168 MHz, peripheral clocks off): Typ 38 mA",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_f49kfh_7",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Supply current (Sleep mode): Typ 12 mA",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_f49kfi_8",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Supply current (Stop mode, regulator in main mode): Typ 140 µA",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_f49kfj_9",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Supply current (Stop mode, regulator in low-power mode): Typ 20 µA",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sjjslz_10",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Supply current (Standby mode, RTC off): Typ 2.0 µA",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sjjsly_11",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Supply current (Standby mode, RTC on): Typ 3.0 µA",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_a8x6fl_12",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Pin Description\nThe STM32F407VGT6 is available in LQFP100 package (100 pins).\nPin 1: PE2 (ETH_TXD3 / TRACECLK / FSMC_A23)\nPin 2: PE3 (ETH_TX_CLK / TRACED0 / FSMC_A19)\nPin 6: PA0 (WKUP/USART2_CTS/ADC123_IN0/TIM5_CH1/TIM2_CH1)\nPin 7: PA1 (USART2_RTS/ADC123_IN1/TIM5_CH2/TIM2_CH2)\nPin 12: PA6 (SPI1_MISO/TIM3_CH1/ADC12_IN6/TIM1_BKIN/TIM8_BKIN2/DCMI_D0)\nPin 14: PA8 (MCO1/USART1_CK/TIM1_CH1/I2C3_SCL)",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "LQFP100"
+    }
+  },
+  {
+    "id": "chunk_h39j59_13",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Pin 31: BOOT0 (boot configuration pin)\nPin 32: PB2/BOOT1\nPin 47: NRST (active-low reset)\nPin 49: VDDA (analog supply)\nPin 50: VSSA (analog ground)\nPin 94: PA9 (USART1_TX/TIM1_CH2/DCMI_D0/I2C3_SMBA)",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_h39j5a_14",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Boot Configuration",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_h39j5b_15",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "BOOT1 (PB2) = 0, BOOT0 = 0: Main Flash memory (0x08000000)",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_h39j5c_16",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "BOOT1 (PB2) = 0, BOOT0 = 1: System memory (bootloader, 0x1FFF0000)",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_h39j5d_17",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "BOOT1 (PB2) = 1, BOOT0 = 0: SRAM (0x20000000)",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_h39j5e_18",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "BOOT1 (PB2) = 1, BOOT0 = 1: Reserved",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_h39j5f_19",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "BOOT0 must be held stable during and after reset for correct boot selection.",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_4ri2wt_20",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Clock Tree",
+    "chunkType": "clock_tree",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_4ri2ws_21",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Main clock sources: HSE (4-26 MHz crystal/clock), HSI (16 MHz RC), LSE (32.768 kHz), LSI (32 kHz)\nSystem clock mux: HSI, HSE, or PLL output\nPLL: Input divider (M), multiplier (N), system divider (P), USB/SDIO/RNG divider (Q)\n  HSE = 8 MHz → M=8 → PLL VCO = 8*336/8 = 336 MHz → SYSCLK = 336/2 = 168 MHz\n  USB/RNG clock = 336/7 = 48 MHz\nMax SYSCLK: 168 MHz\nAPB1 prescaler: /4 (max 42 MHz) — drives USART2-5, SPI2/3, I2C1-3, TIM2-7, TIM12-14\nAPB2 prescaler: /2 (max 84 MHz) — drives USART1, SPI1, TIM1, TIM8-11, ADC1-3, SDIO",
+    "chunkType": "clock_tree",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB",
+        "SDIO"
+      ]
+    }
+  },
+  {
+    "id": "chunk_1mewe7_22",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Reset Guidelines",
+    "chunkType": "reset_guidelines",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_1mewe6_23",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Three reset sources: Power-on reset (POR), System reset (NRST pin or software), Backup domain reset.\nNRST is active-low with internal pull-up. Minimum pulse width: 20 ns.",
+    "chunkType": "reset_guidelines",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_1mewe5_24",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Power-on reset threshold: rising ~1.72 V, falling ~1.60 V.",
+    "chunkType": "reset_guidelines",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_1mewe4_25",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Brown-out reset (BOR) levels configurable via option bytes: OFF, 2.0V, 2.2V, 2.5V, 2.8V.\nWatchdog: Independent watchdog (IWDG) clocked by LSI, Window watchdog (WWDG) clocked by APB1.",
+    "chunkType": "reset_guidelines",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_xlu26e_26",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "USB Guidelines\nUSB 2.0 full-speed device/host/OTG with on-chip PHY.\nOTG_FS: 12 Mbit/s max, supports session request protocol (SRP) and host negotiation protocol (HNP).\nDedicated 48 MHz USB clock required — sourced from PLL48CLK.\nPA11 = USB_DM (D-), PA12 = USB_DP (D+)\nVBUS sensing on PA9 (configurable).",
+    "chunkType": "usb_guidelines",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB"
+      ]
+    }
+  },
+  {
+    "id": "chunk_p34sbp_27",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Recommended PCB Layout for USB: Route DP/DM as differential pair, 90Ω matched impedance,\nkeep traces short, avoid routing under high-frequency noise sources.\nPlace 1.5kΩ pull-up on DP for full-speed device mode.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB"
+      ]
+    }
+  },
+  {
+    "id": "chunk_r7gnb0_28",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "ADC Considerations\nThree ADCs (ADC1, ADC2, ADC3), 12-bit resolution.\nConversion range: VREF- to VREF+ (typically 0 to 3.3 V).\nMaximum sampling rate: 2.4 MSPS in single ADC mode, 7.2 MSPS in triple interleaved mode.\nInput impedance: depends on sampling time configuration.",
+    "chunkType": "adc_considerations",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "ADC"
+      ],
+      "voltageDomain": "3.3V"
+    }
+  },
+  {
+    "id": "chunk_r7gnaz_29",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Recommended external circuit: Add RC filter (100Ω + 10nF) on analog inputs for anti-aliasing.\nKeep analog traces away from high-frequency digital traces.",
+    "chunkType": "adc_considerations",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_p34sb1_30",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Recommended PCB Layout\nUse solid ground plane on bottom layer.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_p34sb0_31",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Place decoupling capacitors (100nF + 4.7µF) close to each VDD/VSS pair.\nVDDA decoupling: 100nF + 1µF, placed close to pin 49/50.\nVBAT decoupling: 100nF close to pin.\nKeep crystal traces short, guard with ground.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_p34saz_32",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Use multiple vias for thermal pads.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_r20etz_33",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Package Outline\nPackage: LQFP100, 14x14 mm body, 0.5 mm pitch.\nThickness: 1.4 mm max.\nCoplanarity: 0.10 mm max.",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "LQFP100"
+    }
+  },
+  {
+    "id": "chunk_o2r5q6_34",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Thermal resistance (junction-to-ambient): 40 °C/W (LQFP100 on 4-layer PCB).",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "LQFP100"
+    }
+  },
+  {
+    "id": "chunk_9bf1qr_35",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Reference Circuit",
+    "chunkType": "reference_circuit",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_9bf1qq_36",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "Minimum external components for operation:\n- 8 MHz crystal (HSE) with 20pF load capacitors\n- 32.768 kHz crystal (LSE) with 6pF load capacitors",
+    "chunkType": "reference_circuit",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_p34sau_37",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "- 100nF decoupling capacitors on all VDD pins (8 total) + 4.7µF bulk\n- 10kΩ pull-up on NRST, 100nF capacitor on NRST",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_h39j74_38",
+    "documentId": "doc_datasheet_STM32F407VGT6_1",
+    "content": "- BOOT0 pull-down 10kΩ resistor\n- VDDA ferrite bead + 100nF + 1µF filtering\n- USB ESD protection (e.g. PRTR5V0U2X) on DP/DM",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "datasheet",
+      "revision": "Rev 5",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB"
+      ],
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_sezjz0_0",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "STM32F407VGT6 — Errata Sheet — Rev 3",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sezjz1_1",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Silicon Revision Z (Device Revision 3)",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sezjz2_2",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Errata Item: USART cannot be used in synchronous mode at maximum APB frequency",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sezjz3_3",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Workaround: Reduce APB clock frequency below 26 MHz when using synchronous mode.\nSeverity: Medium. Affects USART in synchronous (clocked) mode only.",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sezjz4_4",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Errata Item: I2C may not release SDA line after NACK in master mode",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "I2C"
+      ]
+    }
+  },
+  {
+    "id": "chunk_sezjz5_5",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Workaround: Software reset of I2C peripheral after detecting bus stuck condition.\nSeverity: Low. Only occurs after specific NACK timing.",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "I2C"
+      ]
+    }
+  },
+  {
+    "id": "chunk_sezjz6_6",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Errata Item: ADC inaccurate when converting immediately after another ADC",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "ADC"
+      ]
+    }
+  },
+  {
+    "id": "chunk_sezjz7_7",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Workaround: Insert delay of at least 3 µs between consecutive ADC conversions on different ADCs.\nSeverity: Low. Only in triple-interleaved mode at maximum speed.",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "ADC"
+      ]
+    }
+  },
+  {
+    "id": "chunk_gtwdcx_8",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Errata Item: USB OTG may lose SOF under heavy bus load",
+    "chunkType": "usb_guidelines",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB"
+      ]
+    }
+  },
+  {
+    "id": "chunk_sezjz9_9",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Workaround: Enable SOF threshold interrupt and handle within 5 µs.\nSeverity: Medium. Occurs only in host mode with multiple devices.",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sj9jhv_10",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Errata Item: RTC initialization may fail if backup domain write protection not fully removed",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sj9jhw_11",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Workaround: Perform two consecutive writes to DBP bit with 2 APB clock cycle delay.\nSeverity: Low. Only during first RTC configuration after power-on.",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sj9jhx_12",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Device Revision History",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sj9jhy_13",
+    "documentId": "doc_errata_STM32F407VGT6_2",
+    "content": "Rev Z (3): Production silicon. All errata listed above apply.\nRev Y (2): Engineering sample. Do not use for production.\nRev X (1): Initial engineering sample. Not for production.",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "errata",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_mfcmtf_0",
+    "documentId": "doc_app_note_STM32F407VGT6_3",
+    "content": "AN4206 — Getting Started with STM32F407 Hardware Development\n\nApplication Note — Hardware Design Guide\n\nOverview\nThis application note provides guidance for designing hardware with the STM32F407VGT6.",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_rotyv0_1",
+    "documentId": "doc_app_note_STM32F407VGT6_3",
+    "content": "Power Supply Design\nUse a single 3.3V rail when possible. The STM32F407 requires:\n- VDD: 1.8V to 3.6V (main digital supply)\n- VDDA: 1.8V to 3.6V (analog supply, must equal VDD for full ADC performance)\n- VBAT: 1.65V to 3.6V (RTC backup, can connect to VDD if not using battery backup)\n- VDDUSB: 3.0V to 3.6V (can connect to VDD when USB not used in device mode)\n\nClock Selection\nFor USB operation: Must use HSE crystal (not HSI). Recommended 8 MHz.",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB",
+        "ADC"
+      ],
+      "voltageDomain": "$1V-$2V"
+    }
+  },
+  {
+    "id": "chunk_sbujvm_2",
+    "documentId": "doc_app_note_STM32F407VGT6_3",
+    "content": "For general operation: HSI (16 MHz internal RC) is sufficient if USB not used and accuracy\nrequirements are met (±1% at 25°C).\n\nReset Circuit\nConnect 10kΩ pull-up to VDD and 100nF capacitor to ground on NRST pin.\nFor manual reset: Add push-button from NRST to ground.\nNRST is also the JTAG/SWD reset — ensure JTAG/SWD connector accesses this pin.",
+    "chunkType": "clock_tree",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB",
+        "JTAG",
+        "SWD"
+      ]
+    }
+  },
+  {
+    "id": "chunk_8jfsv1_3",
+    "documentId": "doc_app_note_STM32F407VGT6_3",
+    "content": "Boot Configuration",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_8jfsv2_4",
+    "documentId": "doc_app_note_STM32F407VGT6_3",
+    "content": "Default: BOOT0 = LOW (pulled down with 10kΩ). Boots from main flash.",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_8jfsv3_5",
+    "documentId": "doc_app_note_STM32F407VGT6_3",
+    "content": "For bootloader access: Add a jumper or button to pull BOOT0 HIGH at reset.",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_8jfsv4_6",
+    "documentId": "doc_app_note_STM32F407VGT6_3",
+    "content": "PB2 (BOOT1) can be permanently pulled LOW for flash/system memory boot options.",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_e1jweu_7",
+    "documentId": "doc_app_note_STM32F407VGT6_3",
+    "content": "USB Hardware\nPA11 (DM) and PA12 (DP) are dedicated USB pins — no alternate function mapping needed.\nRoute as differential pair: 90Ω impedance, matched length within 0.5mm.\nAdd ESD protection: PRTR5V0U2X or equivalent on DP/DM near connector.\nVBUS pin (PA9) for device mode detection — add voltage divider if VBUS may exceed 3.6V.\n\nDebug Connector\nStandard ARM 10-pin (0.05\" pitch) or 20-pin (0.1\" pitch) JTAG/SWD connector.\nMinimum pins needed for SWD: VDD, GND, SWDIO (PA13), SWCLK (PA14), NRST.\nSWO (PB3) optional for ITM trace output.",
+    "chunkType": "usb_guidelines",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB",
+        "JTAG",
+        "SWD"
+      ],
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_2v6urf_0",
+    "documentId": "doc_package_doc_STM32F407VGT6_4",
+    "content": "STM32F407VGT6 — Package Documentation — LQFP100",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "package_doc",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "LQFP100"
+    }
+  },
+  {
+    "id": "chunk_wdm21z_1",
+    "documentId": "doc_package_doc_STM32F407VGT6_4",
+    "content": "Package Type: LQFP100 (Low-profile Quad Flat Package)\nBody Size: 14.0 x 14.0 mm\nLead Count: 100\nLead Pitch: 0.50 mm\nPackage Thickness: 1.40 mm max\nLead Width: 0.22 mm\nLead Length: 1.0 mm\n\nPin 1 Identification: Notch on pin 1 side + dot on pin 1 corner",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "package_doc",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "LQFP100"
+    }
+  },
+  {
+    "id": "chunk_pywdsh_2",
+    "documentId": "doc_package_doc_STM32F407VGT6_4",
+    "content": "Land Pattern (Footprint)\nPad size: 0.60 x 1.80 mm (per lead)\nPad pitch: 0.50 mm\nPad center to package edge: 0.75 mm",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "package_doc",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_pywdsg_3",
+    "documentId": "doc_package_doc_STM32F407VGT6_4",
+    "content": "Thermal pad: None (LQFP uses leads for thermal dissipation)\nSolder paste stencil: 0.125 mm thickness recommended\n\nSoldering Profile (Pb-free)\nPreheat: 150-200°C, 60-120 seconds\nRamp-up rate: 1-3°C/s\nPeak temperature: 260°C max (245-255°C recommended)\nTime above 217°C: 60-150 seconds\nCooling rate: 1-4°C/s\n\nMoisture Sensitivity Level: MSL3 (168h floor life at 30°C/85%RH)",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "package_doc",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_wdm222_4",
+    "documentId": "doc_package_doc_STM32F407VGT6_4",
+    "content": "Tape and Reel\nTape width: 24 mm\nReel diameter: 330 mm\nDevices per reel: 1000",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F407VGT6",
+      "documentType": "package_doc",
+      "revision": "1.0",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_x4impo_0",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "STM32F401CCU6 — ARM Cortex-M4 Microcontroller\nDatasheet — Production Data — Rev 4\n\nDescription\nThe STM32F401CCU6 is a cost-effective ARM Cortex-M4 32-bit RISC core operating at up to 84 MHz.\nIt features FPU, DSP instructions, and ART Accelerator. Available in UFQFPN48 package.",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_x6jpgk_1",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Absolute Maximum Ratings",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_xg79ck_2",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Supply voltage (VDD): -0.3 to 4.0 V\nInput voltage on 5V tolerant pins: -0.3 to VDD+4.0 V\nOperating temperature range: -40 to 85 °C\nStorage temperature range: -65 to 150 °C\nESD protection: 2000 V HBM",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_xg79cj_3",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Recommended Operating Conditions\nVDD: 1.7 to 3.6 V (typ 3.3V)\nVDDA: 1.7 to 3.6 V (must equal VDD for ADC accuracy)\nVBAT: 1.7 to 3.6 V",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "ADC"
+      ],
+      "voltageDomain": "3.3V"
+    }
+  },
+  {
+    "id": "chunk_6t6ajm_4",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Power Requirements\nRun mode at 84 MHz: Typ 36 mA\nSleep mode at 84 MHz: Typ 8 mA\nStop mode: Typ 12 µA\nStandby mode: Typ 1.5 µA",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_yfjgct_5",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Pin Description\nUFQFPN48 package (48 pins).\nPin 1: VBAT\nPin 2: PC13 (RTC_AF1)\nPin 5: PA0 (WKUP/USART2_CTS/ADC_IN0/TIM5_CH1/TIM2_CH1)\nPin 7: PA2 (USART2_TX/ADC_IN2/TIM5_CH3/TIM2_CH3/TIM9_CH1)\nPin 10: PA5 (SPI1_SCK/ADC_IN5/TIM2_CH1)\nPin 12: PA7 (SPI1_MOSI/ADC_IN7/TIM3_CH2/TIM1_CH1N)\nPin 17: PA9 (USART1_TX/TIM1_CH2/I2C3_SMBA)\nPin 18: PA10 (USART1_RX/TIM1_CH3/I2C3_SDA)",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_pykgjl_6",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Pin 20: BOOT0\nPin 22: PB3 (SPI1_SCK/I2C2_SDA/TIM2_CH2/TRACESWO)\nPin 44: PA13 (SWDIO)\nPin 45: VSS\nPin 46: VDD\nPin 47: PA14 (SWCLK)\nPin 48: PA15 (SPI1_NSS/TIM2_CH1_ETR)",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_pykgjk_7",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Boot Configuration",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_pykgjj_8",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "BOOT0 = 0: Main Flash memory at 0x08000000",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_pykgji_9",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "BOOT0 = 1: System memory (bootloader) at 0x1FFF0000",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_sqj640_10",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Clock Tree\nHSI: 16 MHz RC oscillator (±1% at 25°C)\nHSE: 4-26 MHz external crystal/clock\nSystem clock via PLL: Max 84 MHz\nAPB1: Max 42 MHz\nAPB2: Max 84 MHz",
+    "chunkType": "clock_tree",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_zdvbrf_11",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Package Outline\nPackage: UFQFPN48, 7x7 mm body, 0.5 mm pitch.",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_y7e5n2_12",
+    "documentId": "doc_datasheet_STM32F401CCU6_5",
+    "content": "Thermal resistance: 45 °C/W on 4-layer PCB.\nExposed pad on bottom for ground connection and thermal dissipation.",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "datasheet",
+      "revision": "Rev 4",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_9438yg_0",
+    "documentId": "doc_errata_STM32F401CCU6_6",
+    "content": "STM32F401CCU6 — Errata Sheet — Rev 2",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "errata",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_9438yf_1",
+    "documentId": "doc_errata_STM32F401CCU6_6",
+    "content": "Silicon Revision B (Device Revision 2)",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "errata",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_9438ye_2",
+    "documentId": "doc_errata_STM32F401CCU6_6",
+    "content": "Errata Item: I2C analog filter may lock up under specific noise conditions",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "errata",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "I2C"
+      ]
+    }
+  },
+  {
+    "id": "chunk_9438yd_3",
+    "documentId": "doc_errata_STM32F401CCU6_6",
+    "content": "Workaround: Disable analog filter and use digital filter only (DNF > 0).\nSeverity: Low. Occurs only in high-noise environments.",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "errata",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_9438yc_4",
+    "documentId": "doc_errata_STM32F401CCU6_6",
+    "content": "Errata Item: RTC calendar may be incorrect after power-on if BYPSHAD not set",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "errata",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_9438yb_5",
+    "documentId": "doc_errata_STM32F401CCU6_6",
+    "content": "Workaround: Set BYPSHAD bit or read shadow registers twice with delay.\nSeverity: Low.",
+    "chunkType": "errata_item",
+    "metadata": {
+      "manufacturer": "STMicroelectronics",
+      "partFamily": "STM32F4",
+      "mpn": "STM32F401CCU6",
+      "documentType": "errata",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_dbp4yb_0",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "ESP32-S3-WROOM-1-N8R8 — Wi-Fi + BLE Module\nDatasheet — Rev 1.5\n\nDescription\nThe ESP32-S3-WROOM-1-N8R8 is a powerful, generic Wi-Fi + Bluetooth LE MCU module\nbased on Espressif ESP32-S3 series. It features a dual-core Xtensa LX7 processor running\nat up to 240 MHz, with 8MB flash and 8MB PSRAM.",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "Module-WROOM",
+      "applicableInterfaces": [
+        "BLE"
+      ]
+    }
+  },
+  {
+    "id": "chunk_yf23m3_1",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Absolute Maximum Ratings",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_57cpod_2",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Supply voltage (3V3): -0.3 to 3.6 V\nInput voltage on IO pins: -0.3 to 3.6 V\nStorage temperature: -40 to 85 °C\nESD protection: 2000 V HBM (module level)",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_57cpoe_3",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Recommended Operating Conditions",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_57cpof_4",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Supply voltage (3V3): 3.0 to 3.6 V (typ 3.3 V)\nOperating temperature: -40 to 85 °C\nIO voltage: 3.3 V (NOT 5V tolerant)",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "3.3V"
+    }
+  },
+  {
+    "id": "chunk_nsk73k_5",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Power Requirements\nActive mode (Wi-Fi + BLE, 240 MHz): Typ 200 mA peak\nActive mode (CPU only, 240 MHz): Typ 50 mA\nModem sleep (Wi-Fi connected): Typ 5-15 mA\nLight sleep: Typ 800 µA\nDeep sleep: Typ 7-10 µA (with RTC, ULP coprocessor running)",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "BLE"
+      ]
+    }
+  },
+  {
+    "id": "chunk_st9xod_6",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Pin Description\nModule exposes 36 GPIO pins via edge connector (1.27mm pitch).\nKey pins:\nIO0: Strapping pin (must be HIGH for flash boot, LOW for download mode)\nIO2: Strapping pin (must be LOW or floating for flash boot)",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_4n613l_7",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "IO3: Strapping pin (SPI boot mode selection)\nIO45: Strapping pin (must be LOW or floating for SPI boot)\nIO46: Strapping pin (must be HIGH for SPI boot)\nIO43: U0TXD (default UART TX)\nIO44: U0RXD (default UART RX)\nIO18: USB_D- (if USB-OTG used)\nIO19: USB_D+ (if USB-OTG used)\nIO35-IO42: Not available (used for internal flash/PSRAM)",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB",
+        "UART",
+        "SPI"
+      ]
+    }
+  },
+  {
+    "id": "chunk_4n613m_8",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Boot Configuration\nStrapping pins (IO0, IO3, IO45, IO46) are sampled at reset.\nIO0=HIGH, IO3=HIGH: SPI flash boot (normal operation)\nIO0=LOW: USB/UART download mode\nIO45=HIGH: Force ROM messages printed to UART0\nIO46 must be pulled HIGH or left floating for SPI boot.",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB",
+        "UART",
+        "SPI"
+      ]
+    }
+  },
+  {
+    "id": "chunk_blzvbt_9",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Clock Tree\nExternal crystal: 40 MHz (on module)",
+    "chunkType": "clock_tree",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_4sbp4v_10",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Internal RC oscillators: 8 MHz (fast), 150 kHz (slow)",
+    "chunkType": "clock_tree",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_4sbp4w_11",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "RTC watchdog: 32 kHz (internal RC, ±5%)\nAPLL: Audio PLL for I2S applications\nPLL: System PLL generates CPU frequencies 40-240 MHz",
+    "chunkType": "clock_tree",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "I2S"
+      ]
+    }
+  },
+  {
+    "id": "chunk_r9svua_12",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "USB Guidelines\nBuilt-in USB-OTG peripheral supporting full-speed (12 Mbps) device and host.\nIO18/IO19 are dedicated USB pins when USB-OTG is enabled.\nCan be used for JTAG debug without external debugger.\nUSB CDC + JTAG combined on same pins.",
+    "chunkType": "usb_guidelines",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB",
+        "JTAG"
+      ]
+    }
+  },
+  {
+    "id": "chunk_3c3fpv_13",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Recommended PCB Layout\nPlace module with at least 2mm clearance from other components.\nAntenna area (strip at top of module) must have no copper or components underneath.\nUse 4-layer PCB for best RF performance.\nKeep antenna area away from metal enclosures.\nGround pads must be well soldered for thermal and RF performance.\nAdd 10µF + 100nF decoupling on 3V3 input, close to module pin.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_3j9r4x_14",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+    "content": "Package Outline\nModule dimensions: 18.0 x 25.5 x 3.1 mm\nEdge connector: 1.27mm pitch, 38 pads per side (76 total, many are GND)\nWeight: ~3g",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_gqf97n_0",
+    "documentId": "doc_app_note_ESP32-S3-WROOM-1-N8R8_8",
+    "content": "ESP32-S3 Hardware Design Guidelines — Application Note",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_yapgi_1",
+    "documentId": "doc_app_note_ESP32-S3-WROOM-1-N8R8_8",
+    "content": "Power Supply\nUse a stable 3.3V supply capable of delivering at least 500mA peak.\nRecommended: AMS1117-3.3 (1A LDO) or equivalent for prototyping.\nFor production: Use a switching regulator (e.g. SY8089) for efficiency.\nAdd 10µF ceramic + 100µF electrolytic at the module's 3V3 input.\nRoute supply traces with adequate width (min 0.5mm for 500mA).\n\nAntenna Design\nThe WROOM module has an onboard PCB antenna.\nKeep the antenna area completely clear: no copper, components, or metal within 15mm.\nAntenna orientation: module should be mounted so the antenna edge faces away from\nground planes and metal chassis.\nFor external antenna: Use IPEX connector variant of the module.\n\nStrapping Pin Handling\nIO0: Add 10kΩ pull-up to 3V3. Add a button/headers to pull LOW for programming.\nIO3: Leave floating or weak pull-up (10kΩ to 3V3).\nIO45: Leave floating for normal operation.\nIO46: Leave floating or connect 10kΩ pull-up to 3V3.",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "Module-WROOM",
+      "voltageDomain": "$1V"
+    }
+  },
+  {
+    "id": "chunk_hd294k_2",
+    "documentId": "doc_app_note_ESP32-S3-WROOM-1-N8R8_8",
+    "content": "All strapping pins must be stable during power-on reset.\n\nFlash/PSRAM\nThe N8R8 variant includes 8MB Quad SPI flash and 8MB Octal SPI PSRAM.\nBoth are internal to the module — no external connections needed.\nDo not attempt to access the SPI bus externally while module is operating.\nMemory map: Flash at 0x0, PSRAM mapped to data memory region.\n\nDebugging\nUse built-in USB JTAG (IO18/IO19) or external JTAG adapter.\nUSB CDC provides serial console on same USB connection as JTAG.\nFor UART-only debugging: Connect IO43 (TX) and IO44 (RX) to USB-UART adapter.",
+    "chunkType": "reset_guidelines",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8R8",
+      "documentType": "app_note",
+      "revision": "1.0",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/app_note",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB",
+        "UART",
+        "SPI",
+        "JTAG"
+      ]
+    }
+  },
+  {
+    "id": "chunk_jlvncf_0",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "ESP32-S3-WROOM-1-N8 — Wi-Fi + BLE Module\nDatasheet — Rev 1.5\n\nDescription\nThe ESP32-S3-WROOM-1-N8 is a Wi-Fi + Bluetooth LE MCU module based on ESP32-S3\nwith 8MB flash (no PSRAM). Dual-core Xtensa LX7 at up to 240 MHz.",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "Module-WROOM",
+      "applicableInterfaces": [
+        "BLE"
+      ]
+    }
+  },
+  {
+    "id": "chunk_f62fhj_1",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "Absolute Maximum Ratings",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_zboqvz_2",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "Supply voltage (3V3): -0.3 to 3.6 V\nInput voltage on IO pins: -0.3 to 3.6 V\nStorage temperature: -40 to 85 °C",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_zboqvy_3",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "Recommended Operating Conditions",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_zboqvx_4",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "Supply voltage (3V3): 3.0 to 3.6 V (typ 3.3 V)\nOperating temperature: -40 to 85 °C",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "3.3V"
+    }
+  },
+  {
+    "id": "chunk_9udhas_5",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "Power Requirements\nActive mode (Wi-Fi + BLE, 240 MHz): Typ 185 mA peak\nActive mode (CPU only, 240 MHz): Typ 45 mA\nDeep sleep: Typ 7 µA",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "BLE"
+      ]
+    }
+  },
+  {
+    "id": "chunk_wvta1t_6",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "Pin Description",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_wvta1s_7",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "Same pinout as ESP32-S3-WROOM-1-N8R8 (36 GPIO exposed).\nIO35-IO42: Not available (used for internal flash only).",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "Module-WROOM"
+    }
+  },
+  {
+    "id": "chunk_9b0op6_8",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "Boot Configuration\nSame as ESP32-S3-WROOM-1-N8R8.",
+    "chunkType": "boot_configuration",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "Module-WROOM"
+    }
+  },
+  {
+    "id": "chunk_u6o3yx_9",
+    "documentId": "doc_datasheet_ESP32-S3-WROOM-1-N8_9",
+    "content": "Package Outline\nModule dimensions: 18.0 x 25.5 x 3.1 mm (same as N8R8 variant)\nWeight: ~2.8g",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "Espressif",
+      "partFamily": "ESP32-S3",
+      "mpn": "ESP32-S3-WROOM-1-N8",
+      "documentType": "datasheet",
+      "revision": "Rev 1.5",
+      "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_hsebsp_0",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "LM7805CT — Positive Voltage Regulator\nDatasheet — Rev J\n\nDescription\nThe LM7805CT is a positive voltage regulator that provides a fixed 5.0V output\nfrom an unregulated DC input. Available in TO-220 package. Output current up to 1.5A\nwith adequate heatsinking.",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "$&"
+    }
+  },
+  {
+    "id": "chunk_j81n1t_1",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Absolute Maximum Ratings\nInput voltage: -0.3 to 35 V",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_4nb7i1_2",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Power dissipation: Internally limited (thermal shutdown at ~150°C)\nOperating junction temperature range: -40 to 125 °C\nStorage temperature range: -65 to 150 °C\nLead temperature (soldering, 10 sec): 260 °C",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_pqqx20_3",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Recommended Operating Conditions\nInput voltage: 7.0 to 25 V (for 5V output)\nOutput voltage: 4.8 to 5.2 V (typ 5.0 V)\nOutput current: 0 to 1.5 A\nJunction temperature: -40 to 125 °C\nDropout voltage: 2.0 V typical (7V input minimum for 5V output)",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_4nb7hz_4",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Power Requirements\nQuiescent current: Typ 5 mA (max 8 mA)\nGround pin current: Typ 5 mA\nRipple rejection: Typ 73 dB at 120 Hz",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_pvx1k8_5",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Pin Description\nTO-220 package (3 pins):\nPin 1: Input (unregulated DC input, 7-25V)\nPin 2: Ground (common, connected to tab)\nPin 3: Output (regulated 5.0V DC)",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "$&",
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_j81n1o_6",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Thermal Characteristics",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_j81n1n_7",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Thermal resistance junction-to-case (RθJC): 4 °C/W",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_j81n1m_8",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Thermal resistance junction-to-ambient (RθJA): 54 °C/W (TO-220, no heatsink)\nWith heatsink: RθJA = RθJC + RθCS + RθSA",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "package": "$&"
+    }
+  },
+  {
+    "id": "chunk_6lr41u_9",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Recommended PCB Layout\nPlace input capacitor (0.33µF ceramic) close to input pin.\nPlace output capacitor (0.1µF ceramic) close to output pin.\nUse wide traces for input and output to minimize voltage drop.\nGround tab to copper pour for thermal dissipation.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_8czoi2_10",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Add thermal vias under tab if using multilayer board.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_t2ztpy_11",
+    "documentId": "doc_datasheet_LM7805CT_10",
+    "content": "Reference Circuit\nInput: 7-25V DC → Input capacitor 0.33µF (ceramic, close to pin) → LM7805CT → Output capacitor 0.1µF (ceramic) → 5.0V output\nFor higher stability: Add 1µF tantalum on output.\nFor noise-sensitive applications: Add LC filter on output.\nInput bulk capacitor: 100µF electrolytic recommended if source is far from regulator.",
+    "chunkType": "reference_circuit",
+    "metadata": {
+      "manufacturer": "Texas Instruments",
+      "partFamily": "LM78xx",
+      "mpn": "LM7805CT",
+      "documentType": "datasheet",
+      "revision": "Rev J",
+      "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_bhy06w_0",
+    "documentId": "doc_datasheet_USB4105-GF-A_11",
+    "content": "USB4105-GF-A — USB Type-C Receptacle Connector\nDatasheet — Rev 1.2\n\nDescription\nThe USB4105-GF-A is a USB Type-C (USB-C) surface-mount receptacle connector by Amphenol.\nSupports USB 2.0 (480 Mbps) and USB 3.1 Gen 2 (10 Gbps) data rates.\nSupports USB Power Delivery up to 100W (20V/5A) and Alternate Modes.",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "Amphenol",
+      "partFamily": "USB-C",
+      "mpn": "USB4105-GF-A",
+      "documentType": "datasheet",
+      "revision": "Rev 1.2",
+      "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "secondary",
+      "applicableInterfaces": [
+        "USB"
+      ]
+    }
+  },
+  {
+    "id": "chunk_gmg7gw_1",
+    "documentId": "doc_datasheet_USB4105-GF-A_11",
+    "content": "Absolute Maximum Ratings\nRated voltage: 20 V DC (VBUS)\nRated current: 5 A per contact (VBUS and GND)\nContact resistance: 30 mΩ max\nInsulation resistance: 1000 MΩ min\nWithstanding voltage: 500 V AC (1 minute)\nOperating temperature: -40 to 85 °C\nMating cycles: 10,000 min",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "Amphenol",
+      "partFamily": "USB-C",
+      "mpn": "USB4105-GF-A",
+      "documentType": "datasheet",
+      "revision": "Rev 1.2",
+      "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "secondary"
+    }
+  },
+  {
+    "id": "chunk_f0hy14_2",
+    "documentId": "doc_datasheet_USB4105-GF-A_11",
+    "content": "Recommended Operating Conditions\nVBUS voltage: 5 V (default), up to 20 V (USB PD)\nSignal pairs: CC1/CC2 (configuration channel), D+/D- (USB 2.0), TX/RX pairs (USB 3.x)\nSBU1/SBU2: Sideband use pins (for Alternate Modes like DisplayPort)",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "Amphenol",
+      "partFamily": "USB-C",
+      "mpn": "USB4105-GF-A",
+      "documentType": "datasheet",
+      "revision": "Rev 1.2",
+      "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "secondary",
+      "applicableInterfaces": [
+        "USB"
+      ],
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_1vrc6d_3",
+    "documentId": "doc_datasheet_USB4105-GF-A_11",
+    "content": "Pin Description (USB-C receptacle, looking into the connector)\nA1: GND    A2: SSTXp1  A3: SSTXn1  A4: VBUS  A5: CC1   A6: Dp1   A7: Dn1   A8: SBU1   A9: VBUS   A10: SSRXn2  A11: SSRXp2  A12: GND\nB1: GND    B2: SSRXp1  B3: SSRXn1  B4: VBUS  B5: CC2   B6: Dp2   B7: Dn2   B8: SBU2   B9: VBUS   B10: SSTXn2  B11: SSTXp2  B12: GND",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "Amphenol",
+      "partFamily": "USB-C",
+      "mpn": "USB4105-GF-A",
+      "documentType": "datasheet",
+      "revision": "Rev 1.2",
+      "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "secondary",
+      "applicableInterfaces": [
+        "USB"
+      ]
+    }
+  },
+  {
+    "id": "chunk_1vrc6e_4",
+    "documentId": "doc_datasheet_USB4105-GF-A_11",
+    "content": "Note: Pin assignment is symmetric to support reversible plug orientation.",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "Amphenol",
+      "partFamily": "USB-C",
+      "mpn": "USB4105-GF-A",
+      "documentType": "datasheet",
+      "revision": "Rev 1.2",
+      "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "secondary"
+    }
+  },
+  {
+    "id": "chunk_izy49r_5",
+    "documentId": "doc_datasheet_USB4105-GF-A_11",
+    "content": "Recommended PCB Layout\nFootprint: SMT, 0.5mm pitch (signal), through-hole shields.\nKeep differential pairs (TX, RX, D+/D-) impedance matched at 90Ω.\nRoute USB 2.0 D+/D- as differential pair, length matched within 0.25mm.\nRoute USB 3.x TX/RX pairs as differential pairs, length matched within 0.15mm.\nPlace ESD protection on all signal pins, close to connector.\nVBUS traces: Use wide traces or copper pour rated for 5A.\nAdd 10kΩ pull-down resistors (5.1kΩ for default USB) on CC1 and CC2 to GND.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "Amphenol",
+      "partFamily": "USB-C",
+      "mpn": "USB4105-GF-A",
+      "documentType": "datasheet",
+      "revision": "Rev 1.2",
+      "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "secondary",
+      "applicableInterfaces": [
+        "USB"
+      ]
+    }
+  },
+  {
+    "id": "chunk_62vbs1_6",
+    "documentId": "doc_datasheet_USB4105-GF-A_11",
+    "content": "Package Outline\nConnector type: USB Type-C female receptacle, right-angle or vertical.\nMounting: SMT with through-hole mounting tabs for mechanical strength.\nBody dimensions: 8.94 x 7.35 mm (typical for 16-pin SMT)",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "Amphenol",
+      "partFamily": "USB-C",
+      "mpn": "USB4105-GF-A",
+      "documentType": "datasheet",
+      "revision": "Rev 1.2",
+      "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "secondary",
+      "applicableInterfaces": [
+        "USB"
+      ]
+    }
+  },
+  {
+    "id": "chunk_izy49t_7",
+    "documentId": "doc_datasheet_USB4105-GF-A_11",
+    "content": "Recommended land pattern per Amphenol drawing.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "Amphenol",
+      "partFamily": "USB-C",
+      "mpn": "USB4105-GF-A",
+      "documentType": "datasheet",
+      "revision": "Rev 1.2",
+      "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "secondary"
+    }
+  },
+  {
+    "id": "chunk_5unltz_0",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "PRTR5V0U2X — Ultra Low Capacitance Dual TVS/ESD Protection Diode\nDatasheet — Rev 3\n\nDescription\nThe PRTR5V0U2X is a bi-directional ESD protection diode array designed to protect\nhigh-speed data lines (USB 2.0, HDMI, etc.) from Electrostatic Discharge (ESD),\nElectrical Fast Transients (EFT), and surge events.",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB"
+      ],
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_pxc473_1",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "Absolute Maximum Ratings\nReverse working voltage (VRWM): 5.0 V\nBreakdown voltage (VBR): Min 6.0 V, Typ 6.7 V\nClamping voltage at IPP=3A (VC): Max 12 V\nPeak pulse power (8/20µs): 80 W\nESD protection: IEC 61000-4-2, ±15 kV (air), ±8 kV (contact)\nEFT protection: IEC 61000-4-4, 40 A (5/50 ns)",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_yt3g53_2",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "Recommended Operating Conditions\nOperating voltage: 0 to 5.5 V (any line to GND)\nOperating temperature: -40 to 125 °C\nJunction temperature: -40 to 125 °C",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_ht77nq_3",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "Power Requirements\nLeakage current at VRWM: Max 1 µA (typ 0.1 µA)",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_izxyh7_4",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "Pin Description\nSOT-143 package (4 pins):\nPin 1: I/O1 (protected line 1, connects to USB D+)\nPin 2: GND (ground)\nPin 3: I/O2 (protected line 2, connects to USB D-)\nPin 4: VCC (positive supply rail, connects to protected bus voltage or VBUS)",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB"
+      ]
+    }
+  },
+  {
+    "id": "chunk_yt3g50_5",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "Electrical Characteristics\nCapacitance (line-to-line): Typ 0.8 pF (at 1 MHz, VR = 0 V)\nCapacitance (line-to-GND): Typ 2.5 pF\nClamping voltage (IPP=1A): Typ 7.5 V\nDynamic resistance: Typ 0.5 Ω",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_tacdwx_6",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "Recommended PCB Layout\nPlace as close to the USB connector as possible (within 5mm).\nRoute protected traces through the ESD diode before reaching the IC.\nKeep stub lengths from protected line to diode under 2mm.\nConnect GND pin directly to solid ground plane.\nConnect VCC pin to VBUS or leave floating (depends on application).",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB"
+      ]
+    }
+  },
+  {
+    "id": "chunk_eocnvf_7",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "Reference Circuit\nFor USB 2.0 protection:\nUSB_DP → Pin 1 (I/O1)\nUSB_DM → Pin 3 (I/O2)\nPin 2 (GND) → Ground plane\nPin 4 (VCC) → VBUS (5V)\nPlace within 3mm of USB connector for best protection.",
+    "chunkType": "reference_circuit",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "applicableInterfaces": [
+        "USB"
+      ],
+      "voltageDomain": "5V"
+    }
+  },
+  {
+    "id": "chunk_qykmfk_8",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "Package Outline\nPackage: SOT-143 (also known as SOT-343)\nDimensions: 2.9 x 1.5 x 1.1 mm\nPitch: 0.95 mm (gull wing leads)",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_tacdx0_9",
+    "documentId": "doc_datasheet_PRTR5V0U2X_12",
+    "content": "Land pattern: 4 pads, 0.55 x 0.75 mm each",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "NXP",
+      "partFamily": "PRTR5V0U2X",
+      "mpn": "PRTR5V0U2X",
+      "documentType": "datasheet",
+      "revision": "Rev 3",
+      "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_hvumfu_0",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "ABM8-16.000MHZ-B2-T — Quartz Crystal\nDatasheet — Rev 2\n\nDescription\nThe ABM8-16.000MHZ-B2-T is a surface-mount quartz crystal unit operating at 16.000 MHz\nin a compact ceramic package. Designed for microcontroller clock applications.",
+    "chunkType": "general",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_1eatki_1",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "Absolute Maximum Ratings\nStorage temperature range: -55 to 125 °C\nDrive level: 500 µW max",
+    "chunkType": "absolute_max_ratings",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_cag1ka_2",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "Recommended Operating Conditions\nNominal frequency: 16.000 MHz\nOperating temperature range: -40 to 85 °C (standard), -40 to 125 °C (extended)\nFrequency tolerance at 25°C: ±30 ppm (B2 variant)\nFrequency stability over temperature: ±50 ppm (-40 to 85°C)\nLoad capacitance (CL): 20 pF\nEquivalent series resistance (ESR): Max 60 Ω\nShunt capacitance (C0): Max 7 pF\nMotional capacitance (C1): Typ 7 fF\nDrive level: 100 µW typ, 500 µW max\nAging (first year): ±3 ppm",
+    "chunkType": "recommended_operating_conditions",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_t3eat5_3",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "Power Requirements",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_t3eat4_4",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "Drive level: 100 µW recommended (no DC power supply needed — passive component)",
+    "chunkType": "power_requirements",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_18ee47_5",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "Pin Description\nSMD 4-pad ceramic package:\nPad 1: Crystal terminal 1 (no polarity)\nPad 2: Crystal terminal 2 (no polarity)\nPad 3: Mechanical ground / NC (connect to ground plane)\nPad 4: Mechanical ground / NC (connect to ground plane)",
+    "chunkType": "pin_description",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_tuv7pt_6",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "Clock Tree\nWhen used with STM32F4 HSE oscillator circuit:\nExternal load capacitors required: CL_calc = 2 × (CL_spec - C_stray)\n  = 2 × (20 - 7) = 26 pF → use 27 pF standard value (or 22pF for 3.3V CMOS)\nFeedback resistor: Internal to STM32 oscillator cell.\nSeries resistor: Not needed for ABM8 at 16 MHz with STM32F4.\nDrive level from MCU: Typically 200-500 µW — within ABM8 rating.",
+    "chunkType": "clock_tree",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical",
+      "voltageDomain": "3.3V"
+    }
+  },
+  {
+    "id": "chunk_j6iuyn_7",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "Recommended PCB Layout\nPlace crystal as close to MCU oscillator pins as possible (within 10mm).\nRoute crystal traces away from high-frequency digital signals.\nGround pads 3 and 4 to ground plane for mechanical stability and noise shielding.\nKeep load capacitors close to crystal (within 5mm of crystal pads).\nAvoid running other signal traces between crystal pads and MCU oscillator pins.\nUse a ground guard ring around crystal circuit on the component layer.",
+    "chunkType": "recommended_pcb_layout",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_97122l_8",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "Package Outline",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  },
+  {
+    "id": "chunk_97122k_9",
+    "documentId": "doc_datasheet_ABM8-16_000MHZ-B2-T_13",
+    "content": "Package type: SMD ceramic, 4-pad\nDimensions: 3.2 × 2.5 × 0.7 mm\nPad layout: 2 active pads (diagonal) + 2 ground pads\n  Marking: Frequency and lot code on top surface",
+    "chunkType": "package_outline",
+    "metadata": {
+      "manufacturer": "Abracon",
+      "partFamily": "ABM8",
+      "mpn": "ABM8-16.000MHZ-B2-T",
+      "documentType": "datasheet",
+      "revision": "Rev 2",
+      "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
+      "fetchTimestamp": 1775905955137,
+      "trustLevel": "canonical"
+    }
+  }
+]

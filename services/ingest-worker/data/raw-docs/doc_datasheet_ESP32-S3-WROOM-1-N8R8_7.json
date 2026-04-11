@@ -1,0 +1,17 @@
+{
+  "id": "doc_datasheet_ESP32-S3-WROOM-1-N8R8_7",
+  "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
+  "sourceType": "datasheet",
+  "manufacturer": "Espressif",
+  "partFamily": "ESP32-S3",
+  "mpn": "ESP32-S3-WROOM-1-N8R8",
+  "revision": "Rev 1.5",
+  "fetchTimestamp": 1775900085596,
+  "trustLevel": "canonical",
+  "metadata": {
+    "fixtureMode": true,
+    "label": "Fixture datasheet for ESP32-S3-WROOM-1-N8R8",
+    "rawContent": "ESP32-S3-WROOM-1-N8R8 — Wi-Fi + BLE Module\nDatasheet — Rev 1.5\n\nDescription\nThe ESP32-S3-WROOM-1-N8R8 is a powerful, generic Wi-Fi + Bluetooth LE MCU module\nbased on Espressif ESP32-S3 series. It features a dual-core Xtensa LX7 processor running\nat up to 240 MHz, with 8MB flash and 8MB PSRAM.\n\nAbsolute Maximum Ratings\nSupply voltage (3V3): -0.3 to 3.6 V\nInput voltage on IO pins: -0.3 to 3.6 V\nStorage temperature: -40 to 85 °C\nESD protection: 2000 V HBM (module level)\n\nRecommended Operating Conditions\nSupply voltage (3V3): 3.0 to 3.6 V (typ 3.3 V)\nOperating temperature: -40 to 85 °C\nIO voltage: 3.3 V (NOT 5V tolerant)\n\nPower Requirements\nActive mode (Wi-Fi + BLE, 240 MHz): Typ 200 mA peak\nActive mode (CPU only, 240 MHz): Typ 50 mA\nModem sleep (Wi-Fi connected): Typ 5-15 mA\nLight sleep: Typ 800 µA\nDeep sleep: Typ 7-10 µA (with RTC, ULP coprocessor running)\n\nPin Description\nModule exposes 36 GPIO pins via edge connector (1.27mm pitch).\nKey pins:\nIO0: Strapping pin (must be HIGH for flash boot, LOW for download mode)\nIO2: Strapping pin (must be LOW or floating for flash boot)\nIO3: Strapping pin (SPI boot mode selection)\nIO45: Strapping pin (must be LOW or floating for SPI boot)\nIO46: Strapping pin (must be HIGH for SPI boot)\nIO43: U0TXD (default UART TX)\nIO44: U0RXD (default UART RX)\nIO18: USB_D- (if USB-OTG used)\nIO19: USB_D+ (if USB-OTG used)\nIO35-IO42: Not available (used for internal flash/PSRAM)\n\nBoot Configuration\nStrapping pins (IO0, IO3, IO45, IO46) are sampled at reset.\nIO0=HIGH, IO3=HIGH: SPI flash boot (normal operation)\nIO0=LOW: USB/UART download mode\nIO45=HIGH: Force ROM messages printed to UART0\nIO46 must be pulled HIGH or left floating for SPI boot.\n\nClock Tree\nExternal crystal: 40 MHz (on module)\nInternal RC oscillators: 8 MHz (fast), 150 kHz (slow)\nRTC watchdog: 32 kHz (internal RC, ±5%)\nAPLL: Audio PLL for I2S applications\nPLL: System PLL generates CPU frequencies 40-240 MHz\n\nUSB Guidelines\nBuilt-in USB-OTG peripheral supporting full-speed (12 Mbps) device and host.\nIO18/IO19 are dedicated USB pins when USB-OTG is enabled.\nCan be used for JTAG debug without external debugger.\nUSB CDC + JTAG combined on same pins.\n\nRecommended PCB Layout\nPlace module with at least 2mm clearance from other components.\nAntenna area (strip at top of module) must have no copper or components underneath.\nUse 4-layer PCB for best RF performance.\nKeep antenna area away from metal enclosures.\nGround pads must be well soldered for thermal and RF performance.\nAdd 10µF + 100nF decoupling on 3V3 input, close to module pin.\n\nPackage Outline\nModule dimensions: 18.0 x 25.5 x 3.1 mm\nEdge connector: 1.27mm pitch, 38 pads per side (76 total, many are GND)\nWeight: ~3g"
+  },
+  "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

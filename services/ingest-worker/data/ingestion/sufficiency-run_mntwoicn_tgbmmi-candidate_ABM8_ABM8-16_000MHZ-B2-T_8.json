@@ -1,0 +1,138 @@
+{
+  "runId": "run_mntwoicn_tgbmmi",
+  "candidateId": "candidate_ABM8_ABM8-16_000MHZ-B2-T_8",
+  "checks": [
+    {
+      "category": "official_documents",
+      "check": "official_datasheet_exists",
+      "passed": true,
+      "details": "Official datasheet found for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_data_exists",
+      "passed": false,
+      "details": "No procurement data found for ABM8-16.000MHZ-B2-T",
+      "requiredAction": "Resolve procurement data for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_manufacturer_present",
+      "passed": false,
+      "details": "manufacturer missing — no procurement data available",
+      "requiredAction": "Resolve manufacturer for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_mpn_present",
+      "passed": false,
+      "details": "mpn missing — no procurement data available",
+      "requiredAction": "Resolve mpn for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_package_present",
+      "passed": false,
+      "details": "package missing — no procurement data available",
+      "requiredAction": "Resolve package for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_stock_present",
+      "passed": false,
+      "details": "stock missing — no procurement data available",
+      "requiredAction": "Resolve stock for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_unitPrice_present",
+      "passed": false,
+      "details": "unitPrice missing — no procurement data available",
+      "requiredAction": "Resolve unitPrice for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_moq_present",
+      "passed": false,
+      "details": "moq missing — no procurement data available",
+      "requiredAction": "Resolve moq for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_distributorSku_present",
+      "passed": false,
+      "details": "distributorSku missing — no procurement data available",
+      "requiredAction": "Resolve distributorSku for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "procurement_fields",
+      "check": "procurement_lifecycle_present",
+      "passed": false,
+      "details": "lifecycle missing — no procurement data available",
+      "requiredAction": "Resolve lifecycle for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "design_integration",
+      "check": "approved_footprint_exists",
+      "passed": false,
+      "details": "No footprint found for ABM8-16.000MHZ-B2-T",
+      "requiredAction": "Generate or approve footprint for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "design_integration",
+      "check": "kicad_field_mapping_exists",
+      "passed": false,
+      "details": "No KiCad field mapping found for ABM8-16.000MHZ-B2-T",
+      "requiredAction": "Create KiCad field mapping for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "design_integration",
+      "check": "alternate_part_exists",
+      "passed": false,
+      "details": "No alternate parts found for ABM8-16.000MHZ-B2-T",
+      "requiredAction": "Identify alternate parts for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "consistency",
+      "check": "no_placeholder_critical_parts",
+      "passed": true,
+      "details": "No placeholder content detected for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "consistency",
+      "check": "no_package_mismatch",
+      "passed": true,
+      "details": "Package information consistent across documents"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "reference_topology_instantiable",
+      "passed": false,
+      "details": "No reference topology found for ABM8-16.000MHZ-B2-T",
+      "requiredAction": "Find or create reference topology for ABM8-16.000MHZ-B2-T"
+    },
+    {
+      "category": "architecture_readiness",
+      "check": "bom_emittable_without_placeholders",
+      "passed": true,
+      "details": "BOM can be emitted without critical placeholders for ABM8-16.000MHZ-B2-T"
+    }
+  ],
+  "overallPass": false,
+  "gaps": [
+    "Resolve procurement data for ABM8-16.000MHZ-B2-T",
+    "Resolve manufacturer for ABM8-16.000MHZ-B2-T",
+    "Resolve mpn for ABM8-16.000MHZ-B2-T",
+    "Resolve package for ABM8-16.000MHZ-B2-T",
+    "Resolve stock for ABM8-16.000MHZ-B2-T",
+    "Resolve unitPrice for ABM8-16.000MHZ-B2-T",
+    "Resolve moq for ABM8-16.000MHZ-B2-T",
+    "Resolve distributorSku for ABM8-16.000MHZ-B2-T",
+    "Resolve lifecycle for ABM8-16.000MHZ-B2-T",
+    "Generate or approve footprint for ABM8-16.000MHZ-B2-T",
+    "Create KiCad field mapping for ABM8-16.000MHZ-B2-T",
+    "Identify alternate parts for ABM8-16.000MHZ-B2-T",
+    "Find or create reference topology for ABM8-16.000MHZ-B2-T"
+  ],
+  "generatedAt": 1775886014433
+}
