@@ -8,7 +8,11 @@ import { redirect } from 'next/navigation';
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
-  if (!user) redirect('/login');
+
+  const hasSupabase =
+    !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+
+  if (!user && hasSupabase) redirect('/login');
 
   let projects: Array<{
     id: string;
