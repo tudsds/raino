@@ -111,8 +111,8 @@ pnpm dev
 
 ## デプロイ
 
-- **マーケティングサイト**：[raino.site](https://raino.site)
-- **プロダクトスタジオ**：[studio.raino.site](https://studio.raino.site)
+- **マーケティングサイト**：[raino-site.vercel.app](https://raino-site.vercel.app)
+- **プロダクトスタジオ**：[raino-studio.vercel.app](https://raino-studio.vercel.app)
 
 ## コントリビューション
 

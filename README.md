@@ -373,8 +373,8 @@ Raino deploys to Vercel as a monorepo with two separate apps.
 
 | App    | Project ID                         | Root Directory |
 | ------ | ---------------------------------- | -------------- |
-| Site   | `prj_S21pnUYzOXX7iTDRnFTsJZ6z2YBk` | `apps/site`    |
-| Studio | `prj_hDs51OKC5XkyZxH8qsnJmFOkkY40` | `apps/studio`  |
+| Site   | `prj_sHI01eG1T6tkDwzEJIJ5ipBMGGnF` | `apps/site`    |
+| Studio | `prj_Nfp3GrdFKuqzhQOX4FIgcmlxkGk3` | `apps/studio`  |
 
 ### Steps
 
@@ -396,8 +396,8 @@ Every PR gets a preview deployment. Merging to main triggers production deployme
 
 ## Live Deployments
 
-- **Marketing site**: [raino.site](https://raino.site)
-- **Product studio**: [studio.raino.site](https://studio.raino.site)
+- **Marketing site**: [raino-site.vercel.app](https://raino-site.vercel.app)
+- **Product studio**: [raino-studio.vercel.app](https://raino-studio.vercel.app)
 
 ## Contributing
 

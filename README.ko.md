@@ -111,8 +111,8 @@ pnpm dev
 
 ## 배포
 
-- **마케팅 사이트**: [raino.site](https://raino.site)
-- **제품 스튜디오**: [studio.raino.site](https://studio.raino.site)
+- **마케팅 사이트**: [raino-site.vercel.app](https://raino-site.vercel.app)
+- **제품 스튜디오**: [raino-studio.vercel.app](https://raino-studio.vercel.app)
 
 ## 기여
 

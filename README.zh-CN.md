@@ -116,8 +116,8 @@ pnpm dev
 
 ## 在线部署
 
-- **营销网站**：[raino.site](https://raino.site)
-- **产品工作室**：[studio.raino.site](https://studio.raino.site)
+- **营销网站**：[raino-site.vercel.app](https://raino-site.vercel.app)
+- **产品工作室**：[raino-studio.vercel.app](https://raino-studio.vercel.app)
 
 ## 贡献
 

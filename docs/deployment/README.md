@@ -19,8 +19,8 @@ Raino deploys as two separate Vercel applications within a monorepo. Both use Ne
 2. Enable Row-Level Security on all tables
 3. Configure authentication:
    - Enable "Magic Link" provider
-   - Set Site URL to your studio app domain (e.g., `https://studio.raino.site`)
-   - Add redirect URLs: `https://studio.raino.site/auth/callback`
+   - Set Site URL to your studio app domain (e.g., `https://raino-studio.vercel.app`)
+   - Add redirect URLs: `https://raino-studio.vercel.app/auth/callback`
 4. Enable the `vector` extension for pgvector RAG storage
 5. Run Prisma migrations to create tables:
 
@@ -101,8 +101,8 @@ Raino uses two separate Vercel projects, one per app:
 
 | App    | Project ID                         | Root Directory |
 | ------ | ---------------------------------- | -------------- |
-| Site   | `prj_S21pnUYzOXX7iTDRnFTsJZ6z2YBk` | `apps/site`    |
-| Studio | `prj_hDs51OKC5XkyZxH8qsnJmFOkkY40` | `apps/studio`  |
+| Site   | `prj_sHI01eG1T6tkDwzEJIJ5ipBMGGnF` | `apps/site`    |
+| Studio | `prj_Nfp3GrdFKuqzhQOX4FIgcmlxkGk3` | `apps/studio`  |
 
 ### Setup Steps
 
