@@ -26,25 +26,27 @@ export default async function DashboardPage() {
   }> = [];
 
   try {
-    const dbUser = await prisma.user.findUnique({
-      where: { supabaseUserId: user.id },
-      include: {
-        memberships: {
-          include: {
-            organization: {
-              include: {
-                projects: { orderBy: { updatedAt: 'desc' } },
+    if (user) {
+      const dbUser = await prisma.user.findUnique({
+        where: { supabaseUserId: user.id },
+        include: {
+          memberships: {
+            include: {
+              organization: {
+                include: {
+                  projects: { orderBy: { updatedAt: 'desc' } },
+                },
               },
             },
           },
         },
-      },
-    });
+      });
 
-    if (dbUser) {
-      for (const membership of dbUser.memberships) {
-        for (const project of membership.organization.projects) {
-          projects.push(project);
+      if (dbUser) {
+        for (const membership of dbUser.memberships) {
+          for (const project of membership.organization.projects) {
+            projects.push(project);
+          }
         }
       }
     }
