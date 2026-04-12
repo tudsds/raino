@@ -63,7 +63,7 @@ export default async function DashboardPage() {
             Manage your PCB designs from concept to manufacturing
           </p>
           <Link href="/api/projects" className="inline-block">
-            <NeonButton onClick={() => {}}>+ New Project</NeonButton>
+            <NeonButton>+ New Project</NeonButton>
           </Link>
         </div>
 
