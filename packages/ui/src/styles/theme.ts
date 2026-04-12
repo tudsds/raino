@@ -26,15 +26,15 @@ export const theme = {
     },
   },
   fonts: {
-    heading: "'Space Grotesk', sans-serif",
-    body: "'Inter', sans-serif",
-    mono: "'JetBrains Mono', monospace",
+    heading: "'Press Start 2P', monospace",
+    body: "'VT323', monospace",
+    mono: "'VT323', monospace",
   },
   radii: {
     none: '0px',
-    sm: '4px',
-    md: '8px',
-    lg: '12px',
+    sm: '0px',
+    md: '0px',
+    lg: '0px',
   },
   spacing: {
     xs: '4px',
@@ -43,5 +43,10 @@ export const theme = {
     lg: '24px',
     xl: '32px',
     '2xl': '48px',
+  },
+  effects: {
+    pixelBorder: '2px solid',
+    crtGlow: '0 0 10px currentColor, 0 0 20px currentColor',
+    stepTransition: 'all 0.1s steps(2)',
   },
 } as const;

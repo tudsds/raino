@@ -16,15 +16,15 @@ export function GlowingCard({
   ...props
 }: GlowingCardProps) {
   const colorMap = {
-    cyan: 'rgba(0, 240, 255,',
-    purple: 'rgba(139, 92, 246,',
-    magenta: 'rgba(255, 0, 170,',
+    cyan: '#00f0ff',
+    purple: '#8b5cf6',
+    magenta: '#ff00aa',
   };
 
   const intensityMap = {
-    low: 0.2,
-    medium: 0.4,
-    high: 0.6,
+    low: 0.3,
+    medium: 0.5,
+    high: 0.8,
   };
 
   const alpha = intensityMap[intensity];
@@ -32,13 +32,16 @@ export function GlowingCard({
 
   return (
     <div
-      className={cn('relative bg-[#111118] rounded-lg overflow-hidden', className)}
+      className={cn('relative bg-[#111118] overflow-hidden', className)}
       style={{
+        border: `2px solid ${color}`,
         boxShadow: `
-          0 0 20px ${color} ${alpha * 0.5}),
-          0 0 40px ${color} ${alpha * 0.3}),
-          0 0 60px ${color} ${alpha * 0.2}),
-          inset 0 0 20px ${color} ${alpha * 0.1})
+          0 0 0 2px ${color}${Math.round(alpha * 40)
+            .toString(16)
+            .padStart(2, '0')},
+          0 0 10px ${color}${Math.round(alpha * 80)
+            .toString(16)
+            .padStart(2, '0')}
         `,
       }}
       {...props}
@@ -46,7 +49,11 @@ export function GlowingCard({
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: `linear-gradient(135deg, ${color} 0.05) 0%, transparent 50%, ${color} 0.05) 100%)`,
+          background: `linear-gradient(135deg, ${color}${Math.round(alpha * 20)
+            .toString(16)
+            .padStart(2, '0')} 0%, transparent 50%, ${color}${Math.round(alpha * 10)
+            .toString(16)
+            .padStart(2, '0')} 100%)`,
         }}
       />
       <div className="relative z-10">{children}</div>

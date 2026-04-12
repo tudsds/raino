@@ -12,14 +12,19 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, options, error, className, ...props }, ref) => {
     const baseStyles =
-      'w-full px-3 py-2 bg-[#0a0a0f] text-[#e4e4e7] border border-[#27272a] rounded-md transition-all duration-200 focus:outline-none focus:border-[#3f3f46] hover:border-[#3f3f46] appearance-none cursor-pointer';
+      'w-full px-3 py-2 bg-[#0a0a0f] text-[#e4e4e7] border-2 border-[#27272a] transition-all focus:outline-none focus:border-[#3f3f46] hover:border-[#3f3f46] appearance-none cursor-pointer font-[family-name:var(--font-body)] text-lg';
 
     const errorStyles = error ? 'border-[#ff3366] focus:border-[#ff3366]' : '';
 
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-[#a1a1aa] mb-1.5">{label}</label>
+          <label
+            className="block text-base font-[family-name:var(--font-heading)] text-[#a1a1aa] mb-2 uppercase tracking-wider"
+            style={{ fontSize: '0.6rem' }}
+          >
+            {label}
+          </label>
         )}
         <div className="relative">
           <select ref={ref} className={cn(baseStyles, errorStyles, className)} {...props}>
@@ -45,7 +50,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             </svg>
           </div>
         </div>
-        {error && <p className="mt-1.5 text-sm text-[#ff3366]">{error}</p>}
+        {error && <p className="mt-2 text-base text-[#ff3366]">{error}</p>}
       </div>
     );
   },

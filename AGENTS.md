@@ -75,3 +75,35 @@ pnpm typecheck        # Type check all
 - Do NOT leave empty catch blocks
 - Do NOT delete tests to pass builds
 - Do NOT simplify user requirements into demos
+
+## Phase 2 Upgrade Status (IN PROGRESS)
+
+### Architecture Changes
+
+- NEW: `packages/db/` — Prisma + Supabase persistence layer
+- NEW: `packages/llm/` — Kimi K2.5 model gateway
+- UPGRADED: `packages/rag/` — Supabase-backed stores (pgvector)
+- UPGRADED: `packages/supplier-clients/` — Real API adapters + factory
+- UPGRADED: `packages/ui/` — Pixel-art cyberpunk design system
+- UPGRADED: `apps/studio/` — Real auth, Supabase, server components
+- UPGRADED: All 4 services — Real backing stores
+
+### New Dependencies
+
+- @supabase/ssr, @supabase/supabase-js — Auth + Postgres + Storage
+- openai — Kimi K2.5 client (OpenAI-compatible)
+- prisma, @prisma/client — Database ORM
+
+### Environment Variables
+
+See `.env.example` for all 20 required placeholders.
+App runs in degraded/fixture mode without credentials.
+
+### Key Decisions
+
+- ORM: Prisma (coexists with Supabase RLS)
+- Auth: Supabase Auth (magic link)
+- LLM: Kimi K2.5 via OpenAI SDK (baseURL: moonshot.ai)
+- Fonts: Press Start 2P (headings) + VT323 (body)
+- Job Queue: Supabase pg tables (design_jobs)
+- Mock adapters: Kept as permanent honest fallbacks

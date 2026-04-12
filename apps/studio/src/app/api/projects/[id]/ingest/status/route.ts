@@ -1,24 +1,47 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/require-auth';
+import { getIngestionManifest } from '@/lib/data/ingestion-queries';
 
-export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const auth = await requireAuth();
+  if (auth.error) return auth.error;
+
   try {
     const { id } = await params;
+    const manifest = await getIngestionManifest(id);
+
+    if (!manifest) {
+      return NextResponse.json({
+        projectId: id,
+        runId: null,
+        status: 'not_started',
+        progress: 0,
+        stages: [],
+        meta: { mode: 'degraded', reason: 'No ingestion manifest found' },
+      });
+    }
+
+    const stages = Array.isArray(manifest.stages)
+      ? (manifest.stages as Array<Record<string, unknown>>)
+      : [];
+    const completedStages = stages.filter((s) => s.status === 'completed').length;
+    const progress = stages.length > 0 ? Math.round((completedStages / stages.length) * 100) : 0;
 
     return NextResponse.json({
       projectId: id,
-      runId: 'run-1706140800000',
-      status: 'completed',
-      progress: 100,
-      stages: [
-        { name: 'datasheet_fetch', status: 'completed', documentsProcessed: 3 },
-        { name: 'errata_check', status: 'completed', documentsProcessed: 1 },
-        { name: 'app_note_fetch', status: 'completed', documentsProcessed: 2 },
-        { name: 'chunking', status: 'completed', chunksCreated: 48 },
-        { name: 'embedding', status: 'completed', vectorsCreated: 48 },
-        { name: 'sufficiency_gate', status: 'passed', gapsFound: 0 },
-      ],
+      runId: manifest.id,
+      status: manifest.status,
+      progress,
+      stages,
     });
   } catch {
-    return NextResponse.json({ error: 'Failed to retrieve ingest status' }, { status: 400 });
+    return NextResponse.json({
+      projectId: '',
+      runId: null,
+      status: 'unknown',
+      progress: 0,
+      stages: [],
+      meta: { mode: 'degraded', reason: 'Database not configured' },
+    });
   }
 }

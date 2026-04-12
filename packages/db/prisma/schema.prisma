@@ -1,0 +1,288 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector(schema: "extensions"), pgcrypto(schema: "extensions")]
+}
+
+// ─── Auth-linked ───────────────────────────────────────────────────────────────
+
+model User {
+  id              String   @id @default(uuid())
+  supabaseUserId  String   @unique @map("supabase_user_id")
+  email           String   @unique
+  fullName        String?  @map("full_name")
+  avatarUrl       String?  @map("avatar_url")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  memberships OrganizationMember[]
+
+  @@map("users")
+}
+
+// ─── Multi-tenant ──────────────────────────────────────────────────────────────
+
+model Organization {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  plan      String   @default("free")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  members  OrganizationMember[]
+  projects Project[]
+
+  @@map("organizations")
+}
+
+model OrganizationMember {
+  id             String   @id @default(uuid())
+  userId         String   @map("user_id")
+  organizationId String   @map("organization_id")
+  role           String   @default("member")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@map("organization_members")
+}
+
+// ─── Core Project ──────────────────────────────────────────────────────────────
+
+model Project {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  organizationId  String   @map("organization_id")
+  status          String   @default("intake")
+  currentStep     Int      @default(0) @map("current_step")
+  totalSteps      Int      @default(12) @map("total_steps")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  spec          Spec?
+  architecture  Architecture?
+  bom           BOM?
+  quotes        Quote[]
+  ingestion     IngestionManifest?
+  artifacts     DesignArtifact[]
+  jobs          DesignJob[]
+  auditEntries  AuditEntry[]
+  handoffs      HandoffRequest[]
+  intakeMessages IntakeMessage[]
+
+  @@map("projects")
+}
+
+// ─── Intake ────────────────────────────────────────────────────────────────────
+
+model IntakeMessage {
+  id          String   @id @default(uuid())
+  projectId   String   @map("project_id")
+  role        String
+  content     String
+  attachments Json?    @db.JsonB
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("intake_messages")
+}
+
+// ─── Workflow Models ───────────────────────────────────────────────────────────
+
+model Spec {
+  id          String   @id @default(uuid())
+  projectId   String   @unique @map("project_id")
+  requirements Json    @db.JsonB
+  constraints  Json    @db.JsonB
+  interfaces   Json    @db.JsonB
+  rawText     String?  @map("raw_text") @db.Text
+  compiledAt  DateTime? @map("compiled_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("specs")
+}
+
+model Architecture {
+  id           String   @id @default(uuid())
+  projectId    String   @unique @map("project_id")
+  templateId   String   @map("template_id")
+  templateName String   @map("template_name")
+  mcu          String?
+  power        String?
+  interfaces   Json     @db.JsonB
+  features     Json     @db.JsonB
+  rationale    String?  @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("architectures")
+}
+
+model BOM {
+  id         String   @id @default(uuid())
+  projectId  String   @unique @map("project_id")
+  totalCost  Decimal  @default(0) @map("total_cost") @db.Decimal(10, 2)
+  currency   String   @default("USD")
+  lineCount  Int      @default(0) @map("line_count")
+  isEstimate Boolean  @default(true) @map("is_estimate")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  project Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  rows    BOMRow[]
+
+  @@map("boms")
+}
+
+model BOMRow {
+  id               String   @id @default(uuid())
+  bomId            String   @map("bom_id")
+  ref              String
+  value            String
+  mpn              String
+  manufacturer     String
+  pkg              String   @map("package")
+  quantity         Int      @default(1)
+  unitPrice        Decimal  @default(0) @map("unit_price") @db.Decimal(10, 4)
+  currency         String   @default("USD")
+  lifecycle        String   @default("unknown")
+  risk             String   @default("low")
+  description      String?
+  alternates       Json?    @db.JsonB
+  provenanceSource String?  @map("provenance_source")
+  provenanceUrl    String?  @map("provenance_url")
+  isEstimate       Boolean  @default(true) @map("is_estimate")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  bom BOM @relation(fields: [bomId], references: [id], onDelete: Cascade)
+
+  @@map("bom_rows")
+}
+
+model Quote {
+  id          String   @id @default(uuid())
+  projectId   String   @map("project_id")
+  lowQuote    Decimal  @map("low_quote") @db.Decimal(10, 2)
+  midQuote    Decimal  @map("mid_quote") @db.Decimal(10, 2)
+  highQuote   Decimal  @map("high_quote") @db.Decimal(10, 2)
+  confidence  String
+  currency    String   @default("USD")
+  assumptions Json     @db.JsonB
+  breakdown   Json     @db.JsonB
+  isEstimate  Boolean  @default(true) @map("is_estimate")
+  quantity    Int      @default(1)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("quotes")
+}
+
+// ─── Ingestion ─────────────────────────────────────────────────────────────────
+
+model IngestionManifest {
+  id                 String   @id @default(uuid())
+  projectId          String   @unique @map("project_id")
+  status             String
+  stages             Json     @db.JsonB
+  candidateFamilies  Json     @map("candidate_families") @db.JsonB
+  sufficiencyReport  Json?    @map("sufficiency_report") @db.JsonB
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("ingestion_manifests")
+}
+
+// ─── Artifacts ─────────────────────────────────────────────────────────────────
+
+model DesignArtifact {
+  id            String   @id @default(uuid())
+  projectId     String   @map("project_id")
+  artifactType  String   @map("artifact_type")
+  filePath      String   @map("file_path")
+  fileName      String   @map("file_name")
+  fileSize      Int      @map("file_size")
+  checksum      String
+  mimeType      String   @map("mime_type")
+  storageBucket String   @map("storage_bucket")
+  storageKey    String   @map("storage_key")
+  metadata      Json?    @db.JsonB
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("design_artifacts")
+}
+
+model DesignJob {
+  id          String    @id @default(uuid())
+  projectId   String    @map("project_id")
+  jobType     String    @map("job_type")
+  status      String    @default("pending")
+  progress    Decimal   @default(0) @db.Decimal(5, 2)
+  result      Json?     @db.JsonB
+  error       String?
+  workerId    String?   @map("worker_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  startedAt   DateTime? @map("started_at")
+  completedAt DateTime? @map("completed_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("design_jobs")
+}
+
+model HandoffRequest {
+  id        String   @id @default(uuid())
+  projectId String   @map("project_id")
+  type      String
+  status    String   @default("pending")
+  quantity  Int      @default(1)
+  quoteId   String?  @map("quote_id")
+  metadata  Json?    @db.JsonB
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("handoff_requests")
+}
+
+// ─── Audit ─────────────────────────────────────────────────────────────────────
+
+model AuditEntry {
+  id        String   @id @default(uuid())
+  projectId String   @map("project_id")
+  category  String
+  action    String
+  actor     String?
+  details   Json?    @db.JsonB
+  severity  String   @default("info")
+  source    String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("audit_entries")
+}

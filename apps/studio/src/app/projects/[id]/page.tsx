@@ -1,7 +1,7 @@
-import { mockProjects } from '@/lib/mock-data';
+import { prisma } from '@raino/db';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import StatusBadge from '@/components/StatusBadge';
+import StatusBadge, { type Status } from '@/components/StatusBadge';
 import WorkflowProgress from '@/components/WorkflowProgress';
 import NeonButton from '@/components/NeonButton';
 
@@ -11,7 +11,17 @@ interface ProjectPageProps {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { id } = await params;
-  const project = mockProjects.find((p) => p.id === id);
+
+  const project = await prisma.project.findUnique({
+    where: { id },
+    include: {
+      spec: true,
+      bom: { include: { rows: true } },
+      quotes: { orderBy: { createdAt: 'desc' } },
+      intakeMessages: { orderBy: { createdAt: 'asc' } },
+      auditEntries: { orderBy: { createdAt: 'desc' }, take: 5 },
+    },
+  });
 
   if (!project) {
     notFound();
@@ -30,7 +40,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
-      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80  sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/" className="text-[#a1a1aa] hover:text-[#e4e4e7] transition-colors">
@@ -49,7 +59,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <StatusBadge status={project.status} />
+            <StatusBadge status={project.status as Status} />
           </div>
         </div>
       </header>
@@ -79,7 +89,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="lg:col-span-2 space-y-6">
             <div className="card p-6">
               <h2 className="text-lg font-semibold text-[#e4e4e7] mb-4">Description</h2>
-              <p className="text-[#a1a1aa]">{project.description}</p>
+              <p className="text-[#a1a1aa]">{project.description ?? 'No description provided.'}</p>
             </div>
 
             <div className="card p-6">
@@ -93,23 +103,38 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <div className="card p-6">
               <h2 className="text-lg font-semibold text-[#e4e4e7] mb-4">Recent Activity</h2>
               <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-[#00f0ff] mt-2" />
-                  <div>
-                    <p className="text-sm text-[#e4e4e7]">Project created</p>
-                    <p className="text-xs text-[#64748b]">
-                      {new Date(project.createdAt).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-                {project.currentStep > 0 && (
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 rounded-full bg-[#8b5cf6] mt-2" />
-                    <div>
-                      <p className="text-sm text-[#e4e4e7]">Intake completed</p>
-                      <p className="text-xs text-[#64748b]">Specification generated</p>
+                {project.auditEntries.length > 0 ? (
+                  project.auditEntries.map((entry) => (
+                    <div key={entry.id} className="flex items-start gap-3">
+                      <div
+                        className={`w-2 h-2 mt-2 ${
+                          entry.severity === 'info'
+                            ? 'bg-[#00f0ff]'
+                            : entry.severity === 'warning'
+                              ? 'bg-[#f59e0b]'
+                              : 'bg-[#ef4444]'
+                        }`}
+                      />
+                      <div>
+                        <p className="text-sm text-[#e4e4e7]">{entry.action}</p>
+                        <p className="text-xs text-[#64748b]">
+                          {new Date(entry.createdAt).toLocaleString()}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  ))
+                ) : (
+                  <>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-[#00f0ff] mt-2" />
+                      <div>
+                        <p className="text-sm text-[#e4e4e7]">Project created</p>
+                        <p className="text-xs text-[#64748b]">
+                          {new Date(project.createdAt).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
@@ -123,7 +148,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <div className="space-y-4">
                 <div className="flex justify-between">
                   <span className="text-[#64748b]">Status</span>
-                  <StatusBadge status={project.status} />
+                  <StatusBadge status={project.status as Status} />
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748b]">Progress</span>

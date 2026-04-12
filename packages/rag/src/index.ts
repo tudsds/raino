@@ -22,6 +22,15 @@ export {
   MemoryVectorStore,
 } from './storage/memory-store.js';
 
+// Supabase store implementations
+export { SupabaseDocumentStore } from './storage/supabase-document-store.js';
+export { SupabaseChunkStore } from './storage/supabase-chunk-store.js';
+export { SupabaseVectorStore } from './storage/supabase-vector-store.js';
+
+// Store factory
+export { createStoreFactory, createStores } from './storage/factory.js';
+export type { StoreFactory, StoreSet } from './storage/factory.js';
+
 // Chunking engine
 export { chunkDocument } from './chunking/engine.js';
 export type { ChunkingOptions } from './chunking/engine.js';

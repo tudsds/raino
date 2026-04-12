@@ -61,6 +61,46 @@ POST   /api/projects/:id/handoff/pcba
 - Highly legible
 - Clear conversion path to Raino quote handoff
 
+## Phase 2 Upgrade Notes
+
+### Supabase Auth Integration
+
+Studio uses the three-client pattern from `@raino/db`:
+
+- `@raino/db/supabase/server` — server components and API route handlers
+- `@raino/db/supabase/browser` — client components (use in `"use client"` only)
+- `@raino/db/supabase/middleware` — session refresh in Next.js middleware
+
+### Middleware
+
+`middleware.ts` handles two jobs on every request:
+
+1. Refreshes the Supabase auth session cookie
+2. Protects routes that require authentication (redirects to `/login` if unauthenticated)
+
+### Server Components
+
+API routes and server components now query real data through Prisma and Supabase instead of returning mock fixtures. The fixture/mock path still exists as a degraded fallback when credentials are missing.
+
+### Auth Pages
+
+- `/login` — magic link sign-in form
+- `/signup` — magic link sign-up form
+- `/auth/callback` — Supabase auth code exchange (must match `NEXT_PUBLIC_SUPABASE_URL` redirect config)
+
+### Imports
+
+```typescript
+// Server component or API route
+import { createClient } from '@raino/db/supabase/server';
+
+// Client component (inside "use client")
+import { createClient } from '@raino/db/supabase/browser';
+
+// Middleware
+import { createClient } from '@raino/db/supabase/middleware';
+```
+
 ## Commands
 
 ```bash

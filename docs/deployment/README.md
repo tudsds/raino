@@ -1,84 +1,136 @@
 # Deployment Guide
 
-## Vercel Deployment
+## Overview
 
-Raino is designed for deployment on Vercel with a monorepo-friendly setup.
+Raino deploys as two separate Vercel applications within a monorepo. Both use Next.js 15 with Turborepo for build orchestration.
 
-### Prerequisites
+## Prerequisites
 
-- GitHub repository: https://github.com/tudsds/raino
-- Vercel account connected to GitHub
 - Node.js >= 20.0.0
 - pnpm >= 9.0.0
+- Supabase project (for production features)
+- Vercel account connected to GitHub
+- Moonshot API key (for LLM features)
+- Supplier API keys (for live pricing)
 
-### Configuration
+## Supabase Project Setup
 
-#### vercel.json (root)
+1. Create a Supabase project at [supabase.com](https://supabase.com)
+2. Enable Row-Level Security on all tables
+3. Configure authentication:
+   - Enable "Magic Link" provider
+   - Set Site URL to your studio app domain (e.g., `https://studio.raino.site`)
+   - Add redirect URLs: `https://studio.raino.site/auth/callback`
+4. Enable the `vector` extension for pgvector RAG storage
+5. Run Prisma migrations to create tables:
 
-Already configured at repo root. Key settings:
-
-- `buildCommand`: `pnpm build`
-- `installCommand`: `pnpm install`
-- Turborepo handles build orchestration
-
-#### App-Specific Settings
-
-**apps/site (Marketing)**
-
-- Framework: Next.js
-- Build command: inherited from turbo
-- Output directory: `.next`
-- Port: 3000
-
-**apps/studio (Product)**
-
-- Framework: Next.js
-- Build command: inherited from turbo
-- Output directory: `.next`
-- Port: 3001
-
-### Environment Variables
-
-Required for full functionality:
-
-```
-# Supplier APIs (optional — fixture mode without them)
-DIGIKEY_CLIENT_ID=
-DIGIKEY_CLIENT_SECRET=
-MOUSER_API_KEY=
-JLCPCB_API_KEY=
-
-# Embedding service (optional — mock mode without it)
-EMBEDDING_API_KEY=
-EMBEDDING_MODEL=
-
-# Session/auth (optional for development)
-NEXTAUTH_SECRET=
-NEXTAUTH_URL=
+```bash
+cd packages/db
+npx prisma db push
 ```
 
-Without these variables, Raino operates in fixture/degraded mode with clearly labeled estimates.
+## Environment Variables
 
-### Deployment Steps
+Copy `.env.example` to `.env.local` and fill in values. All 20 variables are listed below. The app runs in degraded/fixture mode without any of them.
 
-1. Connect GitHub repo to Vercel
-2. Configure root directory as `/` (monorepo root)
-3. Vercel auto-detects Next.js apps via `vercel.json`
-4. Set environment variables in Vercel dashboard
+### LLM Gateway
+
+| Variable       | Purpose                        | Required for  |
+| -------------- | ------------------------------ | ------------- |
+| `KIMI_API_KEY` | Moonshot API key for Kimi K2.5 | LLM reasoning |
+
+### Supabase
+
+| Variable                               | Purpose                   | Required for        |
+| -------------------------------------- | ------------------------- | ------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`             | Supabase project URL      | Auth, persistence   |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase anon/public key  | Auth, persistence   |
+| `SUPABASE_SERVICE_ROLE_KEY`            | Supabase service role key | Backend data access |
+| `SUPABASE_DB_URL`                      | Prisma connection string  | Database operations |
+
+### GitHub Actions
+
+| Variable                        | Purpose                        | Required for         |
+| ------------------------------- | ------------------------------ | -------------------- |
+| `GITHUB_ACTIONS_DISPATCH_TOKEN` | GitHub PAT for worker dispatch | Async job triggering |
+| `GITHUB_REPOSITORY_OWNER`       | Repository owner               | Worker dispatch      |
+| `GITHUB_REPOSITORY_NAME`        | Repository name                | Worker dispatch      |
+
+### Vercel
+
+| Variable               | Purpose                   | Required for    |
+| ---------------------- | ------------------------- | --------------- |
+| `VERCEL_TOKEN`         | Vercel API token          | Worker dispatch |
+| `NEXT_PUBLIC_APP_URL`  | Studio app public URL     | Auth callbacks  |
+| `NEXT_PUBLIC_SITE_URL` | Marketing site public URL | CTA links       |
+
+### Email
+
+| Variable         | Purpose        | Required for        |
+| ---------------- | -------------- | ------------------- |
+| `RESEND_API_KEY` | Resend API key | Email notifications |
+
+### Supplier APIs
+
+| Variable                | Purpose                   | Required for      |
+| ----------------------- | ------------------------- | ----------------- |
+| `DIGIKEY_CLIENT_ID`     | DigiKey API client ID     | Live DigiKey data |
+| `DIGIKEY_CLIENT_SECRET` | DigiKey API client secret | Live DigiKey data |
+| `DIGIKEY_REDIRECT_URI`  | DigiKey OAuth redirect    | Live DigiKey data |
+| `MOUSER_API_KEY`        | Mouser API key            | Live Mouser data  |
+| `JLCPCB_API_KEY`        | JLCPCB API key            | Live JLCPCB data  |
+
+### Embedding
+
+| Variable             | Purpose                 | Required for   |
+| -------------------- | ----------------------- | -------------- |
+| `EMBEDDING_PROVIDER` | Embedding provider name | RAG embeddings |
+| `EMBEDDING_MODEL`    | Embedding model ID      | RAG embeddings |
+
+### KiCad
+
+| Variable         | Purpose                  | Required for             |
+| ---------------- | ------------------------ | ------------------------ |
+| `KICAD_CLI_PATH` | Path to kicad-cli binary | KiCad project generation |
+
+## Vercel Monorepo Deployment
+
+### Vercel Projects
+
+Raino uses two separate Vercel projects, one per app:
+
+| App    | Project ID                         | Root Directory |
+| ------ | ---------------------------------- | -------------- |
+| Site   | `prj_S21pnUYzOXX7iTDRnFTsJZ6z2YBk` | `apps/site`    |
+| Studio | `prj_hDs51OKC5XkyZxH8qsnJmFOkkY40` | `apps/studio`  |
+
+### Setup Steps
+
+1. Push the repository to GitHub
+2. In Vercel, create (or connect) a project for the marketing site:
+   - Link to `tudsds/raino` repository
+   - Set Root Directory to `apps/site`
+   - Framework Preset: Next.js
+3. In Vercel, create (or connect) a project for the studio:
+   - Link to `tudsds/raino` repository
+   - Set Root Directory to `apps/studio`
+   - Framework Preset: Next.js
+4. Set environment variables in each project's dashboard
 5. Deploy
 
-### Preview Deployments
+### Build Configuration
 
-Every PR automatically gets a preview deployment via Vercel's GitHub integration.
+Each Vercel project builds its app independently. Turborepo handles internal package dependency ordering within each build. The root `vercel.json` enables git-based deployment.
 
-### Production Deployment
+### Preview and Production
 
-Merge to main branch triggers production deployment.
+- Every pull request gets an automatic preview deployment for both apps
+- Merging to `main` triggers production deployment for both apps
 
 ## Local Development
 
 ```bash
-# Install dependencies
+# Install all dependencies
 pnpm install
 
 # Run all apps in dev mode
@@ -89,18 +141,30 @@ pnpm dev --filter @raino/site     # Marketing site on port 3000
 pnpm dev --filter @raino/studio   # Product app on port 3001
 ```
 
+### Local Supabase (Optional)
+
+For local development with a real database, use Supabase CLI:
+
+```bash
+supabase init
+supabase start
+# Update .env.local with local Supabase credentials
+```
+
+## Degraded Mode Operation
+
+Without any credentials configured, both apps render their UI in degraded mode:
+
+- **Marketing site**: Works fully. No backend dependencies.
+- **Studio**: Shows auth prompts. Allows browsing but cannot persist data, call LLMs, or query suppliers. All fixture/mock paths are clearly labeled.
+
+Mock adapters and fixture data are permanent parts of the codebase, not temporary hacks. They exist for testing, development, and honest fallback behavior.
+
 ## Build Verification
 
 ```bash
-# Build all packages and apps
-pnpm build
-
-# Type check everything
-pnpm typecheck
-
-# Run all tests
-pnpm test
-
-# Lint all
-pnpm lint
+pnpm build        # Build all packages and apps
+pnpm typecheck    # Type check everything
+pnpm test         # Run all tests
+pnpm lint         # Lint all
 ```

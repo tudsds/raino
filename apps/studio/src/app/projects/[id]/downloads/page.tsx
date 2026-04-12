@@ -1,11 +1,28 @@
-import { mockDownloads, mockProjects, type DownloadFile, formatBytes } from '@/lib/mock-data';
+'use client';
+
+import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import StatusBadge from '@/components/StatusBadge';
+import { formatBytes } from '@/lib/format';
 import type { ReactElement } from 'react';
 
-interface DownloadsPageProps {
-  params: Promise<{ id: string }>;
+interface DownloadItem {
+  id: string;
+  name: string;
+  type: string;
+  sizeBytes: number;
+  checksum: string;
+  generatedAt: string;
+  mimeType: string;
+  filePath: string;
+  storageBucket?: string;
+  storageKey?: string;
+}
+
+interface DownloadsAPIResponse {
+  projectId: string;
+  downloads: DownloadItem[];
+  isPlaceholder: boolean;
+  meta?: { mode: string; reason: string };
 }
 
 function FileIcon({ type }: { type: string }) {
@@ -84,13 +101,29 @@ function FileIcon({ type }: { type: string }) {
   return icons[type] || icons.bundle;
 }
 
-export default async function DownloadsPage({ params }: DownloadsPageProps) {
-  const { id } = await params;
-  const project = mockProjects.find((p) => p.id === id);
+export default function DownloadsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const [downloads, setDownloads] = useState<DownloadItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isPlaceholder, setIsPlaceholder] = useState(false);
 
-  if (!project) {
-    notFound();
-  }
+  useEffect(() => {
+    const fetchDownloads = async () => {
+      try {
+        const res = await fetch(`/api/projects/${id}/downloads`);
+        if (!res.ok) throw new Error('Failed to fetch');
+        const data: DownloadsAPIResponse = await res.json();
+        setDownloads(data.downloads);
+        setIsPlaceholder(data.isPlaceholder);
+      } catch {
+        setDownloads([]);
+        setIsPlaceholder(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDownloads();
+  }, [id]);
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },
@@ -101,9 +134,11 @@ export default async function DownloadsPage({ params }: DownloadsPageProps) {
     { id: 'quote', label: 'Quote', href: `/projects/${id}/quote` },
   ];
 
+  const totalSize = downloads.reduce((acc, f) => acc + f.sizeBytes, 0);
+
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
-      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -124,7 +159,6 @@ export default async function DownloadsPage({ params }: DownloadsPageProps) {
               <p className="text-xs text-[#a1a1aa] font-mono">{id}</p>
             </div>
           </div>
-          <StatusBadge status={project.status} />
         </div>
       </header>
 
@@ -151,72 +185,73 @@ export default async function DownloadsPage({ params }: DownloadsPageProps) {
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <div className="card overflow-hidden">
-              <div className="p-4 border-b border-[#27273a]">
-                <h2 className="text-lg font-semibold text-[#e4e4e7]">Available Files</h2>
-                <p className="text-sm text-[#64748b]">
-                  Download manufacturing artifacts and design files
+            {loading ? (
+              <div className="card p-8 text-center">
+                <p className="text-[#64748b]">Loading downloads...</p>
+              </div>
+            ) : downloads.length === 0 ? (
+              <div className="card p-8 text-center">
+                <h2 className="text-lg font-semibold text-[#e4e4e7] mb-2">
+                  No Downloads Available
+                </h2>
+                <p className="text-[#64748b]">
+                  Design artifacts will appear here after generation.
                 </p>
               </div>
-
-              <div className="divide-y divide-[#27273a]">
-                {mockDownloads.map((file: DownloadFile) => (
-                  <div
-                    key={file.id}
-                    className="p-4 flex items-center justify-between hover:bg-[#1a1a2e]/50 transition-colors"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-[#1a1a2e] border border-[#27273a] flex items-center justify-center">
-                        <FileIcon type={file.type} />
+            ) : (
+              <div className="card overflow-hidden">
+                <div className="p-4 border-b border-[#27273a]">
+                  <h2 className="text-lg font-semibold text-[#e4e4e7]">Available Files</h2>
+                  <p className="text-sm text-[#64748b]">
+                    Download manufacturing artifacts and design files
+                  </p>
+                </div>
+                <div className="divide-y divide-[#27273a]">
+                  {downloads.map((file) => (
+                    <div
+                      key={file.id}
+                      className="p-4 flex items-center justify-between hover:bg-[#1a1a2e]/50 transition-colors"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-[#1a1a2e] border border-[#27273a] flex items-center justify-center">
+                          <FileIcon type={file.type} />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-medium text-[#e4e4e7]">{file.name}</h3>
+                          <p className="text-xs text-[#64748b]">{formatBytes(file.sizeBytes)}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-sm font-medium text-[#e4e4e7]">{file.name}</h3>
-                        <p className="text-xs text-[#64748b]">{formatBytes(file.sizeBytes)}</p>
-                      </div>
-                    </div>
-                    <button className="px-4 py-2 rounded-lg bg-[#1a1a2e] border border-[#27273a] text-[#e4e4e7] text-sm hover:border-[#00f0ff] hover:text-[#00f0ff] transition-colors flex items-center gap-2">
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                      <button
+                        onClick={() => {
+                          if (file.filePath) {
+                            window.open(file.filePath, '_blank');
+                          }
+                        }}
+                        className="px-4 py-2 bg-[#1a1a2e] border border-[#27273a] text-[#e4e4e7] text-sm hover:border-[#00f0ff] hover:text-[#00f0ff] transition-colors flex items-center gap-2"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                        />
-                      </svg>
-                      Download
-                    </button>
-                  </div>
-                ))}
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                          />
+                        </svg>
+                        Download
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div className="space-y-6">
-            <div className="card p-6">
-              <h3 className="text-sm font-medium text-[#a1a1aa] mb-4 uppercase tracking-wider">
-                Manufacturing Bundle
-              </h3>
-              <p className="text-sm text-[#64748b] mb-4">
-                Download a complete ZIP file with all manufacturing files ready for fabrication.
-              </p>
-              <button className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-[#00f0ff] to-[#8b5cf6] text-[#0a0a0f] font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-                Download All Files
-              </button>
-            </div>
-
             <div className="card p-6">
               <h3 className="text-sm font-medium text-[#a1a1aa] mb-4 uppercase tracking-wider">
                 File Manifest
@@ -224,20 +259,18 @@ export default async function DownloadsPage({ params }: DownloadsPageProps) {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-[#64748b]">Total Files</span>
-                  <span className="text-[#e4e4e7] font-mono">{mockDownloads.length}</span>
+                  <span className="text-[#e4e4e7] font-mono">{downloads.length}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748b]">Total Size</span>
-                  <span className="text-[#e4e4e7] font-mono">
-                    {formatBytes(
-                      mockDownloads.reduce((acc: number, f: DownloadFile) => acc + f.sizeBytes, 0),
-                    )}
-                  </span>
+                  <span className="text-[#e4e4e7] font-mono">{formatBytes(totalSize)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-[#64748b]">Last Updated</span>
-                  <span className="text-[#e4e4e7]">{new Date().toLocaleDateString()}</span>
-                </div>
+                {isPlaceholder && (
+                  <div className="flex justify-between">
+                    <span className="text-[#64748b]">Mode</span>
+                    <span className="text-[#f59e0b] font-mono">Placeholder</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -1,66 +1,69 @@
-'use client';
-
 import Link from 'next/link';
-import { useState } from 'react';
-import { mockProjects } from '@/lib/mock-data';
-import StatusBadge from '@/components/StatusBadge';
+import { prisma } from '@raino/db';
+import StatusBadge, { type Status } from '@/components/StatusBadge';
 import NeonButton from '@/components/NeonButton';
 import WorkflowProgress from '@/components/WorkflowProgress';
+import { getCurrentUser } from '@/lib/auth/get-current-user';
+import { redirect } from 'next/navigation';
 
-export default function DashboardPage() {
-  const [projects, setProjects] = useState(mockProjects);
+export default async function DashboardPage() {
+  const user = await getCurrentUser();
+  if (!user) redirect('/login');
 
-  const handleNewProject = () => {
-    const newProject = {
-      id: `proj-${Date.now()}`,
-      name: `New Project ${projects.length + 1}`,
-      description: 'Describe your hardware idea...',
-      status: 'draft' as const,
-      currentStep: 0,
-      totalSteps: 12,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    setProjects([newProject, ...projects]);
-  };
+  let projects: Array<{
+    id: string;
+    name: string;
+    description: string | null;
+    status: string;
+    currentStep: number;
+    totalSteps: number;
+    createdAt: Date;
+    updatedAt: Date;
+  }> = [];
+
+  try {
+    const dbUser = await prisma.user.findUnique({
+      where: { supabaseUserId: user.id },
+      include: {
+        memberships: {
+          include: {
+            organization: {
+              include: {
+                projects: { orderBy: { updatedAt: 'desc' } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (dbUser) {
+      for (const membership of dbUser.memberships) {
+        for (const project of membership.organization.projects) {
+          projects.push(project);
+        }
+      }
+    }
+  } catch {
+    // intentional — projects remain empty
+  }
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] circuit-grid">
-      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00f0ff] to-[#8b5cf6] flex items-center justify-center">
-              <span className="text-[#0a0a0f] font-bold text-xl">R</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold gradient-text">Raino Studio</h1>
-              <p className="text-xs text-[#a1a1aa]">Agentic PCB Design Platform</p>
-            </div>
-          </div>
-          <nav className="flex items-center gap-6">
-            <Link href="/" className="text-[#e4e4e7] hover:text-[#00f0ff] transition-colors">
-              Dashboard
-            </Link>
-            <Link href="/docs" className="text-[#a1a1aa] hover:text-[#e4e4e7] transition-colors">
-              Documentation
-            </Link>
-            <div className="w-8 h-8 rounded-full bg-[#1a1a2e] border border-[#27273a]" />
-          </nav>
-        </div>
-      </header>
-
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="mb-10">
           <h2 className="text-3xl font-bold text-[#e4e4e7] mb-2">Your Projects</h2>
           <p className="text-[#a1a1aa] mb-6">
             Manage your PCB designs from concept to manufacturing
           </p>
-          <NeonButton onClick={handleNewProject}>+ New Project</NeonButton>
+          <Link href="/api/projects" className="inline-block">
+            <NeonButton onClick={() => {}}>+ New Project</NeonButton>
+          </Link>
         </div>
 
         {projects.length === 0 && (
           <div className="text-center py-20">
-            <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-[#13131f] border border-[#27273a] flex items-center justify-center">
+            <div className="w-24 h-24 mx-auto mb-6 bg-[#13131f] border border-[#27273a] flex items-center justify-center">
               <svg
                 className="w-12 h-12 text-[#3a3a5a]"
                 fill="none"
@@ -71,7 +74,7 @@ export default function DashboardPage() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={1.5}
-                  d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+                  d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
                 />
               </svg>
             </div>
@@ -93,7 +96,7 @@ export default function DashboardPage() {
               >
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00f0ff]/20 to-[#8b5cf6]/20 border border-[#00f0ff]/30 flex items-center justify-center group-hover:border-[#00f0ff]/60 transition-colors">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#00f0ff]/20 to-[#8b5cf6]/20 border border-[#00f0ff]/30 flex items-center justify-center group-hover:border-[#00f0ff]/60 transition-colors">
                       <svg
                         className="w-6 h-6 text-[#00f0ff]"
                         fill="none"
@@ -108,7 +111,7 @@ export default function DashboardPage() {
                         />
                       </svg>
                     </div>
-                    <StatusBadge status={project.status} />
+                    <StatusBadge status={project.status as Status} />
                   </div>
 
                   <h3 className="text-lg font-semibold text-[#e4e4e7] mb-2 group-hover:text-[#00f0ff] transition-colors">
@@ -121,7 +124,7 @@ export default function DashboardPage() {
                   />
 
                   <div className="mt-4 pt-4 border-t border-[#27273a] flex items-center justify-between text-xs text-[#64748b]">
-                    <span>Updated {new Date(project.updatedAt).toLocaleDateString()}</span>
+                    <span>Updated {project.updatedAt.toLocaleDateString()}</span>
                     <span className="font-mono">{project.id}</span>
                   </div>
                 </div>

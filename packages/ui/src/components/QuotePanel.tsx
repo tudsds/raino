@@ -59,21 +59,27 @@ export function QuotePanel({
         )}
 
         <div className="grid grid-cols-3 gap-4">
-          <div className="text-center p-4 bg-[#0a0a0f] rounded-lg border border-[#27272a]">
-            <p className="text-[#71717a] text-sm mb-1">Low</p>
-            <p className={cn('text-xl font-bold font-mono', conf.color)}>
+          <div className="text-center p-4 bg-[#0a0a0f] border-2 border-[#27272a]">
+            <p className="text-[#71717a] text-base mb-1 font-[family-name:var(--font-heading)] uppercase text-xs">
+              Low
+            </p>
+            <p className={cn('text-xl font-bold font-[family-name:var(--font-mono)]', conf.color)}>
               {formatCurrency(lowQuote)}
             </p>
           </div>
-          <div className="text-center p-4 bg-[#0a0a0f] rounded-lg border-2 border-[#00f0ff] shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-            <p className="text-[#00f0ff] text-sm mb-1 font-medium">Expected</p>
-            <p className="text-2xl font-bold font-mono text-[#00f0ff]">
+          <div className="text-center p-4 bg-[#0a0a0f] border-2 border-[#00f0ff] shadow-[0_0_0_2px_rgba(0,240,255,0.3),0_0_10px_rgba(0,240,255,0.5)]">
+            <p className="text-[#00f0ff] text-base mb-1 font-[family-name:var(--font-heading)] uppercase text-xs">
+              Expected
+            </p>
+            <p className="text-2xl font-bold font-[family-name:var(--font-mono)] text-[#00f0ff]">
               {formatCurrency(midQuote)}
             </p>
           </div>
-          <div className="text-center p-4 bg-[#0a0a0f] rounded-lg border border-[#27272a]">
-            <p className="text-[#71717a] text-sm mb-1">High</p>
-            <p className={cn('text-xl font-bold font-mono', conf.color)}>
+          <div className="text-center p-4 bg-[#0a0a0f] border-2 border-[#27272a]">
+            <p className="text-[#71717a] text-base mb-1 font-[family-name:var(--font-heading)] uppercase text-xs">
+              High
+            </p>
+            <p className={cn('text-xl font-bold font-[family-name:var(--font-mono)]', conf.color)}>
               {formatCurrency(highQuote)}
             </p>
           </div>
@@ -81,11 +87,16 @@ export function QuotePanel({
 
         {assumptions.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-[#a1a1aa]">Assumptions:</p>
+            <p className="text-base font-[family-name:var(--font-heading)] text-[#a1a1aa] uppercase text-xs">
+              Assumptions:
+            </p>
             <ul className="space-y-1">
               {assumptions.map((assumption, index) => (
-                <li key={index} className="text-sm text-[#71717a] flex items-start gap-2">
-                  <span className="text-[#00f0ff] mt-1">•</span>
+                <li
+                  key={index}
+                  className="text-base text-[#71717a] flex items-start gap-2 font-[family-name:var(--font-body)]"
+                >
+                  <span className="text-[#00f0ff] mt-1">▸</span>
                   {assumption}
                 </li>
               ))}

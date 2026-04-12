@@ -32,3 +32,5 @@ data/raw-docs/
 
 # Ingestion outputs
 data/ingestion/
+.vercel
+.env*.local

@@ -34,16 +34,21 @@ export function Modal({ open, onClose, title, children, size = 'md' }: ModalProp
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/80" onClick={onClose} />
 
       <div
         className={cn(
-          'relative w-full mx-4 bg-[#111118] border border-[#27272a] rounded-lg shadow-2xl',
+          'relative w-full mx-4 bg-[#111118] border-2 border-[#27272a] shadow-2xl',
           sizeStyles[size],
         )}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#27272a]">
-          <h2 className="text-lg font-semibold text-[#e4e4e7]">{title}</h2>
+        <div className="flex items-center justify-between px-6 py-4 border-b-2 border-[#27272a]">
+          <h2
+            className="text-base font-[family-name:var(--font-heading)] text-[#e4e4e7] uppercase tracking-wider"
+            style={{ fontSize: '0.7rem' }}
+          >
+            {title}
+          </h2>
           <Button variant="ghost" size="sm" onClick={onClose} className="p-1">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

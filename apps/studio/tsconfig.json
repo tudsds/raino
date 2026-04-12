@@ -2,11 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2022"
-    ],
+    "lib": ["dom", "dom.iterable", "ES2022"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
@@ -16,28 +12,16 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@raino/ui": [
-        "../../packages/ui/src"
-      ],
-      "@raino/core": [
-        "../../packages/core/src"
-      ],
-      "@raino/agents": [
-        "../../packages/agents/src"
-      ]
+      "@/*": ["./src/*"],
+      "@raino/ui": ["../../packages/ui/src"],
+      "@raino/core": ["../../packages/core/src"],
+      "@raino/agents": ["../../packages/agents/src"],
+      "@raino/db": ["../../packages/db/src"],
+      "@raino/db/*": ["../../packages/db/src/*"]
     },
     "allowJs": true,
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "src/**/*",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "src/**/*", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

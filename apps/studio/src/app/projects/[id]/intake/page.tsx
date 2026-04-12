@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, use } from 'react';
-import { mockIntakeMessages } from '@/lib/mock-data';
+import { useState, use, useEffect } from 'react';
 import Link from 'next/link';
 
 interface Message {
@@ -14,15 +13,41 @@ interface Message {
 
 export default function IntakePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [messages, setMessages] = useState<Message[]>(
-    mockIntakeMessages.map((m) => ({ ...m, timestamp: m.timestamp.toISOString() })),
-  );
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isReady] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleSend = () => {
+  useEffect(() => {
+    async function loadMessages() {
+      try {
+        const res = await fetch(`/api/projects/${id}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.project?.intakeMessages) {
+            setMessages(
+              data.project.intakeMessages.map(
+                (m: { id: string; role: string; content: string; createdAt: string }) => ({
+                  id: m.id,
+                  role: m.role as 'user' | 'assistant',
+                  content: m.content,
+                  timestamp: new Date(m.createdAt).toISOString(),
+                }),
+              ),
+            );
+          }
+        }
+      } catch {
+        // no prior messages — start fresh
+      }
+    }
+    loadMessages();
+  }, [id]);
+
+  const handleSend = async () => {
     if (!input.trim() && selectedFiles.length === 0) return;
+    if (loading) return;
 
     const userMessage: Message = {
       id: `msg-${Date.now()}`,
@@ -32,20 +57,35 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
       attachments: selectedFiles.map((f) => f.name),
     };
 
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setSelectedFiles([]);
+    setLoading(true);
 
-    setTimeout(() => {
-      const assistantMessage: Message = {
+    try {
+      const res = await fetch(`/api/projects/${id}/intake`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage.content }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.message) {
+          setMessages((prev) => [...prev, data.message]);
+        }
+      }
+    } catch {
+      const errorMessage: Message = {
         id: `msg-${Date.now() + 1}`,
         role: 'assistant',
-        content:
-          "I understand you're building a sensor board for environmental monitoring. Could you tell me more about the specific sensors you need and the communication protocol?",
+        content: 'Failed to get a response. Please try again.',
         timestamp: new Date().toISOString(),
       };
-      setMessages((prev) => [...prev, assistantMessage]);
-    }, 1000);
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +111,7 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] flex flex-col">
-      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80  sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -94,13 +134,13 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
           </div>
           <div className="flex items-center gap-4">
             {isReady ? (
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)]">
-                <div className="w-2 h-2 rounded-full bg-[#22c55e]" />
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)]">
+                <div className="w-2 h-2 bg-[#22c55e]" />
                 <span className="text-xs text-[#22c55e] font-medium">Ready for Spec</span>
               </div>
             ) : (
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[rgba(59,130,246,0.15)] border border-[rgba(59,130,246,0.3)]">
-                <div className="w-2 h-2 rounded-full bg-[#3b82f6] animate-pulse" />
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-[rgba(59,130,246,0.15)] border border-[rgba(59,130,246,0.3)]">
+                <div className="w-2 h-2 bg-[#3b82f6] animate-pulse" />
                 <span className="text-xs text-[#3b82f6] font-medium">Gathering Info</span>
               </div>
             )}
@@ -136,7 +176,7 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
               className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[80%] px-4 py-3 rounded-2xl ${
+                className={`max-w-[80%] px-4 py-32xl ${
                   message.role === 'user'
                     ? 'chat-user text-[#e4e4e7]'
                     : 'chat-assistant text-[#e4e4e7]'
@@ -148,7 +188,7 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
                     {message.attachments.map((attachment, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-[rgba(0,240,255,0.1)] border border-[rgba(0,240,255,0.3)]"
+                        className="flex items-center gap-1.5 px-2 py-1 bg-[rgba(0,240,255,0.1)] border border-[rgba(0,240,255,0.3)]"
                       >
                         <svg
                           className="w-3 h-3 text-[#00f0ff]"
@@ -182,7 +222,7 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
               {selectedFiles.map((file, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[rgba(0,240,255,0.1)] border border-[rgba(0,240,255,0.3)]"
+                  className="flex items-center gap-2 px-3 py-1.5 bg-[rgba(0,240,255,0.1)] border border-[rgba(0,240,255,0.3)]"
                 >
                   <svg
                     className="w-4 h-4 text-[#00f0ff]"
@@ -224,7 +264,7 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
               placeholder="Describe your hardware idea..."
               className="flex-1 input-cyber"
             />
-            <label className="cursor-pointer px-4 py-3 rounded-lg border border-[#27273a] bg-[#1a1a2e] text-[#a1a1aa] hover:border-[#00f0ff] hover:text-[#00f0ff] transition-colors flex items-center justify-center">
+            <label className="cursor-pointer px-4 py-3 border border-[#27273a] bg-[#1a1a2e] text-[#a1a1aa] hover:border-[#00f0ff] hover:text-[#00f0ff] transition-colors flex items-center justify-center">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -237,10 +277,10 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
             </label>
             <button
               onClick={handleSend}
-              disabled={!input.trim() && selectedFiles.length === 0}
-              className="px-6 py-3 bg-gradient-to-r from-[#00f0ff] to-[#8b5cf6] text-[#0a0a0f] font-medium rounded-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              disabled={(!input.trim() && selectedFiles.length === 0) || loading}
+              className="px-6 py-3 bg-gradient-to-r from-[#00f0ff] to-[#8b5cf6] text-[#0a0a0f] font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
             >
-              Send
+              {loading ? 'Sending...' : 'Send'}
             </button>
           </div>
           <p className="text-xs text-[#64748b] mt-2">

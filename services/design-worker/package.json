@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "@raino/core": "workspace:*",
+    "@raino/db": "workspace:*",
     "@raino/kicad-worker-client": "workspace:*",
+    "@supabase/supabase-js": "^2.103.0",
     "zod": "^3.24.0"
   },
   "devDependencies": {

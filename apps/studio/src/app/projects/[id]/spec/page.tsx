@@ -1,25 +1,49 @@
 'use client';
 
-import { mockProjects } from '@/lib/mock-data';
+import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import StatusBadge from '@/components/StatusBadge';
-import { use } from 'react';
+import StatusBadge, { type Status } from '@/components/StatusBadge';
 
-interface SpecPageProps {
-  params: Promise<{ id: string }>;
+interface ProjectData {
+  id: string;
+  name: string;
+  status: string;
+  currentStep: number;
+  totalSteps: number;
+  spec: {
+    rawText: string | null;
+    requirements: string[];
+  } | null;
 }
 
-export default function SpecPage({ params }: SpecPageProps) {
+export default function SpecPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const project = mockProjects.find((p) => p.id === id);
+  const [project, setProject] = useState<ProjectData | null>(null);
+
+  useEffect(() => {
+    async function loadProject() {
+      try {
+        const res = await fetch(`/api/projects/${id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setProject(data.project);
+        }
+      } catch {
+        // project data unavailable — show not found
+      }
+    }
+    loadProject();
+  }, [id]);
 
   if (!project) {
     notFound();
   }
 
-  const requirements = project.intake?.extractedRequirements ?? [];
-  const isCompiled = requirements.length > 0;
+  const requirements: string[] = Array.isArray(project.spec?.requirements)
+    ? (project.spec.requirements as string[])
+    : [];
+  const isCompiled = requirements.length > 0 || !!project.spec?.rawText;
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },
@@ -34,7 +58,7 @@ export default function SpecPage({ params }: SpecPageProps) {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
-      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80  sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -57,15 +81,15 @@ export default function SpecPage({ params }: SpecPageProps) {
           </div>
           <div className="flex items-center gap-4">
             {isCompiled ? (
-              <span className="px-3 py-1.5 rounded-full bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-xs text-[#22c55e] font-medium">
+              <span className="px-3 py-1.5 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-xs text-[#22c55e] font-medium">
                 Compiled
               </span>
             ) : (
-              <span className="px-3 py-1.5 rounded-full bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] text-xs text-[#f59e0b] font-medium">
+              <span className="px-3 py-1.5 bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] text-xs text-[#f59e0b] font-medium">
                 Pending
               </span>
             )}
-            <StatusBadge status={project.status} />
+            <StatusBadge status={project.status as Status} />
           </div>
         </div>
       </header>
@@ -99,7 +123,7 @@ export default function SpecPage({ params }: SpecPageProps) {
                 <ul className="space-y-3">
                   {requirements.map((req, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-5 h-5 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] flex items-center justify-center flex-shrink-0 mt-0.5">
                         <svg
                           className="w-3 h-3 text-[#22c55e]"
                           fill="none"
@@ -118,6 +142,8 @@ export default function SpecPage({ params }: SpecPageProps) {
                     </li>
                   ))}
                 </ul>
+              ) : project.spec?.rawText ? (
+                <div className="text-[#a1a1aa] whitespace-pre-wrap">{project.spec.rawText}</div>
               ) : (
                 <div className="text-center py-8">
                   <p className="text-[#64748b]">No requirements compiled yet.</p>
@@ -171,7 +197,7 @@ export default function SpecPage({ params }: SpecPageProps) {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748b]">Status</span>
-                  <StatusBadge status={project.status} />
+                  <StatusBadge status={project.status as Status} />
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#64748b]">Progress</span>
@@ -191,9 +217,9 @@ export default function SpecPage({ params }: SpecPageProps) {
                   <>
                     <Link
                       href={`/projects/${id}/architecture`}
-                      className="flex items-center gap-3 p-3 rounded-lg bg-[rgba(0,240,255,0.05)] border border-[rgba(0,240,255,0.2)] hover:border-[#00f0ff] transition-colors"
+                      className="flex items-center gap-3 p-3 bg-[rgba(0,240,255,0.05)] border border-[rgba(0,240,255,0.2)] hover:border-[#00f0ff] transition-colors"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-[#00f0ff] to-[#8b5cf6] flex items-center justify-center">
+                      <div className="w-8 h-8 bg-gradient-to-r from-[#00f0ff] to-[#8b5cf6] flex items-center justify-center">
                         <svg
                           className="w-4 h-4 text-[#0a0a0f]"
                           fill="none"
@@ -215,9 +241,9 @@ export default function SpecPage({ params }: SpecPageProps) {
                     </Link>
                     <Link
                       href={`/projects/${id}/bom`}
-                      className="flex items-center gap-3 p-3 rounded-lg bg-[#1a1a2e] border border-[#27273a] hover:border-[#3a3a5a] transition-colors"
+                      className="flex items-center gap-3 p-3 bg-[#1a1a2e] border border-[#27273a] hover:border-[#3a3a5a] transition-colors"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-[#27273a] flex items-center justify-center">
+                      <div className="w-8 h-8 bg-[#27273a] flex items-center justify-center">
                         <svg
                           className="w-4 h-4 text-[#a1a1aa]"
                           fill="none"
@@ -241,9 +267,9 @@ export default function SpecPage({ params }: SpecPageProps) {
                 ) : (
                   <Link
                     href={`/projects/${id}/intake`}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-[rgba(245,158,11,0.05)] border border-[rgba(245,158,11,0.2)] hover:border-[#f59e0b] transition-colors"
+                    className="flex items-center gap-3 p-3 bg-[rgba(245,158,11,0.05)] border border-[rgba(245,158,11,0.2)] hover:border-[#f59e0b] transition-colors"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] flex items-center justify-center">
+                    <div className="w-8 h-8 bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] flex items-center justify-center">
                       <svg
                         className="w-4 h-4 text-[#f59e0b]"
                         fill="none"

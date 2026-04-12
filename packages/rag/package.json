@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@raino/core": "workspace:*",
+    "@supabase/supabase-js": "^2.103.0",
     "zod": "^3.24.0"
   },
   "devDependencies": {

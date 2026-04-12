@@ -17,19 +17,19 @@ export function Card({
   children,
   ...props
 }: CardProps) {
-  const baseStyles = 'rounded-lg transition-all duration-200';
+  const baseStyles = 'transition-all duration-100';
 
   const variantStyles = {
-    default: 'bg-[#111118] border border-[#27272a]',
-    elevated: 'bg-[#1a1a24] border border-[#3f3f46] shadow-lg',
-    outlined: 'bg-transparent border border-[#27272a]',
-    neon: 'bg-[#111118] border border-[#00f0ff]/50',
+    default: 'bg-[#111118] border-2 border-[#27272a]',
+    elevated: 'bg-[#1a1a24] border-2 border-[#3f3f46]',
+    outlined: 'bg-transparent border-2 border-[#27272a]',
+    neon: 'bg-[#111118] border-2 border-[#00f0ff]',
   };
 
   const glowColorMap = {
-    cyan: 'hover:shadow-[0_0_30px_rgba(0,240,255,0.2)]',
-    purple: 'hover:shadow-[0_0_30px_rgba(139,92,246,0.2)]',
-    magenta: 'hover:shadow-[0_0_30px_rgba(255,0,170,0.2)]',
+    cyan: 'hover:shadow-[0_0_0_2px_rgba(0,240,255,0.3),0_0_10px_rgba(0,240,255,0.4)]',
+    purple: 'hover:shadow-[0_0_0_2px_rgba(139,92,246,0.3),0_0_10px_rgba(139,92,246,0.4)]',
+    magenta: 'hover:shadow-[0_0_0_2px_rgba(255,0,170,0.3),0_0_10px_rgba(255,0,170,0.4)]',
   };
 
   const glowStyles = glow ? glowColorMap[glowColor] : '';

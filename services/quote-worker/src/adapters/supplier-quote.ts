@@ -18,6 +18,8 @@ export interface SupplierPriceResult {
   isEstimate: boolean;
 }
 
+import { createSupplierAdapters, type SupplierAdapter } from '@raino/supplier-clients';
+
 export interface SupplierAdapterLike {
   name: string;
   getPartInfo: (mpn: string) => Promise<unknown>;
@@ -88,14 +90,30 @@ function selectBestQuote(quotes: SupplierQuoteResult[]): {
   };
 }
 
+function wrapSupplierAdapter(adapter: SupplierAdapter): SupplierAdapterLike {
+  return {
+    name: adapter.name,
+    getPartInfo: async (mpn: string) => {
+      const result = await adapter.getPartInfo(mpn);
+      return result;
+    },
+  };
+}
+
+export function createQuoteAdapters(): SupplierAdapterLike[] {
+  const adapters = createSupplierAdapters();
+  return adapters.map(wrapSupplierAdapter);
+}
+
 export async function aggregateSupplierPrices(
   inputs: SupplierPriceInput[],
-  adapters: SupplierAdapterLike[],
+  adapters?: SupplierAdapterLike[],
 ): Promise<SupplierPriceResult[]> {
+  const resolvedAdapters = adapters ?? createQuoteAdapters();
   const results: SupplierPriceResult[] = [];
 
   for (const input of inputs) {
-    const allQuotes = await queryAllSuppliers(input, adapters);
+    const allQuotes = await queryAllSuppliers(input, resolvedAdapters);
     const { bestPrice, bestSupplier } = selectBestQuote(allQuotes);
     const isEstimate = allQuotes.length === 0 || allQuotes.some((q) => q.isEstimate);
 

@@ -18,11 +18,11 @@ export function StatusDot({ status, size = 'md', label }: StatusDotProps) {
   };
 
   const statusGlow = {
-    active: 'shadow-[0_0_8px_rgba(0,255,136,0.6)]',
+    active: 'shadow-[0_0_8px_rgba(0,255,136,0.8)]',
     inactive: '',
-    warning: 'shadow-[0_0_8px_rgba(255,170,0,0.6)]',
-    error: 'shadow-[0_0_8px_rgba(255,51,102,0.6)]',
-    pending: 'shadow-[0_0_8px_rgba(0,240,255,0.6)] animate-pulse',
+    warning: 'shadow-[0_0_8px_rgba(255,170,0,0.8)]',
+    error: 'shadow-[0_0_8px_rgba(255,51,102,0.8)]',
+    pending: 'shadow-[0_0_8px_rgba(0,240,255,0.8)] animate-pixel-pulse',
   };
 
   const sizeStyles = {
@@ -33,10 +33,12 @@ export function StatusDot({ status, size = 'md', label }: StatusDotProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <span
-        className={cn('rounded-full', sizeStyles[size], statusColors[status], statusGlow[status])}
-      />
-      {label && <span className="text-sm text-[#a1a1aa]">{label}</span>}
+      <span className={cn(sizeStyles[size], statusColors[status], statusGlow[status])} />
+      {label && (
+        <span className="text-base text-[#a1a1aa] font-[family-name:var(--font-body)]">
+          {label}
+        </span>
+      )}
     </div>
   );
 }

@@ -95,11 +95,11 @@ const detailedFeatures = [
 
 function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-md border-b border-[#27272a]">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80  border-b border-[#27272a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold font-['Space_Grotesk']">
+            <span className="text-2xl font-bold font-[family-name:var(--font-heading)]">
               RA<span className="text-[#00f0ff]">I</span>NO
             </span>
           </Link>
@@ -127,7 +127,7 @@ function Navbar() {
           </div>
           <a
             href="http://localhost:3001"
-            className="px-4 py-2 bg-[#111118] border border-[#00f0ff] text-[#00f0ff] rounded hover:neon-glow transition-all duration-300 font-medium"
+            className="px-4 py-2 bg-[#111118] border-2 border-[#00f0ff] text-[#00f0ff] hover:neon-glow transition-all duration-300 font-medium"
           >
             Launch Studio
           </a>
@@ -147,17 +147,19 @@ function FeatureCard({ feature, index }: { feature: (typeof detailedFeatures)[0]
           className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${isEven ? '' : 'lg:flex-row-reverse'}`}
         >
           <div className={isEven ? '' : 'lg:order-2'}>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#00f0ff]/10 border border-[#00f0ff]/30 rounded-full text-sm text-[#00f0ff] font-mono mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#00f0ff]/10 border-2 border-[#00f0ff]/30 text-sm text-[#00f0ff] font-mono mb-4">
               Feature {String(index + 1).padStart(2, '0')}
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-['Space_Grotesk'] mb-2">
+            <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-heading)] mb-2">
               {feature.title}
             </h2>
             <p className="text-xl text-[#8b5cf6] mb-6">{feature.subtitle}</p>
             <p className="text-[#a1a1aa] mb-8">{feature.description}</p>
 
             <div className="space-y-4 mb-8">
-              <h3 className="font-semibold font-['Space_Grotesk'] text-[#e4e4e7]">Capabilities</h3>
+              <h3 className="font-semibold font-[family-name:var(--font-heading)] text-[#e4e4e7]">
+                Capabilities
+              </h3>
               <ul className="space-y-2">
                 {feature.capabilities.map((cap) => (
                   <li key={cap} className="flex items-start gap-3 text-[#a1a1aa]">
@@ -168,29 +170,29 @@ function FeatureCard({ feature, index }: { feature: (typeof detailedFeatures)[0]
               </ul>
             </div>
 
-            <div className="p-4 bg-[#1a1a24] border border-[#27272a] rounded-lg">
+            <div className="p-4 bg-[#1a1a24] border-2 border-[#27272a]">
               <h4 className="text-sm font-semibold text-[#71717a] mb-2">Use Case Example</h4>
               <p className="text-sm text-[#a1a1aa]">{feature.useCase}</p>
             </div>
           </div>
 
           <div className={`${isEven ? '' : 'lg:order-1'}`}>
-            <div className="aspect-video bg-[#0a0a0f] border border-[#27272a] rounded-xl p-6 flex items-center justify-center">
+            <div className="aspect-video bg-[#0a0a0f] border-2 border-[#27272a] p-6 flex items-center justify-center">
               {feature.visual === 'chat' && (
                 <div className="w-full max-w-sm space-y-3">
                   <div className="flex gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#8b5cf6] flex items-center justify-center text-xs font-bold">
+                    <div className="w-8 h-8 bg-[#8b5cf6] flex items-center justify-center text-xs font-bold">
                       U
                     </div>
-                    <div className="flex-1 p-3 bg-[#1a1a24] rounded-lg rounded-tl-none text-sm text-[#a1a1aa]">
+                    <div className="flex-1 p-3 bg-[#1a1a24]-none text-sm text-[#a1a1aa]">
                       I need a sensor board with 5V input, I2C interface, and 40x30mm dimensions
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#00f0ff] flex items-center justify-center text-xs font-bold text-[#0a0a0f]">
+                    <div className="w-8 h-8 bg-[#00f0ff] flex items-center justify-center text-xs font-bold text-[#0a0a0f]">
                       R
                     </div>
-                    <div className="flex-1 p-3 bg-[#111118] border border-[#00f0ff]/30 rounded-lg rounded-tl-none text-sm text-[#a1a1aa]">
+                    <div className="flex-1 p-3 bg-[#111118] border-2 border-[#00f0ff]/30-none text-sm text-[#a1a1aa]">
                       What type of sensor? Temperature, accelerometer, or something else?
                     </div>
                   </div>
@@ -198,24 +200,24 @@ function FeatureCard({ feature, index }: { feature: (typeof detailedFeatures)[0]
               )}
               {feature.visual === 'schema' && (
                 <div className="w-full max-w-sm space-y-2 font-mono text-xs">
-                  <div className="p-3 bg-[#1a1a24] rounded border-l-2 border-[#00f0ff]">
+                  <div className="p-3 bg-[#1a1a24] border-l-2 border-[#00f0ff]">
                     <span className="text-[#00f0ff]">power_input:</span>
                     <span className="text-[#a1a1aa]"> 5V ±5%</span>
                   </div>
-                  <div className="p-3 bg-[#1a1a24] rounded border-l-2 border-[#8b5cf6]">
+                  <div className="p-3 bg-[#1a1a24] border-l-2 border-[#8b5cf6]">
                     <span className="text-[#8b5cf6]">interface:</span>
                     <span className="text-[#a1a1aa]"> I2C @ 400kHz</span>
                   </div>
-                  <div className="p-3 bg-[#1a1a24] rounded border-l-2 border-[#ff00aa]">
+                  <div className="p-3 bg-[#1a1a24] border-l-2 border-[#ff00aa]">
                     <span className="text-[#ff00aa]">dimensions:</span>
                     <span className="text-[#a1a1aa]"> 40mm × 30mm</span>
                   </div>
                 </div>
               )}
               {feature.visual === 'template' && (
-                <div className="w-full max-w-sm p-4 bg-[#111118] border border-[#27272a] rounded-lg">
+                <div className="w-full max-w-sm p-4 bg-[#111118] border-2 border-[#27272a]">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 bg-[#00f0ff]/10 border border-[#00f0ff]/30 rounded flex items-center justify-center">
+                    <div className="w-10 h-10 bg-[#00f0ff]/10 border-2 border-[#00f0ff]/30 flex items-center justify-center">
                       <span className="text-[#00f0ff] text-lg">◎</span>
                     </div>
                     <div>
@@ -243,15 +245,15 @@ function FeatureCard({ feature, index }: { feature: (typeof detailedFeatures)[0]
                     Bill of Materials (3 items)
                   </div>
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between p-2 bg-[#1a1a24] rounded text-sm">
+                    <div className="flex items-center justify-between p-2 bg-[#1a1a24] text-sm">
                       <span className="text-[#a1a1aa]">MCP9808T-E/MS</span>
                       <span className="text-[#00ff88] text-xs">$2.45</span>
                     </div>
-                    <div className="flex items-center justify-between p-2 bg-[#1a1a24] rounded text-sm">
+                    <div className="flex items-center justify-between p-2 bg-[#1a1a24] text-sm">
                       <span className="text-[#a1a1aa]">TPS563201DDCR</span>
                       <span className="text-[#00ff88] text-xs">$0.89</span>
                     </div>
-                    <div className="flex items-center justify-between p-2 bg-[#1a1a24] rounded text-sm">
+                    <div className="flex items-center justify-between p-2 bg-[#1a1a24] text-sm">
                       <span className="text-[#a1a1aa]">STM32L072KZ</span>
                       <span className="text-[#ffaa00] text-xs">$4.20 ⚠</span>
                     </div>
@@ -259,11 +261,11 @@ function FeatureCard({ feature, index }: { feature: (typeof detailedFeatures)[0]
                 </div>
               )}
               {feature.visual === 'kicad' && (
-                <div className="w-full max-w-sm aspect-video bg-[#0a0a0f] border border-[#27272a] rounded relative overflow-hidden">
+                <div className="w-full max-w-sm aspect-video bg-[#0a0a0f] border-2 border-[#27272a] relative overflow-hidden">
                   <div className="absolute inset-0 circuit-grid opacity-50" />
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <div className="w-16 h-16 border-2 border-[#00f0ff] rounded-full flex items-center justify-center">
-                      <div className="w-8 h-8 border border-[#8b5cf6] rounded-full" />
+                    <div className="w-16 h-16 border-2 border-[#00f0ff] flex items-center justify-center">
+                      <div className="w-8 h-8 border-2 border-[#8b5cf6]" />
                     </div>
                     <div className="absolute top-0 left-1/2 w-px h-8 bg-[#00f0ff] -translate-x-1/2 -translate-y-full" />
                     <div className="absolute bottom-0 left-1/2 w-px h-8 bg-[#00f0ff] -translate-x-1/2 translate-y-full" />
@@ -277,9 +279,9 @@ function FeatureCard({ feature, index }: { feature: (typeof detailedFeatures)[0]
               )}
               {feature.visual === 'preview' && (
                 <div className="w-full max-w-sm">
-                  <div className="aspect-video bg-[#1a1a24] rounded-lg mb-3 relative overflow-hidden">
+                  <div className="aspect-video bg-[#1a1a24] mb-3 relative overflow-hidden">
                     <div className="absolute inset-0 circuit-grid opacity-30" />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-12 border border-[#00f0ff]/50 bg-[#00f0ff]/5 rounded" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-12 border-2 border-[#00f0ff]/50 bg-[#00f0ff]/5" />
                     <div className="absolute bottom-2 left-2 text-xs text-[#71717a]">
                       PCB Preview
                     </div>
@@ -304,7 +306,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold font-['Space_Grotesk']">
+            <span className="text-xl font-bold font-[family-name:var(--font-heading)]">
               RA<span className="text-[#00f0ff]">I</span>NO
             </span>
           </div>
@@ -336,7 +338,7 @@ export default function FeaturesPage() {
       <main className="pt-16">
         <section className="py-24 bg-[#0a0a0f] circuit-grid">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold font-['Space_Grotesk'] mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold font-[family-name:var(--font-heading)] mb-6">
               <span className="gradient-text">Features</span>
             </h1>
             <p className="text-xl text-[#a1a1aa]">

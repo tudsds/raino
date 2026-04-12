@@ -16,10 +16,26 @@ export type {
   ValidationViolation,
   ValidationResult,
 } from './validator/types';
-export { runValidation } from './validator/engine';
+export { runValidation, runValidationAsync } from './validator/engine';
 
 export type { ExportFormat, ExportRequest, ExportResult } from './exporter/types';
-export { runExport } from './exporter/engine';
+export { runExport, runExportAsync } from './exporter/engine';
 
 export type { PreviewAssets } from './exporter/preview';
 export { generatePreviewAssets } from './exporter/preview';
+
+export {
+  generateArtifactManifest,
+  uploadArtifactsToStorage,
+  type ArtifactManifestEntry,
+  type ArtifactManifest,
+} from './artifacts/manifest';
+
+export {
+  pollAndExecuteJob,
+  pollAndExecuteWithPrisma,
+  executeJob,
+  type JobType,
+  type JobInput,
+  type JobResult,
+} from './queue/worker';

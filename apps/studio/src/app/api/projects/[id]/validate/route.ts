@@ -1,8 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/require-auth';
+import { createDesignJob } from '@/lib/data/artifact-queries';
+import { createAuditEntry } from '@/lib/data/audit-queries';
+import { updateProjectStatus } from '@/lib/data/project-queries';
 
 export async function POST(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const auth = await requireAuth();
+  if (auth.error) return auth.error;
+
   try {
     const { id } = await params;
+
+    const job = await createDesignJob(id, 'VALIDATION');
+
+    await updateProjectStatus(id, 'validated');
+
+    await createAuditEntry(id, {
+      category: 'design',
+      action: 'validation_job_created',
+      actor: auth.user.id,
+      details: { jobId: job.id, jobType: 'VALIDATION' },
+    });
 
     return NextResponse.json({
       projectId: id,
@@ -10,9 +28,11 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         erc: { pass: true, errors: 0 },
         drc: { pass: true, errors: 0 },
       },
-      status: 'passed',
+      status: 'pending',
+      jobId: job.id,
+      message: 'Validation job queued',
     });
   } catch {
-    return NextResponse.json({ error: 'Failed to validate design' }, { status: 400 });
+    return NextResponse.json({ error: 'Failed to create validation job' }, { status: 400 });
   }
 }

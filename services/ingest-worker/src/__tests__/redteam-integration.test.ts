@@ -9,14 +9,8 @@ import {
   type BOM,
   type BOMRow,
 } from '@raino/core';
-import {
-  generateManifest,
-  type ArtifactEntryInput,
-} from '../../../../services/audit-worker/src/manifests/generator.js';
-import {
-  WorkflowMachine,
-  InvalidTransitionError,
-} from '../../../../packages/agents/src/workflow/machine.js';
+import { generateManifest, type ArtifactEntryInput } from '@raino/audit-worker';
+import { WorkflowMachine, InvalidTransitionError } from '@raino/agents';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

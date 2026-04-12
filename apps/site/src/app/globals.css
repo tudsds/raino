@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 :root {
+  /* Pixel-art dark backgrounds */
   --bg-primary: #0a0a0f;
   --bg-secondary: #111118;
   --bg-tertiary: #1a1a24;
@@ -16,45 +17,143 @@
   --accent-red: #ff3366;
   --border-primary: #27272a;
   --border-secondary: #3f3f46;
+
+  /* Pixel fonts */
+  --font-heading: 'Press Start 2P', monospace;
+  --font-body: 'VT323', monospace;
+  --font-mono: 'VT323', monospace;
 }
 
 body {
   background: var(--bg-primary);
   color: var(--fg-primary);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.4;
+  image-rendering: pixelated;
 }
 
-/* Neon glow utility */
+/* Selection - pixel block */
+::selection {
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+}
+
+/* Neon glow - sharp step-based */
 .neon-glow {
   box-shadow:
-    0 0 10px rgba(0, 240, 255, 0.3),
-    0 0 40px rgba(0, 240, 255, 0.1);
+    0 0 0 2px var(--accent-cyan),
+    0 0 0 4px rgba(0, 240, 255, 0.5),
+    0 0 10px rgba(0, 240, 255, 0.8);
 }
 
 .neon-glow-purple {
   box-shadow:
-    0 0 10px rgba(139, 92, 246, 0.3),
-    0 0 40px rgba(139, 92, 246, 0.1);
+    0 0 0 2px var(--accent-purple),
+    0 0 0 4px rgba(139, 92, 246, 0.5),
+    0 0 10px rgba(139, 92, 246, 0.8);
 }
 
 .neon-text {
   text-shadow:
-    0 0 10px rgba(0, 240, 255, 0.5),
-    0 0 40px rgba(0, 240, 255, 0.2);
+    0 0 0 var(--accent-cyan),
+    0 0 10px rgba(0, 240, 255, 0.8);
 }
 
-/* Circuit grid background */
+/* Pixel grid background */
+.pixel-grid {
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.05) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.05) 2px, transparent 2px);
+  background-size: 4px 4px;
+}
+
+/* Circuit grid - pixel version */
 .circuit-grid {
   background-image:
-    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(0, 240, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.08) 1px, transparent 1px);
   background-size: 40px 40px;
+  image-rendering: pixelated;
 }
 
-/* Gradient text */
+/* Gradient text - sharp */
 .gradient-text {
-  background: linear-gradient(135deg, #00f0ff, #8b5cf6, #ff00aa);
+  background: linear-gradient(
+    135deg,
+    var(--accent-cyan),
+    var(--accent-purple),
+    var(--accent-magenta)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: contrast(1.2);
+}
+
+/* CRT overlay */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.02) 100%
+  );
+  background-size: 100% 4px;
+}
+
+/* Animations */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pixel-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s steps(2) infinite;
+}
+
+.animate-pixel-pulse {
+  animation: pixel-pulse 1s steps(2) infinite;
+}
+
+/* Sharp corners utility */
+.sharp {
+  border-radius: 0 !important;
+}
+
+/* Font utilities */
+.font-pixel-heading {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+}
+
+.font-pixel-body {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.4;
 }

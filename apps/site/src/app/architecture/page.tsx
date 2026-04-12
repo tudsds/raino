@@ -95,11 +95,11 @@ const boundaries = [
 
 function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-md border-b border-[#27272a]">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80  border-b border-[#27272a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold font-['Space_Grotesk']">
+            <span className="text-2xl font-bold font-[family-name:var(--font-heading)]">
               RA<span className="text-[#00f0ff]">I</span>NO
             </span>
           </Link>
@@ -127,7 +127,7 @@ function Navbar() {
           </div>
           <a
             href="http://localhost:3001"
-            className="px-4 py-2 bg-[#111118] border border-[#00f0ff] text-[#00f0ff] rounded hover:neon-glow transition-all duration-300 font-medium"
+            className="px-4 py-2 bg-[#111118] border-2 border-[#00f0ff] text-[#00f0ff] hover:neon-glow transition-all duration-300 font-medium"
           >
             Launch Studio
           </a>
@@ -139,7 +139,7 @@ function Navbar() {
 
 function ArchitectureDiagram() {
   return (
-    <div className="bg-[#0a0a0f] border border-[#27272a] rounded-xl p-6 font-mono text-xs sm:text-sm overflow-x-auto">
+    <div className="bg-[#0a0a0f] border-2 border-[#27272a] p-6 font-mono text-xs sm:text-sm overflow-x-auto">
       <pre className="text-[#a1a1aa] leading-relaxed">
         {`┌─────────────────────────────────────────────────────────────────┐
 │                          Users                                   │
@@ -183,7 +183,7 @@ function ArchitectureDiagram() {
 
 function WorkflowDiagram() {
   return (
-    <div className="bg-[#0a0a0f] border border-[#27272a] rounded-xl p-6 font-mono text-xs sm:text-sm overflow-x-auto">
+    <div className="bg-[#0a0a0f] border-2 border-[#27272a] p-6 font-mono text-xs sm:text-sm overflow-x-auto">
       <pre className="text-[#a1a1aa] leading-relaxed">
         {`┌─────────────────────────┐
 │  Natural Language       │
@@ -284,7 +284,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold font-['Space_Grotesk']">
+            <span className="text-xl font-bold font-[family-name:var(--font-heading)]">
               RA<span className="text-[#00f0ff]">I</span>NO
             </span>
           </div>
@@ -316,7 +316,7 @@ export default function ArchitecturePage() {
       <main className="pt-16">
         <section className="py-24 bg-[#0a0a0f] circuit-grid">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold font-['Space_Grotesk'] mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold font-[family-name:var(--font-heading)] mb-6">
               System <span className="gradient-text">Architecture</span>
             </h1>
             <p className="text-xl text-[#a1a1aa]">
@@ -328,7 +328,7 @@ export default function ArchitecturePage() {
 
         <section className="py-24 bg-[#111118]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-['Space_Grotesk'] mb-8 text-center">
+            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-8 text-center">
               High-Level <span className="gradient-text">Overview</span>
             </h2>
             <ArchitectureDiagram />
@@ -337,18 +337,18 @@ export default function ArchitecturePage() {
 
         <section className="py-24 bg-[#0a0a0f]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-['Space_Grotesk'] mb-12 text-center">
+            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-12 text-center">
               Package <span className="gradient-text">Structure</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {packages.map((pkg) => (
                 <div
                   key={pkg.name}
-                  className="p-6 bg-[#111118] border border-[#27272a] rounded-xl hover:border-opacity-50 transition-all duration-300"
+                  className="p-6 bg-[#111118] border-2 border-[#27272a] hover:border-opacity-50 transition-all duration-300"
                   style={{ borderColor: `${pkg.color}40` }}
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: pkg.color }} />
+                    <div className="w-3 h-3" style={{ backgroundColor: pkg.color }} />
                     <code className="text-sm font-semibold" style={{ color: pkg.color }}>
                       {pkg.name}
                     </code>
@@ -362,14 +362,14 @@ export default function ArchitecturePage() {
 
         <section className="py-24 bg-[#111118]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-['Space_Grotesk'] mb-12 text-center">
+            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-12 text-center">
               Worker <span className="gradient-text">Services</span>
             </h2>
             <div className="space-y-8">
               {services.map((service) => (
                 <div
                   key={service.name}
-                  className="p-6 bg-[#0a0a0f] border border-[#27272a] rounded-xl"
+                  className="p-6 bg-[#0a0a0f] border-2 border-[#27272a]"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                     <div className="lg:w-1/3">
@@ -380,7 +380,7 @@ export default function ArchitecturePage() {
                       <div className="flex flex-wrap gap-2">
                         {service.stages.map((stage, idx) => (
                           <div key={stage} className="flex items-center gap-2">
-                            <span className="px-3 py-1 bg-[#1a1a24] border border-[#27272a] rounded text-sm text-[#a1a1aa]">
+                            <span className="px-3 py-1 bg-[#1a1a24] border-2 border-[#27272a] text-sm text-[#a1a1aa]">
                               {stage}
                             </span>
                             {idx < service.stages.length - 1 && (
@@ -399,16 +399,16 @@ export default function ArchitecturePage() {
 
         <section className="py-24 bg-[#0a0a0f]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-['Space_Grotesk'] mb-12 text-center">
+            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-12 text-center">
               External <span className="gradient-text">Boundaries</span>
             </h2>
             <div className="space-y-6">
               {boundaries.map((boundary) => (
                 <div
                   key={boundary.name}
-                  className="p-6 bg-[#111118] border border-[#27272a] rounded-xl"
+                  className="p-6 bg-[#111118] border-2 border-[#27272a]"
                 >
-                  <h3 className="text-xl font-semibold font-['Space_Grotesk'] mb-3 text-[#e4e4e7]">
+                  <h3 className="text-xl font-semibold font-[family-name:var(--font-heading)] mb-3 text-[#e4e4e7]">
                     {boundary.name}
                   </h3>
                   <p className="text-[#a1a1aa] mb-4">{boundary.description}</p>
@@ -428,7 +428,7 @@ export default function ArchitecturePage() {
 
         <section className="py-24 bg-[#111118]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-['Space_Grotesk'] mb-8 text-center">
+            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-8 text-center">
               Product <span className="gradient-text">Workflow</span>
             </h2>
             <WorkflowDiagram />
@@ -437,12 +437,12 @@ export default function ArchitecturePage() {
 
         <section className="py-24 bg-[#0a0a0f]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-['Space_Grotesk'] mb-8 text-center">
+            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-8 text-center">
               RAG <span className="gradient-text">Scope</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="p-6 bg-[#111118] border border-[#27272a] rounded-xl">
-                <h3 className="text-lg font-semibold font-['Space_Grotesk'] mb-4 text-[#00ff88]">
+              <div className="p-6 bg-[#111118] border-2 border-[#27272a]">
+                <h3 className="text-lg font-semibold font-[family-name:var(--font-heading)] mb-4 text-[#00ff88]">
                   ✓ What RAG Is For
                 </h3>
                 <ul className="space-y-2 text-[#a1a1aa]">
@@ -468,8 +468,8 @@ export default function ArchitecturePage() {
                   </li>
                 </ul>
               </div>
-              <div className="p-6 bg-[#111118] border border-[#27272a] rounded-xl">
-                <h3 className="text-lg font-semibold font-['Space_Grotesk'] mb-4 text-[#ff3366]">
+              <div className="p-6 bg-[#111118] border-2 border-[#27272a]">
+                <h3 className="text-lg font-semibold font-[family-name:var(--font-heading)] mb-4 text-[#ff3366]">
                   ✗ What RAG Is NOT For
                 </h3>
                 <ul className="space-y-2 text-[#a1a1aa]">

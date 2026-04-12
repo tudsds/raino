@@ -10,6 +10,7 @@ export { DEFAULT_QUOTE_CONFIG, type QuoteConfig } from './engine/defaults';
 
 export {
   aggregateSupplierPrices,
+  createQuoteAdapters,
   type SupplierPriceInput,
   type SupplierPriceResult,
   type SupplierQuoteResult,

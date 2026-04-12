@@ -1,0 +1,53 @@
+{
+  "name": "@raino/db",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./supabase/server": {
+      "types": "./dist/supabase/server.d.ts",
+      "default": "./dist/supabase/server.js"
+    },
+    "./supabase/browser": {
+      "types": "./dist/supabase/browser.d.ts",
+      "default": "./dist/supabase/browser.js"
+    },
+    "./supabase/middleware": {
+      "types": "./dist/supabase/middleware.d.ts",
+      "default": "./dist/supabase/middleware.js"
+    }
+  },
+  "scripts": {
+    "build": "prisma generate && tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run --reporter=verbose",
+    "clean": "rm -rf dist",
+    "prisma:generate": "prisma generate",
+    "prisma:validate": "prisma validate"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.0",
+    "@raino/core": "workspace:*",
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.103.0",
+    "next": "^15.1.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "prisma": "^6.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  }
+}

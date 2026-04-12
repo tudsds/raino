@@ -1,7 +1,13 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { MockDigiKeyAdapter } from '../digikey/adapter.js';
 import { MockMouserAdapter } from '../mouser/adapter.js';
 import { MockJLCPCBAdapter } from '../jlcpcb/adapter.js';
+import { RealDigiKeyAdapter } from '../digikey/real-adapter.js';
+import { RealMouserAdapter } from '../mouser/real-adapter.js';
+import { RealJLCPCBAdapter } from '../jlcpcb/real-adapter.js';
+import { createSupplierAdapters, getAdapterStatus } from '../factory.js';
+import { FetchHttpClient, HttpError } from '../common/http-client.js';
+import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers.js';
 
 // ── MockDigiKeyAdapter ───────────────────────────────────────────────────────
 
@@ -260,5 +266,321 @@ describe('Cross-adapter fixture consistency', () => {
       expect(mouserPart).not.toBeNull();
       expect(jlcpcbPart).not.toBeNull();
     }
+  });
+});
+
+// ── RealDigiKeyAdapter (no API calls) ────────────────────────────────────────
+
+describe('RealDigiKeyAdapter', () => {
+  it('reports live mode (not estimate-only)', () => {
+    const adapter = new RealDigiKeyAdapter({
+      clientId: 'test-id',
+      clientSecret: 'test-secret',
+      redirectUri: 'https://localhost/callback',
+    });
+    expect(adapter.isEstimateOnly()).toBe(false);
+  });
+
+  it('exposes correct name', () => {
+    const adapter = new RealDigiKeyAdapter({
+      clientId: 'test-id',
+      clientSecret: 'test-secret',
+      redirectUri: 'https://localhost/callback',
+    });
+    expect(adapter.name).toBe('DigiKey');
+  });
+
+  it('reports available when credentials are set', async () => {
+    const adapter = new RealDigiKeyAdapter({
+      clientId: 'test-id',
+      clientSecret: 'test-secret',
+      redirectUri: 'https://localhost/callback',
+    });
+    expect(await adapter.isAvailable()).toBe(true);
+  });
+
+  it('reports unavailable when credentials are empty', async () => {
+    const adapter = new RealDigiKeyAdapter({
+      clientId: '',
+      clientSecret: '',
+      redirectUri: '',
+    });
+    expect(await adapter.isAvailable()).toBe(false);
+  });
+
+  it('accepts custom FetchHttpClient', () => {
+    const http = new FetchHttpClient('https://custom-base.example.com');
+    const adapter = new RealDigiKeyAdapter(
+      { clientId: 'id', clientSecret: 'secret', redirectUri: '' },
+      http,
+    );
+    expect(adapter.name).toBe('DigiKey');
+  });
+
+  it('uses sandbox URL when configured', () => {
+    const adapter = new RealDigiKeyAdapter({
+      clientId: 'test-id',
+      clientSecret: 'test-secret',
+      redirectUri: '',
+      sandbox: true,
+    });
+    expect(adapter.isEstimateOnly()).toBe(false);
+  });
+});
+
+// ── RealMouserAdapter (no API calls) ─────────────────────────────────────────
+
+describe('RealMouserAdapter', () => {
+  it('reports live mode (not estimate-only)', () => {
+    const adapter = new RealMouserAdapter({ apiKey: 'test-key' });
+    expect(adapter.isEstimateOnly()).toBe(false);
+  });
+
+  it('exposes correct name', () => {
+    const adapter = new RealMouserAdapter({ apiKey: 'test-key' });
+    expect(adapter.name).toBe('Mouser');
+  });
+
+  it('reports available when API key is set', async () => {
+    const adapter = new RealMouserAdapter({ apiKey: 'test-key' });
+    expect(await adapter.isAvailable()).toBe(true);
+  });
+
+  it('reports unavailable when API key is empty', async () => {
+    const adapter = new RealMouserAdapter({ apiKey: '' });
+    expect(await adapter.isAvailable()).toBe(false);
+  });
+
+  it('generates a cart URL without API calls', () => {
+    const adapter = new RealMouserAdapter({ apiKey: 'test-key' });
+    const url = adapter.getCartUrl([{ sku: '123', quantity: 5 }]);
+    expect(url).toContain('mouser.com/cart');
+    expect(url).toContain('123');
+  });
+
+  it('generates empty cart URL', () => {
+    const adapter = new RealMouserAdapter({ apiKey: 'test-key' });
+    expect(adapter.getCartUrl([])).toBe('https://www.mouser.com/cart/');
+  });
+
+  it('accepts custom FetchHttpClient', () => {
+    const http = new FetchHttpClient('https://custom-base.example.com');
+    const adapter = new RealMouserAdapter({ apiKey: 'key' }, http);
+    expect(adapter.name).toBe('Mouser');
+  });
+});
+
+// ── RealJLCPCBAdapter (no API calls) ─────────────────────────────────────────
+
+describe('RealJLCPCBAdapter', () => {
+  it('reports live mode (not estimate-only)', () => {
+    const adapter = new RealJLCPCBAdapter({ apiKey: 'test-key' });
+    expect(adapter.isEstimateOnly()).toBe(false);
+  });
+
+  it('exposes correct name', () => {
+    const adapter = new RealJLCPCBAdapter({ apiKey: 'test-key' });
+    expect(adapter.name).toBe('JLCPCB');
+  });
+
+  it('reports available when API key is set', async () => {
+    const adapter = new RealJLCPCBAdapter({ apiKey: 'test-key' });
+    expect(await adapter.isAvailable()).toBe(true);
+  });
+
+  it('reports unavailable when API key is empty', async () => {
+    const adapter = new RealJLCPCBAdapter({ apiKey: '' });
+    expect(await adapter.isAvailable()).toBe(false);
+  });
+
+  it('accepts custom FetchHttpClient', () => {
+    const http = new FetchHttpClient('https://custom-base.example.com');
+    const adapter = new RealJLCPCBAdapter({ apiKey: 'key' }, http);
+    expect(adapter.name).toBe('JLCPCB');
+  });
+});
+
+// ── SupplierAdapterFactory ───────────────────────────────────────────────────
+
+describe('SupplierAdapterFactory', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('returns mock adapters when no env vars are set', () => {
+    const adapters = createSupplierAdapters();
+    expect(adapters).toHaveLength(3);
+    for (const adapter of adapters) {
+      expect(adapter.isEstimateOnly()).toBe(true);
+    }
+  });
+
+  it('returns real DigiKey adapter when DIGIKEY env vars are set', () => {
+    vi.stubEnv('DIGIKEY_CLIENT_ID', 'test-client-id');
+    vi.stubEnv('DIGIKEY_CLIENT_SECRET', 'test-client-secret');
+    vi.stubEnv('DIGIKEY_REDIRECT_URI', 'https://localhost/callback');
+
+    const adapters = createSupplierAdapters();
+    const digikey = adapters.find((a) => a.name === 'DigiKey');
+    expect(digikey).toBeDefined();
+    expect(digikey!.isEstimateOnly()).toBe(false);
+  });
+
+  it('returns real Mouser adapter when MOUSER_API_KEY is set', () => {
+    vi.stubEnv('MOUSER_API_KEY', 'test-mouser-key');
+
+    const adapters = createSupplierAdapters();
+    const mouser = adapters.find((a) => a.name === 'Mouser');
+    expect(mouser).toBeDefined();
+    expect(mouser!.isEstimateOnly()).toBe(false);
+  });
+
+  it('returns real JLCPCB adapter when JLCPCB_API_KEY is set', () => {
+    vi.stubEnv('JLCPCB_API_KEY', 'test-jlcpcb-key');
+
+    const adapters = createSupplierAdapters();
+    const jlcpcb = adapters.find((a) => a.name === 'JLCPCB');
+    expect(jlcpcb).toBeDefined();
+    expect(jlcpcb!.isEstimateOnly()).toBe(false);
+  });
+
+  it('returns mixed adapters when only some env vars are set', () => {
+    vi.stubEnv('MOUSER_API_KEY', 'test-mouser-key');
+
+    const adapters = createSupplierAdapters();
+    const digikey = adapters.find((a) => a.name === 'DigiKey');
+    const mouser = adapters.find((a) => a.name === 'Mouser');
+    const jlcpcb = adapters.find((a) => a.name === 'JLCPCB');
+
+    expect(digikey!.isEstimateOnly()).toBe(true);
+    expect(mouser!.isEstimateOnly()).toBe(false);
+    expect(jlcpcb!.isEstimateOnly()).toBe(true);
+  });
+});
+
+// ── getAdapterStatus ─────────────────────────────────────────────────────────
+
+describe('getAdapterStatus', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('reports all mock when no env vars set', () => {
+    const status = getAdapterStatus();
+    expect(status.digikey.mode).toBe('mock');
+    expect(status.digikey.available).toBe(false);
+    expect(status.mouser.mode).toBe('mock');
+    expect(status.mouser.available).toBe(false);
+    expect(status.jlcpcb.mode).toBe('mock');
+    expect(status.jlcpcb.available).toBe(false);
+  });
+
+  it('reports live for DigiKey when env vars set', () => {
+    vi.stubEnv('DIGIKEY_CLIENT_ID', 'test-id');
+    vi.stubEnv('DIGIKEY_CLIENT_SECRET', 'test-secret');
+
+    const status = getAdapterStatus();
+    expect(status.digikey.mode).toBe('live');
+    expect(status.digikey.available).toBe(true);
+  });
+
+  it('reports live for Mouser when env var set', () => {
+    vi.stubEnv('MOUSER_API_KEY', 'test-key');
+
+    const status = getAdapterStatus();
+    expect(status.mouser.mode).toBe('live');
+    expect(status.mouser.available).toBe(true);
+  });
+
+  it('reports live for JLCPCB when env var set', () => {
+    vi.stubEnv('JLCPCB_API_KEY', 'test-key');
+
+    const status = getAdapterStatus();
+    expect(status.jlcpcb.mode).toBe('live');
+    expect(status.jlcpcb.available).toBe(true);
+  });
+
+  it('reports mock for DigiKey when only client ID is set', () => {
+    vi.stubEnv('DIGIKEY_CLIENT_ID', 'test-id');
+
+    const status = getAdapterStatus();
+    expect(status.digikey.mode).toBe('mock');
+    expect(status.digikey.available).toBe(false);
+  });
+});
+
+// ── HttpError ────────────────────────────────────────────────────────────────
+
+describe('HttpError', () => {
+  it('captures status and body', () => {
+    const error = new HttpError(404, 'Not Found', '{"error":"not found"}');
+    expect(error.status).toBe(404);
+    expect(error.body).toBe('{"error":"not found"}');
+    expect(error.message).toContain('404');
+    expect(error.name).toBe('HttpError');
+  });
+
+  it('truncates long body in message', () => {
+    const longBody = 'x'.repeat(500);
+    const error = new HttpError(500, 'Internal Server Error', longBody);
+    expect(error.message.length).toBeLessThan(longBody.length + 50);
+  });
+});
+
+// ── Shared helpers ───────────────────────────────────────────────────────────
+
+describe('shared helpers', () => {
+  describe('resolvePrice', () => {
+    it('returns unit price when no breakpoints', () => {
+      expect(resolvePrice({ unitPrice: 10.0 }, 5)).toBe(10.0);
+    });
+
+    it('returns breakpoint price when quantity matches', () => {
+      const part = {
+        unitPrice: 10.0,
+        breakpoints: [
+          { quantity: 10, price: 9.0 },
+          { quantity: 100, price: 8.0 },
+        ],
+      };
+      expect(resolvePrice(part, 10)).toBe(9.0);
+      expect(resolvePrice(part, 100)).toBe(8.0);
+      expect(resolvePrice(part, 50)).toBe(9.0);
+      expect(resolvePrice(part, 1)).toBe(10.0);
+    });
+
+    it('returns 0 when unitPrice is null and no breakpoints', () => {
+      expect(resolvePrice({ unitPrice: null }, 5)).toBe(0);
+    });
+  });
+
+  describe('round2', () => {
+    it('rounds to 2 decimal places', () => {
+      expect(round2(1.125)).toBe(1.13);
+      expect(round2(1.124)).toBe(1.12);
+      expect(round2(0)).toBe(0);
+    });
+  });
+
+  describe('parseLeadWeeks', () => {
+    it('extracts number from lead time string', () => {
+      expect(parseLeadWeeks('8 weeks')).toBe(8);
+      expect(parseLeadWeeks('3 days')).toBe(3);
+      expect(parseLeadWeeks('TBD')).toBe(0);
+    });
+  });
+
+  describe('mapLifecycleStatus', () => {
+    it('maps known status strings', () => {
+      expect(mapLifecycleStatus('Active')).toBe('active');
+      expect(mapLifecycleStatus('Obsolete')).toBe('obsolete');
+      expect(mapLifecycleStatus('Not Recommended for New Designs')).toBe('not_recommended');
+      expect(mapLifecycleStatus('End of Life')).toBe('end_of_life');
+    });
+
+    it('returns unknown for undefined or unrecognized', () => {
+      expect(mapLifecycleStatus(undefined)).toBe('unknown');
+      expect(mapLifecycleStatus('Something Else')).toBe('unknown');
+    });
   });
 });

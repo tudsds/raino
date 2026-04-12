@@ -1,4 +1,5 @@
 export { type AuditTrace, type AuditTraceStore, InMemoryAuditTraceStore } from './traces/logger';
+export { SupabaseAuditTraceStore, createAuditTraceStore } from './traces/supabase-store';
 
 export {
   generateManifest,

@@ -2,8 +2,22 @@
 
 import { useState, use } from 'react';
 import Link from 'next/link';
-import { mockProjects } from '@/lib/mock-data';
-import StatusBadge from '@/components/StatusBadge';
+
+interface PreviewResponse {
+  projectId: string;
+  type: string;
+  format: string;
+  isPlaceholder: boolean;
+  available: boolean;
+  artifactId?: string;
+  fileName?: string;
+  filePath?: string;
+  fileSize?: number;
+  mimeType?: string;
+  checksum?: string;
+  createdAt?: string;
+  meta?: { mode: string; reason: string };
+}
 
 function SchematicPlaceholder() {
   return (
@@ -15,72 +29,11 @@ function SchematicPlaceholder() {
         </pattern>
       </defs>
       <rect width="800" height="600" fill="url(#grid)" />
-
-      <g stroke="#00f0ff" strokeWidth="2" fill="none" opacity="0.6">
-        <rect x="100" y="100" width="120" height="80" rx="4" />
-        <text
-          x="160"
-          y="145"
-          textAnchor="middle"
-          fill="#00f0ff"
-          stroke="none"
-          fontSize="14"
-          fontFamily="monospace"
-        >
-          U1
-        </text>
-
-        <rect x="300" y="80" width="100" height="60" rx="4" />
-        <text
-          x="350"
-          y="115"
-          textAnchor="middle"
-          fill="#00f0ff"
-          stroke="none"
-          fontSize="12"
-          fontFamily="monospace"
-        >
-          R1
-        </text>
-
-        <rect x="300" y="180" width="100" height="60" rx="4" />
-        <text
-          x="350"
-          y="215"
-          textAnchor="middle"
-          fill="#00f0ff"
-          stroke="none"
-          fontSize="12"
-          fontFamily="monospace"
-        >
-          C1
-        </text>
-
-        <circle cx="500" cy="140" r="40" />
-        <text
-          x="500"
-          y="145"
-          textAnchor="middle"
-          fill="#00f0ff"
-          stroke="none"
-          fontSize="12"
-          fontFamily="monospace"
-        >
-          L1
-        </text>
-
-        <line x1="220" y1="140" x2="300" y2="110" />
-        <line x1="220" y1="140" x2="300" y2="210" />
-        <line x1="400" y1="110" x2="460" y2="140" />
-        <line x1="540" y1="140" x2="600" y2="140" />
-        <line x1="600" y1="140" x2="600" y2="300" />
-        <line x1="400" y1="210" x2="400" y2="350" />
-        <line x1="100" y1="140" x2="50" y2="140" />
-        <line x1="50" y1="140" x2="50" y2="400" />
-      </g>
-
+      <text x="400" y="300" textAnchor="middle" fill="#3a3a5a" fontSize="18" fontFamily="monospace">
+        No schematic preview available
+      </text>
       <text x="400" y="550" textAnchor="middle" fill="#64748b" fontSize="14" fontFamily="monospace">
-        Schematic Preview (SVG Placeholder)
+        Schematic Preview (Placeholder)
       </text>
     </svg>
   );
@@ -90,47 +43,11 @@ function PCB2DPlaceholder() {
   return (
     <svg viewBox="0 0 800 600" className="w-full h-full">
       <rect width="800" height="600" fill="#1a1a25" />
-
-      <rect
-        x="200"
-        y="150"
-        width="400"
-        height="300"
-        rx="8"
-        fill="#0f3d0f"
-        stroke="#22c55e"
-        strokeWidth="2"
-      />
-
-      <g fill="#22c55e" opacity="0.8">
-        <circle cx="250" cy="200" r="8" />
-        <circle cx="300" cy="200" r="8" />
-        <circle cx="350" cy="200" r="8" />
-        <circle cx="450" cy="200" r="8" />
-        <circle cx="500" cy="200" r="8" />
-        <circle cx="550" cy="200" r="8" />
-
-        <circle cx="250" cy="400" r="8" />
-        <circle cx="300" cy="400" r="8" />
-        <circle cx="350" cy="400" r="8" />
-        <circle cx="450" cy="400" r="8" />
-        <circle cx="500" cy="400" r="8" />
-        <circle cx="550" cy="400" r="8" />
-
-        <rect x="380" y="280" width="40" height="40" rx="4" />
-        <rect x="320" y="320" width="60" height="30" rx="2" />
-        <rect x="420" y="250" width="50" height="40" rx="2" />
-      </g>
-
-      <g stroke="#eab308" strokeWidth="1.5" fill="none" opacity="0.7">
-        <path d="M 250 200 L 300 200 L 350 250 L 400 300" />
-        <path d="M 450 200 L 500 250 L 450 300 L 400 300" />
-        <path d="M 550 200 L 550 350 L 500 400" />
-        <path d="M 250 400 L 300 400 L 340 350" />
-      </g>
-
+      <text x="400" y="300" textAnchor="middle" fill="#3a3a5a" fontSize="18" fontFamily="monospace">
+        No PCB 2D preview available
+      </text>
       <text x="400" y="550" textAnchor="middle" fill="#64748b" fontSize="14" fontFamily="monospace">
-        PCB 2D Preview - Top Layer (SVG Placeholder)
+        PCB 2D Preview (Placeholder)
       </text>
     </svg>
   );
@@ -138,53 +55,27 @@ function PCB2DPlaceholder() {
 
 function PCB3DPlaceholder() {
   return (
-    <svg viewBox="0 0 800" className="w-full h-full">
-      <defs>
-        <linearGradient id="board3d" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#1a3a1a" />
-          <stop offset="50%" stopColor="#0f2d0f" />
-          <stop offset="100%" stopColor="#1a3a1a" />
-        </linearGradient>
-        <linearGradient id="sideGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#2d5a2d" />
-          <stop offset="100%" stopColor="#0f2d0f" />
-        </linearGradient>
-      </defs>
-
+    <svg viewBox="0 0 800 600" className="w-full h-full">
       <rect width="800" height="600" fill="#0a0a0f" />
-
-      <g transform="translate(400, 300)">
-        <path
-          d="M -150 -100 L 150 -100 L 180 0 L 150 100 L -150 100 L -180 0 Z"
-          fill="url(#board3d)"
-          stroke="#22c55e"
-          strokeWidth="2"
-        />
-
-        <path d="M -150 100 L -150 120 L 150 120 L 150 100" fill="url(#sideGradient)" />
-        <path d="M 150 100 L 180 0 L 180 20 L 150 120" fill="#0f3d0f" />
-
-        <g fill="#22c55e" opacity="0.9">
-          <circle cx="-100" cy="-50" r="6" />
-          <circle cx="-50" cy="-50" r="6" />
-          <circle cx="0" cy="-50" r="6" />
-          <circle cx="100" cy="-50" r="6" />
-
-          <circle cx="-100" cy="50" r="6" />
-          <circle cx="-50" cy="50" r="6" />
-          <circle cx="50" cy="50" r="6" />
-          <circle cx="100" cy="50" r="6" />
-
-          <rect x="-20" y="-20" width="40" height="40" rx="3" />
-          <rect x="-60" y="20" width="30" height="20" rx="2" />
-        </g>
-
-        <rect x="-30" y="-110" width="60" height="15" rx="2" fill="#64748b" />
-        <rect x="-30" y="-120" width="50" height="15" rx="2" fill="#8b5cf6" />
-      </g>
-
+      <text x="400" y="300" textAnchor="middle" fill="#3a3a5a" fontSize="18" fontFamily="monospace">
+        No PCB 3D preview available
+      </text>
       <text x="400" y="550" textAnchor="middle" fill="#64748b" fontSize="14" fontFamily="monospace">
-        PCB 3D Preview (SVG Placeholder)
+        PCB 3D Preview (Placeholder)
+      </text>
+    </svg>
+  );
+}
+
+function PreviewError({ message }: { message: string }) {
+  return (
+    <svg viewBox="0 0 800 600" className="w-full h-full">
+      <rect width="800" height="600" fill="#1a0a0a" />
+      <text x="400" y="300" textAnchor="middle" fill="#ef4444" fontSize="18" fontFamily="monospace">
+        Error loading preview
+      </text>
+      <text x="400" y="330" textAnchor="middle" fill="#64748b" fontSize="14" fontFamily="monospace">
+        {message}
       </text>
     </svg>
   );
@@ -193,7 +84,13 @@ function PCB3DPlaceholder() {
 export default function PreviewsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const [activeTab, setActiveTab] = useState<'schematic' | 'pcb2d' | 'pcb3d'>('schematic');
-  const project = mockProjects.find((p) => p.id === id);
+  const [previewData, setPreviewData] = useState<Record<string, PreviewResponse | null>>({
+    schematic: null,
+    pcb2d: null,
+    pcb3d: null,
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },
@@ -210,9 +107,98 @@ export default function PreviewsPage({ params }: { params: Promise<{ id: string 
     { id: 'pcb3d', label: 'PCB 3D' },
   ];
 
+  const fetchPreview = async (type: 'schematic' | 'pcb2d' | 'pcb3d') => {
+    if (previewData[type] !== null) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/projects/${id}/previews/${type}`);
+      if (!res.ok) throw new Error('Failed to fetch');
+      const data = await res.json();
+      setPreviewData((prev) => ({ ...prev, [type]: data }));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (activeTab === 'schematic' && previewData.schematic === null && !loading) {
+    fetchPreview('schematic');
+  }
+  if (activeTab === 'pcb2d' && previewData.pcb2d === null && !loading) {
+    fetchPreview('pcb2d');
+  }
+  if (activeTab === 'pcb3d' && previewData.pcb3d === null && !loading) {
+    fetchPreview('pcb3d');
+  }
+
+  const currentPreview = previewData[activeTab];
+
+  const renderPreview = () => {
+    if (loading) {
+      return (
+        <svg viewBox="0 0 800 600" className="w-full h-full">
+          <rect width="800" height="600" fill="#0a0a0f" />
+          <text
+            x="400"
+            y="300"
+            textAnchor="middle"
+            fill="#00f0ff"
+            fontSize="18"
+            fontFamily="monospace"
+          >
+            Loading preview...
+          </text>
+        </svg>
+      );
+    }
+
+    if (error) {
+      return <PreviewError message={error} />;
+    }
+
+    if (!currentPreview) {
+      return <SchematicPlaceholder />;
+    }
+
+    if (currentPreview.isPlaceholder || !currentPreview.available) {
+      if (activeTab === 'schematic') return <SchematicPlaceholder />;
+      if (activeTab === 'pcb2d') return <PCB2DPlaceholder />;
+      if (activeTab === 'pcb3d') return <PCB3DPlaceholder />;
+    }
+
+    if (currentPreview.format === 'svg' && currentPreview.filePath) {
+      return (
+        <div className="w-full h-full flex items-center justify-center bg-[#0a0a0f]">
+          <img
+            src={currentPreview.filePath}
+            alt={`${activeTab} preview`}
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
+      );
+    }
+
+    if (currentPreview.format === 'glb' && currentPreview.filePath) {
+      return (
+        <div className="w-full h-full flex items-center justify-center bg-[#0a0a0f]">
+          <div className="text-center">
+            <p className="text-[#00f0ff] font-mono mb-2">3D Preview Available</p>
+            <p className="text-[#64748b] text-sm">{currentPreview.fileName}</p>
+          </div>
+        </div>
+      );
+    }
+
+    if (activeTab === 'schematic') return <SchematicPlaceholder />;
+    if (activeTab === 'pcb2d') return <PCB2DPlaceholder />;
+    return <PCB3DPlaceholder />;
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
-      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80  sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -233,7 +219,6 @@ export default function PreviewsPage({ params }: { params: Promise<{ id: string 
               <p className="text-xs text-[#a1a1aa] font-mono">{id}</p>
             </div>
           </div>
-          {project && <StatusBadge status={project.status} />}
         </div>
       </header>
 
@@ -277,32 +262,7 @@ export default function PreviewsPage({ params }: { params: Promise<{ id: string 
             </div>
           </div>
 
-          <div className="aspect-video bg-[#0a0a0f]">
-            {activeTab === 'schematic' && <SchematicPlaceholder />}
-            {activeTab === 'pcb2d' && <PCB2DPlaceholder />}
-            {activeTab === 'pcb3d' && <PCB3DPlaceholder />}
-          </div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="card p-4">
-            <h3 className="text-sm font-medium text-[#a1a1aa] mb-2">Schematic</h3>
-            <p className="text-xs text-[#64748b]">
-              Circuit diagram showing all components and their connections.
-            </p>
-          </div>
-          <div className="card p-4">
-            <h3 className="text-sm font-medium text-[#a1a1aa] mb-2">PCB 2D</h3>
-            <p className="text-xs text-[#64748b]">
-              Top and bottom layer views with copper traces and component placements.
-            </p>
-          </div>
-          <div className="card p-4">
-            <h3 className="text-sm font-medium text-[#a1a1aa] mb-2">PCB 3D</h3>
-            <p className="text-xs text-[#64748b]">
-              Interactive 3D model showing the physical board with components.
-            </p>
-          </div>
+          <div className="aspect-video bg-[#0a0a0f]">{renderPreview()}</div>
         </div>
       </main>
     </div>

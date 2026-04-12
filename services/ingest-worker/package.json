@@ -19,6 +19,8 @@
   "dependencies": {
     "@raino/core": "workspace:*",
     "@raino/rag": "workspace:*",
+    "@raino/agents": "workspace:*",
+    "@raino/audit-worker": "workspace:*",
     "zod": "^3.24.0"
   },
   "devDependencies": {

@@ -20,15 +20,15 @@ export function NeonBorder({
   const colorMap = {
     cyan: {
       border: '#00f0ff',
-      glow: 'rgba(0, 240, 255, 0.5)',
+      glow: 'rgba(0, 240, 255, 0.8)',
     },
     purple: {
       border: '#8b5cf6',
-      glow: 'rgba(139, 92, 246, 0.5)',
+      glow: 'rgba(139, 92, 246, 0.8)',
     },
     magenta: {
       border: '#ff00aa',
-      glow: 'rgba(255, 0, 170, 0.5)',
+      glow: 'rgba(255, 0, 170, 0.8)',
     },
   };
 
@@ -41,7 +41,7 @@ export function NeonBorder({
     let direction = 1;
     const interval = setInterval(() => {
       setPulseIntensity((prev) => {
-        const next = prev + direction * 0.1;
+        const next = prev + direction * 0.2;
         if (next >= 1) {
           direction = -1;
           return 1;
@@ -52,7 +52,7 @@ export function NeonBorder({
         }
         return next;
       });
-    }, 100);
+    }, 150);
 
     return () => clearInterval(interval);
   }, [animated]);
@@ -63,9 +63,9 @@ export function NeonBorder({
       style={{
         border: `${thickness}px solid ${colors.border}`,
         boxShadow: animated
-          ? `0 0 ${10 * pulseIntensity}px ${colors.glow}, 0 0 ${20 * pulseIntensity}px ${colors.glow}, inset 0 0 ${10 * pulseIntensity}px ${colors.glow}`
-          : `0 0 10px ${colors.glow}`,
-        transition: animated ? 'box-shadow 0.1s ease-out' : undefined,
+          ? `0 0 ${8 * pulseIntensity}px ${colors.glow}, 0 0 ${16 * pulseIntensity}px ${colors.glow}`
+          : `0 0 8px ${colors.glow}`,
+        transition: animated ? 'box-shadow 0.15s steps(2)' : undefined,
       }}
       {...props}
     >

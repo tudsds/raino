@@ -25,4 +25,5 @@ export interface ExportResult {
   outputFiles: string[];
   errors: string[];
   duration: number;
+  isPlaceholder?: boolean;
 }

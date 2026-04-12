@@ -20,4 +20,5 @@ export interface ValidationResult {
   passed: boolean;
   violations: ValidationViolation[];
   duration: number;
+  isPlaceholder?: boolean;
 }

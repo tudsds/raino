@@ -23,14 +23,16 @@ export default function WorkflowProgress({ progress, showSteps = false }: Workfl
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between text-sm">
+      <div className="flex items-center justify-between text-base font-[family-name:var(--font-body)]">
         <span className="text-[#64748b]">Progress</span>
-        <span className="text-[#00f0ff] font-mono font-bold">{progress}%</span>
+        <span className="text-[#00f0ff] font-[family-name:var(--font-mono)] font-bold">
+          {progress}%
+        </span>
       </div>
 
-      <div className="h-2 bg-[#1a1a2e] rounded-full overflow-hidden">
+      <div className="h-3 bg-[#1a1a2e] overflow-hidden border border-[#27272a]">
         <div
-          className="h-full progress-neon rounded-full transition-all duration-500"
+          className="h-full progress-neon transition-all duration-100"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -49,12 +51,12 @@ export default function WorkflowProgress({ progress, showSteps = false }: Workfl
                 }`}
               >
                 <div
-                  className={`w-8 h-8 mx-auto rounded-full flex items-center justify-center text-xs font-medium mb-1 ${
+                  className={`w-8 h-8 mx-auto flex items-center justify-center text-xs font-[family-name:var(--font-heading)] mb-1 ${
                     isCompleted
-                      ? 'bg-[#22c55e] text-[#0a0a0f]'
+                      ? 'bg-[#00ff88] text-[#0a0a0f]'
                       : isCurrent
                         ? 'bg-[#00f0ff] text-[#0a0a0f]'
-                        : 'bg-[#1a1a2e] text-[#64748b] border border-[#27273a]'
+                        : 'bg-[#1a1a2e] text-[#64748b] border-2 border-[#27272a]'
                   }`}
                 >
                   {isCompleted ? (
@@ -71,7 +73,7 @@ export default function WorkflowProgress({ progress, showSteps = false }: Workfl
                   )}
                 </div>
                 <span
-                  className={`text-[10px] ${
+                  className={`text-[10px] font-[family-name:var(--font-body)] ${
                     isCompleted || isCurrent ? 'text-[#e4e4e7]' : 'text-[#64748b]'
                   }`}
                 >

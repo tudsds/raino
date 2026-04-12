@@ -1,4 +1,9 @@
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import type { ExportRequest, ExportResult, ExportFormat } from './types';
+import { KicadCliCommands } from '@raino/kicad-worker-client';
+
+const execFileAsync = promisify(execFile);
 
 type FixtureOutputMapper = (outputPath: string) => string[];
 
@@ -22,10 +27,31 @@ const FIXTURE_OUTPUTS: Record<ExportFormat, FixtureOutputMapper> = {
   bom_csv: (outputPath) => [`${outputPath}/bom.csv`],
 };
 
-export function runExport(request: ExportRequest): ExportResult {
-  const startTime = performance.now();
-  const errors: string[] = [];
+function getKicadCliPath(): string | null {
+  return process.env.KICAD_CLI_PATH ?? null;
+}
 
+type KiCadExportCommand = (
+  projectPath: string,
+  outputPath: string,
+) => { command: string; args: string[]; description: string };
+
+const KICAD_EXPORT_COMMANDS: Partial<Record<ExportFormat, KiCadExportCommand>> = {
+  schematic_pdf: (projectPath, outputPath) =>
+    KicadCliCommands.schExportPdf(projectPath, outputPath),
+  schematic_svg: (projectPath, outputPath) =>
+    KicadCliCommands.schExportSvg(projectPath, outputPath),
+  netlist: (projectPath, outputPath) => KicadCliCommands.schExportNetlist(projectPath, outputPath),
+  pcb_svg: (projectPath, outputPath) => KicadCliCommands.pcbExportSvg(projectPath, outputPath),
+  pcb_glb: (projectPath, outputPath) => KicadCliCommands.pcbExportGlb(projectPath, outputPath),
+  gerbers: (projectPath, outputPath) => KicadCliCommands.pcbExportGerbers(projectPath, outputPath),
+  pos: (projectPath, outputPath) => KicadCliCommands.pcbExportPos(projectPath, outputPath),
+  ipc2581: (projectPath, outputPath) => KicadCliCommands.pcbExportIpc2581(projectPath, outputPath),
+  odb: (projectPath, outputPath) => KicadCliCommands.pcbExportOdb(projectPath, outputPath),
+};
+
+function validateExportRequest(request: ExportRequest): string[] {
+  const errors: string[] = [];
   if (!request.projectId || request.projectId.trim().length === 0) {
     errors.push('projectId is required');
   }
@@ -35,6 +61,12 @@ export function runExport(request: ExportRequest): ExportResult {
   if (!request.outputPath || request.outputPath.trim().length === 0) {
     errors.push('outputPath is required');
   }
+  return errors;
+}
+
+export function runExport(request: ExportRequest): ExportResult {
+  const startTime = performance.now();
+  const errors = validateExportRequest(request);
 
   if (errors.length > 0) {
     return {
@@ -44,6 +76,7 @@ export function runExport(request: ExportRequest): ExportResult {
       outputFiles: [],
       errors,
       duration: performance.now() - startTime,
+      isPlaceholder: false,
     };
   }
 
@@ -56,6 +89,7 @@ export function runExport(request: ExportRequest): ExportResult {
       outputFiles: [],
       errors: [`Unsupported export format: ${request.format}`],
       duration: performance.now() - startTime,
+      isPlaceholder: false,
     };
   }
 
@@ -68,5 +102,72 @@ export function runExport(request: ExportRequest): ExportResult {
     outputFiles,
     errors: [],
     duration: performance.now() - startTime,
+    isPlaceholder: true,
   };
+}
+
+export async function runExportAsync(request: ExportRequest): Promise<ExportResult> {
+  const cliPath = getKicadCliPath();
+  if (!cliPath) {
+    return runExport(request);
+  }
+
+  const startTime = performance.now();
+  const errors = validateExportRequest(request);
+
+  if (errors.length > 0) {
+    return {
+      projectId: request.projectId,
+      format: request.format,
+      success: false,
+      outputFiles: [],
+      errors,
+      duration: performance.now() - startTime,
+      isPlaceholder: false,
+    };
+  }
+
+  const commandBuilder = KICAD_EXPORT_COMMANDS[request.format];
+  if (!commandBuilder) {
+    return {
+      projectId: request.projectId,
+      format: request.format,
+      success: false,
+      outputFiles: [],
+      errors: [`Unsupported export format: ${request.format}`],
+      duration: performance.now() - startTime,
+      isPlaceholder: false,
+    };
+  }
+
+  const command = commandBuilder(request.projectPath, request.outputPath);
+
+  try {
+    await execFileAsync(command.command, [...command.args], {
+      timeout: 300_000,
+    });
+
+    const mapper = FIXTURE_OUTPUTS[request.format];
+    const outputFiles = mapper ? mapper(request.outputPath) : [];
+
+    return {
+      projectId: request.projectId,
+      format: request.format,
+      success: true,
+      outputFiles,
+      errors: [],
+      duration: performance.now() - startTime,
+      isPlaceholder: false,
+    };
+  } catch (err) {
+    return {
+      projectId: request.projectId,
+      format: request.format,
+      success: false,
+      outputFiles: [],
+      errors: [`KiCad CLI export failed: ${err instanceof Error ? err.message : String(err)}`],
+      duration: performance.now() - startTime,
+      isPlaceholder: false,
+    };
+  }
 }

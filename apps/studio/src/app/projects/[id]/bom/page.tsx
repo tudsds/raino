@@ -1,21 +1,22 @@
-import { mockBOM, mockProjects, type BOMItem } from '@/lib/mock-data';
+import { prisma } from '@raino/db';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import StatusBadge from '@/components/StatusBadge';
+import StatusBadge, { type Status } from '@/components/StatusBadge';
 
 interface BOMPageProps {
   params: Promise<{ id: string }>;
 }
 
-function RiskBadge({ level }: { level: 'low' | 'medium' | 'high' }) {
-  const colors = {
+function RiskBadge({ level }: { level: string }) {
+  const colors: Record<string, string> = {
     low: 'bg-[rgba(34,197,94,0.15)] text-[#22c55e] border-[rgba(34,197,94,0.3)]',
     medium: 'bg-[rgba(245,158,11,0.15)] text-[#f59e0b] border-[rgba(245,158,11,0.3)]',
     high: 'bg-[rgba(239,68,68,0.15)] text-[#ef4444] border-[rgba(239,68,68,0.3)]',
   };
+  const colorClass = colors[level] ?? colors.low;
 
   return (
-    <span className={`px-2 py-1 rounded text-xs font-medium border ${colors[level]}`}>
+    <span className={`px-2 py-1 text-xs font-medium border ${colorClass}`}>
       {level.toUpperCase()}
     </span>
   );
@@ -23,17 +24,18 @@ function RiskBadge({ level }: { level: 'low' | 'medium' | 'high' }) {
 
 export default async function BOMPage({ params }: BOMPageProps) {
   const { id } = await params;
-  const project = mockProjects.find((p) => p.id === id);
+  const project = await prisma.project.findUnique({
+    where: { id },
+    include: { bom: { include: { rows: true } } },
+  });
 
   if (!project) {
     notFound();
   }
 
-  const bom = mockBOM;
-  const totalCost = bom.items.reduce(
-    (sum: number, item: BOMItem) => sum + item.unitPrice * item.quantity,
-    0,
-  );
+  const bom = project.bom;
+  const rows = bom?.rows ?? [];
+  const totalCost = rows.reduce((sum, item) => sum + Number(item.unitPrice) * item.quantity, 0);
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },
@@ -48,7 +50,7 @@ export default async function BOMPage({ params }: BOMPageProps) {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
-      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80  sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -70,10 +72,12 @@ export default async function BOMPage({ params }: BOMPageProps) {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <span className="px-3 py-1.5 rounded-full bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] text-xs text-[#f59e0b] font-medium">
-              Estimate
-            </span>
-            <StatusBadge status={project.status} />
+            {bom?.isEstimate && (
+              <span className="px-3 py-1.5 bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] text-xs text-[#f59e0b] font-medium">
+                Estimate
+              </span>
+            )}
+            <StatusBadge status={project.status as Status} />
           </div>
         </div>
       </header>
@@ -99,188 +103,153 @@ export default async function BOMPage({ params }: BOMPageProps) {
       </div>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        <div className="card overflow-hidden">
-          <div className="p-4 border-b border-[#27273a] flex items-center justify-between">
-            <div>
-              <h2 className="text-lg font-semibold text-[#e4e4e7]">BOM Items</h2>
-              <p className="text-sm text-[#64748b]">{bom.items.length} components</p>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <span className="text-[#64748b]">Total Estimate:</span>
-              <span className="text-[#00f0ff] font-mono text-lg font-bold">
-                ${totalCost.toFixed(2)}
-              </span>
-            </div>
+        {rows.length === 0 ? (
+          <div className="card p-8 text-center">
+            <h2 className="text-lg font-semibold text-[#e4e4e7] mb-2">No BOM Generated</h2>
+            <p className="text-[#64748b]">
+              Complete the architecture phase first to generate a BOM.
+            </p>
           </div>
-
-          <div className="overflow-x-auto">
-            <table className="table-cyber">
-              <thead>
-                <tr>
-                  <th>Ref</th>
-                  <th>Value</th>
-                  <th>MPN</th>
-                  <th>Manufacturer</th>
-                  <th className="text-right">Qty</th>
-                  <th className="text-right">Unit Price</th>
-                  <th className="text-right">Extended</th>
-                  <th>Risk</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bom.items.map((item: BOMItem) => (
-                  <tr key={item.id}>
-                    <td className="font-mono text-[#00f0ff]">{item.ref}</td>
-                    <td>{item.value}</td>
-                    <td className="font-mono text-sm">{item.mpn}</td>
-                    <td>{item.manufacturer}</td>
-                    <td className="text-right font-mono">{item.quantity}</td>
-                    <td className="text-right font-mono">${item.unitPrice.toFixed(2)}</td>
-                    <td className="text-right font-mono text-[#e4e4e7]">
-                      ${(item.unitPrice * item.quantity).toFixed(2)}
-                    </td>
-                    <td>
-                      <RiskBadge level={item.risk} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr className="border-t-2 border-[#27273a]">
-                  <td colSpan={6} className="text-right font-semibold text-[#e4e4e7]">
-                    Total (estimated):
-                  </td>
-                  <td className="text-right font-mono text-lg font-bold text-[#00f0ff]">
+        ) : (
+          <>
+            <div className="card overflow-hidden">
+              <div className="p-4 border-b border-[#27273a] flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold text-[#e4e4e7]">BOM Items</h2>
+                  <p className="text-sm text-[#64748b]">{rows.length} components</p>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-[#64748b]">Total Estimate:</span>
+                  <span className="text-[#00f0ff] font-mono text-lg font-bold">
                     ${totalCost.toFixed(2)}
-                  </td>
-                  <td></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="card p-4">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] flex items-center justify-center">
-                <svg
-                  className="w-4 h-4 text-[#22c55e]"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <span className="text-sm text-[#a1a1aa]">Low Risk</span>
-            </div>
-            <p className="text-2xl font-bold text-[#22c55e]">
-              {bom.items.filter((i: BOMItem) => i.risk === 'low').length}
-            </p>
-          </div>
-
-          <div className="card p-4">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] flex items-center justify-center">
-                <svg
-                  className="w-4 h-4 text-[#f59e0b]"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-              </div>
-              <span className="text-sm text-[#a1a1aa]">Medium Risk</span>
-            </div>
-            <p className="text-2xl font-bold text-[#f59e0b]">
-              {bom.items.filter((i: BOMItem) => i.risk === 'medium').length}
-            </p>
-          </div>
-
-          <div className="card p-4">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-[rgba(239,68,68,0.15)] border border-[rgba(239,68,68,0.3)] flex items-center justify-center">
-                <svg
-                  className="w-4 h-4 text-[#ef4444]"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <span className="text-sm text-[#a1a1aa]">High Risk</span>
-            </div>
-            <p className="text-2xl font-bold text-[#ef4444]">
-              {bom.items.filter((i: BOMItem) => i.risk === 'high').length}
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-6 card p-6">
-          <h2 className="text-lg font-semibold text-[#e4e4e7] mb-4">Sourcing Rationale</h2>
-          <div className="space-y-4">
-            {bom.items.map((item: BOMItem) => (
-              <div
-                key={item.id}
-                className="p-4 rounded-xl bg-[#1a1a2e] border border-[#27273a] hover:border-[#3a3a5a] transition-colors"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-[#00f0ff] text-sm">{item.ref}</span>
-                    <span className="text-[#e4e4e7] font-medium">{item.value}</span>
-                    <span className="text-[#64748b] text-sm">{item.mpn}</span>
-                  </div>
-                  <RiskBadge level={item.risk} />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <p className="text-[#64748b] text-xs uppercase tracking-wider mb-1">
-                      Why Chosen
-                    </p>
-                    <p className="text-[#a1a1aa]">{item.description}</p>
-                  </div>
-                  <div>
-                    <p className="text-[#64748b] text-xs uppercase tracking-wider mb-1">
-                      Supplier Options
-                    </p>
-                    <p className="text-[#a1a1aa]">{item.manufacturer}</p>
-                    <p className="text-[#00f0ff] font-mono">${item.unitPrice.toFixed(2)}</p>
-                  </div>
-                  <div>
-                    <p className="text-[#64748b] text-xs uppercase tracking-wider mb-1">
-                      Risk Assessment
-                    </p>
-                    <p className="text-[#a1a1aa]">
-                      {item.risk === 'low'
-                        ? 'Widely available, multiple sources'
-                        : item.risk === 'medium'
-                          ? 'Limited suppliers, monitor stock'
-                          : 'Single source, long lead time'}
-                    </p>
-                  </div>
+                  </span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+
+              <div className="overflow-x-auto">
+                <table className="table-cyber">
+                  <thead>
+                    <tr>
+                      <th>Ref</th>
+                      <th>Value</th>
+                      <th>MPN</th>
+                      <th>Manufacturer</th>
+                      <th className="text-right">Qty</th>
+                      <th className="text-right">Unit Price</th>
+                      <th className="text-right">Extended</th>
+                      <th>Risk</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((item) => (
+                      <tr key={item.id}>
+                        <td className="font-mono text-[#00f0ff]">{item.ref}</td>
+                        <td>{item.value}</td>
+                        <td className="font-mono text-sm">{item.mpn}</td>
+                        <td>{item.manufacturer}</td>
+                        <td className="text-right font-mono">{item.quantity}</td>
+                        <td className="text-right font-mono">
+                          ${Number(item.unitPrice).toFixed(2)}
+                        </td>
+                        <td className="text-right font-mono text-[#e4e4e7]">
+                          ${(Number(item.unitPrice) * item.quantity).toFixed(2)}
+                        </td>
+                        <td>
+                          <RiskBadge level={item.risk} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr className="border-t-2 border-[#27273a]">
+                      <td colSpan={6} className="text-right font-semibold text-[#e4e4e7]">
+                        Total (estimated):
+                      </td>
+                      <td className="text-right font-mono text-lg font-bold text-[#00f0ff]">
+                        ${totalCost.toFixed(2)}
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="card p-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-[#22c55e]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <span className="text-sm text-[#a1a1aa]">Low Risk</span>
+                </div>
+                <p className="text-2xl font-bold text-[#22c55e]">
+                  {rows.filter((i) => i.risk === 'low').length}
+                </p>
+              </div>
+
+              <div className="card p-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-[#f59e0b]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                      />
+                    </svg>
+                  </div>
+                  <span className="text-sm text-[#a1a1aa]">Medium Risk</span>
+                </div>
+                <p className="text-2xl font-bold text-[#f59e0b]">
+                  {rows.filter((i) => i.risk === 'medium').length}
+                </p>
+              </div>
+
+              <div className="card p-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 bg-[rgba(239,68,68,0.15)] border border-[rgba(239,68,68,0.3)] flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-[#ef4444]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                  <span className="text-sm text-[#a1a1aa]">High Risk</span>
+                </div>
+                <p className="text-2xl font-bold text-[#ef4444]">
+                  {rows.filter((i) => i.risk === 'high').length}
+                </p>
+              </div>
+            </div>
+          </>
+        )}
       </main>
     </div>
   );
