@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/require-auth';
 import { getQuote, createQuote } from '@/lib/data/quote-queries';
 import { createAuditEntry } from '@/lib/data/audit-queries';
-import { updateProjectStatus } from '@/lib/data/project-queries';
+import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 import { getBOM } from '@/lib/data/bom-queries';
 import { calculateRoughQuote } from '@raino/core';
 import type { BOM, BOMRow } from '@raino/core';
@@ -18,6 +18,11 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
 
   try {
     const { id } = await params;
+    const ownership = await verifyProjectOwnership(id, auth.user.id);
+    if (!ownership.authorized) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+
     const quote = await getQuote(id);
 
     if (!quote) {
@@ -35,6 +40,10 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
         breakdown: quote.breakdown,
         assumptions: quote.assumptions,
         isEstimate: quote.isEstimate,
+        dataSource: quote.isEstimate ? 'llm_estimates' : 'live_supplier',
+        disclaimer: quote.isEstimate
+          ? 'This is a rough estimate based on AI-generated component pricing. Actual costs may vary significantly. Request a formal quote for verified pricing.'
+          : 'Quote based on live supplier pricing data. Final costs subject to change at time of order.',
         quantity: quote.quantity,
         generatedAt: quote.createdAt.toISOString(),
         validUntil: new Date(quote.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),
@@ -51,6 +60,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
   try {
     const { id } = await params;
+    const ownership = await verifyProjectOwnership(id, auth.user.id);
+    if (!ownership.authorized) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+
     const body = await request.json();
     const parsed = QuoteRequestSchema.safeParse(body);
 
@@ -111,6 +125,9 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         'Assembly includes AOI and basic functional test',
         'Does not include custom tooling or NRE charges',
         'Shipping and customs not included',
+        bom.isEstimate
+          ? 'All component prices are LLM-generated estimates, not verified against live supplier data'
+          : 'Component prices sourced from live supplier queries',
       ],
     });
 
@@ -147,6 +164,11 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       },
     });
 
+    const dataSource = bom.isEstimate ? ('llm_estimates' as const) : ('live_supplier' as const);
+    const disclaimer = bom.isEstimate
+      ? 'This is a rough estimate based on AI-generated component pricing. Actual costs may vary significantly. Request a formal quote for verified pricing.'
+      : 'Quote based on live supplier pricing data. Final costs subject to change at time of order.';
+
     return NextResponse.json({
       projectId: id,
       quote: {
@@ -158,6 +180,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         breakdown: quote.breakdown,
         assumptions: quote.assumptions,
         isEstimate: quote.isEstimate,
+        dataSource,
+        disclaimer,
         quantity: quote.quantity,
         generatedAt: quote.createdAt.toISOString(),
         validUntil: new Date(quote.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),

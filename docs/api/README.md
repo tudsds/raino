@@ -7,8 +7,9 @@
 
 ## Authentication
 
-Not implemented in bootstrap. API routes are open for development.
-Production deployment should add authentication middleware.
+All API routes require authentication via `requireAuth()` and project-level ownership via `verifyProjectOwnership()`. Unauthenticated requests receive a 401 response. Requests to project routes for projects not owned by the authenticated user receive a 404 (not 403, to avoid leaking project existence).
+
+Authentication is enforced via Supabase Auth (magic link) with session cookies refreshed by middleware on every request.
 
 ## Project Lifecycle
 

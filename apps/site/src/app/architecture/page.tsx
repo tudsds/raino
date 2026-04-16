@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 
 const packages = [
   {
@@ -92,50 +93,6 @@ const boundaries = [
     ],
   },
 ];
-
-function Navbar() {
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80  border-b border-[#27272a]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold font-[family-name:var(--font-heading)]">
-              RA<span className="text-[#00f0ff]">I</span>NO
-            </span>
-          </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link
-              href="/features"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              Features
-            </Link>
-            <Link href="/architecture" className="text-[#00f0ff]">
-              Architecture
-            </Link>
-            <Link href="/" className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors">
-              How It Works
-            </Link>
-            <a
-              href="https://github.com/tudsds/raino"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              GitHub
-            </a>
-          </div>
-          <a
-            href="http://localhost:3001"
-            className="px-4 py-2 bg-[#111118] border-2 border-[#00f0ff] text-[#00f0ff] hover:neon-glow transition-all duration-300 font-medium"
-          >
-            Launch Studio
-          </a>
-        </div>
-      </div>
-    </nav>
-  );
-}
 
 function ArchitectureDiagram() {
   return (
@@ -312,7 +269,7 @@ function Footer() {
 export default function ArchitecturePage() {
   return (
     <>
-      <Navbar />
+      <Navbar activePath="/architecture" />
       <main className="pt-16">
         <section className="py-24 bg-[#0a0a0f] circuit-grid">
           <div className="max-w-4xl mx-auto px-4 text-center">
@@ -367,10 +324,7 @@ export default function ArchitecturePage() {
             </h2>
             <div className="space-y-8">
               {services.map((service) => (
-                <div
-                  key={service.name}
-                  className="p-6 bg-[#0a0a0f] border-2 border-[#27272a]"
-                >
+                <div key={service.name} className="p-6 bg-[#0a0a0f] border-2 border-[#27272a]">
                   <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                     <div className="lg:w-1/3">
                       <code className="text-[#00f0ff] font-semibold">{service.name}</code>
@@ -404,10 +358,7 @@ export default function ArchitecturePage() {
             </h2>
             <div className="space-y-6">
               {boundaries.map((boundary) => (
-                <div
-                  key={boundary.name}
-                  className="p-6 bg-[#111118] border-2 border-[#27272a]"
-                >
+                <div key={boundary.name} className="p-6 bg-[#111118] border-2 border-[#27272a]">
                   <h3 className="text-xl font-semibold font-[family-name:var(--font-heading)] mb-3 text-[#e4e4e7]">
                     {boundary.name}
                   </h3>

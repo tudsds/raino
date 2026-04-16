@@ -2,13 +2,13 @@
 
 ## Aesthetic
 
-Raino uses a **hacker/cyberpunk** design language across both apps.
+Raino uses a **pixel-art cyberpunk** design language across both apps.
 
 ### Core Principles
 
 1. **Dark-first** — Near-black backgrounds with high-contrast foreground
 2. **Neon accents** — Cyan, purple, magenta glow effects
-3. **Technical precision** — Monospace fonts for data, clean grid layouts
+3. **Technical precision** — Monospace fonts for data, pixel-art grid layouts
 4. **Product-grade** — Not gimmicky, highly legible
 5. **Responsive** — Works across all screen sizes
 
@@ -25,7 +25,7 @@ Raino uses a **hacker/cyberpunk** design language across both apps.
 | fg-muted         | #71717a   | Muted/disabled text          |
 | accent-cyan      | #00f0ff   | Primary accent, links, CTAs  |
 | accent-purple    | #8b5cf6   | Secondary accent, selections |
-| accent-magenta   | #ff00aa   | Highlight, special elements  |
+| accent-magenta   | #ff00ff   | Highlight, special elements  |
 | accent-green     | #00ff88   | Success, confirmed status    |
 | accent-amber     | #ffaa00   | Warning, pending status      |
 | accent-red       | #ff3366   | Error, destructive actions   |
@@ -35,11 +35,11 @@ Raino uses a **hacker/cyberpunk** design language across both apps.
 
 ### Typography
 
-| Role      | Font           | Weight  |
-| --------- | -------------- | ------- |
-| Headings  | Space Grotesk  | 600-700 |
-| Body      | Inter          | 400-500 |
-| Code/Data | JetBrains Mono | 400     |
+| Role      | Font           | Weight |
+| --------- | -------------- | ------ |
+| Headings  | Press Start 2P | 400    |
+| Body      | VT323          | 400    |
+| Code/Data | VT323          | 400    |
 
 ### Effects
 

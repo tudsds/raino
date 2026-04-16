@@ -1,10 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/require-auth';
-import { prisma } from '@raino/db';
 import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
 import { createBOM } from '@/lib/data/bom-queries';
 import { createAuditEntry } from '@/lib/data/audit-queries';
-import { updateProjectStatus } from '@/lib/data/project-queries';
+import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
+
+const BOMComponentSchema = z.object({
+  ref: z.string().describe('Reference designator, e.g. U1, R2, C3'),
+  value: z.string().describe('Component value, e.g. 10kΩ, 100nF, STM32F407'),
+  mpn: z.string().describe('Manufacturer Part Number'),
+  manufacturer: z.string().describe('Manufacturer name'),
+  package: z.string().describe('Package/footprint type, e.g. 0402, QFP-48'),
+  quantity: z.number().int().min(1),
+  unitPrice: z.number().min(0).describe('Estimated unit price in USD'),
+  lifecycle: z.enum(['active', 'nrnd', 'obsolete', 'unknown']).optional(),
+  risk: z.enum(['low', 'medium', 'high']).optional(),
+  description: z.string().optional(),
+  alternates: z
+    .array(
+      z.object({
+        mpn: z.string(),
+        manufacturer: z.string(),
+        reason: z.string().optional(),
+      }),
+    )
+    .optional(),
+});
+
+const BOMOutputSchema = z.object({
+  components: z.array(BOMComponentSchema),
+  notes: z.string().optional(),
+});
 
 export async function POST(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await requireAuth();
@@ -13,14 +40,12 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
   try {
     const { id } = await params;
 
-    const project = await prisma.project.findUnique({
-      where: { id },
-      include: { architecture: true, spec: true, ingestion: true },
-    });
-
-    if (!project) {
+    const ownership = await verifyProjectOwnership(id, auth.user.id);
+    if (!ownership.authorized) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
+
+    const project = ownership.project;
 
     const architecture = project.architecture
       ? JSON.stringify({
@@ -35,6 +60,20 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       : 'No candidates ingested';
 
     let bomGuidance: string;
+    let bomRows: Array<{
+      ref: string;
+      value: string;
+      mpn: string;
+      manufacturer: string;
+      pkg: string;
+      quantity: number;
+      unitPrice: number;
+      currency: string;
+      lifecycle: string;
+      risk: string;
+      description?: string;
+    }> = [];
+
     try {
       const provider = new KimiProvider();
       const gateway = new LLMGateway(provider);
@@ -45,18 +84,33 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         boardArea: '',
         layerCount: '',
       });
-      const response = await gateway.chat(messages);
-      bomGuidance = response.content;
+      const structured = await gateway.chatStructured(messages, BOMOutputSchema);
+      bomGuidance = structured.notes ?? 'BOM generated from LLM estimates.';
+      bomRows = structured.components.map((c) => ({
+        ref: c.ref,
+        value: c.value,
+        mpn: c.mpn,
+        manufacturer: c.manufacturer,
+        pkg: c.package,
+        quantity: c.quantity,
+        unitPrice: c.unitPrice,
+        currency: 'USD',
+        lifecycle: c.lifecycle ?? 'unknown',
+        risk: c.risk ?? 'low',
+        description: c.description,
+      }));
     } catch {
       bomGuidance = 'BOM generation unavailable — AI service could not be reached.';
     }
 
+    const totalCost = bomRows.reduce((sum, r) => sum + r.quantity * r.unitPrice, 0);
+
     const bom = await createBOM(id, {
-      totalCost: 0,
+      totalCost,
       currency: 'USD',
-      lineCount: 0,
+      lineCount: bomRows.length,
       isEstimate: true,
-      rows: [],
+      rows: bomRows,
     });
 
     await updateProjectStatus(id, 'bom_generated');

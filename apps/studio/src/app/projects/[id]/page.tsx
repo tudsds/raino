@@ -39,8 +39,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f]">
-      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80  sticky top-0 z-50">
+    <div className="min-h-screen bg-[#0a0a0f] circuit-grid">
+      <header className="border-b border-[#27273a] bg-[#0a0a0f]/80 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/" className="text-[#a1a1aa] hover:text-[#e4e4e7] transition-colors">
@@ -54,8 +54,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </svg>
             </Link>
             <div>
-              <h1 className="text-xl font-bold text-[#e4e4e7]">{project.name}</h1>
-              <p className="text-xs text-[#a1a1aa] font-mono">{project.id}</p>
+              <h1 className="text-xl font-bold text-[#e4e4e7] font-[family-name:var(--font-heading)]">
+                {project.name}
+              </h1>
+              <p className="text-xs text-[#a1a1aa] font-[family-name:var(--font-body)]">
+                {project.id}
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -64,14 +68,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </header>
 
-      <div className="border-b border-[#27273a] bg-[#13131f]/50">
+      <div className="border-b border-[#27273a] bg-[#111118]/50">
         <div className="max-w-7xl mx-auto px-6">
           <nav className="flex gap-1">
             {tabs.map((tab) => (
               <Link
                 key={tab.id}
                 href={tab.href}
-                className={`px-4 py-3 text-sm font-medium transition-all border-b-2 ${
+                className={`px-4 py-3 text-sm font-medium transition-all border-b-2 font-[family-name:var(--font-body)] ${
                   tab.active
                     ? 'text-[#00f0ff] border-[#00f0ff]'
                     : 'text-[#a1a1aa] border-transparent hover:text-[#e4e4e7] hover:border-[#3a3a5a]'
@@ -88,12 +92,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <div className="card p-6">
-              <h2 className="text-lg font-semibold text-[#e4e4e7] mb-4">Description</h2>
-              <p className="text-[#a1a1aa]">{project.description ?? 'No description provided.'}</p>
+              <h2 className="text-lg font-semibold text-[#e4e4e7] mb-4 font-[family-name:var(--font-heading)]">
+                Description
+              </h2>
+              <p className="text-[#a1a1aa] font-[family-name:var(--font-body)]">
+                {project.description ?? 'No description provided.'}
+              </p>
             </div>
 
             <div className="card p-6">
-              <h2 className="text-lg font-semibold text-[#e4e4e7] mb-4">Workflow Progress</h2>
+              <h2 className="text-lg font-semibold text-[#e4e4e7] mb-4 font-[family-name:var(--font-heading)]">
+                Workflow Progress
+              </h2>
               <WorkflowProgress
                 progress={Math.round((project.currentStep / project.totalSteps) * 100)}
                 showSteps
@@ -101,7 +111,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
 
             <div className="card p-6">
-              <h2 className="text-lg font-semibold text-[#e4e4e7] mb-4">Recent Activity</h2>
+              <h2 className="text-lg font-semibold text-[#e4e4e7] mb-4 font-[family-name:var(--font-heading)]">
+                Recent Activity
+              </h2>
               <div className="space-y-4">
                 {project.auditEntries.length > 0 ? (
                   project.auditEntries.map((entry) => (
@@ -111,13 +123,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                           entry.severity === 'info'
                             ? 'bg-[#00f0ff]'
                             : entry.severity === 'warning'
-                              ? 'bg-[#f59e0b]'
-                              : 'bg-[#ef4444]'
+                              ? 'bg-[#ffaa00]'
+                              : 'bg-[#ff3366]'
                         }`}
                       />
                       <div>
-                        <p className="text-sm text-[#e4e4e7]">{entry.action}</p>
-                        <p className="text-xs text-[#64748b]">
+                        <p className="text-sm text-[#e4e4e7] font-[family-name:var(--font-body)]">
+                          {entry.action}
+                        </p>
+                        <p className="text-xs text-[#71717a] font-[family-name:var(--font-body)]">
                           {new Date(entry.createdAt).toLocaleString()}
                         </p>
                       </div>
@@ -128,8 +142,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-[#00f0ff] mt-2" />
                       <div>
-                        <p className="text-sm text-[#e4e4e7]">Project created</p>
-                        <p className="text-xs text-[#64748b]">
+                        <p className="text-sm text-[#e4e4e7] font-[family-name:var(--font-body)]">
+                          Project created
+                        </p>
+                        <p className="text-xs text-[#71717a] font-[family-name:var(--font-body)]">
                           {new Date(project.createdAt).toLocaleString()}
                         </p>
                       </div>
@@ -142,28 +158,28 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           <div className="space-y-6">
             <div className="card p-6">
-              <h3 className="text-sm font-medium text-[#a1a1aa] mb-4 uppercase tracking-wider">
+              <h3 className="text-sm font-medium text-[#a1a1aa] mb-4 uppercase tracking-wider font-[family-name:var(--font-heading)]">
                 Quick Stats
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-4 font-[family-name:var(--font-body)]">
                 <div className="flex justify-between">
-                  <span className="text-[#64748b]">Status</span>
+                  <span className="text-[#71717a]">Status</span>
                   <StatusBadge status={project.status as Status} />
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#64748b]">Progress</span>
-                  <span className="text-[#00f0ff] font-mono">
+                  <span className="text-[#71717a]">Progress</span>
+                  <span className="text-[#00f0ff] font-[family-name:var(--font-body)]">
                     {Math.round((project.currentStep / project.totalSteps) * 100)}%
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#64748b]">Created</span>
+                  <span className="text-[#71717a]">Created</span>
                   <span className="text-[#e4e4e7]">
                     {new Date(project.createdAt).toLocaleDateString()}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#64748b]">Updated</span>
+                  <span className="text-[#71717a]">Updated</span>
                   <span className="text-[#e4e4e7]">
                     {new Date(project.updatedAt).toLocaleDateString()}
                   </span>
@@ -172,7 +188,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
 
             <div className="card p-6">
-              <h3 className="text-sm font-medium text-[#a1a1aa] mb-4 uppercase tracking-wider">
+              <h3 className="text-sm font-medium text-[#a1a1aa] mb-4 uppercase tracking-wider font-[family-name:var(--font-heading)]">
                 Quick Actions
               </h3>
               <div className="space-y-3">

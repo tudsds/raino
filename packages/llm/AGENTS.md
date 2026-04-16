@@ -31,10 +31,10 @@ interface LLMProvider {
 
 Kimi K2.5 uses the OpenAI SDK with a custom `baseURL`:
 
-- **Model**: `moonshot-v1-auto` (auto-selects reasoning depth)
-- **Base URL**: `https://api.moonshot.cn/v1`
-- **Max tokens**: 4096 (fixed, not configurable per call)
-- **Temperature**: 0.0 (deterministic output for structured tasks)
+- **Model**: `kimi-k2-0711`
+- **Base URL**: `https://api.moonshot.ai/v1`
+- **Max tokens**: 32768 (default, overridable per call via `options.maxTokens`)
+- **Temperature**: 1.0 (fixed, not configurable per call)
 - **SDK**: `openai` npm package (OpenAI-compatible)
 
 The provider does not expose model selection or temperature tuning to callers. These are fixed to ensure consistent, reproducible structured outputs. If a caller needs different settings, that is a new provider implementation.

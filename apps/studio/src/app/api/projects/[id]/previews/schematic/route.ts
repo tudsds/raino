@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/require-auth';
+import { verifyProjectOwnership } from '@/lib/data/project-queries';
 import { getArtifacts } from '@/lib/data/artifact-queries';
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -8,6 +9,11 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
 
   try {
     const { id } = await params;
+    const ownership = await verifyProjectOwnership(id, auth.user.id);
+    if (!ownership.authorized) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+
     const artifacts = await getArtifacts(id, 'schematic');
 
     if (artifacts.length === 0) {
@@ -17,6 +23,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
         format: 'svg',
         isPlaceholder: true,
         available: false,
+        reason: 'no_design_generated',
+        message: 'Run KiCad design generation first to create preview assets',
       });
     }
 

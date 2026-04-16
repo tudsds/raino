@@ -150,6 +150,11 @@ body {
     0 0 10px rgba(0, 240, 255, 0.5);
 }
 
+.card {
+  background-color: #111118;
+  border: 2px solid #27272a;
+}
+
 /* Card hover - pixel style */
 .card-hover-glow {
   transition: all 0.1s steps(2);

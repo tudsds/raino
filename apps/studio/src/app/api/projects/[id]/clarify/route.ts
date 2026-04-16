@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/require-auth';
-import { prisma } from '@raino/db';
+import { verifyProjectOwnership } from '@/lib/data/project-queries';
 import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 
@@ -15,6 +15,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
   try {
     const { id } = await params;
+    const ownership = await verifyProjectOwnership(id, auth.user.id);
+    if (!ownership.authorized) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+
+    const project = ownership.project;
+
     const body = await request.json();
     const parsed = ClarifySchema.safeParse(body);
 
@@ -26,15 +33,6 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     }
 
     const { message } = parsed.data;
-
-    const project = await prisma.project.findUnique({
-      where: { id },
-      include: { intakeMessages: true, spec: true },
-    });
-
-    if (!project) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
-    }
 
     const intakeMessages = project.intakeMessages.map((m) => `${m.role}: ${m.content}`).join('\n');
 

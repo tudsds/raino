@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import type { ProjectGenerationRequest, ProjectGenerationResult, BomComponent } from './types';
 import { mapBomToKiCad, type KiCadSymbolMapping } from './symbol-mapper';
 
@@ -167,9 +169,16 @@ export function generateKiCadProject(request: ProjectGenerationRequest): Project
     .join('\n');
   const pcbContent = PCB_TEMPLATE.replace('{footprintEntries}', footprintEntries);
 
-  void projectContent;
-  void schematicContent;
-  void pcbContent;
+  try {
+    fs.mkdirSync(projectPath, { recursive: true });
+
+    fs.writeFileSync(path.join(projectPath, `${projectName}.kicad_pro`), projectContent);
+    fs.writeFileSync(schematicPath, schematicContent);
+    fs.writeFileSync(pcbPath, pcbContent);
+  } catch (writeError) {
+    const message = writeError instanceof Error ? writeError.message : String(writeError);
+    errors.push(`Failed to write project files: ${message}`);
+  }
 
   return {
     projectId: request.projectId,

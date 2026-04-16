@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/auth/get-current-user';
 import UserMenu from '@/components/UserMenu';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export default async function StudioHeader() {
   const user = await getCurrentUser();
@@ -25,6 +26,7 @@ export default async function StudioHeader() {
           <Link href="/" className="text-[#e4e4e7] hover:text-[#00f0ff] transition-colors">
             Dashboard
           </Link>
+          <LanguageSwitcher />
           {user ? (
             <UserMenu email={user.email ?? 'User'} />
           ) : (

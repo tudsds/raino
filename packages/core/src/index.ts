@@ -70,6 +70,8 @@ export {
 
 export { validateProject, validateProductSpec, validateBOM, validateQuote } from './validation';
 
+export { runSufficiencyGate, type IngestionState } from './ingestion/sufficiency-gate';
+
 export { calculateRoughQuote, type QuoteOptions } from './quote/calculator';
 
 export {

@@ -24,13 +24,13 @@ export default function WorkflowProgress({ progress, showSteps = false }: Workfl
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between text-base font-[family-name:var(--font-body)]">
-        <span className="text-[#64748b]">Progress</span>
-        <span className="text-[#00f0ff] font-[family-name:var(--font-mono)] font-bold">
+        <span className="text-[#71717a]">Progress</span>
+        <span className="text-[#00f0ff] font-[family-name:var(--font-body)] font-bold">
           {progress}%
         </span>
       </div>
 
-      <div className="h-3 bg-[#1a1a2e] overflow-hidden border border-[#27272a]">
+      <div className="h-3 bg-[#1a1a24] overflow-hidden border border-[#27272a]">
         <div
           className="h-full progress-neon transition-all duration-100"
           style={{ width: `${progress}%` }}
@@ -56,7 +56,7 @@ export default function WorkflowProgress({ progress, showSteps = false }: Workfl
                       ? 'bg-[#00ff88] text-[#0a0a0f]'
                       : isCurrent
                         ? 'bg-[#00f0ff] text-[#0a0a0f]'
-                        : 'bg-[#1a1a2e] text-[#64748b] border-2 border-[#27272a]'
+                        : 'bg-[#1a1a24] text-[#71717a] border-2 border-[#27272a]'
                   }`}
                 >
                   {isCompleted ? (
@@ -74,7 +74,7 @@ export default function WorkflowProgress({ progress, showSteps = false }: Workfl
                 </div>
                 <span
                   className={`text-[10px] font-[family-name:var(--font-body)] ${
-                    isCompleted || isCurrent ? 'text-[#e4e4e7]' : 'text-[#64748b]'
+                    isCompleted || isCurrent ? 'text-[#e4e4e7]' : 'text-[#71717a]'
                   }`}
                 >
                   {step}

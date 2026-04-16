@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/require-auth';
 import { updateIngestionStatus } from '@/lib/data/ingestion-queries';
 import { createAuditEntry } from '@/lib/data/audit-queries';
-import { updateProjectStatus } from '@/lib/data/project-queries';
+import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 
 export async function POST(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await requireAuth();
@@ -10,6 +10,11 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
   try {
     const { id } = await params;
+
+    const ownership = await verifyProjectOwnership(id, auth.user.id);
+    if (!ownership.authorized) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
 
     await updateIngestionStatus(id, 'completed');
     await updateProjectStatus(id, 'ingested');

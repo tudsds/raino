@@ -43,3 +43,13 @@ export async function updateIngestionStatus(projectId: string, status: string) {
     data: { status },
   });
 }
+
+export async function updateIngestionSufficiencyReport(
+  projectId: string,
+  report: Record<string, unknown>,
+) {
+  return prisma.ingestionManifest.update({
+    where: { projectId },
+    data: { sufficiencyReport: report as Prisma.InputJsonValue },
+  });
+}

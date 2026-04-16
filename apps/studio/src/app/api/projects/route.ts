@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/require-auth';
-import { getProjectsForUser, createProject } from '@/lib/data/project-queries';
+import { getProjectsForUser, createProject, getUserOrgId } from '@/lib/data/project-queries';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 
 const CreateProjectSchema = z.object({
@@ -42,7 +42,14 @@ export async function POST(request: NextRequest) {
 
     const { name, description, organizationId } = parsed.data;
 
-    const orgId = organizationId ?? 'default';
+    const orgId = organizationId ?? (await getUserOrgId(auth.user.id));
+
+    if (!orgId) {
+      return NextResponse.json(
+        { error: 'No organization found for user. Please complete sign-up first.' },
+        { status: 403 },
+      );
+    }
 
     const project = await createProject({
       name,

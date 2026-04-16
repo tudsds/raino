@@ -58,18 +58,20 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-[#0a0a0f] circuit-grid">
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="mb-10">
-          <h2 className="text-3xl font-bold text-[#e4e4e7] mb-2">Your Projects</h2>
-          <p className="text-[#a1a1aa] mb-6">
+          <h2 className="text-3xl font-bold text-[#e4e4e7] mb-2 font-[family-name:var(--font-heading)]">
+            Your Projects
+          </h2>
+          <p className="text-[#a1a1aa] mb-6 font-[family-name:var(--font-body)]">
             Manage your PCB designs from concept to manufacturing
           </p>
-          <Link href="/api/projects" className="inline-block">
+          <Link href="/projects/new" className="inline-block">
             <NeonButton>+ New Project</NeonButton>
           </Link>
         </div>
 
         {projects.length === 0 && (
           <div className="text-center py-20">
-            <div className="w-24 h-24 mx-auto mb-6 bg-[#13131f] border border-[#27273a] flex items-center justify-center">
+            <div className="w-24 h-24 mx-auto mb-6 bg-[#111118] border border-[#27273a] flex items-center justify-center">
               <svg
                 className="w-12 h-12 text-[#3a3a5a]"
                 fill="none"
@@ -84,8 +86,10 @@ export default async function DashboardPage() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-[#e4e4e7] mb-2">No projects yet</h3>
-            <p className="text-[#a1a1aa] max-w-md mx-auto">
+            <h3 className="text-xl font-semibold text-[#e4e4e7] mb-2 font-[family-name:var(--font-heading)]">
+              No projects yet
+            </h3>
+            <p className="text-[#a1a1aa] max-w-md mx-auto font-[family-name:var(--font-body)]">
               Start your first PCB design project. Describe your hardware idea in natural language
               and let Raino guide you through the workflow.
             </p>
@@ -120,18 +124,20 @@ export default async function DashboardPage() {
                     <StatusBadge status={project.status as Status} />
                   </div>
 
-                  <h3 className="text-lg font-semibold text-[#e4e4e7] mb-2 group-hover:text-[#00f0ff] transition-colors">
+                  <h3 className="text-lg font-semibold text-[#e4e4e7] mb-2 group-hover:text-[#00f0ff] transition-colors font-[family-name:var(--font-heading)]">
                     {project.name}
                   </h3>
-                  <p className="text-sm text-[#a1a1aa] mb-4 line-clamp-2">{project.description}</p>
+                  <p className="text-sm text-[#a1a1aa] mb-4 line-clamp-2 font-[family-name:var(--font-body)]">
+                    {project.description}
+                  </p>
 
                   <WorkflowProgress
                     progress={Math.round((project.currentStep / project.totalSteps) * 100)}
                   />
 
-                  <div className="mt-4 pt-4 border-t border-[#27273a] flex items-center justify-between text-xs text-[#64748b]">
+                  <div className="mt-4 pt-4 border-t border-[#27273a] flex items-center justify-between text-xs text-[#71717a] font-[family-name:var(--font-body)]">
                     <span>Updated {project.updatedAt.toLocaleDateString()}</span>
-                    <span className="font-mono">{project.id}</span>
+                    <span className="font-[family-name:var(--font-body)]">{project.id}</span>
                   </div>
                 </div>
               </Link>

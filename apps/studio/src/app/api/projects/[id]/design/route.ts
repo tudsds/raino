@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/require-auth';
+import { verifyProjectOwnership } from '@/lib/data/project-queries';
 import { createDesignJob } from '@/lib/data/artifact-queries';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 import { updateProjectStatus } from '@/lib/data/project-queries';
@@ -10,6 +11,11 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
   try {
     const { id } = await params;
+
+    const ownership = await verifyProjectOwnership(id, auth.user.id);
+    if (!ownership.authorized) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
 
     const job = await createDesignJob(id, 'DESIGN');
 

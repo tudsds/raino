@@ -97,3 +97,53 @@ export async function getProjectsForUser(userId: string) {
   }
   return allProjects;
 }
+
+export async function verifyProjectOwnership(
+  projectId: string,
+  userId: string,
+): Promise<
+  | {
+      authorized: true;
+      project: NonNullable<Awaited<ReturnType<typeof getProject>>>;
+    }
+  | { authorized: false }
+> {
+  const user = await prisma.user.findUnique({
+    where: { supabaseUserId: userId },
+    include: {
+      memberships: { select: { organizationId: true } },
+    },
+  });
+
+  if (!user) return { authorized: false };
+
+  const userOrgIds = user.memberships.map((m) => m.organizationId);
+
+  const project = await prisma.project.findUnique({
+    where: { id: projectId },
+    select: { organizationId: true },
+  });
+
+  if (!project) return { authorized: false };
+
+  if (!userOrgIds.includes(project.organizationId)) {
+    return { authorized: false };
+  }
+
+  const fullProject = await getProject(projectId, project.organizationId);
+  if (!fullProject) return { authorized: false };
+
+  return { authorized: true, project: fullProject };
+}
+
+export async function getUserOrgId(userId: string): Promise<string | null> {
+  const user = await prisma.user.findUnique({
+    where: { supabaseUserId: userId },
+    include: { memberships: { take: 1 } },
+  });
+
+  if (!user || user.memberships.length === 0) return null;
+
+  const membership = user.memberships[0];
+  return membership?.organizationId ?? null;
+}

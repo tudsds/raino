@@ -3,7 +3,7 @@ import { requireAuth } from '@/lib/auth/require-auth';
 import { prisma } from '@raino/db';
 import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
 import { createAuditEntry } from '@/lib/data/audit-queries';
-import { updateProjectStatus } from '@/lib/data/project-queries';
+import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 
 export async function POST(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await requireAuth();
@@ -12,14 +12,12 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
   try {
     const { id } = await params;
 
-    const project = await prisma.project.findUnique({
-      where: { id },
-      include: { spec: true },
-    });
-
-    if (!project) {
+    const ownership = await verifyProjectOwnership(id, auth.user.id);
+    if (!ownership.authorized) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
+
+    const project = ownership.project;
 
     const specText = project.spec?.rawText ?? project.description ?? '';
 

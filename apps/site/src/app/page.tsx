@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 
 const features = [
   {
@@ -50,56 +51,6 @@ const workflowSteps = [
   { num: 8, title: 'KiCad Output', desc: 'Production-ready schematic and PCB files' },
 ];
 
-function Navbar() {
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 border-b border-[#27272a]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold font-[family-name:var(--font-heading)]">
-              RA<span className="text-[#00f0ff]">I</span>NO
-            </span>
-          </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link
-              href="/features"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              Features
-            </Link>
-            <Link
-              href="/architecture"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              Architecture
-            </Link>
-            <Link
-              href="#how-it-works"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              How It Works
-            </Link>
-            <a
-              href="https://github.com/tudsds/raino"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              GitHub
-            </a>
-          </div>
-          <a
-            href="http://localhost:3001"
-            className="px-4 py-2 bg-[#111118] border-2 border-[#00f0ff] text-[#00f0ff] hover:neon-glow transition-all duration-300 font-medium"
-          >
-            Launch Studio
-          </a>
-        </div>
-      </div>
-    </nav>
-  );
-}
-
 function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center circuit-grid pt-16">
@@ -118,7 +69,7 @@ function Hero() {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="http://localhost:3001"
+            href={process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'}
             className="px-8 py-4 bg-[#00f0ff] text-[#0a0a0f] font-semibold hover:neon-glow transition-all duration-300"
           >
             Get Started
@@ -330,7 +281,10 @@ function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="http://localhost:3001" className="hover:text-[#00f0ff] transition-colors">
+                <a
+                  href={process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'}
+                  className="hover:text-[#00f0ff] transition-colors"
+                >
                   Studio
                 </a>
               </li>
@@ -380,7 +334,7 @@ function Footer() {
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <Navbar activePath="/" />
       <main>
         <Hero />
         <Features />
