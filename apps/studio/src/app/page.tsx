@@ -14,7 +14,7 @@ export default async function DashboardPage() {
 
   if (!user && hasSupabase) redirect('/login');
 
-  let projects: Array<{
+  const projects: Array<{
     id: string;
     name: string;
     description: string | null;

@@ -212,7 +212,9 @@ export class RealDigiKeyAdapter implements DigiKeyAdapter {
           return fn();
         }
         if (error.status === 429) {
-          throw new Error(`DigiKey API rate limit exceeded: ${error.body.slice(0, 100)}`);
+          throw new Error(`DigiKey API rate limit exceeded: ${error.body.slice(0, 100)}`, {
+            cause: error,
+          });
         }
         if (error.status >= 500) {
           await this.sleep(1000);

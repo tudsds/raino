@@ -1,6 +1,7 @@
 {
   "name": "raino",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "description": "Agentic PCB and PCBA workflow platform",
   "license": "MIT",
@@ -18,11 +19,14 @@
     "format:check": "prettier --check ."
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.59.1",
     "@types/node": "^22.10.0",
+    "eslint": "^10.2.1",
     "prettier": "^3.4.0",
     "turbo": "^2.3.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.58.2"
   },
   "packageManager": "pnpm@9.15.0",
   "engines": {

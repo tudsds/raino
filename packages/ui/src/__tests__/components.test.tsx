@@ -32,7 +32,7 @@ describe('cn utility', () => {
   });
 
   it('handles conditional classes', () => {
-    expect(cn('base', false && 'hidden', 'active')).toBe('base active');
+    expect(cn('base', false && 'hidden', 'active')).toBe('base active'); // eslint-disable-line no-constant-binary-expression -- intentional falsy test
   });
 
   it('deduplicates tailwind classes', () => {

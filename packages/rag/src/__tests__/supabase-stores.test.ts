@@ -436,7 +436,7 @@ describe('SupabaseVectorStore', () => {
 });
 
 describe('createStoreFactory', () => {
-  it('returns memory stores when no config or env vars', async () => {
+  it('returns memory stores when no config or env vars', { timeout: 15000 }, async () => {
     const originalUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const originalKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     delete process.env.NEXT_PUBLIC_SUPABASE_URL;

@@ -167,7 +167,9 @@ export class RealMouserAdapter implements MouserAdapter {
     } catch (error) {
       if (error instanceof HttpError) {
         if (error.status === 429) {
-          throw new Error(`Mouser API rate limit exceeded: ${error.body.slice(0, 100)}`);
+          throw new Error(`Mouser API rate limit exceeded: ${error.body.slice(0, 100)}`, {
+            cause: error,
+          });
         }
         if (error.status >= 500) {
           await this.sleep(1000);
