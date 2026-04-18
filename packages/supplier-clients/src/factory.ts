@@ -32,9 +32,11 @@ function createMouserAdapter(): SupplierAdapter {
 }
 
 function createJLCPCBAdapter(): SupplierAdapter {
-  const apiKey = process.env.JLCPCB_API_KEY;
-  if (apiKey) {
-    return new RealJLCPCBAdapter({ apiKey });
+  const appId = process.env.JLCPCB_APP_ID;
+  const accessKey = process.env.JLCPCB_ACCESS_KEY;
+  const secretKey = process.env.JLCPCB_SECRET_KEY;
+  if (appId && accessKey && secretKey) {
+    return new RealJLCPCBAdapter({ appId, accessKey, secretKey });
   }
   return new MockJLCPCBAdapter();
 }
@@ -61,8 +63,15 @@ export function getAdapterStatus(): AdapterStatusMap {
       available: !!process.env.MOUSER_API_KEY,
     },
     jlcpcb: {
-      mode: process.env.JLCPCB_API_KEY ? 'live' : 'mock',
-      available: !!process.env.JLCPCB_API_KEY,
+      mode:
+        process.env.JLCPCB_APP_ID && process.env.JLCPCB_ACCESS_KEY && process.env.JLCPCB_SECRET_KEY
+          ? 'live'
+          : 'mock',
+      available: !!(
+        process.env.JLCPCB_APP_ID &&
+        process.env.JLCPCB_ACCESS_KEY &&
+        process.env.JLCPCB_SECRET_KEY
+      ),
     },
   };
 }

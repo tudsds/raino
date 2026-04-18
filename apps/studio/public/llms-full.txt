@@ -1,0 +1,148 @@
+# Raino Studio — Agentic PCB Design Platform
+
+## Overview
+
+Raino Studio is the product application for Raino, an agentic PCB and PCBA workflow platform. It requires authentication via Supabase magic link. Once signed in, users can create hardware projects and step through the full design workflow: from a natural language description of what they want to build, through specification, architecture selection, part sourcing, BOM generation, KiCad project creation, and rough cost quoting.
+
+Raino Studio is not a chatbot. Every design decision is bounded by approved architecture templates. Every part selection is traceable to its source. Every quote marks which prices came from live supplier data and which came from fixture estimates. The system stops and asks for input when it hits ambiguity it cannot resolve on its own.
+
+
+## Public Routes
+
+/login — https://raino-studio.vercel.app/login
+Magic link sign-in. Users enter their email and receive a login link.
+
+/signup — https://raino-studio.vercel.app/signup
+Account creation. Collects email and creates a Supabase auth account.
+
+
+## Authenticated Routes
+
+All routes below require a valid session. Unauthenticated users are redirected to the login page.
+
+/ (Dashboard) — https://raino-studio.vercel.app/
+Project list and management. Shows all projects owned by the authenticated user. Each project card displays its name, current workflow step, and last updated timestamp.
+
+/projects/new — https://raino-studio.vercel.app/projects/new
+Create a new project. The user provides a project name and an initial natural language description of the hardware they want to build.
+
+/projects/{id} — https://raino-studio.vercel.app/projects/{id}
+Project detail page. Shows the project overview and workflow progress. Contains sub-pages for each workflow step.
+
+/projects/{id}/intake — https://raino-studio.vercel.app/projects/{id}/intake
+Natural language intake. The user describes their hardware intent in plain English.
+
+/projects/{id}/spec — https://raino-studio.vercel.app/projects/{id}/spec
+Structured specification. Displays the compiled spec with validated fields: target application, power requirements, interfaces, size constraints, environmental conditions, compliance needs, and cost targets.
+
+/projects/{id}/architecture — https://raino-studio.vercel.app/projects/{id}/architecture
+Architecture template selection. Shows the approved architecture template that matches the project requirements.
+
+/projects/{id}/bom — https://raino-studio.vercel.app/projects/{id}/bom
+Bill of materials. Displays the full BOM with supplier links, pricing, stock levels, MOQ requirements, and alternate parts for every line item.
+
+/projects/{id}/quote — https://raino-studio.vercel.app/projects/{id}/quote
+Rough cost quote. Shows the quote breakdown with confidence band (high, medium, or low), subtotal calculation, and a full list of assumptions.
+
+/projects/{id}/previews — https://raino-studio.vercel.app/projects/{id}/previews
+Design previews. Shows generated schematic and layout previews when available.
+
+/projects/{id}/downloads — https://raino-studio.vercel.app/projects/{id}/downloads
+Artifact downloads. Provides download links for Gerber files, BOM exports, and manufacturing handoff bundles.
+
+
+## API Routes
+
+All project API routes require authentication and enforce ownership via verifyProjectOwnership. Unauthenticated requests receive a 401 response. Requests from authenticated users who do not own the project receive a 404 response (not 403, to avoid leaking project existence).
+
+API routes handle:
+- Project CRUD operations
+- Workflow step transitions
+- Intake and clarification state
+- Spec read/write
+- Architecture selection
+- BOM generation and retrieval
+- Quote calculation and retrieval
+- File upload and download for design artifacts
+
+
+## The Workflow
+
+Raino Studio guides each project through ten main workflow steps:
+
+1. Intake — The user describes what they want to build in natural language.
+
+2. Clarification — The LLM asks follow-up questions to resolve ambiguity. This loop continues until the system has enough information. It will not proceed past critical uncertainty without user input.
+
+3. Spec compilation — The system compiles the user's answers into a structured specification with validated fields.
+
+4. Architecture selection — The system selects an approved architecture template that matches the requirements. Architecture templates are predefined, audited designs that constrain the solution space.
+
+5. Ingestion — Datasheets, errata, and application notes for selected parts are ingested through an 8-stage pipeline with sufficiency gates. If critical documents are missing, the system flags the gap.
+
+6. BOM generation — A KiCad-ready bill of materials is assembled with alternate parts for every line item. Each part includes supplier links, pricing, stock, and MOQ.
+
+7. Quote generation — A rough cost quote is produced with three confidence bands. High: all BOM lines have real supplier prices. Medium: 70%+ real, 30% or fewer estimates. Low: more than 30% estimates. Every quote includes a full assumption list.
+
+8. Design generation — KiCad schematic and layout files are produced via the KiCad CLI. KiCad is an external GPL-licensed tool invoked via CLI commands only. If the KiCad CLI is unavailable, this step is skipped and labeled.
+
+9. Preview and download — The user can preview generated designs and download artifacts including Gerber files, BOM exports, and manufacturing handoff bundles.
+
+10. Handoff — A manufacturing handoff bundle is assembled with all deliverables for PCBA fabrication.
+
+
+## Authentication and Security
+
+Auth uses Supabase magic link (passwordless email login). The middleware refreshes session cookies on every request.
+
+Project data is isolated by ownership. Users can only access their own projects. The verifyProjectOwnership function checks both authentication status and project ownership on every API request.
+
+Supabase Row-Level Security (RLS) provides an additional layer of data isolation at the database level.
+
+
+## Degraded Mode
+
+Raino Studio runs in degraded mode when credentials are missing. Every degraded path is clearly labeled.
+
+Without Supabase credentials: the app shows auth prompts but cannot persist projects or run RAG queries. Static UI still renders.
+
+Without KIMI_API_KEY: the app works except LLM calls. Natural language intake and reasoning fall back to manual input modes.
+
+Without supplier API keys (DigiKey, Mouser, JLCPCB): the full workflow runs, but pricing, stock, and MOQ data come from labeled fixture data. Quotes are marked as estimates.
+
+Without KiCad CLI: project management, BOM, and quote steps work normally. KiCad project generation is skipped with a clear label.
+
+Mock adapters and fixture data are permanent parts of the codebase. They are not temporary hacks. They exist so the system is always inspectable and testable.
+
+
+## No-Fake-Integration Policy
+
+Raino Studio never fabricates live pricing or stock data. It never claims a live API connection when using fixture data. It never silently downgrades to degraded mode without reporting it. And it never proceeds past critical ambiguity without user confirmation.
+
+Every degraded-mode path is inspectable through the audit trail. Mock adapters are permanent, honest fallbacks.
+
+
+## Tech Stack
+
+Frontend: Next.js 15, React 19, Tailwind CSS v4
+Design: @raino/ui pixel-art cyberpunk design system
+Backend: Next.js Route Handlers, Server Actions, Supabase
+Database: Supabase Postgres, Prisma ORM, pgvector
+Auth: Supabase Auth (magic link)
+Storage: Supabase Storage
+LLM: Kimi K2.5 via OpenAI SDK (moonshot.ai)
+Validation: Zod
+Testing: Vitest
+Deploy: Vercel
+
+
+## Marketing Site
+
+The public-facing marketing site with documentation, feature descriptions, architecture overview, and workflow explanation is at:
+
+https://raino-site.vercel.app/
+
+
+## License
+
+Raino Studio is MIT licensed. KiCad is an external GPL-licensed tool and is not embedded in the Raino codebase.

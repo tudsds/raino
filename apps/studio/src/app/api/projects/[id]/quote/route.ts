@@ -7,6 +7,10 @@ import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-
 import { getBOM } from '@/lib/data/bom-queries';
 import { calculateRoughQuote } from '@raino/core';
 import type { BOM, BOMRow } from '@raino/core';
+import {
+  aggregateSupplierPrices,
+  type SupplierPriceResult,
+} from '@/lib/quotes/supplier-comparison';
 
 const QuoteRequestSchema = z.object({
   quantity: z.number().int().positive().default(100),
@@ -115,6 +119,37 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       version: 1,
     };
 
+    let supplierComparison: SupplierPriceResult[] = [];
+    let supplierHasEstimates = bom.isEstimate;
+
+    try {
+      const supplierInputs = coreRows
+        .filter((r) => r.mpn && r.mpn !== 'unknown')
+        .map((r) => ({ mpn: r.mpn, quantity }));
+
+      if (supplierInputs.length > 0) {
+        supplierComparison = await aggregateSupplierPrices(supplierInputs);
+
+        const priceByMpn = new Map(
+          supplierComparison
+            .filter((r) => r.bestPrice !== null)
+            .map((r) => [r.mpn, r.bestPrice as number]),
+        );
+
+        for (const row of coreBOM.rows) {
+          const override = priceByMpn.get(row.mpn);
+          if (override !== undefined) {
+            row.unitPrice = override;
+          }
+        }
+
+        supplierHasEstimates = supplierComparison.some((r) => r.isEstimate || r.bestPrice === null);
+      }
+    } catch {
+      supplierComparison = [];
+      supplierHasEstimates = true;
+    }
+
     const roughQuote = calculateRoughQuote(coreBOM, {
       designAutomationFee: 500,
       engineeringReviewFee: 300,
@@ -146,7 +181,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         { label: 'Assembly', value: roughQuote.assemblyEstimate },
         { label: 'QA & Handling', value: roughQuote.qaPackagingHandling },
       ],
-      isEstimate: roughQuote.isEstimate,
+      isEstimate: supplierHasEstimates || roughQuote.isEstimate,
       quantity,
     });
 
@@ -164,8 +199,17 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       },
     });
 
-    const dataSource = bom.isEstimate ? ('llm_estimates' as const) : ('live_supplier' as const);
-    const disclaimer = bom.isEstimate
+    let dataSource: 'live_supplier' | 'mixed_supplier_estimates' | 'llm_estimates';
+    if (supplierComparison.length === 0) {
+      dataSource = bom.isEstimate ? 'llm_estimates' : 'live_supplier';
+    } else if (supplierComparison.every((r) => !r.isEstimate && r.bestPrice !== null)) {
+      dataSource = 'live_supplier';
+    } else {
+      dataSource = 'mixed_supplier_estimates';
+    }
+
+    const isEstimateFinal = supplierHasEstimates || roughQuote.isEstimate;
+    const disclaimer = isEstimateFinal
       ? 'This is a rough estimate based on AI-generated component pricing. Actual costs may vary significantly. Request a formal quote for verified pricing.'
       : 'Quote based on live supplier pricing data. Final costs subject to change at time of order.';
 
@@ -185,6 +229,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         quantity: quote.quantity,
         generatedAt: quote.createdAt.toISOString(),
         validUntil: new Date(quote.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        supplierComparison: supplierComparison.map((r) => ({
+          mpn: r.mpn,
+          bestPrice: r.bestPrice,
+          bestSupplier: r.bestSupplier,
+          allQuotes: r.allQuotes,
+          isEstimate: r.isEstimate,
+        })),
       },
     });
   } catch {

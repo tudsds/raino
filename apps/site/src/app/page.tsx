@@ -135,8 +135,8 @@ function Architecture() {
             </p>
             <ul className="space-y-3">
               {[
-                'Marketing site (Port 3000) — Public-facing information',
-                'Product studio (Port 3001) — Design workflow application',
+                'Marketing site — Public-facing information and documentation',
+                'Product studio — Design workflow application',
                 'Core packages — Schemas, validation, domain logic',
                 'Worker services — Ingest, design, quote, audit',
                 'External boundaries — KiCad CLI, supplier APIs',
@@ -162,7 +162,7 @@ function Architecture() {
 │                                      │
 │  ┌──────────┐    ┌──────────────┐    │
 │  │  site    │───▶│   studio     │    │
-│  │  :3000   │    │   :3001      │    │
+│  │  site    │    │   studio     │    │
 │  └──────────┘    └──────┬───────┘    │
 │                         │            │
 │  ┌──────────────────────┴─────────┐  │

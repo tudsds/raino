@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /$
+Allow: /login
+Allow: /signup
+Disallow: /api/
+Disallow: /projects/
+Disallow: /auth/
+
+Sitemap: https://raino-studio.vercel.app/

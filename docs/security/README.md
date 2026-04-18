@@ -67,7 +67,7 @@ All external API keys are environment variables on the server side:
 | `SUPABASE_SERVICE_ROLE_KEY` | `@raino/db`               | No                 |
 | `DIGIKEY_CLIENT_SECRET`     | `@raino/supplier-clients` | No                 |
 | `MOUSER_API_KEY`            | `@raino/supplier-clients` | No                 |
-| `JLCPCB_API_KEY`            | `@raino/supplier-clients` | No                 |
+| `JLCPCB_SECRET_KEY`         | `@raino/supplier-clients` | No                 |
 | `RESEND_API_KEY`            | Email service             | No                 |
 
 Browser-exposed variables are limited to:

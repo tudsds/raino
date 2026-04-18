@@ -20,11 +20,12 @@ Agent prompts, workflow state machines, orchestration helpers, and inter-service
 5. candidates_discovered — Candidate part families identified
 6. ingested — Documents ingested and indexed
 7. bom_generated — Full BOM with alternates
-8. design_generated — KiCad project artifacts
-9. validated — ERC/DRC passed
-10. exported — Previews and downloads ready
-11. quoted — Rough quote generated
-12. handed_off — Optional PCBA quote requested
+8. design_pending — Design job queued, awaiting worker
+9. design_generated — KiCad project artifacts
+10. validated — ERC/DRC passed
+11. exported — Previews and downloads ready
+12. quoted — Rough quote generated
+13. handed_off — Optional PCBA quote requested
 
 ## Commands
 

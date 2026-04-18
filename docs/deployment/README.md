@@ -78,7 +78,9 @@ Copy `.env.example` to `.env.local` and fill in values. All 20 variables are lis
 | `DIGIKEY_CLIENT_SECRET` | DigiKey API client secret | Live DigiKey data |
 | `DIGIKEY_REDIRECT_URI`  | DigiKey OAuth redirect    | Live DigiKey data |
 | `MOUSER_API_KEY`        | Mouser API key            | Live Mouser data  |
-| `JLCPCB_API_KEY`        | JLCPCB API key            | Live JLCPCB data  |
+| `JLCPCB_APP_ID`         | JLCPCB API app ID         | Live JLCPCB data  |
+| `JLCPCB_ACCESS_KEY`     | JLCPCB API access key     | Live JLCPCB data  |
+| `JLCPCB_SECRET_KEY`     | JLCPCB API secret key     | Live JLCPCB data  |
 
 ### Embedding
 

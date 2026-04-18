@@ -5,10 +5,10 @@ interface NavbarProps {
 }
 
 const languages = [
-  { code: 'en', label: 'EN' },
-  { code: 'zh', label: '中文' },
-  { code: 'ja', label: '日本語' },
-  { code: 'ko', label: '한국어' },
+  { code: 'en', label: 'EN', href: '/' },
+  { code: 'zh', label: '中文', href: 'https://github.com/tudsds/raino/blob/main/README.zh-CN.md' },
+  { code: 'ja', label: '日本語', href: 'https://github.com/tudsds/raino/blob/main/README.ja.md' },
+  { code: 'ko', label: '한국어', href: 'https://github.com/tudsds/raino/blob/main/README.ko.md' },
 ];
 
 export default function Navbar({ activePath }: NavbarProps) {
@@ -61,16 +61,20 @@ export default function Navbar({ activePath }: NavbarProps) {
             <div className="hidden sm:flex items-center gap-2 font-[family-name:var(--font-body)] text-lg">
               {languages.map((lang, idx) => (
                 <span key={lang.code} className="flex items-center gap-2">
-                  <Link
-                    href={activePath}
-                    className={
-                      lang.code === 'en'
-                        ? 'text-[#00f0ff]'
-                        : 'text-[#71717a] hover:text-[#00f0ff] transition-colors'
-                    }
-                  >
-                    {lang.label}
-                  </Link>
+                  {lang.code === 'en' ? (
+                    <Link href={lang.href} className="text-[#00f0ff]">
+                      {lang.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={lang.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#71717a] hover:text-[#00f0ff] transition-colors"
+                    >
+                      {lang.label}
+                    </a>
+                  )}
                   {idx < languages.length - 1 && <span className="text-[#71717a]">|</span>}
                 </span>
               ))}

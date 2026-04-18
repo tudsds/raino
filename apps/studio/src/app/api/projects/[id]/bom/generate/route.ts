@@ -103,6 +103,17 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       bomGuidance = 'BOM generation unavailable — AI service could not be reached.';
     }
 
+    if (bomRows.length === 0) {
+      return NextResponse.json(
+        {
+          error: 'BOM generation failed: no components were produced.',
+          guidance: bomGuidance,
+          suggestion: 'Please refine your project specification or try again.',
+        },
+        { status: 422 },
+      );
+    }
+
     const totalCost = bomRows.reduce((sum, r) => sum + r.quantity * r.unitPrice, 0);
 
     const bom = await createBOM(id, {

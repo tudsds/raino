@@ -1,3 +1,4 @@
+import { createHash, randomUUID } from 'node:crypto';
 import type { SearchOptions } from '../common/adapter.js';
 import type {
   SupplierPartInfo,
@@ -10,7 +11,9 @@ import { FetchHttpClient, HttpError } from '../common/http-client.js';
 import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers.js';
 
 export interface JLCPCBConfig {
-  apiKey: string;
+  appId: string;
+  accessKey: string;
+  secretKey: string;
 }
 
 interface JLCPCBComponent {
@@ -57,11 +60,7 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
 
   constructor(config: JLCPCBConfig, http?: FetchHttpClient) {
     this.config = config;
-    const defaultHeaders: Record<string, string> = {};
-    if (config.apiKey) {
-      defaultHeaders['Authorization'] = `Bearer ${config.apiKey}`;
-    }
-    this.http = http ?? new FetchHttpClient('https://wmsc.lcsc.com/ftps/wm', defaultHeaders);
+    this.http = http ?? new FetchHttpClient('https://ips.lcsc.com/rest/wmsc2agent/');
   }
 
   isEstimateOnly(): boolean {
@@ -69,7 +68,29 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
   }
 
   async isAvailable(): Promise<boolean> {
-    return this.config.apiKey.length > 0;
+    return (
+      this.config.appId.length > 0 &&
+      this.config.accessKey.length > 0 &&
+      this.config.secretKey.length > 0
+    );
+  }
+
+  private signParams(): Record<string, string> {
+    const timestamp = Date.now().toString();
+    const nonce = randomUUID();
+    const signature = createHash('md5')
+      .update(timestamp + nonce + this.config.secretKey)
+      .digest('hex');
+    return {
+      key: this.config.accessKey,
+      timestamp,
+      nonce,
+      signature,
+    };
+  }
+
+  private authParams(params?: Record<string, string>): Record<string, string> {
+    return { ...this.signParams(), ...params };
   }
 
   async searchPart(query: string, options?: SearchOptions): Promise<SupplierSearchResult> {
@@ -79,7 +100,7 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
     }
 
     const response = await this.withRetry(() =>
-      this.http.get<JLCPCBSearchResponse>('product/search', { params }),
+      this.http.get<JLCPCBSearchResponse>('product/search', { params: this.authParams(params) }),
     );
 
     let components = response.data?.list ?? [];
@@ -117,7 +138,7 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
     try {
       const response = await this.withRetry(() =>
         this.http.get<JLCPCBDetailResponse>('product/detail', {
-          params: { productCode: skuOrMpn },
+          params: this.authParams({ productCode: skuOrMpn }),
         }),
       );
       if (response.data) {
@@ -181,7 +202,7 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
     try {
       const response = await this.withRetry(() =>
         this.http.get<JLCPCBDetailResponse>('product/detail', {
-          params: { productCode: jlcpcbPartId },
+          params: this.authParams({ productCode: jlcpcbPartId }),
         }),
       );
 
@@ -212,7 +233,7 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
   private async findComponentByMpn(mpn: string): Promise<JLCPCBComponent | null> {
     const response = await this.withRetry(() =>
       this.http.get<JLCPCBSearchResponse>('product/search', {
-        params: { keyword: mpn, pageSize: '1' },
+        params: this.authParams({ keyword: mpn, pageSize: '1' }),
       }),
     );
 

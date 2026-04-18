@@ -19,7 +19,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
     const job = await createDesignJob(id, 'DESIGN');
 
-    await updateProjectStatus(id, 'design_generated');
+    await updateProjectStatus(id, 'design_pending');
 
     await createAuditEntry(id, {
       category: 'design',
@@ -31,8 +31,9 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     return NextResponse.json({
       projectId: id,
       designId: job.id,
-      status: job.status,
-      message: 'Design generation job queued',
+      status: 'design_pending',
+      message:
+        'Design job queued. Worker dispatch requires manual setup — the job will be processed when a design worker is configured.',
     });
   } catch {
     return NextResponse.json({ error: 'Failed to create design job' }, { status: 400 });

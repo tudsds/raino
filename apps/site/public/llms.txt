@@ -1,0 +1,24 @@
+# Raino — Agentic PCB & PCBA Workflow Platform
+
+> Raino converts fuzzy hardware intent into structured specs, selects approved architectures, resolves procurement data, generates KiCad projects, and produces manufacturing bundles with rough quotes. MIT licensed, open source.
+
+## Pages
+
+- [/ (Home)](https://raino-site.vercel.app/) — Product overview, features, and getting started
+- [/features](https://raino-site.vercel.app/features) — Feature breakdown with descriptions
+- [/architecture](https://raino-site.vercel.app/architecture) — System architecture diagrams and package structure
+- [/docs](https://raino-site.vercel.app/docs) — Documentation hub with getting-started guide
+- [/workflow](https://raino-site.vercel.app/workflow) — 12-step workflow explainer
+
+## Product App
+
+- [Raino Studio](https://raino-studio.vercel.app/) — The design workflow application (requires auth)
+
+## Key Facts
+
+- MIT licensed, open source
+- KiCad is an external GPL boundary — not embedded
+- Supplier adapters (DigiKey, Mouser, JLCPCB) use interface+adapter pattern
+- Quote source of truth is structured supplier adapters, not RAG
+- No fake integrations — all degraded modes are labeled
+- Tech stack: Next.js 15, TypeScript, Tailwind CSS v4, Prisma, Supabase, Vitest

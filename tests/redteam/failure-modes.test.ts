@@ -438,6 +438,7 @@ describe('Failure mode: agents continuing after ambiguity (cross-cutting)', () =
     machine.transition('candidates_discovered');
     machine.transition('ingested');
     machine.transition('bom_generated');
+    machine.transition('design_pending');
     machine.transition('design_generated');
     machine.transition('validated');
     machine.transition('exported');

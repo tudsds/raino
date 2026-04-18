@@ -1,13 +1,25 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import type { EmbeddingRecord, ChunkRecord, ChunkMetadata } from '@raino/rag';
-import { MemoryDocumentStore, MemoryChunkStore, MemoryVectorStore } from '@raino/rag';
+import type {
+  EmbeddingRecord,
+  ChunkRecord,
+  ChunkMetadata,
+  DocumentStore,
+  ChunkStore,
+  VectorStore,
+} from '@raino/rag';
+import { createStores } from '@raino/rag';
 
 const DEFAULT_DATA_DIR = path.resolve(process.cwd(), 'data');
 
-const documentStore = new MemoryDocumentStore();
-const chunkStore = new MemoryChunkStore();
-const vectorStore = new MemoryVectorStore();
+const stores = createStores({
+  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  supabaseKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+});
+
+const documentStore = stores.documents;
+const chunkStore = stores.chunks;
+const vectorStore = stores.vectors;
 
 export async function storeEmbeddings(
   embeddings: EmbeddingRecord[],
@@ -51,9 +63,9 @@ export async function storeEmbeddings(
 }
 
 export function getStores(): {
-  documentStore: MemoryDocumentStore;
-  chunkStore: MemoryChunkStore;
-  vectorStore: MemoryVectorStore;
+  documentStore: DocumentStore;
+  chunkStore: ChunkStore;
+  vectorStore: VectorStore;
 } {
   return { documentStore, chunkStore, vectorStore };
 }

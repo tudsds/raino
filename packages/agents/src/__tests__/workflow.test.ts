@@ -27,6 +27,7 @@ describe('WorkflowMachine', () => {
     machine.transition('candidates_discovered');
     machine.transition('ingested');
     machine.transition('bom_generated');
+    machine.transition('design_pending');
     machine.transition('design_generated');
     machine.transition('validated');
     machine.transition('exported');
@@ -166,12 +167,13 @@ describe('WorkflowState', () => {
     expect(states).toContain('candidates_discovered');
     expect(states).toContain('ingested');
     expect(states).toContain('bom_generated');
+    expect(states).toContain('design_pending');
     expect(states).toContain('design_generated');
     expect(states).toContain('validated');
     expect(states).toContain('exported');
     expect(states).toContain('quoted');
     expect(states).toContain('handed_off');
-    expect(states).toHaveLength(12);
+    expect(states).toHaveLength(13);
   });
 });
 

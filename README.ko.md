@@ -107,7 +107,9 @@ pnpm dev
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase 서비스 롤 키     | 아니오 (저하 모드)     |
 | `DIGIKEY_CLIENT_ID`         | DigiKey API 클라이언트 ID | 아니오 (픽스처 모드)   |
 | `MOUSER_API_KEY`            | Mouser API 키             | 아니오 (픽스처 모드)   |
-| `JLCPCB_API_KEY`            | JLCPCB API 키             | 아니오 (픽스처 모드)   |
+| `JLCPCB_APP_ID`             | JLCPCB API 앱 ID          | 아니오 (픽스처 모드)   |
+| `JLCPCB_ACCESS_KEY`         | JLCPCB API 액세스 키      | 아니오 (픽스처 모드)   |
+| `JLCPCB_SECRET_KEY`         | JLCPCB API 시크릿 키      | 아니오 (픽스처 모드)   |
 
 ## 배포
 

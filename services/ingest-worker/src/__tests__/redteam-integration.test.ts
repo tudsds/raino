@@ -432,6 +432,7 @@ describe('Failure mode: agents continuing after ambiguity (cross-cutting)', () =
     machine.transition('candidates_discovered');
     machine.transition('ingested');
     machine.transition('bom_generated');
+    machine.transition('design_pending');
     machine.transition('design_generated');
     machine.transition('validated');
     machine.transition('exported');
@@ -439,7 +440,7 @@ describe('Failure mode: agents continuing after ambiguity (cross-cutting)', () =
     machine.transition('handed_off');
 
     expect(machine.getCurrentState()).toBe('handed_off');
-    expect(machine.getHistory()).toHaveLength(11);
+    expect(machine.getHistory()).toHaveLength(12);
   });
 
   it('handed_off is a terminal state with no valid transitions', () => {

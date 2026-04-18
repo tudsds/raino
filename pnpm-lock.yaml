@@ -91,6 +91,9 @@ importers:
       '@raino/llm':
         specifier: workspace:*
         version: link:../../packages/llm
+      '@raino/supplier-clients':
+        specifier: workspace:*
+        version: link:../../packages/supplier-clients
       '@raino/ui':
         specifier: workspace:*
         version: link:../../packages/ui

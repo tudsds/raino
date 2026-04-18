@@ -1,0 +1,178 @@
+# Raino — Agentic PCB & PCBA Workflow Platform
+
+## Full Product Description
+
+Raino is an MIT-licensed, open source platform that turns a vague hardware idea into a manufacturing-ready PCB bundle. You describe what you want to build in plain language, and the system walks you through a structured workflow: refining the spec, picking parts from real suppliers, generating a KiCad project, and producing a rough cost quote.
+
+Raino is not a chatbot or an unconstrained autopilot. Every design decision is bounded by approved architecture templates. Every part selection is traceable to its source. Every quote clearly marks which prices came from live supplier data and which came from fixture estimates. The system runs formal sufficiency gates before generating any design, and it stops to ask for your input when it hits ambiguity it cannot resolve on its own.
+
+The platform runs on two frontend apps, eight shared packages, and four worker services. Supabase handles persistence, auth, and vector storage. Kimi K2.5 handles LLM reasoning. Everything is MIT-licensed except KiCad, which is an external GPL boundary.
+
+Raino never fabricates live pricing or stock data. It never claims a live API connection when using fixture data. Mock adapters and fixture data are permanent parts of the codebase, not temporary hacks. They exist so the system is always inspectable and testable without live credentials.
+
+
+## The 12-Step Workflow
+
+1. Natural Language Intake
+   You describe what you want to build in plain English. The system captures your intent as-is, without imposing structure yet.
+
+2. Clarifying Question Loop
+   The LLM asks follow-up questions to resolve ambiguity. It will not proceed past critical uncertainty without your input. This loop continues until the system has enough information to compile a formal spec.
+
+3. Structured Product Specification
+   Your answers become a formal specification document with validated fields: target application, power requirements, interfaces, size constraints, environmental conditions, compliance needs, and cost targets.
+
+4. Architecture Template Selection
+   The system picks an approved architecture template matching your requirements. Architecture templates are predefined, audited designs that constrain the solution space. This prevents the system from hallucinating infeasible designs.
+
+5. Candidate Part Family Selection
+   Part families are shortlisted based on the spec and the selected architecture. This narrows the search space before hitting supplier APIs.
+
+6. Engineering Document Ingestion
+   Datasheets, errata, and application notes for the selected parts are ingested, chunked, and stored in a vector database. This pipeline runs sufficiency gates: if critical documents are missing or too short, the system flags the gap rather than proceeding blindly.
+
+7. Supplier Metadata Resolution
+   Real pricing, stock, and MOQ data are pulled from DigiKey, Mouser, and JLCPCB via adapter interfaces. If supplier credentials are missing, the system falls back to labeled fixture data and marks the quote as degraded.
+
+8. RAG-Assisted Engineering Reasoning
+   The system reasons over the ingested engineering documents to validate part choices. It checks for errata that affect the selected parts, verifies voltage and thermal margins, and flags potential conflicts. RAG is used only for engineering knowledge retrieval, never for live pricing or stock data.
+
+9. Full BOM with Alternates
+   A KiCad-ready bill of materials is assembled, with alternates for every line item. Each part includes supplier links, pricing, stock levels, and MOQ requirements.
+
+10. KiCad Project Generation
+    Schematic and layout files are produced via the KiCad CLI. KiCad is an external GPL-licensed tool. Raino communicates through CLI commands only; no KiCad code is embedded. If the KiCad CLI is not available, this step is skipped and labeled.
+
+11. ERC/DRC/Export
+    Electrical rule checks and design rule checks are run against the generated KiCad project. Gerber files and other manufacturing exports are produced. Any violations are reported with references to the specific design rules that failed.
+
+12. Quote Generation and Handoff
+    A rough cost quote is produced with three confidence bands (high, medium, low). The quote includes a full breakdown: design automation fee, engineering review fee, PCB fabrication estimate, components estimate, assembly estimate, and QA/packaging/handling. Every assumption is listed. When any component price comes from fixture data, the quote is flagged as an estimate. The final deliverable is a manufacturing handoff bundle.
+
+
+## Quote Confidence Bands
+
+High confidence: All BOM lines have real supplier prices.
+Medium confidence: 70% or more of lines have real prices, 30% or fewer are estimates.
+Low confidence: More than 30% of lines use estimated prices.
+
+The subtotal is calculated as:
+  subtotal = design_automation_fee + engineering_review_fee + pcb_fabrication_estimate + components_estimate + assembly_estimate + qa_packaging_handling
+
+A mid quote adds contingency and margin. A low quote is mid * 0.8. A high quote is mid * 1.25.
+
+
+## Architecture Overview
+
+The system has three layers:
+
+Frontend Apps
+  apps/site — Next.js 15 marketing site (port 3000)
+  apps/studio — Next.js 15 product app (port 3001)
+
+Shared Packages
+  packages/core — Zod schemas, validation, quote engine, domain logic
+  packages/db — Prisma ORM + Supabase clients (server, browser, middleware)
+  packages/llm — Kimi K2.5 gateway via OpenAI SDK, structured output, retry logic
+  packages/rag — Engineering-aware chunking, pgvector retrieval
+  packages/agents — Workflow state machine, agent prompts, orchestration
+  packages/ui — Pixel-art cyberpunk design system (Press Start 2P + VT323 fonts)
+  packages/kicad-worker-client — KiCad CLI command contracts and job types
+  packages/supplier-clients — DigiKey, Mouser, JLCPCB adapter interfaces + factory
+
+Worker Services
+  services/ingest-worker — 8-stage document ingestion pipeline
+  services/design-worker — KiCad project generation and export
+  services/quote-worker — Rough quote calculation with confidence bands
+  services/audit-worker — Audit trail, artifact manifests, provenance
+
+External Boundaries
+  Supabase — Auth (magic link), Postgres, Storage, pgvector
+  KiCad CLI — GPL-licensed EDA tool, invoked via CLI commands only
+  DigiKey — Component supplier API
+  Mouser — Component supplier API
+  JLCPCB — PCB fabrication and assembly API
+
+
+## Key Architectural Boundaries
+
+KiCad is an external GPL-licensed tool. Raino communicates through CLI commands only; no KiCad code is embedded in the Raino codebase.
+
+Supplier adapters use the Interface + Adapter pattern with a factory for runtime selection. Mock adapters are used when credentials are missing. Mocks are permanent, not temporary hacks.
+
+RAG handles engineering knowledge retrieval (datasheets, errata, application notes). It is never used for live pricing, stock, or order state. The quote source of truth is always the structured supplier adapter output.
+
+Persistence uses Prisma ORM against Supabase Postgres with Row-Level Security. Auth uses Supabase magic link with session cookie refresh on every request.
+
+The LLM gateway wraps the OpenAI SDK pointed at Moonshot's API (Kimi K2.5). It uses exponential backoff retry and Zod-validated structured output.
+
+
+## Current Capabilities
+
+The marketing site works fully with no backend dependencies. It serves product information, feature descriptions, architecture documentation, workflow explanation, and a getting-started guide.
+
+Raino Studio supports user authentication via Supabase magic link. Authenticated users can create projects and step through the hardware design workflow from intake to quote.
+
+The quote engine produces structured cost estimates with confidence bands and full assumption lists. Golden-output tests verify exact numeric results.
+
+The ingestion pipeline processes PDF datasheets, errata, and application notes through 8 stages with sufficiency gates.
+
+The design system (pixel-art cyberpunk) is built on Tailwind CSS v4 with Press Start 2P headings and VT323 body text.
+
+
+## Current Limitations
+
+Raino runs in degraded mode when credentials are missing. The app labels every degraded path clearly.
+
+Without Supabase credentials: static pages and UI rendering work, but auth, project persistence, and RAG are unavailable.
+
+Without KIMI_API_KEY: everything except LLM calls works. Natural language intake and reasoning steps fall back to manual input.
+
+Without supplier API keys: all design workflow steps work, but live pricing, stock, and MOQ data fall back to labeled fixture data.
+
+Without KiCad CLI: project management, BOM generation, and quote steps work, but actual KiCad project generation is skipped.
+
+Mock adapters and fixture data are permanent parts of the codebase. They exist so the system is always inspectable and testable without live credentials.
+
+
+## Tech Stack
+
+Frontend: Next.js 15, React 19, Tailwind CSS v4
+Design: @raino/ui pixel-art cyberpunk system
+Backend: Next.js Route Handlers, Server Actions, Supabase
+Database: Supabase Postgres, Prisma ORM, pgvector
+Auth: Supabase Auth (magic link)
+Storage: Supabase Storage
+LLM: Kimi K2.5 via OpenAI SDK (moonshot.ai)
+Validation: Zod
+Testing: Vitest
+Build: Turborepo, pnpm workspaces
+Deploy: Vercel (monorepo, two apps)
+
+
+## Pages
+
+Home — https://raino-site.vercel.app/
+Product overview, features, and getting started information.
+
+Features — https://raino-site.vercel.app/features
+Feature breakdown with descriptions of each capability.
+
+Architecture — https://raino-site.vercel.app/architecture
+System architecture diagrams, package structure, and boundary explanations.
+
+Documentation — https://raino-site.vercel.app/docs
+Documentation hub with getting-started guide and links to detailed docs.
+
+Workflow — https://raino-site.vercel.app/workflow
+12-step workflow explainer showing the full path from idea to manufacturing handoff.
+
+Raino Studio — https://raino-studio.vercel.app/
+The product application. Requires authentication via Supabase magic link.
+
+
+## License
+
+Raino is MIT licensed. See the LICENSE file in the repository.
+
+KiCad is an external GPL-licensed tool. It is not embedded in Raino. KiCad libraries and generated designs may carry different license terms.

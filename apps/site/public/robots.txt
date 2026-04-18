@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /docs
+Allow: /workflow
+Allow: /features
+Allow: /architecture
+
+Sitemap: https://raino-site.vercel.app/

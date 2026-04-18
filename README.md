@@ -101,7 +101,7 @@ Every quote includes a full list of assumptions. When any component price comes 
 │  ┌──────────────┐              ┌──────────────────────┐      │
 │  │  apps/site   │              │    apps/studio       │      │
 │  │  Marketing   │───CTA──────▶│    Product App       │      │
-│  │  (Port 3000) │              │    (Port 3001)       │      │
+│  │  raino-site │              │    raino-studio      │      │
 │  └──────────────┘              └──────┬───────────────┘      │
 │                                       │                      │
 │                         Route Handlers │ Server Actions       │
@@ -238,7 +238,9 @@ See `.env.example` for all 20 placeholders. Key variables:
 | `DIGIKEY_CLIENT_ID`                    | DigiKey API client ID          | No (fixture mode)          |
 | `DIGIKEY_CLIENT_SECRET`                | DigiKey API client secret      | No (fixture mode)          |
 | `MOUSER_API_KEY`                       | Mouser API key                 | No (fixture mode)          |
-| `JLCPCB_API_KEY`                       | JLCPCB API key                 | No (fixture mode)          |
+| `JLCPCB_APP_ID`                        | JLCPCB API app ID              | No (fixture mode)          |
+| `JLCPCB_ACCESS_KEY`                    | JLCPCB API access key          | No (fixture mode)          |
+| `JLCPCB_SECRET_KEY`                    | JLCPCB API secret key          | No (fixture mode)          |
 | `NEXT_PUBLIC_APP_URL`                  | Studio app public URL          | No (defaults to localhost) |
 
 ## Deployment

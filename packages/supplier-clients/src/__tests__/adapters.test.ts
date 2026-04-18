@@ -374,28 +374,43 @@ describe('RealMouserAdapter', () => {
 
 describe('RealJLCPCBAdapter', () => {
   it('reports live mode (not estimate-only)', () => {
-    const adapter = new RealJLCPCBAdapter({ apiKey: 'test-key' });
+    const adapter = new RealJLCPCBAdapter({
+      appId: 'app',
+      accessKey: 'access',
+      secretKey: 'secret',
+    });
     expect(adapter.isEstimateOnly()).toBe(false);
   });
 
   it('exposes correct name', () => {
-    const adapter = new RealJLCPCBAdapter({ apiKey: 'test-key' });
+    const adapter = new RealJLCPCBAdapter({
+      appId: 'app',
+      accessKey: 'access',
+      secretKey: 'secret',
+    });
     expect(adapter.name).toBe('JLCPCB');
   });
 
-  it('reports available when API key is set', async () => {
-    const adapter = new RealJLCPCBAdapter({ apiKey: 'test-key' });
+  it('reports available when all keys are set', async () => {
+    const adapter = new RealJLCPCBAdapter({
+      appId: 'app',
+      accessKey: 'access',
+      secretKey: 'secret',
+    });
     expect(await adapter.isAvailable()).toBe(true);
   });
 
-  it('reports unavailable when API key is empty', async () => {
-    const adapter = new RealJLCPCBAdapter({ apiKey: '' });
+  it('reports unavailable when any key is empty', async () => {
+    const adapter = new RealJLCPCBAdapter({ appId: '', accessKey: '', secretKey: '' });
     expect(await adapter.isAvailable()).toBe(false);
   });
 
   it('accepts custom FetchHttpClient', () => {
     const http = new FetchHttpClient('https://custom-base.example.com');
-    const adapter = new RealJLCPCBAdapter({ apiKey: 'key' }, http);
+    const adapter = new RealJLCPCBAdapter(
+      { appId: 'app', accessKey: 'access', secretKey: 'secret' },
+      http,
+    );
     expect(adapter.name).toBe('JLCPCB');
   });
 });
@@ -435,8 +450,10 @@ describe('SupplierAdapterFactory', () => {
     expect(mouser!.isEstimateOnly()).toBe(false);
   });
 
-  it('returns real JLCPCB adapter when JLCPCB_API_KEY is set', () => {
-    vi.stubEnv('JLCPCB_API_KEY', 'test-jlcpcb-key');
+  it('returns real JLCPCB adapter when JLCPCB env vars are set', () => {
+    vi.stubEnv('JLCPCB_APP_ID', 'test-app-id');
+    vi.stubEnv('JLCPCB_ACCESS_KEY', 'test-access-key');
+    vi.stubEnv('JLCPCB_SECRET_KEY', 'test-secret-key');
 
     const adapters = createSupplierAdapters();
     const jlcpcb = adapters.find((a) => a.name === 'JLCPCB');
@@ -492,8 +509,10 @@ describe('getAdapterStatus', () => {
     expect(status.mouser.available).toBe(true);
   });
 
-  it('reports live for JLCPCB when env var set', () => {
-    vi.stubEnv('JLCPCB_API_KEY', 'test-key');
+  it('reports live for JLCPCB when all env vars set', () => {
+    vi.stubEnv('JLCPCB_APP_ID', 'test-app-id');
+    vi.stubEnv('JLCPCB_ACCESS_KEY', 'test-access-key');
+    vi.stubEnv('JLCPCB_SECRET_KEY', 'test-secret-key');
 
     const status = getAdapterStatus();
     expect(status.jlcpcb.mode).toBe('live');

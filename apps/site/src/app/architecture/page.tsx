@@ -104,7 +104,7 @@ function ArchitectureDiagram() {
 │   ┌──────────────────┐          ┌──────────────────────┐         │
 │   │   apps/site      │          │     apps/studio      │         │
 │   │   Marketing      │───CTA───▶│     Product App      │         │
-│   │   (Port 3000)    │          │     (Port 3001)      │         │
+│   │   raino-site      │          │     raino-studio     │         │
 │   └──────────────────┘          └──────────┬───────────┘         │
 │                                            │                     │
 │                                    API Routes                    │

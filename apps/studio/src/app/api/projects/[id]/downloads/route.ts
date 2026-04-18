@@ -23,6 +23,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
         isPlaceholder: true,
         reason: 'no_design_generated',
         message: 'Run KiCad design generation first to create downloadable artifacts',
+        artifactPersistence: 'not_persisted_to_cloud' as const,
+        warning:
+          'Artifacts are generated on the local filesystem during design worker execution and are not yet persisted to Supabase Storage. Download links reference local paths only.',
       });
     }
 
@@ -43,6 +46,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
       projectId: id,
       downloads,
       isPlaceholder: false,
+      artifactPersistence: 'not_persisted_to_cloud' as const,
+      warning:
+        'Artifacts are generated on the local filesystem during design worker execution and are not yet persisted to Supabase Storage. Download links reference local paths only.',
     });
   } catch {
     return NextResponse.json({
@@ -50,6 +56,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
       downloads: [],
       isPlaceholder: true,
       meta: { mode: 'degraded', reason: 'Database not configured' },
+      artifactPersistence: 'not_persisted_to_cloud' as const,
+      warning:
+        'Artifacts are generated on the local filesystem during design worker execution and are not yet persisted to Supabase Storage. Download links reference local paths only.',
     });
   }
 }

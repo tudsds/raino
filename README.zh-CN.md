@@ -112,7 +112,9 @@ pnpm dev
 | `SUPABASE_SERVICE_ROLE_KEY`            | Supabase 服务角色密钥 | 否（降级模式）     |
 | `DIGIKEY_CLIENT_ID`                    | DigiKey API 客户端 ID | 否（固件模式）     |
 | `MOUSER_API_KEY`                       | Mouser API 密钥       | 否（固件模式）     |
-| `JLCPCB_API_KEY`                       | JLCPCB API 密钥       | 否（固件模式）     |
+| `JLCPCB_APP_ID`                        | JLCPCB API 应用 ID    | 否（固件模式）     |
+| `JLCPCB_ACCESS_KEY`                    | JLCPCB API 访问密钥   | 否（固件模式）     |
+| `JLCPCB_SECRET_KEY`                    | JLCPCB API 签名密钥   | 否（固件模式）     |
 
 ## 在线部署
 

@@ -8,6 +8,7 @@ export type Status =
   | 'candidates_discovered'
   | 'ingested'
   | 'bom_generated'
+  | 'design_pending'
   | 'design_generated'
   | 'design'
   | 'validated'
@@ -62,6 +63,10 @@ const statusConfig: Record<Status, { label: string; className: string }> = {
   bom_generated: {
     label: 'BOM Ready',
     className: 'badge-info',
+  },
+  design_pending: {
+    label: 'Design Pending',
+    className: 'badge-warning',
   },
   design_generated: {
     label: 'Design',

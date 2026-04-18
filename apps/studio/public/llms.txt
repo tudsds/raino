@@ -1,0 +1,35 @@
+# Raino Studio — Agentic PCB Design Platform
+
+> Raino Studio is the product application for Raino. It requires authentication (Supabase magic link). Authenticated users can create projects and run the full hardware design workflow.
+
+## Public Routes
+
+- [/login](https://raino-studio.vercel.app/login) — Magic link sign-in
+- [/signup](https://raino-studio.vercel.app/signup) — Account creation
+
+## Authenticated Routes (require sign-in)
+
+- [/ (Dashboard)](https://raino-studio.vercel.app/) — Project list and management
+- [/projects/new](https://raino-studio.vercel.app/projects/new) — Create new project
+- [/projects/{id}](https://raino-studio.vercel.app/projects/{id}) — Project detail with workflow
+
+## API Routes (require auth + ownership)
+
+All project API routes enforce ownership via verifyProjectOwnership. Unauthenticated requests get 401, unauthorized get 404.
+
+## Workflow Steps
+
+1. Intake — Natural language description
+2. Clarification — Clarifying questions
+3. Spec compilation — Structured specification
+4. Architecture — Template selection
+5. Ingestion — Document ingestion
+6. BOM generation — Bill of materials
+7. Quote generation — Rough quotes with honest labeling
+8. Design generation — KiCad project creation
+9. Preview/download — Artifacts
+10. Handoff — Manufacturing handoff
+
+## Marketing Site
+
+- [raino-site.vercel.app](https://raino-site.vercel.app/) — Public-facing documentation and product info

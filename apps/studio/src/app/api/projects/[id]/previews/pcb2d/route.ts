@@ -25,6 +25,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
         available: false,
         reason: 'no_design_generated',
         message: 'Run KiCad design generation first to create preview assets',
+        artifactPersistence: 'not_persisted_to_cloud' as const,
+        artifactNote:
+          'Design artifacts are generated on the local filesystem and not yet persisted to cloud storage. File paths reference local disk locations only.',
       });
     }
 
@@ -42,6 +45,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
       mimeType: latest.mimeType,
       checksum: latest.checksum,
       createdAt: latest.createdAt.toISOString(),
+      artifactPersistence: 'not_persisted_to_cloud' as const,
+      artifactNote:
+        'Design artifacts are generated on the local filesystem and not yet persisted to cloud storage. File paths reference local disk locations only.',
     });
   } catch {
     return NextResponse.json({
@@ -51,6 +57,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
       available: false,
       isPlaceholder: true,
       meta: { mode: 'degraded', reason: 'Database not configured' },
+      artifactPersistence: 'not_persisted_to_cloud' as const,
+      artifactNote:
+        'Design artifacts are generated on the local filesystem and not yet persisted to cloud storage. File paths reference local disk locations only.',
     });
   }
 }

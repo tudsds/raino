@@ -8,6 +8,7 @@ export const ProjectStatus = z.enum([
   'candidates_discovered',
   'ingested',
   'bom_generated',
+  'design_pending',
   'design_generated',
   'validated',
   'exported',

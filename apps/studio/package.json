@@ -17,6 +17,7 @@
     "@raino/core": "workspace:*",
     "@raino/db": "workspace:*",
     "@raino/llm": "workspace:*",
+    "@raino/supplier-clients": "workspace:*",
     "@raino/ui": "workspace:*",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.0",

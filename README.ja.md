@@ -107,7 +107,9 @@ pnpm dev
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase サービスロールキー | いいえ（低下モード）         |
 | `DIGIKEY_CLIENT_ID`         | DigiKey API クライアント ID | いいえ（フィクスチャモード） |
 | `MOUSER_API_KEY`            | Mouser API キー             | いいえ（フィクスチャモード） |
-| `JLCPCB_API_KEY`            | JLCPCB API キー             | いいえ（フィクスチャモード） |
+| `JLCPCB_APP_ID`             | JLCPCB API アプリ ID        | いいえ（フィクスチャモード） |
+| `JLCPCB_ACCESS_KEY`         | JLCPCB API アクセスキー     | いいえ（フィクスチャモード） |
+| `JLCPCB_SECRET_KEY`         | JLCPCB API シークレットキー | いいえ（フィクスチャモード） |
 
 ## デプロイ
 
