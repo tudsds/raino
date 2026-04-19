@@ -1,0 +1,14 @@
+=== Verification: No inline Footer/Navbar in page.tsx files ===
+
+Inline Footer functions:
+apps/site/src/app/architecture/page.tsx:269:function Footer() {
+apps/site/src/app/docs/page.tsx:142:function Footer() {
+apps/site/src/app/workflow/page.tsx:172:function Footer() {
+apps/site/src/app/page.tsx:286:function Footer() {
+
+Inline Navbar functions:
+apps/site/src/app/docs/page.tsx:89:function Navbar() {
+apps/site/src/app/workflow/page.tsx:122:function Navbar() {
+
+=== Build Result ===
+SUCCESS - All 5 pages prerendered as static content

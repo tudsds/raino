@@ -1,0 +1,49 @@
+=== index.html ===
+title: Raino — Agentic PCB Design
+og:title: Raino — Agentic PCB Design
+og:description: Turn vague hardware ideas into manufacturing-ready PCB bundles with structured intelligence
+og:url: https://raino-site.vercel.app
+og:image: http://localhost:3000/og-image.png
+twitter:card: summary_large_image
+twitter:title: Raino — Agentic PCB Design
+icon: /favicon.ico
+
+=== features.html ===
+title: Raino — Features
+og:title: Raino — Features
+og:description: Every capability in Raino is designed for production hardware workflows. No gimmicks. No autopilot. Just structured engineering.
+og:url: https://raino-site.vercel.app/features
+og:image: http://localhost:3000/og-image.png
+twitter:card: summary_large_image
+twitter:title: Raino — Features
+icon: /favicon.ico
+
+=== architecture.html ===
+title: Raino — Architecture
+og:title: Raino — Architecture
+og:description: Modular system architecture with defined responsibilities and explicit interfaces across packages, services, and external boundaries.
+og:url: https://raino-site.vercel.app/architecture
+og:image: http://localhost:3000/og-image.png
+twitter:card: summary_large_image
+twitter:title: Raino — Architecture
+icon: /favicon.ico
+
+=== workflow.html ===
+title: Raino — Workflow
+og:title: Raino — Workflow
+og:description: From natural language to manufacturing handoff. Twelve structured steps with formal validation and full audit trails.
+og:url: https://raino-site.vercel.app/workflow
+og:image: http://localhost:3000/og-image.png
+twitter:card: summary_large_image
+twitter:title: Raino — Workflow
+icon: /favicon.ico
+
+=== docs.html ===
+title: Raino — Documentation
+og:title: Raino — Documentation
+og:description: Get started with Raino, explore the architecture, and dive into the details.
+og:url: https://raino-site.vercel.app/docs
+og:image: http://localhost:3000/og-image.png
+twitter:card: summary_large_image
+twitter:title: Raino — Documentation
+icon: /favicon.ico

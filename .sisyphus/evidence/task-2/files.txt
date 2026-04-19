@@ -1,0 +1,9 @@
+-rwxrwxrwx 1 jamesg27 jamesg27 54378 Apr 19 04:00 /mnt/d/raino/apps/site/public/og-image.png
+-rwxrwxrwx 1 jamesg27 jamesg27   203 Apr 19 04:00 /mnt/d/raino/apps/site/src/app/favicon.ico
+
+-rwxrwxrwx 1 jamesg27 jamesg27 22907 Apr 19 04:11 /mnt/d/raino/apps/site/src/app/architecture/page.tsx
+-rwxrwxrwx 1 jamesg27 jamesg27 11411 Apr 19 04:13 /mnt/d/raino/apps/site/src/app/docs/page.tsx
+-rwxrwxrwx 1 jamesg27 jamesg27 14795 Apr 19 04:10 /mnt/d/raino/apps/site/src/app/features/page.tsx
+-rwxrwxrwx 1 jamesg27 jamesg27  1077 Apr 19 04:01 /mnt/d/raino/apps/site/src/app/layout.tsx
+-rwxrwxrwx 1 jamesg27 jamesg27 17714 Apr 19 04:10 /mnt/d/raino/apps/site/src/app/page.tsx
+-rwxrwxrwx 1 jamesg27 jamesg27 12315 Apr 19 04:12 /mnt/d/raino/apps/site/src/app/workflow/page.tsx

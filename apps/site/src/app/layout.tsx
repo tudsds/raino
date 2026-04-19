@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'Raino — Agentic PCB & PCBA Workflow Platform',
@@ -19,7 +21,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#0a0a0f] text-[#e4e4e7] antialiased">{children}</body>
+      <body className="min-h-screen bg-[#0a0a0f] text-[#e4e4e7] antialiased">
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

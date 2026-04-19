@@ -176,7 +176,7 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
               className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[80%] px-4 py-32xl ${
+                className={`max-w-[80%] px-4 py-3 ${
                   message.role === 'user'
                     ? 'chat-user text-[#e4e4e7]'
                     : 'chat-assistant text-[#e4e4e7]'

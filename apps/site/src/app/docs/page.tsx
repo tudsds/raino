@@ -1,4 +1,21 @@
-import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Raino — Documentation',
+  description:
+    'Get started with Raino, explore the architecture, and dive into the details. Full docs covering setup, deployment, security, ingestion, and UX.',
+  openGraph: {
+    title: 'Raino — Documentation',
+    description: 'Get started with Raino, explore the architecture, and dive into the details.',
+    images: ['/og-image.png'],
+    url: 'https://raino-site.vercel.app/docs',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Raino — Documentation',
+    description: 'Get started with Raino, explore the architecture, and dive into the details.',
+  },
+};
 
 const gettingStartedSteps = [
   {
@@ -68,103 +85,9 @@ const docSections = [
   },
 ];
 
-function Navbar() {
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 border-b border-[#27272a]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold font-[family-name:var(--font-heading)]">
-              RA<span className="text-[#00f0ff]">I</span>NO
-            </span>
-          </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link
-              href="/features"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              Features
-            </Link>
-            <Link
-              href="/architecture"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              Architecture
-            </Link>
-            <Link
-              href="/workflow"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              Workflow
-            </Link>
-            <Link href="/docs" className="text-[#00f0ff]">
-              Docs
-            </Link>
-            <a
-              href="https://github.com/tudsds/raino"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
-            >
-              GitHub
-            </a>
-          </div>
-          <a
-            href={process.env.NEXT_PUBLIC_APP_URL}
-            className="px-4 py-2 bg-[#111118] border-2 border-[#00f0ff] text-[#00f0ff] hover:neon-glow transition-all duration-300 font-medium"
-          >
-            Launch Studio
-          </a>
-        </div>
-      </div>
-    </nav>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="py-12 bg-[#0a0a0f] border-t border-[#27272a]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-bold font-[family-name:var(--font-heading)]">
-              RA<span className="text-[#00f0ff]">I</span>NO
-            </span>
-          </div>
-          <div className="flex items-center gap-6 text-sm text-[#71717a]">
-            <Link href="/" className="hover:text-[#00f0ff] transition-colors">
-              Home
-            </Link>
-            <Link href="/features" className="hover:text-[#00f0ff] transition-colors">
-              Features
-            </Link>
-            <Link href="/architecture" className="hover:text-[#00f0ff] transition-colors">
-              Architecture
-            </Link>
-            <Link href="/workflow" className="hover:text-[#00f0ff] transition-colors">
-              Workflow
-            </Link>
-            <Link href="/docs" className="text-[#00f0ff]">
-              Docs
-            </Link>
-            <a
-              href="https://github.com/tudsds/raino"
-              className="hover:text-[#00f0ff] transition-colors"
-            >
-              GitHub
-            </a>
-          </div>
-          <p className="text-sm text-[#71717a]">© 2024 Raino. MIT License.</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export default function DocsPage() {
   return (
     <>
-      <Navbar />
       <main className="pt-16">
         <section className="py-24 bg-[#0a0a0f] circuit-grid">
           <div className="max-w-4xl mx-auto px-4 text-center">
@@ -258,7 +181,6 @@ export default function DocsPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

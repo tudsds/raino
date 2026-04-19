@@ -1,5 +1,25 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+
+export const metadata: Metadata = {
+  title: 'Raino — Agentic PCB Design',
+  description:
+    'Raino converts fuzzy hardware intent into structured specs, selects approved architectures, and generates KiCad projects with full audit trails.',
+  openGraph: {
+    title: 'Raino — Agentic PCB Design',
+    description:
+      'Turn vague hardware ideas into manufacturing-ready PCB bundles with structured intelligence',
+    images: ['/og-image.png'],
+    url: 'https://raino-site.vercel.app',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Raino — Agentic PCB Design',
+    description:
+      'Turn vague hardware ideas into manufacturing-ready PCB bundles with structured intelligence',
+  },
+};
 
 const features = [
   {
@@ -341,7 +361,7 @@ function Footer() {
           </div>
         </div>
         <div className="pt-8 border-t border-[#27272a] flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[#71717a] text-sm">© 2024 Raino. MIT Licensed.</p>
+          <p className="text-[#71717a] text-sm">© 2024-2026 Raino. MIT Licensed.</p>
           <p className="text-[#71717a] text-sm">
             KiCad is a trademark of the KiCad Project. Not affiliated.
           </p>

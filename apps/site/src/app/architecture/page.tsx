@@ -1,5 +1,23 @@
-import Link from 'next/link';
-import Navbar from '@/components/Navbar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Raino — Architecture',
+  description:
+    'Raino is built as a modular system with clear boundaries. Marketing site, product studio, core packages, worker services, and external boundaries.',
+  openGraph: {
+    title: 'Raino — Architecture',
+    description:
+      'Modular system architecture with defined responsibilities and explicit interfaces across packages, services, and external boundaries.',
+    images: ['/og-image.png'],
+    url: 'https://raino-site.vercel.app/architecture',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Raino — Architecture',
+    description:
+      'Modular system architecture with defined responsibilities and explicit interfaces across packages, services, and external boundaries.',
+  },
+};
 
 const packages = [
   {
@@ -246,47 +264,9 @@ function WorkflowDiagram() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="py-12 bg-[#0a0a0f] border-t border-[#27272a]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-bold font-[family-name:var(--font-heading)]">
-              RA<span className="text-[#00f0ff]">I</span>NO
-            </span>
-          </div>
-          <div className="flex items-center gap-6 text-sm text-[#71717a]">
-            <Link href="/" className="hover:text-[#00f0ff] transition-colors">
-              Home
-            </Link>
-            <Link href="/features" className="hover:text-[#00f0ff] transition-colors">
-              Features
-            </Link>
-            <Link href="/workflow" className="hover:text-[#00f0ff] transition-colors">
-              Workflow
-            </Link>
-            <Link href="/docs" className="hover:text-[#00f0ff] transition-colors">
-              Docs
-            </Link>
-            <a
-              href="https://github.com/tudsds/raino"
-              className="hover:text-[#00f0ff] transition-colors"
-            >
-              GitHub
-            </a>
-          </div>
-          <p className="text-sm text-[#71717a]">© 2024 Raino. MIT License.</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export default function ArchitecturePage() {
   return (
     <>
-      <Navbar activePath="/architecture" />
       <main className="pt-16">
         <section className="py-24 bg-[#0a0a0f] circuit-grid">
           <div className="max-w-4xl mx-auto px-4 text-center">
@@ -471,7 +451,6 @@ export default function ArchitecturePage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

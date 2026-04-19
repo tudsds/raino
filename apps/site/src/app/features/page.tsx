@@ -1,5 +1,23 @@
-import Link from 'next/link';
-import Navbar from '@/components/Navbar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Raino — Features',
+  description:
+    "Explore Raino's production hardware workflow capabilities: natural language intake, structured specs, approved architectures, intelligent BOM, KiCad generation, and manufacturing handoff.",
+  openGraph: {
+    title: 'Raino — Features',
+    description:
+      'Every capability in Raino is designed for production hardware workflows. No gimmicks. No autopilot. Just structured engineering.',
+    images: ['/og-image.png'],
+    url: 'https://raino-site.vercel.app/features',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Raino — Features',
+    description:
+      'Every capability in Raino is designed for production hardware workflows. No gimmicks. No autopilot. Just structured engineering.',
+  },
+};
 
 const detailedFeatures = [
   {
@@ -141,7 +159,7 @@ function FeatureCard({ feature, index }: { feature: (typeof detailedFeatures)[0]
                     <div className="w-8 h-8 bg-[#8b5cf6] flex items-center justify-center text-xs font-bold">
                       U
                     </div>
-                    <div className="flex-1 p-3 bg-[#1a1a24]-none text-sm text-[#a1a1aa]">
+                    <div className="flex-1 p-3 bg-[#1a1a24] text-sm text-[#a1a1aa]">
                       I need a sensor board with 5V input, I2C interface, and 40x30mm dimensions
                     </div>
                   </div>
@@ -149,7 +167,7 @@ function FeatureCard({ feature, index }: { feature: (typeof detailedFeatures)[0]
                     <div className="w-8 h-8 bg-[#00f0ff] flex items-center justify-center text-xs font-bold text-[#0a0a0f]">
                       R
                     </div>
-                    <div className="flex-1 p-3 bg-[#111118] border-2 border-[#00f0ff]/30-none text-sm text-[#a1a1aa]">
+                    <div className="flex-1 p-3 bg-[#111118] border-2 border-[#00f0ff]/30 text-sm text-[#a1a1aa]">
                       What type of sensor? Temperature, accelerometer, or something else?
                     </div>
                   </div>
@@ -257,64 +275,23 @@ function FeatureCard({ feature, index }: { feature: (typeof detailedFeatures)[0]
   );
 }
 
-function Footer() {
-  return (
-    <footer className="py-12 bg-[#0a0a0f] border-t border-[#27272a]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-bold font-[family-name:var(--font-heading)]">
-              RA<span className="text-[#00f0ff]">I</span>NO
-            </span>
-          </div>
-          <div className="flex items-center gap-6 text-sm text-[#71717a]">
-            <Link href="/" className="hover:text-[#00f0ff] transition-colors">
-              Home
-            </Link>
-            <Link href="/architecture" className="hover:text-[#00f0ff] transition-colors">
-              Architecture
-            </Link>
-            <Link href="/workflow" className="hover:text-[#00f0ff] transition-colors">
-              Workflow
-            </Link>
-            <Link href="/docs" className="hover:text-[#00f0ff] transition-colors">
-              Docs
-            </Link>
-            <a
-              href="https://github.com/tudsds/raino"
-              className="hover:text-[#00f0ff] transition-colors"
-            >
-              GitHub
-            </a>
-          </div>
-          <p className="text-sm text-[#71717a]">© 2024 Raino. MIT License.</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export default function FeaturesPage() {
   return (
-    <>
-      <Navbar activePath="/features" />
-      <main className="pt-16">
-        <section className="py-24 bg-[#0a0a0f] circuit-grid">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold font-[family-name:var(--font-heading)] mb-6">
-              <span className="gradient-text">Features</span>
-            </h1>
-            <p className="text-xl text-[#a1a1aa]">
-              Every capability in Raino is designed for production hardware workflows. No gimmicks.
-              No autopilot. Just structured engineering.
-            </p>
-          </div>
-        </section>
-        {detailedFeatures.map((feature, index) => (
-          <FeatureCard key={feature.title} feature={feature} index={index} />
-        ))}
-      </main>
-      <Footer />
-    </>
+    <main className="pt-16">
+      <section className="py-24 bg-[#0a0a0f] circuit-grid">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h1 className="text-4xl sm:text-5xl font-bold font-[family-name:var(--font-heading)] mb-6">
+            <span className="gradient-text">Features</span>
+          </h1>
+          <p className="text-xl text-[#a1a1aa]">
+            Every capability in Raino is designed for production hardware workflows. No gimmicks.
+            No autopilot. Just structured engineering.
+          </p>
+        </div>
+      </section>
+      {detailedFeatures.map((feature, index) => (
+        <FeatureCard key={feature.title} feature={feature} index={index} />
+      ))}
+    </main>
   );
 }

@@ -1,0 +1,2 @@
+109:              className="md:hidden p-2 text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
+144:          className="md:hidden absolute top-16 left-0 right-0 bg-[#0a0a0f]/95 border-b border-[#27272a] backdrop-blur-sm"
