@@ -100,9 +100,15 @@ importers:
       '@raino/design-worker':
         specifier: workspace:*
         version: link:../../services/design-worker
+      '@raino/ingest-worker':
+        specifier: workspace:*
+        version: link:../../services/ingest-worker
       '@raino/llm':
         specifier: workspace:*
         version: link:../../packages/llm
+      '@raino/rag':
+        specifier: workspace:*
+        version: link:../../packages/rag
       '@raino/supplier-clients':
         specifier: workspace:*
         version: link:../../packages/supplier-clients
