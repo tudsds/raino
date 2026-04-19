@@ -232,7 +232,7 @@ See `.env.example` for all 20 placeholders. Key variables:
 | -------------------------------------- | ------------------------------ | -------------------------- |
 | `KIMI_API_KEY`                         | Moonshot API key for Kimi K2.5 | No (LLM calls fail)        |
 | `NEXT_PUBLIC_SUPABASE_URL`             | Supabase project URL           | No (degraded mode)         |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase anon key              | No (degraded mode)         |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key              | No (degraded mode)         |
 | `SUPABASE_SERVICE_ROLE_KEY`            | Supabase service role key      | No (degraded mode)         |
 | `DATABASE_URL`                         | Prisma connection string       | No (degraded mode)         |
 | `DIGIKEY_CLIENT_ID`                    | DigiKey API client ID          | No (fixture mode)          |

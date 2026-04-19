@@ -12,7 +12,7 @@ import type { LLMMessage, LLMRequestOptions, LLMResponse, LLMStreamEvent } from 
 import type { LLMProvider } from '../provider';
 
 const KIMI_DEFAULT_BASE_URL = 'https://api.moonshot.ai/v1';
-const KIMI_DEFAULT_MODEL = 'kimi-k2-0711';
+const KIMI_DEFAULT_MODEL = 'kimi-k2.5';
 
 /** Convert our LLMMessage[] to the shape the OpenAI SDK expects. */
 function toOpenAIMessages(messages: LLMMessage[]): OpenAI.ChatCompletionMessageParam[] {

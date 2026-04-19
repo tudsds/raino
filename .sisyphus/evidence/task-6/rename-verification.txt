@@ -1,0 +1,25 @@
+Task 6: Rename NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY → NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+Date: 2026-04-19
+
+=== Verification: Old name (zero matches outside plan) ===
+grep -rn "PUBLISHABLE_KEY|publishableKey" → 0 matches in source/docs
+
+=== Verification: New name (12 matches) ===
+.env.example:17
+apps/studio/src/app/auth/callback/route.ts:14
+apps/studio/src/app/page.tsx:13
+apps/studio/src/lib/auth/get-current-user.ts:4
+apps/studio/src/middleware.ts:8
+docs/deployment/README.md:87
+docs/security/README.md:78
+packages/db/src/supabase/browser.ts:6
+packages/db/src/supabase/middleware.ts:11
+packages/db/src/supabase/server.ts:8
+README.md:235
+README.zh-CN.md:111
+
+=== Verification: Build ===
+pnpm typecheck: PASS
+pnpm lint: PASS (pre-existing warnings only)
+pnpm test: PASS (621 tests across 14 packages)

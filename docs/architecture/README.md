@@ -71,7 +71,7 @@ API routes in `apps/studio/app/api/` handle all backend operations. They import 
 
 ### @raino/llm (Kimi K2.5 Gateway)
 
-Provides a unified interface for calling language models. The primary implementation targets Kimi K2.5 via the OpenAI-compatible SDK (`openai` npm package with `baseURL` configured via `KIMI_API_BASE_URL`, defaulting to `https://api.moonshot.cn/v1`). Model: `kimi-k2-0711`. Temperature: 1.0. Max tokens: 32768.
+Provides a unified interface for calling language models. The primary implementation targets Kimi K2.5 via the OpenAI-compatible SDK (`openai` npm package with `baseURL` configured via `KIMI_API_BASE_URL`, defaulting to `https://api.moonshot.cn/v1`). Model: `kimi-k2.5`. Temperature: 1.0. Max tokens: 32768.
 
 Supports two call patterns:
 

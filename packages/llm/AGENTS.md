@@ -31,7 +31,7 @@ interface LLMProvider {
 
 Kimi K2.5 uses the OpenAI SDK with a custom `baseURL`:
 
-- **Model**: `kimi-k2-0711`
+- **Model**: `kimi-k2.5`
 - **Base URL**: `https://api.moonshot.ai/v1`
 - **Max tokens**: 32768 (default, overridable per call via `options.maxTokens`)
 - **Temperature**: 1.0 (fixed, not configurable per call)

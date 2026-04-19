@@ -16,7 +16,7 @@ function createMockResponse(
     id: overrides?.id ?? 'chatcmpl-test123',
     object: 'chat.completion' as const,
     created: Date.now(),
-    model: overrides?.model ?? 'kimi-k2-0711',
+    model: overrides?.model ?? 'kimi-k2.5',
     choices: [
       {
         index: 0,
@@ -65,7 +65,7 @@ describe('KimiProvider', () => {
 
   it('has correct name and defaultModel', () => {
     expect(provider.name).toBe('kimi');
-    expect(provider.defaultModel).toBe('kimi-k2-0711');
+    expect(provider.defaultModel).toBe('kimi-k2.5');
   });
 
   it('isAvailable returns false without KIMI_API_KEY', async () => {
@@ -92,7 +92,7 @@ describe('KimiProvider', () => {
 
     expect(result.content).toBe('Test response');
     expect(result.id).toBe('chatcmpl-test123');
-    expect(result.model).toBe('kimi-k2-0711');
+    expect(result.model).toBe('kimi-k2.5');
     expect(result.usage.promptTokens).toBe(10);
     expect(result.usage.completionTokens).toBe(5);
     expect(result.usage.totalTokens).toBe(15);
@@ -112,7 +112,7 @@ describe('KimiProvider', () => {
     expect(callArgs.presence_penalty).toBe(0.0);
     expect(callArgs.frequency_penalty).toBe(0.0);
     expect(callArgs.max_tokens).toBe(32768);
-    expect(callArgs.model).toBe('kimi-k2-0711');
+    expect(callArgs.model).toBe('kimi-k2.5');
   });
 
   it('chat supports jsonMode', async () => {

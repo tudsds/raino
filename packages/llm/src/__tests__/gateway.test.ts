@@ -7,7 +7,7 @@ function createResponse(content: string): LLMResponse {
   return {
     id: 'test-id',
     content,
-    model: 'kimi-k2-0711',
+    model: 'kimi-k2.5',
     usage: { promptTokens: 10, completionTokens: 5, totalTokens: 15 },
     finishReason: 'stop',
   };

@@ -6,21 +6,19 @@ import { createSupabaseBrowserClient } from '@raino/db/supabase/browser';
 
 export default function SignupPage() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setMessage(null);
 
     const supabase = createSupabaseBrowserClient();
-    const { error: authError } = await supabase.auth.signUp({
+    const { error: authError } = await supabase.auth.signInWithOtp({
       email,
-      password,
       options: {
         emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
@@ -29,7 +27,7 @@ export default function SignupPage() {
     if (authError) {
       setError(authError.message);
     } else {
-      setMessage('Check your email to confirm your account');
+      setMessage('Check your email for the signup link');
     }
     setLoading(false);
   };
@@ -45,14 +43,14 @@ export default function SignupPage() {
               </span>
             </div>
             <h1 className="font-[family-name:var(--font-heading)] text-base text-[#e4e4e7] mb-2">
-              Create Account
+              Get Started
             </h1>
             <p className="text-[#a1a1aa] text-base font-[family-name:var(--font-body)]">
-              Sign up to start designing PCBs
+              Enter your email to create your account
             </p>
           </div>
 
-          <form onSubmit={handleSignup} className="space-y-6">
+          <form onSubmit={handleMagicLink} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -71,25 +69,6 @@ export default function SignupPage() {
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block font-[family-name:var(--font-heading)] text-xs text-[#a1a1aa] mb-2"
-              >
-                PASSWORD
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-                placeholder="Min 6 characters"
-                className="input-cyber w-full px-4 py-3 text-lg font-[family-name:var(--font-body)]"
-              />
-            </div>
-
             {error && (
               <div className="border-2 border-[#ff3366] bg-[rgba(255,51,102,0.1)] px-4 py-3 text-[#ff3366] font-[family-name:var(--font-body)]">
                 {error}
@@ -104,10 +83,10 @@ export default function SignupPage() {
 
             <button
               type="submit"
-              disabled={loading || !email || !password}
+              disabled={loading || !email}
               className="btn-neon w-full px-6 py-3 text-[#00f0ff] font-[family-name:var(--font-body)] text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Creating account...' : 'Create Account'}
+              {loading ? 'Sending...' : 'Send Magic Link'}
             </button>
           </form>
 

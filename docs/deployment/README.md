@@ -84,7 +84,7 @@ Copy `.env.example` to `.env.local` and fill in values. The app runs in degraded
 | Variable                               | Purpose                   | Required for        |
 | -------------------------------------- | ------------------------- | ------------------- |
 | `NEXT_PUBLIC_SUPABASE_URL`             | Supabase project URL      | Auth, persistence   |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase anon/public key  | Auth, persistence   |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key  | Auth, persistence   |
 | `SUPABASE_SERVICE_ROLE_KEY`            | Supabase service role key | Backend data access |
 
 ### GitHub Actions

@@ -545,7 +545,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `feat(site): add mobile hamburger menu to Navbar`
   - Files: Navbar.tsx
 
-- [ ] 5. Fix auth consistency — make signup use magic link
+- [x] 5. Fix auth consistency — make signup use magic link
 
   **What to do**:
   - Update `apps/studio/src/app/signup/page.tsx` to use magic link (signInWithOtp) instead of password-based signup (signUp with password)
@@ -604,7 +604,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `fix(auth): make signup use magic link to match login`
   - Files: signup/page.tsx
 
-- [ ] 6. Rename Supabase env vars to standard naming
+- [x] 6. Rename Supabase env vars to standard naming
 
   **What to do**:
   This is a HIGH blast radius change — must be atomic across ALL files. The current code uses `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` but Supabase's official convention is `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
@@ -681,7 +681,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `refactor: rename SUPABASE_PUBLISHABLE_KEY to SUPABASE_ANON_KEY (official convention)`
   - Files: 6 source files + .env.example
 
-- [ ] 7. Update Kimi model from kimi-k2-0711 to kimi-k2.5
+- [x] 7. Update Kimi model from kimi-k2-0711 to kimi-k2.5
 
   **What to do**:
   Update the default Kimi model name in the LLM provider and all associated test files.
@@ -743,7 +743,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `fix(llm): update default Kimi model from kimi-k2-0711 to kimi-k2.5`
   - Files: kimi.ts, 4 test files
 
-- [ ] 8. Create dispatch.ts and wire design job queue
+- [x] 8. Create dispatch.ts and wire design job queue
 
   **What to do**:
   The Phase 1 plan specified `apps/studio/src/lib/workers/dispatch.ts` but it was never created. The design route currently runs generation synchronously. Create a proper dispatch module:
@@ -809,7 +809,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `feat(studio): create dispatch.ts and wire design job queue`
   - Files: dispatch.ts (new), design/route.ts
 
-- [ ] 9. Add /api/health endpoint
+- [x] 9. Add /api/health endpoint
 
   **What to do**:
   Create a simple health check endpoint for monitoring:
@@ -857,7 +857,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `feat(studio): add /api/health endpoint`
   - Files: health/route.ts (new)
 
-- [ ] 10. Add custom not-found.tsx and error.tsx to both apps
+- [x] 10. Add custom not-found.tsx and error.tsx to both apps
 
   **What to do**:
   Create custom error pages matching the cyberpunk theme for both apps:

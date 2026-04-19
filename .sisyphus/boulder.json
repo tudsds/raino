@@ -18,6 +18,15 @@
       "agent": "Sisyphus-Junior",
       "category": "quick",
       "updated_at": "2026-04-19T11:55:27.250Z"
+    },
+    "todo:5": {
+      "task_key": "todo:5",
+      "task_label": "5",
+      "task_title": "Fix auth consistency — make signup use magic link",
+      "session_id": "ses_25a64d0c4ffeL4VUtfVxvhBUDV",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-19T12:08:52.575Z"
     }
   }
 }
