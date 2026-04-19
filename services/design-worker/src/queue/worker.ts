@@ -42,7 +42,7 @@ interface JobUpdate {
   [key: string]: unknown;
 }
 
-const STORAGE_BUCKET = 'design-artifacts';
+const STORAGE_BUCKET = 'artifacts';
 
 async function executeJob(input: JobInput): Promise<JobResult> {
   switch (input.type) {

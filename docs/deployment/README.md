@@ -42,7 +42,7 @@ psql "$DATABASE_URL" -f supabase/migrations/00001_enable_extensions.sql   # pgcr
 psql "$DATABASE_URL" -f supabase/migrations/00002_rls_policies.sql        # tenant-scoped RLS
 psql "$DATABASE_URL" -f supabase/migrations/00003_vector_and_rag.sql       # documents, chunks, embeddings
 psql "$DATABASE_URL" -f supabase/migrations/00004_pgvector_1536.sql        # dimension migration
-psql "$DATABASE_URL" -f supabase/migrations/00004_storage_buckets.sql      # designs, documents, avatars
+psql "$DATABASE_URL" -f supabase/migrations/00004_storage_buckets.sql      # reports, artifacts, uploads
 psql "$DATABASE_URL" -f supabase/migrations/00005_seed_data.sql            # seed data
 ```
 
@@ -56,11 +56,11 @@ Or run them all at once:
 
 Confirm the three storage buckets exist in the Supabase dashboard under Storage:
 
-| Bucket      | Public | Purpose                            |
-| ----------- | ------ | ---------------------------------- |
-| `designs`   | No     | KiCad exports, generated artifacts |
-| `documents` | No     | Ingested engineering documents     |
-| `avatars`   | Yes    | User profile avatars               |
+| Bucket       | Public | Purpose                                           |
+| ------------ | ------ | ------------------------------------------------- |
+| `reports`    | No     | Generated reports and audit trails                |
+| `artifacts`  | No     | Design artifacts (KiCad projects, Gerber files)   |
+| `uploads`    | Yes    | User-uploaded documents (datasheets, specs)       |
 
 ## Environment Variables
 

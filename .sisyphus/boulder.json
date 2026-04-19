@@ -45,6 +45,15 @@
       "agent": "Sisyphus-Junior",
       "category": "quick",
       "updated_at": "2026-04-19T12:35:27.867Z"
+    },
+    "todo:16": {
+      "task_key": "todo:16",
+      "task_label": "16",
+      "task_title": "Fix Supabase Storage Bucket Mismatch (CRITICAL)",
+      "session_id": "ses_25a3fca3cffeo9hiBJFV05th1L",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-19T12:44:09.796Z"
     }
   }
 }

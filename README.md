@@ -385,6 +385,10 @@ If you are adding a new supplier adapter, a new architecture template, or a new 
 - **KiCad**: External GPL-licensed tool. Not embedded in Raino. KiCad libraries and generated designs may carry different license terms.
 - Third-party attributions and notices: see [NOTICES.md](NOTICES.md).
 
+## Acknowledgements
+
+See [NOTICES.md](NOTICES.md) for third-party attributions and licence information.
+
 ---
 
 <p align="center">

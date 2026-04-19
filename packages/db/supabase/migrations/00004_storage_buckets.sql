@@ -3,64 +3,64 @@
 -- ─── Buckets ──────────────────────────────────────────────────────────────────
 
 INSERT INTO storage.buckets (id, name, public)
-  VALUES ('designs', 'designs', false)
+  VALUES ('reports', 'reports', false)
   ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO storage.buckets (id, name, public)
-  VALUES ('documents', 'documents', false)
+  VALUES ('artifacts', 'artifacts', false)
   ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO storage.buckets (id, name, public)
-  VALUES ('avatars', 'avatars', true)
+  VALUES ('uploads', 'uploads', true)
   ON CONFLICT (id) DO NOTHING;
 
--- ─── Designs bucket policies ──────────────────────────────────────────────────
+-- ─── Reports bucket policies ──────────────────────────────────────────────────
 
-CREATE POLICY "Authenticated users can upload designs"
+CREATE POLICY "Authenticated users can upload reports"
   ON storage.objects FOR INSERT
   TO authenticated
-  WITH CHECK (bucket_id = 'designs');
+  WITH CHECK (bucket_id = 'reports');
 
-CREATE POLICY "Authenticated users can view designs"
+CREATE POLICY "Authenticated users can view reports"
   ON storage.objects FOR SELECT
   TO authenticated
-  USING (bucket_id = 'designs');
+  USING (bucket_id = 'reports');
 
-CREATE POLICY "Authenticated users can delete designs"
+CREATE POLICY "Authenticated users can delete reports"
   ON storage.objects FOR DELETE
   TO authenticated
-  USING (bucket_id = 'designs');
+  USING (bucket_id = 'reports');
 
--- ─── Documents bucket policies ────────────────────────────────────────────────
+-- ─── Artifacts bucket policies ────────────────────────────────────────────────
 
-CREATE POLICY "Authenticated users can upload documents"
+CREATE POLICY "Authenticated users can upload artifacts"
   ON storage.objects FOR INSERT
   TO authenticated
-  WITH CHECK (bucket_id = 'documents');
+  WITH CHECK (bucket_id = 'artifacts');
 
-CREATE POLICY "Authenticated users can view documents"
+CREATE POLICY "Authenticated users can view artifacts"
   ON storage.objects FOR SELECT
   TO authenticated
-  USING (bucket_id = 'documents');
+  USING (bucket_id = 'artifacts');
 
-CREATE POLICY "Authenticated users can delete documents"
+CREATE POLICY "Authenticated users can delete artifacts"
   ON storage.objects FOR DELETE
   TO authenticated
-  USING (bucket_id = 'documents');
+  USING (bucket_id = 'artifacts');
 
--- ─── Avatars bucket policies ──────────────────────────────────────────────────
+-- ─── Uploads bucket policies ──────────────────────────────────────────────────
 
-CREATE POLICY "Anyone can view avatars"
+CREATE POLICY "Anyone can view uploads"
   ON storage.objects FOR SELECT
   TO public
-  USING (bucket_id = 'avatars');
+  USING (bucket_id = 'uploads');
 
-CREATE POLICY "Authenticated users can upload avatars"
+CREATE POLICY "Authenticated users can upload uploads"
   ON storage.objects FOR INSERT
   TO authenticated
-  WITH CHECK (bucket_id = 'avatars');
+  WITH CHECK (bucket_id = 'uploads');
 
-CREATE POLICY "Users can update own avatars"
+CREATE POLICY "Users can update own uploads"
   ON storage.objects FOR UPDATE
   TO authenticated
-  USING (bucket_id = 'avatars');
+  USING (bucket_id = 'uploads');

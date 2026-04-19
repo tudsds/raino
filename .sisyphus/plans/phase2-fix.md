@@ -1295,7 +1295,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
 > Fixes critical integration mismatches, adds agent memory system inspired by reference frameworks,
 > overhauls raino-site/raino-studio/README to match reference professionalism, adds legal acknowledgements.
 
-- [ ] 16. Fix Supabase Storage Bucket Mismatch (CRITICAL)
+- [x] 16. Fix Supabase Storage Bucket Mismatch (CRITICAL)
 
   **What to do**:
   - Three different configurations exist for storage buckets — NONE match:
@@ -1388,7 +1388,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `fix(storage): resolve critical bucket name mismatch across code, migration, and Supabase`
   - Files: `services/design-worker/src/queue/worker.ts`, `packages/db/supabase/migrations/00004_storage_buckets.sql`, `.env.example`
 
-- [ ] 17. Fix DigiKey OAuth Integration & Remove Dead Code
+- [x] 17. Fix DigiKey OAuth Integration & Remove Dead Code
 
   **What to do**:
   - **DISCOVERY**: DigiKey API uses `client_credentials` (2-legged OAuth), NOT authorization code flow
@@ -1581,7 +1581,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Files: `SOUL.md`, `TOOLS.md`, `IDENTITY.md`, `packages/agents/src/memory/*`
   - Pre-commit: `pnpm typecheck && pnpm test`
 
-- [ ] 19. Add Legal Acknowledgements (NOTICES.md)
+- [x] 19. Add Legal Acknowledgements (NOTICES.md)
 
   **What to do**:
   - Create `NOTICES.md` at project root — NOT in README or website (user's explicit requirement)

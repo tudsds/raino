@@ -179,6 +179,9 @@ export class RealDigiKeyAdapter implements DigiKeyAdapter {
     }));
   }
 
+  // DigiKey uses 2-legged OAuth (client_credentials).
+  // No redirect URI or user interaction is required.
+  // Token expires in 10 minutes; we refresh proactively.
   private async ensureToken(): Promise<string> {
     if (this.accessToken && Date.now() < this.tokenExpiresAt) {
       return this.accessToken;
