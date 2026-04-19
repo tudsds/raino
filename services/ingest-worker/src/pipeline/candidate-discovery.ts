@@ -1,4 +1,4 @@
-import type { SeedConfig, CandidateSet } from './types.js';
+import type { SeedConfig, CandidateSet } from './types';
 
 let candidateCounter = 0;
 

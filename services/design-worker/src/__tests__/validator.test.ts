@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { runValidation, runValidationAsync } from '../validator/engine.js';
-import type { ValidationRequest } from '../validator/types.js';
+import { runValidation, runValidationAsync } from '../validator/engine';
+import type { ValidationRequest } from '../validator/types';
 
 describe('runValidation (fixture mode)', () => {
   beforeEach(() => {

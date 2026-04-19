@@ -1,15 +1,15 @@
-export { BOOTSTRAP_SEED } from './config/seed.js';
+export { BOOTSTRAP_SEED } from './config/seed';
 
-export { discoverCandidates } from './pipeline/candidate-discovery.js';
-export { fetchDocuments } from './pipeline/doc-fetch.js';
-export { storeRawDocuments } from './pipeline/raw-document-store.js';
-export { normalizeDocument } from './pipeline/normalization.js';
-export { chunkDocuments } from './pipeline/chunking.js';
-export { enrichMetadata } from './pipeline/metadata-enrichment.js';
-export { generateEmbeddings } from './pipeline/embedding.js';
-export { storeEmbeddings, getStores, querySimilar } from './pipeline/vector-store.js';
-export { runSufficiencyGate } from './pipeline/sufficiency-gate.js';
-export { bootstrap } from './cli/bootstrap.js';
+export { discoverCandidates } from './pipeline/candidate-discovery';
+export { fetchDocuments } from './pipeline/doc-fetch';
+export { storeRawDocuments } from './pipeline/raw-document-store';
+export { normalizeDocument } from './pipeline/normalization';
+export { chunkDocuments } from './pipeline/chunking';
+export { enrichMetadata } from './pipeline/metadata-enrichment';
+export { generateEmbeddings } from './pipeline/embedding';
+export { storeEmbeddings, getStores, querySimilar } from './pipeline/vector-store';
+export { runSufficiencyGate } from './pipeline/sufficiency-gate';
+export { bootstrap } from './cli/bootstrap';
 
 export type {
   SeedFamily,
@@ -22,7 +22,7 @@ export type {
   SufficiencyReport,
   IngestionManifest,
   FixtureDocument,
-} from './pipeline/types.js';
+} from './pipeline/types';
 
 export {
   writeJson,
@@ -34,4 +34,4 @@ export {
   writePipelineSummary,
   readIngestionManifest,
   readSufficiencyReport,
-} from './storage/local.js';
+} from './storage/local';

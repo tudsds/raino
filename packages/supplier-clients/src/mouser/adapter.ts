@@ -1,10 +1,10 @@
-import type { SupplierAdapter, SearchOptions } from '../common/adapter.js';
+import type { SupplierAdapter, SearchOptions } from '../common/adapter';
 import type {
   SupplierPartInfo,
   SupplierQuote,
   SupplierQuoteLineItem,
   SupplierSearchResult,
-} from '../common/types.js';
+} from '../common/types';
 
 export interface MouserAdapter extends SupplierAdapter {
   getCartUrl(lineItems: Array<{ sku: string; quantity: number }>): string;

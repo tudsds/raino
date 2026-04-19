@@ -3,7 +3,7 @@
 // Produces consistent vectors based on a hash of the input text.
 // No external API calls — purely local computation.
 
-import type { EmbeddingGenerator } from './contracts.js';
+import type { EmbeddingGenerator } from './contracts';
 
 const MOCK_MODEL_NAME = 'mock-hash-384';
 const MOCK_DIMENSIONS = 384;

@@ -1,10 +1,10 @@
-import type { SupplierAdapter, SearchOptions } from '../common/adapter.js';
+import type { SupplierAdapter, SearchOptions } from '../common/adapter';
 import type {
   SupplierPartInfo,
   SupplierQuote,
   SupplierQuoteLineItem,
   SupplierSearchResult,
-} from '../common/types.js';
+} from '../common/types';
 
 export interface DigiKeyAdapter extends SupplierAdapter {
   getCategories(): Promise<Array<{ id: string; name: string }>>;

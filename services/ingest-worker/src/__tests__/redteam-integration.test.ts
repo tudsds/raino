@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { runSufficiencyGate } from '../pipeline/sufficiency-gate.js';
-import type { CandidateSet } from '../pipeline/types.js';
+import { runSufficiencyGate } from '../pipeline/sufficiency-gate';
+import type { CandidateSet } from '../pipeline/types';
 import type { DocumentRecord } from '@raino/rag';
 import {
   validateBOMCompleteness,

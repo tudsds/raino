@@ -10,56 +10,56 @@ export type {
   ChunkRecord,
   EmbeddingRecord,
   RetrievalResult,
-} from './storage/types.js';
+} from './storage/types';
 
 // Storage interfaces
-export type { DocumentStore, ChunkStore, VectorStore } from './storage/interfaces.js';
+export type { DocumentStore, ChunkStore, VectorStore } from './storage/interfaces';
 
 // Memory store implementations
 export {
   MemoryDocumentStore,
   MemoryChunkStore,
   MemoryVectorStore,
-} from './storage/memory-store.js';
+} from './storage/memory-store';
 
 // Supabase store implementations
-export { SupabaseDocumentStore } from './storage/supabase-document-store.js';
-export { SupabaseChunkStore } from './storage/supabase-chunk-store.js';
-export { SupabaseVectorStore } from './storage/supabase-vector-store.js';
+export { SupabaseDocumentStore } from './storage/supabase-document-store';
+export { SupabaseChunkStore } from './storage/supabase-chunk-store';
+export { SupabaseVectorStore } from './storage/supabase-vector-store';
 
 // Store factory
-export { createStoreFactory, createStores } from './storage/factory.js';
-export type { StoreFactory, StoreSet } from './storage/factory.js';
+export { createStoreFactory, createStores } from './storage/factory';
+export type { StoreFactory, StoreSet } from './storage/factory';
 
 // Chunking engine
-export { chunkDocument } from './chunking/engine.js';
-export type { ChunkingOptions } from './chunking/engine.js';
+export { chunkDocument } from './chunking/engine';
+export type { ChunkingOptions } from './chunking/engine';
 
 // Section detection
-export { detectSections } from './chunking/section-detector.js';
-export type { SectionBoundary } from './chunking/section-detector.js';
+export { detectSections } from './chunking/section-detector';
+export type { SectionBoundary } from './chunking/section-detector';
 
 // Embedding contracts
-export type { EmbeddingGenerator } from './embeddings/contracts.js';
+export type { EmbeddingGenerator } from './embeddings/contracts';
 
 // Mock embedding generator
-export { MockEmbeddingGenerator } from './embeddings/mock-generator.js';
+export { MockEmbeddingGenerator } from './embeddings/mock-generator';
 
 // OpenAI embedding generator
-export { OpenAIEmbeddingGenerator } from './embeddings/openai-generator.js';
-export type { OpenAIEmbeddingConfig } from './embeddings/openai-generator.js';
+export { OpenAIEmbeddingGenerator } from './embeddings/openai-generator';
+export type { OpenAIEmbeddingConfig } from './embeddings/openai-generator';
 
 // Embedding factory
 export {
   createEmbeddingGenerator,
   getEmbeddingGenerator,
   resetEmbeddingGenerator,
-} from './embeddings/factory.js';
-export type { EmbeddingFactoryConfig } from './embeddings/factory.js';
+} from './embeddings/factory';
+export type { EmbeddingFactoryConfig } from './embeddings/factory';
 
 // Retrieval engine
-export { RetrievalEngine } from './retrieval/engine.js';
-export type { RetrievalOptions, RetrievalDeps } from './retrieval/engine.js';
+export { RetrievalEngine } from './retrieval/engine';
+export type { RetrievalOptions, RetrievalDeps } from './retrieval/engine';
 
 // Pipeline types
 export type {
@@ -68,4 +68,4 @@ export type {
   PipelineResult,
   PipelineConfig,
   PipelineRunResult,
-} from './pipeline/types.js';
+} from './pipeline/types';

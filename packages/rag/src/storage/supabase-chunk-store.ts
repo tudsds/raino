@@ -3,8 +3,8 @@
 // document ID, MPN, and arbitrary metadata filters.
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { ChunkRecord, ChunkMetadata } from './types.js';
-import type { ChunkStore } from './interfaces.js';
+import type { ChunkRecord, ChunkMetadata } from './types';
+import type { ChunkStore } from './interfaces';
 
 interface ChunkRow {
   id: string;

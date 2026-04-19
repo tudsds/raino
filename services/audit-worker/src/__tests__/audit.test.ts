@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { InMemoryAuditTraceStore, type AuditTrace } from '../traces/logger.js';
-import { validatePolicies, type ProjectState } from '../policy/checker.js';
-import { generateManifest, type ArtifactEntryInput } from '../manifests/generator.js';
-import { generateAuditReport, type BOMProvenanceEntry } from '../reports/generator.js';
+import { InMemoryAuditTraceStore, type AuditTrace } from '../traces/logger';
+import { validatePolicies, type ProjectState } from '../policy/checker';
+import { generateManifest, type ArtifactEntryInput } from '../manifests/generator';
+import { generateAuditReport, type BOMProvenanceEntry } from '../reports/generator';
 
 function makeTrace(overrides: Partial<AuditTrace> = {}): AuditTrace {
   return {

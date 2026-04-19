@@ -1,4 +1,4 @@
-import type { CandidateSet, SufficiencyCheckResult, SufficiencyReport } from './types.js';
+import type { CandidateSet, SufficiencyCheckResult, SufficiencyReport } from './types';
 import type { DocumentRecord, SourceType } from '@raino/rag';
 
 const COMPLEX_PART_PATTERNS = [

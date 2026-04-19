@@ -1,22 +1,22 @@
 import { describe, it, expect } from 'vitest';
-import { runSufficiencyGate } from '../../services/ingest-worker/src/pipeline/sufficiency-gate.js';
-import type { CandidateSet } from '../../services/ingest-worker/src/pipeline/types.js';
-import type { DocumentRecord } from '../../packages/rag/src/storage/types.js';
+import { runSufficiencyGate } from '../../services/ingest-worker/src/pipeline/sufficiency-gate';
+import type { CandidateSet } from '../../services/ingest-worker/src/pipeline/types';
+import type { DocumentRecord } from '../../packages/rag/src/storage/types';
 import {
   validateBOMCompleteness,
   checkBOMForPlaceholders,
-} from '../../packages/core/src/bom/engine.js';
-import { calculateRoughQuote } from '../../packages/core/src/quote/calculator.js';
-import type { BOM, BOMRow } from '../../packages/core/src/schemas/bom.js';
+} from '../../packages/core/src/bom/engine';
+import { calculateRoughQuote } from '../../packages/core/src/quote/calculator';
+import type { BOM, BOMRow } from '../../packages/core/src/schemas/bom';
 import {
   generateManifest,
   type ArtifactEntryInput,
-} from '../../services/audit-worker/src/manifests/generator.js';
+} from '../../services/audit-worker/src/manifests/generator';
 import {
   WorkflowMachine,
   InvalidTransitionError,
-} from '../../packages/agents/src/workflow/machine.js';
-import { WorkflowState } from '../../packages/agents/src/workflow/states.js';
+} from '../../packages/agents/src/workflow/machine';
+import { WorkflowState } from '../../packages/agents/src/workflow/states';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { selectBestQuote, type SupplierQuoteResult } from '../supplier-comparison.js';
+import { selectBestQuote, type SupplierQuoteResult } from '../supplier-comparison';
 
 describe('selectBestQuote', () => {
   it('returns the lowest positive price among suppliers', () => {

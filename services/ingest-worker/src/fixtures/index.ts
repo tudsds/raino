@@ -1,4 +1,4 @@
-import type { FixtureDocument } from '../pipeline/types.js';
+import type { FixtureDocument } from '../pipeline/types';
 
 // ── STM32F407VGT6 ──────────────────────────────────────────────────────────────
 

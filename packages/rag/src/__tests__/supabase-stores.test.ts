@@ -5,10 +5,10 @@ import type {
   ChunkRecord,
   ChunkMetadata,
   EmbeddingRecord,
-} from '../storage/types.js';
-import { SupabaseDocumentStore } from '../storage/supabase-document-store.js';
-import { SupabaseChunkStore } from '../storage/supabase-chunk-store.js';
-import { SupabaseVectorStore } from '../storage/supabase-vector-store.js';
+} from '../storage/types';
+import { SupabaseDocumentStore } from '../storage/supabase-document-store';
+import { SupabaseChunkStore } from '../storage/supabase-chunk-store';
+import { SupabaseVectorStore } from '../storage/supabase-vector-store';
 
 function makeDocument(overrides: Partial<DocumentRecord> = {}): DocumentRecord {
   return {

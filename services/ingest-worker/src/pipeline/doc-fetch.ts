@@ -1,5 +1,5 @@
-import { FIXTURE_DOCUMENTS } from '../fixtures/index.js';
-import type { CandidateSet } from './types.js';
+import { FIXTURE_DOCUMENTS } from '../fixtures/index';
+import type { CandidateSet } from './types';
 import type { DocumentRecord, SourceType, TrustLevel } from '@raino/rag';
 
 let docCounter = 0;

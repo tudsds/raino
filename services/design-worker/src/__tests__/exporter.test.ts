@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { runExport, runExportAsync } from '../exporter/engine.js';
-import type { ExportRequest } from '../exporter/types.js';
+import { runExport, runExportAsync } from '../exporter/engine';
+import type { ExportRequest } from '../exporter/types';
 
 describe('runExport (fixture mode)', () => {
   beforeEach(() => {

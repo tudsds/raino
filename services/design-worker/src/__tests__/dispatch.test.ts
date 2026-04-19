@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { pollAndExecuteWithPrisma } from '../queue/worker.js';
+import { pollAndExecuteWithPrisma } from '../queue/worker';
 
 interface MockDesignJob {
   id: string;
@@ -49,7 +49,7 @@ vi.mock('../generator/project.js', () => ({
   generateKiCadProject: vi.fn(),
 }));
 
-import { generateKiCadProject } from '../generator/project.js';
+import { generateKiCadProject } from '../generator/project';
 
 describe('pollAndExecuteWithPrisma', () => {
   beforeEach(() => {

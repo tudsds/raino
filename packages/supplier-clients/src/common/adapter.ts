@@ -1,4 +1,4 @@
-import type { SupplierPartInfo, SupplierQuote, SupplierSearchResult } from './types.js';
+import type { SupplierPartInfo, SupplierQuote, SupplierSearchResult } from './types';
 
 export interface SearchOptions {
   category?: string;

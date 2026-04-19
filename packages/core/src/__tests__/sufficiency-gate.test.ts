@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { runSufficiencyGate, type IngestionState } from '../ingestion/sufficiency-gate.js';
+import { runSufficiencyGate, type IngestionState } from '../ingestion/sufficiency-gate';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

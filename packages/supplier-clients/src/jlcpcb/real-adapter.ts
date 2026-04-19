@@ -1,19 +1,19 @@
 import { createHash, randomUUID } from 'node:crypto';
-import type { SearchOptions } from '../common/adapter.js';
+import type { SearchOptions } from '../common/adapter';
 import type {
   SupplierPartInfo,
   SupplierQuote,
   SupplierQuoteLineItem,
   SupplierSearchResult,
-} from '../common/types.js';
-import type { JLCPCBAdapter } from './adapter.js';
-import { FetchHttpClient, HttpError } from '../common/http-client.js';
-import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers.js';
+} from '../common/types';
+import type { JLCPCBAdapter } from './adapter';
+import { FetchHttpClient, HttpError } from '../common/http-client';
+import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers';
 import {
   JLCPCBComponentSchema,
   JLCPCBDetailResponseSchema,
   JLCPCBSearchResponseSchema,
-} from '../common/response-schemas.js';
+} from '../common/response-schemas';
 
 export interface JLCPCBConfig {
   appId: string;

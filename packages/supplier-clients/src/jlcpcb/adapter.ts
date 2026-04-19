@@ -1,10 +1,10 @@
-import type { SupplierAdapter, SearchOptions } from '../common/adapter.js';
+import type { SupplierAdapter, SearchOptions } from '../common/adapter';
 import type {
   SupplierPartInfo,
   SupplierQuote,
   SupplierQuoteLineItem,
   SupplierSearchResult,
-} from '../common/types.js';
+} from '../common/types';
 
 export interface JLCPCBAdapter extends SupplierAdapter {
   getComponentSpecs(jlcpcbPartId: string): Promise<{

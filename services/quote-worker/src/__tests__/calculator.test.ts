@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { calculateRoughQuote, type BOMRow } from '../engine/calculator.js';
-import { DEFAULT_QUOTE_CONFIG } from '../engine/defaults.js';
+import { calculateRoughQuote, type BOMRow } from '../engine/calculator';
+import { DEFAULT_QUOTE_CONFIG } from '../engine/defaults';
 
 function makeBOMRow(overrides: Partial<BOMRow> = {}): BOMRow {
   return {

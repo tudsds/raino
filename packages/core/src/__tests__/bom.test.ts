@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { validateBOMCompleteness, checkBOMForPlaceholders } from '../bom/engine.js';
-import type { BOM } from '../schemas/bom.js';
+import { validateBOMCompleteness, checkBOMForPlaceholders } from '../bom/engine';
+import type { BOM } from '../schemas/bom';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

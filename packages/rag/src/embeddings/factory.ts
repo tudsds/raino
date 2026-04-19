@@ -2,9 +2,9 @@
 // Selects the appropriate embedding backend based on environment configuration.
 // OpenAI provider when credentials are present; mock as honest fallback.
 
-import type { EmbeddingGenerator } from './contracts.js';
-import { MockEmbeddingGenerator } from './mock-generator.js';
-import { OpenAIEmbeddingGenerator } from './openai-generator.js';
+import type { EmbeddingGenerator } from './contracts';
+import { MockEmbeddingGenerator } from './mock-generator';
+import { OpenAIEmbeddingGenerator } from './openai-generator';
 
 export interface EmbeddingFactoryConfig {
   /** Provider to use: "openai" or "mock". Defaults to "mock". */

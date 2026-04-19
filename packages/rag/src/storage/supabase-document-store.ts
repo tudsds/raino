@@ -3,8 +3,8 @@
 // project_id when provided, enabling multi-tenant isolation.
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { DocumentRecord } from './types.js';
-import type { DocumentStore } from './interfaces.js';
+import type { DocumentRecord } from './types';
+import type { DocumentStore } from './interfaces';
 
 /** Row shape stored in the `documents` Supabase table. */
 interface DocumentRow {

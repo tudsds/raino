@@ -4,15 +4,15 @@
 // retrieval works end-to-end.
 
 import { describe, it, expect, beforeAll } from 'vitest';
-import { BOOTSTRAP_SEED } from '../config/seed.js';
-import { discoverCandidates } from '../pipeline/candidate-discovery.js';
-import { fetchDocuments } from '../pipeline/doc-fetch.js';
-import { normalizeDocument } from '../pipeline/normalization.js';
-import { chunkDocuments } from '../pipeline/chunking.js';
-import { enrichMetadata } from '../pipeline/metadata-enrichment.js';
-import { generateEmbeddings } from '../pipeline/embedding.js';
-import { storeEmbeddings, getStores, querySimilar } from '../pipeline/vector-store.js';
-import type { CandidateSet } from '../pipeline/types.js';
+import { BOOTSTRAP_SEED } from '../config/seed';
+import { discoverCandidates } from '../pipeline/candidate-discovery';
+import { fetchDocuments } from '../pipeline/doc-fetch';
+import { normalizeDocument } from '../pipeline/normalization';
+import { chunkDocuments } from '../pipeline/chunking';
+import { enrichMetadata } from '../pipeline/metadata-enrichment';
+import { generateEmbeddings } from '../pipeline/embedding';
+import { storeEmbeddings, getStores, querySimilar } from '../pipeline/vector-store';
+import type { CandidateSet } from '../pipeline/types';
 import type { DocumentRecord, ChunkRecord, EmbeddingRecord } from '@raino/rag';
 
 describe('Retrieval smoke test — full pipeline + query', () => {

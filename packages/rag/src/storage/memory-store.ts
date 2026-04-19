@@ -2,8 +2,8 @@
 // Simple map-backed stores for testing, development, and fixture mode.
 // Vector search uses brute-force cosine similarity — no external dependencies.
 
-import type { DocumentRecord, ChunkRecord, ChunkMetadata, EmbeddingRecord } from './types.js';
-import type { DocumentStore, ChunkStore, VectorStore } from './interfaces.js';
+import type { DocumentRecord, ChunkRecord, ChunkMetadata, EmbeddingRecord } from './types';
+import type { DocumentStore, ChunkStore, VectorStore } from './interfaces';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 

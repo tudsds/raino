@@ -2,7 +2,7 @@
 // Identifies semantic section boundaries in engineering documents (datasheets,
 // errata, application notes) and maps them to ChunkType values.
 
-import type { ChunkType } from '../storage/types.js';
+import type { ChunkType } from '../storage/types';
 
 /** A detected section boundary within a document. */
 export interface SectionBoundary {

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { validateBOMCompleteness, checkBOMForPlaceholders } from '../bom/engine.js';
-import { calculateRoughQuote } from '../quote/calculator.js';
-import type { BOM, BOMRow } from '../schemas/bom.js';
+import { validateBOMCompleteness, checkBOMForPlaceholders } from '../bom/engine';
+import { calculateRoughQuote } from '../quote/calculator';
+import type { BOM, BOMRow } from '../schemas/bom';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

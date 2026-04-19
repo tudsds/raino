@@ -1,19 +1,19 @@
-import type { SearchOptions } from '../common/adapter.js';
+import type { SearchOptions } from '../common/adapter';
 import type {
   SupplierPartInfo,
   SupplierQuote,
   SupplierQuoteLineItem,
   SupplierSearchResult,
-} from '../common/types.js';
-import type { DigiKeyAdapter } from './adapter.js';
-import { FetchHttpClient, HttpError } from '../common/http-client.js';
-import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers.js';
+} from '../common/types';
+import type { DigiKeyAdapter } from './adapter';
+import { FetchHttpClient, HttpError } from '../common/http-client';
+import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers';
 import {
   DigiKeyCategoriesResponseSchema,
   DigiKeyProductSchema,
   DigiKeySearchResponseSchema,
   DigiKeyTokenResponseSchema,
-} from '../common/response-schemas.js';
+} from '../common/response-schemas';
 
 export interface DigiKeyConfig {
   clientId: string;

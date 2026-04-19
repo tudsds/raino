@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { executeJob, pollAndExecuteJob, type JobInput, type JobType } from '../queue/worker.js';
+import { executeJob, pollAndExecuteJob, type JobInput, type JobType } from '../queue/worker';
 
 interface MockDesignJob {
   id: string;

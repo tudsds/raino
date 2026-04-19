@@ -2,9 +2,9 @@
 // Combines embedding generation, vector search, and provenance lookup into a
 // single retrieval pipeline. Returns scored results with full document lineage.
 
-import type { ChunkRecord, ChunkMetadata, RetrievalResult } from '../storage/types.js';
-import type { ChunkStore, VectorStore } from '../storage/interfaces.js';
-import type { EmbeddingGenerator } from '../embeddings/contracts.js';
+import type { ChunkRecord, ChunkMetadata, RetrievalResult } from '../storage/types';
+import type { ChunkStore, VectorStore } from '../storage/interfaces';
+import type { EmbeddingGenerator } from '../embeddings/contracts';
 
 /** Options controlling retrieval behavior. */
 export interface RetrievalOptions {

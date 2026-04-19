@@ -1,13 +1,13 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { MockDigiKeyAdapter } from '../digikey/adapter.js';
-import { MockMouserAdapter } from '../mouser/adapter.js';
-import { MockJLCPCBAdapter } from '../jlcpcb/adapter.js';
-import { RealDigiKeyAdapter } from '../digikey/real-adapter.js';
-import { RealMouserAdapter } from '../mouser/real-adapter.js';
-import { RealJLCPCBAdapter } from '../jlcpcb/real-adapter.js';
-import { createSupplierAdapters, getAdapterStatus } from '../factory.js';
-import { FetchHttpClient, HttpError } from '../common/http-client.js';
-import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers.js';
+import { MockDigiKeyAdapter } from '../digikey/adapter';
+import { MockMouserAdapter } from '../mouser/adapter';
+import { MockJLCPCBAdapter } from '../jlcpcb/adapter';
+import { RealDigiKeyAdapter } from '../digikey/real-adapter';
+import { RealMouserAdapter } from '../mouser/real-adapter';
+import { RealJLCPCBAdapter } from '../jlcpcb/real-adapter';
+import { createSupplierAdapters, getAdapterStatus } from '../factory';
+import { FetchHttpClient, HttpError } from '../common/http-client';
+import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers';
 
 // ── MockDigiKeyAdapter ───────────────────────────────────────────────────────
 

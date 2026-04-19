@@ -4,7 +4,7 @@
 // Falls back gracefully when credentials are missing.
 
 import OpenAI from 'openai';
-import type { EmbeddingGenerator } from './contracts.js';
+import type { EmbeddingGenerator } from './contracts';
 
 const OPENAI_MODEL_NAME = 'text-embedding-3-small';
 const OPENAI_DIMENSIONS = 1536;

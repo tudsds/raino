@@ -1,10 +1,10 @@
-import type { SupplierAdapter } from './common/adapter.js';
-import { MockDigiKeyAdapter } from './digikey/adapter.js';
-import { MockMouserAdapter } from './mouser/adapter.js';
-import { MockJLCPCBAdapter } from './jlcpcb/adapter.js';
-import { RealDigiKeyAdapter } from './digikey/real-adapter.js';
-import { RealMouserAdapter } from './mouser/real-adapter.js';
-import { RealJLCPCBAdapter } from './jlcpcb/real-adapter.js';
+import type { SupplierAdapter } from './common/adapter';
+import { MockDigiKeyAdapter } from './digikey/adapter';
+import { MockMouserAdapter } from './mouser/adapter';
+import { MockJLCPCBAdapter } from './jlcpcb/adapter';
+import { RealDigiKeyAdapter } from './digikey/real-adapter';
+import { RealMouserAdapter } from './mouser/real-adapter';
+import { RealJLCPCBAdapter } from './jlcpcb/real-adapter';
 
 export function createSupplierAdapters(): SupplierAdapter[] {
   return [createDigiKeyAdapter(), createMouserAdapter(), createJLCPCBAdapter()];

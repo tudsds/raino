@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { calculateRoughQuote } from '../quote/calculator.js';
-import type { BOM } from '../schemas/bom.js';
+import { calculateRoughQuote } from '../quote/calculator';
+import type { BOM } from '../schemas/bom';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

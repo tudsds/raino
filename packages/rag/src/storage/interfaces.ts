@@ -2,7 +2,7 @@
 // Contracts that every storage backend must satisfy. Production implementations
 // wrap real databases; in-memory versions exist for tests and fixture mode.
 
-import type { DocumentRecord, ChunkRecord, ChunkMetadata, EmbeddingRecord } from './types.js';
+import type { DocumentRecord, ChunkRecord, ChunkMetadata, EmbeddingRecord } from './types';
 
 /** CRUD operations for engineering documents. */
 export interface DocumentStore {

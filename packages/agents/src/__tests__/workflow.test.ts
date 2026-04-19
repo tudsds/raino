@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { WorkflowMachine, InvalidTransitionError } from '../workflow/machine.js';
-import { WorkflowState, ValidTransitions } from '../workflow/states.js';
+import { WorkflowMachine, InvalidTransitionError } from '../workflow/machine';
+import { WorkflowState, ValidTransitions } from '../workflow/states';
 
 describe('WorkflowMachine', () => {
   it('starts in intake state by default', () => {

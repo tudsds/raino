@@ -1,20 +1,20 @@
 import { describe, it, expect } from 'vitest';
-import { ProjectSchema, ProjectStatus } from '../schemas/project.js';
+import { ProjectSchema, ProjectStatus } from '../schemas/project';
 import {
   ProductSpecSchema,
   RequirementSchema,
   ConstraintsSchema,
   InterfaceSchema,
-} from '../schemas/spec.js';
+} from '../schemas/spec';
 import {
   BOMRowSchema,
   BOMSchema,
   ProvenanceSchema,
   RiskLevel,
   LifecycleStatus,
-} from '../schemas/bom.js';
-import { RoughQuoteSchema, ConfidenceLevel } from '../schemas/quote.js';
-import { AuditEntrySchema, AuditManifestSchema, AuditCategory } from '../schemas/audit.js';
+} from '../schemas/bom';
+import { RoughQuoteSchema, ConfidenceLevel } from '../schemas/quote';
+import { AuditEntrySchema, AuditManifestSchema, AuditCategory } from '../schemas/audit';
 import {
   CandidateFamilySchema,
   IngestionManifestSchema,
@@ -23,7 +23,7 @@ import {
   SufficiencyCheckSchema,
   DocumentType,
   IngestionManifestStatus,
-} from '../schemas/ingestion.js';
+} from '../schemas/ingestion';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

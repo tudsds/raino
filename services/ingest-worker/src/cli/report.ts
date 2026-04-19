@@ -1,4 +1,4 @@
-import { listFiles, readJson } from '../storage/local.js';
+import { listFiles, readJson } from '../storage/local';
 import * as path from 'node:path';
 
 async function report(): Promise<void> {

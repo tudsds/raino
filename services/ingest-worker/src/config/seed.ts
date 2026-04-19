@@ -1,4 +1,4 @@
-import type { SeedConfig } from '../pipeline/types.js';
+import type { SeedConfig } from '../pipeline/types';
 
 export const BOOTSTRAP_SEED: SeedConfig = {
   version: '0.1.0',

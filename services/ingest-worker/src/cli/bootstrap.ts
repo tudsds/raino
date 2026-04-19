@@ -1,25 +1,25 @@
-import { BOOTSTRAP_SEED } from '../config/seed.js';
-import { discoverCandidates } from '../pipeline/candidate-discovery.js';
-import { fetchDocuments } from '../pipeline/doc-fetch.js';
-import { storeRawDocuments } from '../pipeline/raw-document-store.js';
-import { normalizeDocument } from '../pipeline/normalization.js';
-import { chunkDocuments } from '../pipeline/chunking.js';
-import { enrichMetadata } from '../pipeline/metadata-enrichment.js';
-import { generateEmbeddings } from '../pipeline/embedding.js';
-import { storeEmbeddings } from '../pipeline/vector-store.js';
-import { runSufficiencyGate } from '../pipeline/sufficiency-gate.js';
+import { BOOTSTRAP_SEED } from '../config/seed';
+import { discoverCandidates } from '../pipeline/candidate-discovery';
+import { fetchDocuments } from '../pipeline/doc-fetch';
+import { storeRawDocuments } from '../pipeline/raw-document-store';
+import { normalizeDocument } from '../pipeline/normalization';
+import { chunkDocuments } from '../pipeline/chunking';
+import { enrichMetadata } from '../pipeline/metadata-enrichment';
+import { generateEmbeddings } from '../pipeline/embedding';
+import { storeEmbeddings } from '../pipeline/vector-store';
+import { runSufficiencyGate } from '../pipeline/sufficiency-gate';
 import {
   writeIngestionManifest,
   writeSufficiencyReport,
   writePipelineSummary,
-} from '../storage/local.js';
+} from '../storage/local';
 import type {
   PipelineContext,
   PipelineStageResult,
   IngestionManifest,
   SufficiencyReport,
   CandidateSet,
-} from '../pipeline/types.js';
+} from '../pipeline/types';
 import type { DocumentRecord, ChunkRecord, EmbeddingRecord } from '@raino/rag';
 
 function makeRunId(): string {

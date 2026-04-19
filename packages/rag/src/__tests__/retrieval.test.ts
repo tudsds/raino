@@ -3,12 +3,12 @@ import {
   MemoryDocumentStore,
   MemoryChunkStore,
   MemoryVectorStore,
-} from '../storage/memory-store.js';
-import { MockEmbeddingGenerator } from '../embeddings/mock-generator.js';
-import { RetrievalEngine } from '../retrieval/engine.js';
-import { chunkDocument } from '../chunking/engine.js';
-import { detectSections } from '../chunking/section-detector.js';
-import type { DocumentRecord, ChunkRecord } from '../storage/types.js';
+} from '../storage/memory-store';
+import { MockEmbeddingGenerator } from '../embeddings/mock-generator';
+import { RetrievalEngine } from '../retrieval/engine';
+import { chunkDocument } from '../chunking/engine';
+import { detectSections } from '../chunking/section-detector';
+import type { DocumentRecord, ChunkRecord } from '../storage/types';
 
 function makeDocument(overrides: Partial<DocumentRecord> = {}): DocumentRecord {
   return {

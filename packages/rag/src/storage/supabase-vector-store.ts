@@ -3,8 +3,8 @@
 // RPC for HNSW similarity search instead of brute-force cosine.
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { EmbeddingRecord, ChunkMetadata } from './types.js';
-import type { VectorStore } from './interfaces.js';
+import type { EmbeddingRecord, ChunkMetadata } from './types';
+import type { VectorStore } from './interfaces';
 
 interface EmbeddingRow {
   id: string;

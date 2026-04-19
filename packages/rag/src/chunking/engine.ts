@@ -3,8 +3,8 @@
 // boundaries detected by the section-detector, then applies size/overlap
 // controls to produce ChunkRecord arrays ready for embedding.
 
-import type { DocumentRecord, ChunkRecord, ChunkMetadata } from '../storage/types.js';
-import { detectSections, type SectionBoundary } from './section-detector.js';
+import type { DocumentRecord, ChunkRecord, ChunkMetadata } from '../storage/types';
+import { detectSections, type SectionBoundary } from './section-detector';
 
 /** Options controlling chunk size and semantic behavior. */
 export interface ChunkingOptions {

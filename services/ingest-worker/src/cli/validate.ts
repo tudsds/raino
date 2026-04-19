@@ -1,9 +1,9 @@
-import { BOOTSTRAP_SEED } from '../config/seed.js';
-import { discoverCandidates } from '../pipeline/candidate-discovery.js';
-import { fetchDocuments } from '../pipeline/doc-fetch.js';
-import { runSufficiencyGate } from '../pipeline/sufficiency-gate.js';
-import { writeSufficiencyReport } from '../storage/local.js';
-import type { SufficiencyReport } from '../pipeline/types.js';
+import { BOOTSTRAP_SEED } from '../config/seed';
+import { discoverCandidates } from '../pipeline/candidate-discovery';
+import { fetchDocuments } from '../pipeline/doc-fetch';
+import { runSufficiencyGate } from '../pipeline/sufficiency-gate';
+import { writeSufficiencyReport } from '../storage/local';
+import type { SufficiencyReport } from '../pipeline/types';
 
 async function validate(): Promise<void> {
   console.log('[ingest:validate] Running sufficiency validation...');

@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { MemoryChunkStore, MemoryVectorStore } from '../storage/memory-store.js';
-import { OpenAIEmbeddingGenerator } from '../embeddings/openai-generator.js';
-import { RetrievalEngine } from '../retrieval/engine.js';
-import type { ChunkRecord, ChunkMetadata } from '../storage/types.js';
+import { MemoryChunkStore, MemoryVectorStore } from '../storage/memory-store';
+import { OpenAIEmbeddingGenerator } from '../embeddings/openai-generator';
+import { RetrievalEngine } from '../retrieval/engine';
+import type { ChunkRecord, ChunkMetadata } from '../storage/types';
 
 const MOCK_DIMENSIONS = 10;
 

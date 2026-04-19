@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { SupabaseAuditTraceStore, createAuditTraceStore } from '../traces/supabase-store.js';
-import { InMemoryAuditTraceStore } from '../traces/logger.js';
-import type { AuditTrace } from '../traces/logger.js';
+import { SupabaseAuditTraceStore, createAuditTraceStore } from '../traces/supabase-store';
+import { InMemoryAuditTraceStore } from '../traces/logger';
+import type { AuditTrace } from '../traces/logger';
 
 function makeTrace(overrides: Partial<AuditTrace> = {}): AuditTrace {
   return {

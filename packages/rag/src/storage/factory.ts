@@ -3,11 +3,11 @@
 // Supabase client is loaded lazily so test environments never need the dep.
 
 import { createClient } from '@supabase/supabase-js';
-import type { DocumentStore, ChunkStore, VectorStore } from './interfaces.js';
-import { MemoryDocumentStore, MemoryChunkStore, MemoryVectorStore } from './memory-store.js';
-import { SupabaseDocumentStore } from './supabase-document-store.js';
-import { SupabaseChunkStore } from './supabase-chunk-store.js';
-import { SupabaseVectorStore } from './supabase-vector-store.js';
+import type { DocumentStore, ChunkStore, VectorStore } from './interfaces';
+import { MemoryDocumentStore, MemoryChunkStore, MemoryVectorStore } from './memory-store';
+import { SupabaseDocumentStore } from './supabase-document-store';
+import { SupabaseChunkStore } from './supabase-chunk-store';
+import { SupabaseVectorStore } from './supabase-vector-store';
 
 export interface StoreSet {
   documents: DocumentStore;

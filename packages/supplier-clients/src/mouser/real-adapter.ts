@@ -1,14 +1,14 @@
-import type { SearchOptions } from '../common/adapter.js';
+import type { SearchOptions } from '../common/adapter';
 import type {
   SupplierPartInfo,
   SupplierQuote,
   SupplierQuoteLineItem,
   SupplierSearchResult,
-} from '../common/types.js';
-import type { MouserAdapter } from './adapter.js';
-import { FetchHttpClient, HttpError } from '../common/http-client.js';
-import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers.js';
-import { MouserPartSchema, MouserSearchResponseSchema } from '../common/response-schemas.js';
+} from '../common/types';
+import type { MouserAdapter } from './adapter';
+import { FetchHttpClient, HttpError } from '../common/http-client';
+import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers';
+import { MouserPartSchema, MouserSearchResponseSchema } from '../common/response-schemas';
 
 export interface MouserConfig {
   apiKey: string;

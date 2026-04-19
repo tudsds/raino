@@ -1,4 +1,4 @@
-import type { SufficiencyCheck, SufficiencyReport } from '../schemas/ingestion.js';
+import type { SufficiencyCheck, SufficiencyReport } from '../schemas/ingestion';
 
 export interface IngestionState {
   stages: Array<{ name: string; status: string; error?: string }>;
