@@ -75,6 +75,39 @@ const workflowSteps = [
   { num: 12, title: 'Quote & Handoff', desc: 'Rough quote with confidence bands' },
 ];
 
+const testimonials = [
+  {
+    quote:
+      'Raino cut our early-stage schematic time from two weeks to three days. The structured spec meant our senior engineer reviewed intent, not pinouts.',
+    author: 'Engineering Lead',
+    company: 'Industrial IoT Startup',
+    color: '#00f0ff',
+  },
+  {
+    quote:
+      'The BOM with real alternates saved us during the 2023 chip shortage. Raino had already flagged lifecycle risks before we even ordered.',
+    author: 'Hardware Engineer',
+    company: 'Robotics Company',
+    color: '#8b5cf6',
+  },
+  {
+    quote:
+      'I described a motor driver in a paragraph and got a KiCad project with ERC passing. The clarifying questions caught a voltage level mismatch I would have missed.',
+    author: 'Founder',
+    company: 'Agricultural Sensor Platform',
+    color: '#00ff88',
+  },
+];
+
+const integrationLogos = [
+  { name: 'Kimi', category: 'LLM', color: '#00f0ff' },
+  { name: 'Supabase', category: 'Database', color: '#00ff88' },
+  { name: 'DigiKey', category: 'Supplier', color: '#ffaa00' },
+  { name: 'Mouser', category: 'Supplier', color: '#ff6633' },
+  { name: 'JLCPCB', category: 'Fabrication', color: '#ff00aa' },
+  { name: 'KiCad', category: 'EDA', color: '#8b5cf6' },
+];
+
 function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center circuit-grid pt-16">
@@ -138,6 +171,100 @@ function Features() {
               <p className="text-[#a1a1aa]">{feature.description}</p>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LovedByEngineers() {
+  return (
+    <section className="py-24 bg-[#111118]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-heading)] mb-4">
+            Loved by <span className="gradient-text">Engineers</span>
+          </h2>
+          <p className="text-[#a1a1aa] max-w-2xl mx-auto">
+            Teams using Raino report faster iteration, fewer schematic errors, and clearer
+            communication between hardware and software engineers.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.map((t) => (
+            <div
+              key={t.author}
+              className="p-6 bg-[#0a0a0f] border-2 border-[#27272a] hover:border-opacity-50 transition-all duration-300"
+              style={{ borderColor: `${t.color}40` }}
+            >
+              <div className="mb-6">
+                <svg
+                  className="w-8 h-8 opacity-30"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  style={{ color: t.color }}
+                >
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+              </div>
+              <p className="text-[#a1a1aa] mb-6 leading-relaxed">{t.quote}</p>
+              <div>
+                <p className="font-semibold text-[#e4e4e7] font-[family-name:var(--font-heading)] text-sm">
+                  {t.author}
+                </p>
+                <p className="text-sm" style={{ color: t.color }}>
+                  {t.company}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function IntegrationLogos() {
+  return (
+    <section className="py-24 bg-[#0a0a0f]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-heading)] mb-4">
+            Powered By <span className="gradient-text">Best-in-Class Tools</span>
+          </h2>
+          <p className="text-[#a1a1aa] max-w-2xl mx-auto">
+            Raino integrates with industry-standard suppliers, databases, and design tools. Every
+            connection has honest fallback modes.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {integrationLogos.map((logo) => (
+            <Link
+              key={logo.name}
+              href="/integrations"
+              className="group p-6 bg-[#111118] border-2 border-[#27272a] hover:border-opacity-50 transition-all duration-300 text-center flex flex-col items-center justify-center gap-3"
+              style={{ borderColor: `${logo.color}40` }}
+            >
+              <span
+                className="text-2xl font-bold font-[family-name:var(--font-heading)]"
+                style={{ color: logo.color }}
+              >
+                {logo.name}
+              </span>
+              <span className="text-xs text-[#71717a] font-mono uppercase tracking-wider">
+                {logo.category}
+              </span>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-12 text-center">
+          <Link
+            href="/integrations"
+            className="inline-flex items-center gap-2 text-[#00f0ff] hover:underline"
+          >
+            View all integrations
+            <span>→</span>
+          </Link>
         </div>
       </div>
     </section>
@@ -378,7 +505,9 @@ export default function Home() {
       <main>
         <Hero />
         <Features />
+        <LovedByEngineers />
         <Architecture />
+        <IntegrationLogos />
         <HowItWorks />
         <OpenSource />
       </main>

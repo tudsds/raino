@@ -1457,7 +1457,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `fix(supplier): remove misleading DigiKey OAuth redirect URI, document 2-legged flow`
   - Files: `.env.example`, `packages/supplier-clients/src/digikey/real-adapter.ts`
 
-- [ ] 18. Add Raino Agent Memory System (Inspired by MemPalace + Nanobot + OpenClaw)
+- [x] 18. Add Raino Agent Memory System (Inspired by MemPalace + Nanobot + OpenClaw)
 
   **What to do**:
   - Implement a 4-layer agent memory system inspired by reference framework research:
@@ -1716,7 +1716,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `docs: add NOTICES.md with third-party acknowledgements and licence info`
   - Files: `NOTICES.md`, `README.md`
 
-- [ ] 20. Overhaul raino-site to Match Reference Framework Professionalism
+- [x] 20. Overhaul raino-site to Match Reference Framework Professionalism
 
   **What to do**:
   - Based on analysis of 8 reference framework websites, raino-site needs these new pages:
@@ -1837,7 +1837,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Files: `apps/site/src/app/showcase/`, `apps/site/src/app/integrations/`, `apps/site/src/app/changelog/`, `apps/site/src/app/trust/`, `apps/site/src/components/Navbar.tsx`, `apps/site/src/app/layout.tsx`, `apps/site/src/app/page.tsx`
   - Pre-commit: `pnpm build --filter @raino/site`
 
-- [ ] 21. Overhaul raino-studio UX and Add Settings Page
+- [x] 21. Overhaul raino-studio UX and Add Settings Page
 
   **What to do**:
   - Based on analysis of reference frameworks, raino-studio needs these enhancements:
@@ -1946,7 +1946,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Files: `apps/studio/src/app/settings/`, `apps/studio/src/app/signup/page.tsx`, `apps/studio/src/app/projects/[id]/intake/page.tsx`, `apps/studio/src/app/downloads/`, `apps/studio/src/app/(dashboard)/`
   - Pre-commit: `pnpm build --filter @raino/studio`
 
-- [ ] 22. Wire Resend for Sending Design Documents via Email
+- [x] 22. Wire Resend for Sending Design Documents via Email
 
   **What to do**:
   - Install `resend` npm package in `apps/studio`

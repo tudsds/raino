@@ -23,6 +23,16 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/showcase" className="hover:text-[#00f0ff] transition-colors">
+                  Showcase
+                </Link>
+              </li>
+              <li>
+                <Link href="/integrations" className="hover:text-[#00f0ff] transition-colors">
+                  Integrations
+                </Link>
+              </li>
+              <li>
                 <Link href="/architecture" className="hover:text-[#00f0ff] transition-colors">
                   Architecture
                 </Link>
@@ -50,6 +60,16 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold font-[family-name:var(--font-heading)] mb-4">Resources</h4>
             <ul className="space-y-2 text-[#71717a]">
+              <li>
+                <Link href="/trust" className="hover:text-[#00f0ff] transition-colors">
+                  Trust & Security
+                </Link>
+              </li>
+              <li>
+                <Link href="/changelog" className="hover:text-[#00f0ff] transition-colors">
+                  Changelog
+                </Link>
+              </li>
               <li>
                 <a
                   href="https://github.com/tudsds/raino"

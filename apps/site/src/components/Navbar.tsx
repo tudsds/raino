@@ -17,9 +17,12 @@ const languages = [
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Features', href: '/features' },
+  { label: 'Showcase', href: '/showcase' },
+  { label: 'Integrations', href: '/integrations' },
   { label: 'Architecture', href: '/architecture' },
   { label: 'Workflow', href: '/workflow' },
   { label: 'Docs', href: '/docs' },
+  { label: 'Trust', href: '/trust' },
 ];
 
 export default function Navbar({ activePath }: NavbarProps) {

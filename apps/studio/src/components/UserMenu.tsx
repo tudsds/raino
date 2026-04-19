@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { logout } from '@/lib/auth/logout';
 
 interface UserMenuProps {
@@ -50,7 +51,13 @@ export default function UserMenu({ email }: UserMenuProps) {
               {email}
             </p>
           </div>
-          <div className="p-2">
+          <div className="p-2 space-y-1">
+            <Link
+              href="/settings"
+              className="block w-full text-left px-4 py-2 text-[#e4e4e7] hover:bg-[rgba(0,240,255,0.1)] font-[family-name:var(--font-body)] text-base transition-colors"
+            >
+              Settings
+            </Link>
             <button
               onClick={() => logout()}
               className="w-full text-left px-4 py-2 text-[#ff3366] hover:bg-[rgba(255,51,102,0.1)] font-[family-name:var(--font-body)] text-base transition-colors"

@@ -55,3 +55,32 @@ export {
   type StepResult,
   type StepExecuteFn,
 } from './orchestration/coordinator';
+
+// Memory
+export {
+  MemoryLayer,
+  TokenBudgets,
+  PromptMode,
+  type MemoryLayerType,
+  type PromptModeType,
+  type MemoryEntry,
+  type L0IdentityEntry,
+  type L1EssentialEntry,
+  type L2OnDemandEntry,
+  type L3DeepEntry,
+  type AssembledContext,
+  type MemoryStoreResult,
+  type MemoryQuery,
+  type DreamConsolidationResult,
+  type SummarizeFn,
+  type DreamConsolidationConfig,
+} from './memory/types';
+
+export { MemoryStore, estimateTokens } from './memory/memory-store';
+
+export {
+  ContextBuilder,
+  type ContextBuilderOptions,
+} from './memory/context-builder';
+
+export { DreamConsolidator } from './memory/dream-consolidator';

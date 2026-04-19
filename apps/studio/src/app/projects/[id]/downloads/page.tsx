@@ -128,6 +128,8 @@ export default function DownloadsPage({ params }: { params: Promise<{ id: string
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },
     { id: 'intake', label: 'Intake', href: `/projects/${id}/intake` },
+    { id: 'spec', label: 'Spec', href: `/projects/${id}/spec` },
+    { id: 'architecture', label: 'Architecture', href: `/projects/${id}/architecture` },
     { id: 'bom', label: 'BOM', href: `/projects/${id}/bom` },
     { id: 'previews', label: 'Previews', href: `/projects/${id}/previews` },
     { id: 'downloads', label: 'Downloads', href: `/projects/${id}/downloads`, active: true },

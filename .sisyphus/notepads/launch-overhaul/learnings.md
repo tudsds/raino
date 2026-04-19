@@ -100,3 +100,39 @@ Workaround for CI: run `npx playwright install --with-deps` with sufficient priv
 - Tests are written to work in both degraded mode (no Supabase) and full mode. Assertions use regex patterns that match either success or error states.
 - No comments were added to test files per project conventions.
 - The intake page test was included in `project-detail.spec.ts` since EXPECTED OUTCOME requested intake coverage but MUST DO only listed three files.
+
+## Task 20: Marketing Site Overhaul (4 New Pages + Homepage Enhancements)
+
+### New Pages Created
+
+- `/showcase` — 6 example projects with PCB wireframe mockups, testimonials section, CTA
+- `/integrations` — 6 integration cards (Kimi, Supabase, DigiKey, Mouser, JLCPCB, KiCad) with degraded mode info
+- `/changelog` — Timeline of releases v0.1.0 through v0.5.0, "Coming Soon" roadmap
+- `/trust` — Security practices grid, 4 commitments, privacy policy section
+
+### Homepage Enhancements
+
+- Added `LovedByEngineers` section with 3 testimonials after Features
+- Added `IntegrationLogos` section with 6 integration links after Architecture
+
+### Design System Patterns Applied
+
+- `pt-16` on `<main>` for navbar offset (standard across all non-home pages)
+- `circuit-grid` on hero sections
+- Alternating `bg-[#0a0a0f]` / `bg-[#111118]` backgrounds
+- `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8` content containers
+- Border colors use `${color}40` for subtle tinting
+- Status badges: `px-2 py-1 text-xs font-mono border` with `${color}10` bg, `${color}40` border
+- Timeline pattern: `relative pl-8 border-l-2` with absolute dot
+
+### Files Modified
+
+- `Navbar.tsx` — Added Showcase, Integrations, Trust links to `navLinks` array
+- `Footer.tsx` — Added new pages to Product column, Trust/Changelog to Resources column
+- `page.tsx` — Added 2 new sections, testimonials and integration logos data arrays
+
+### Build Verification
+
+- `pnpm build --filter @raino/site` succeeded
+- 13 static pages generated (up from 9)
+- All 4 new pages prerendered successfully

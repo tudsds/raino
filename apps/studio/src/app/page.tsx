@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { prisma } from '@raino/db';
+import { getAdapterStatus } from '@raino/supplier-clients';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import NeonButton from '@/components/NeonButton';
 import WorkflowProgress from '@/components/WorkflowProgress';
@@ -54,9 +55,45 @@ export default async function DashboardPage() {
     // intentional — projects remain empty
   }
 
+  const adapterStatus = getAdapterStatus();
+  const hasKimi = !!process.env.KIMI_API_KEY;
+
+  const integrationStatuses = [
+    { name: 'Kimi', status: hasKimi ? 'live' : 'mock' as const },
+    { name: 'Supabase', status: hasSupabase ? 'live' : 'unavailable' as const },
+    { name: 'DigiKey', status: adapterStatus.digikey.mode === 'live' ? 'live' : 'mock' as const },
+    { name: 'Mouser', status: adapterStatus.mouser.mode === 'live' ? 'live' : 'mock' as const },
+    { name: 'JLCPCB', status: adapterStatus.jlcpcb.mode === 'live' ? 'live' : 'mock' as const },
+  ];
+
   return (
     <div className="min-h-screen bg-[#0a0a0f] circuit-grid">
       <main className="max-w-7xl mx-auto px-6 py-8">
+        <div className="mb-6">
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            {integrationStatuses.map((integration) => (
+              <Link
+                key={integration.name}
+                href="/settings"
+                className="flex items-center gap-2 px-3 py-1.5 bg-[#111118] border-2 border-[#27272a] hover:border-[#3f3f46] transition-colors"
+              >
+                <span
+                  className={`inline-block w-2.5 h-2.5 ${
+                    integration.status === 'live'
+                      ? 'bg-[#00ff88] shadow-[0_0_6px_rgba(0,255,136,0.8)]'
+                      : integration.status === 'mock'
+                        ? 'bg-[#ffaa00] shadow-[0_0_6px_rgba(255,170,0,0.8)]'
+                        : 'bg-[#71717a]'
+                  }`}
+                />
+                <span className="text-xs text-[#a1a1aa] font-[family-name:var(--font-body)]">
+                  {integration.name}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="mb-10">
           <h2 className="text-3xl font-bold text-[#e4e4e7] mb-2 font-[family-name:var(--font-heading)]">
             Your Projects

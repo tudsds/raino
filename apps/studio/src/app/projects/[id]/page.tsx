@@ -113,43 +113,109 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 Recent Activity
               </h2>
               <div className="space-y-4">
-                {project.auditEntries.length > 0 ? (
-                  project.auditEntries.map((entry) => (
-                    <div key={entry.id} className="flex items-start gap-3">
-                      <div
-                        className={`w-2 h-2 mt-2 ${
-                          entry.severity === 'info'
-                            ? 'bg-[#00f0ff]'
-                            : entry.severity === 'warning'
-                              ? 'bg-[#ffaa00]'
-                              : 'bg-[#ff3366]'
-                        }`}
-                      />
-                      <div>
-                        <p className="text-sm text-[#e4e4e7] font-[family-name:var(--font-body)]">
-                          {entry.action}
-                        </p>
-                        <p className="text-xs text-[#71717a] font-[family-name:var(--font-body)]">
-                          {new Date(entry.createdAt).toLocaleString()}
-                        </p>
-                      </div>
+                {project.jobs.length > 0 && (
+                  <div className="mb-4 pb-4 border-b-2 border-[#27272a]">
+                    <h3
+                      className="text-[#a1a1aa] font-[family-name:var(--font-heading)] uppercase tracking-wider mb-3"
+                      style={{ fontSize: '0.6rem' }}
+                    >
+                      Design Jobs
+                    </h3>
+                    <div className="space-y-3">
+                      {project.jobs.slice(0, 5).map((job) => (
+                        <div key={job.id} className="flex items-start gap-3">
+                          <div
+                            className={`w-2 h-2 mt-2 ${
+                              job.status === 'completed'
+                                ? 'bg-[#00ff88]'
+                                : job.status === 'running'
+                                  ? 'bg-[#00f0ff] animate-pixel-pulse'
+                                  : job.status === 'failed'
+                                    ? 'bg-[#ff3366]'
+                                    : 'bg-[#71717a]'
+                            }`}
+                          />
+                          <div className="flex-1">
+                            <p className="text-sm text-[#e4e4e7] font-[family-name:var(--font-body)]">
+                              {job.jobType}
+                            </p>
+                            <div className="flex items-center gap-2 mt-0.5">
+                              <span
+                                className={`text-xs px-1.5 py-0.5 border-2 ${
+                                  job.status === 'completed'
+                                    ? 'text-[#00ff88] border-[#00ff88]'
+                                    : job.status === 'running'
+                                      ? 'text-[#00f0ff] border-[#00f0ff]'
+                                      : job.status === 'failed'
+                                        ? 'text-[#ff3366] border-[#ff3366]'
+                                        : 'text-[#71717a] border-[#71717a]'
+                                }`}
+                              >
+                                {job.status}
+                              </span>
+                              <span className="text-xs text-[#71717a] font-[family-name:var(--font-body)]">
+                                {job.completedAt
+                                  ? new Date(job.completedAt).toLocaleString()
+                                  : new Date(job.createdAt).toLocaleString()}
+                              </span>
+                            </div>
+                            {job.error && (
+                              <p className="text-xs text-[#ff3366] mt-1 font-[family-name:var(--font-body)]">
+                                {job.error}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))
-                ) : (
-                  <>
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-[#00f0ff] mt-2" />
-                      <div>
-                        <p className="text-sm text-[#e4e4e7] font-[family-name:var(--font-body)]">
-                          Project created
-                        </p>
-                        <p className="text-xs text-[#71717a] font-[family-name:var(--font-body)]">
-                          {new Date(project.createdAt).toLocaleString()}
-                        </p>
-                      </div>
-                    </div>
-                  </>
+                  </div>
                 )}
+
+                <div>
+                  <h3
+                    className="text-[#a1a1aa] font-[family-name:var(--font-heading)] uppercase tracking-wider mb-3"
+                    style={{ fontSize: '0.6rem' }}
+                  >
+                    Audit Log
+                  </h3>
+                  <div className="space-y-3">
+                    {project.auditEntries.length > 0 ? (
+                      project.auditEntries.slice(0, 5).map((entry) => (
+                        <div key={entry.id} className="flex items-start gap-3">
+                          <div
+                            className={`w-2 h-2 mt-2 ${
+                              entry.severity === 'info'
+                                ? 'bg-[#00f0ff]'
+                                : entry.severity === 'warning'
+                                  ? 'bg-[#ffaa00]'
+                                  : 'bg-[#ff3366]'
+                            }`}
+                          />
+                          <div>
+                            <p className="text-sm text-[#e4e4e7] font-[family-name:var(--font-body)]">
+                              {entry.action}
+                            </p>
+                            <p className="text-xs text-[#71717a] font-[family-name:var(--font-body)]">
+                              {new Date(entry.createdAt).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-[#00f0ff] mt-2" />
+                        <div>
+                          <p className="text-sm text-[#e4e4e7] font-[family-name:var(--font-body)]">
+                            Project created
+                          </p>
+                          <p className="text-xs text-[#71717a] font-[family-name:var(--font-body)]">
+                            {new Date(project.createdAt).toLocaleString()}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
