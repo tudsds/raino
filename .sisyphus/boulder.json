@@ -71,6 +71,14 @@
       "session_id": "ses_25a054488ffemttIW9P8G2q9ju",
       "agent": "build",
       "updated_at": "2026-04-19T13:47:22.282Z"
+    },
+    "todo:25": {
+      "task_key": "todo:25",
+      "task_label": "25",
+      "task_title": "Post-Fix Re-Audit (Round 2 — Final Verification)",
+      "session_id": "ses_259fe7d32ffeNa6jMSFMI8ceYI",
+      "agent": "general",
+      "updated_at": "2026-04-19T14:02:44.032Z"
     }
   }
 }

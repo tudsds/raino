@@ -1,0 +1,16 @@
+=== typecheck ===
+PASS — 25/25 tasks successful (cached)
+
+=== lint ===
+PASS — 25/25 tasks, no errors
+
+=== test ===
+PASS — 25/25 tasks, all tests green
+  core: 145, ui: 80, agents: 21, db: 16, rag: 75, kicad-worker-client: 39
+  supplier-clients: 75, site: 12, studio: 56, design-worker: 25, audit-worker: 33
+  llm: 37, ingest-worker: 41, quote-worker: 17 = 561 total
+
+=== build ===
+PASS — 14/14 packages built
+  site: 13 static pages generated (including /changelog, /showcase, /integrations, /trust)
+  studio: 12 static pages + dynamic routes + middleware

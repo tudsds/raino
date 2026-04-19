@@ -1,0 +1,9 @@
+/ → 200
+/features → 200
+/architecture → 200
+/workflow → 200
+/docs → 200
+/showcase → 200
+/integrations → 200
+/changelog → 200
+/trust → 200

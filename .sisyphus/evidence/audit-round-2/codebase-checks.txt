@@ -1,0 +1,10 @@
+=== DIGIKEY_REDIRECT_URI check ===
+Exit: 1
+
+=== Changelog in Navbar ===
+25:  { label: 'Changelog', href: '/changelog' },
+Exit: 0
+
+=== metadataBase in layout ===
+7:  metadataBase: new URL('https://raino-site.vercel.app'),
+Exit: 0
