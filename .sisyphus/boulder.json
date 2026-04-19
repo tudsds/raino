@@ -36,6 +36,15 @@
       "agent": "Sisyphus-Junior",
       "category": "writing",
       "updated_at": "2026-04-19T12:27:45.700Z"
+    },
+    "todo:14": {
+      "task_key": "todo:14",
+      "task_label": "14",
+      "task_title": "Push all changes, verify CI green, verify Vercel deployments",
+      "session_id": "ses_25a445fdaffeMTbl5JS6nQ4F0I",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-19T12:35:27.867Z"
     }
   }
 }

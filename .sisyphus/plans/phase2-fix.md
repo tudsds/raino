@@ -1136,7 +1136,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `chore: parallelize CI and remove corrupted directory`
   - Files: ci.yml, remove corrupted dir
 
-- [ ] 14. Push all changes, verify CI green, verify Vercel deployments
+- [x] 14. Push all changes, verify CI green, verify Vercel deployments
 
   **What to do**:
   After all Waves 1-3 are complete:
@@ -1204,7 +1204,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `chore: finalize Phase 2 fixes and verify deployments`
   - Pre-commit: `pnpm typecheck && pnpm lint && pnpm test && pnpm build`
 
-- [ ] 15. Manual user steps guide for GitHub settings + Vercel env vars
+- [x] 15. Manual user steps guide for GitHub settings + Vercel env vars
 
   **What to do**:
   Create a detailed step-by-step guide in `.sisyphus/drafts/manual-steps.md` for the user to perform manually. These are configuration changes that cannot be done via code.
