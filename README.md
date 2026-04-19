@@ -234,7 +234,7 @@ See `.env.example` for all 20 placeholders. Key variables:
 | `NEXT_PUBLIC_SUPABASE_URL`             | Supabase project URL           | No (degraded mode)         |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase anon key              | No (degraded mode)         |
 | `SUPABASE_SERVICE_ROLE_KEY`            | Supabase service role key      | No (degraded mode)         |
-| `SUPABASE_DB_URL`                      | Prisma connection string       | No (degraded mode)         |
+| `DATABASE_URL`                         | Prisma connection string       | No (degraded mode)         |
 | `DIGIKEY_CLIENT_ID`                    | DigiKey API client ID          | No (fixture mode)          |
 | `DIGIKEY_CLIENT_SECRET`                | DigiKey API client secret      | No (fixture mode)          |
 | `MOUSER_API_KEY`                       | Mouser API key                 | No (fixture mode)          |

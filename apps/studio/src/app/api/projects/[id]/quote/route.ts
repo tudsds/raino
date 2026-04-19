@@ -150,6 +150,19 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       supplierHasEstimates = true;
     }
 
+    const hasValidPrice = coreBOM.rows.some(
+      (r) => typeof r.unitPrice === 'number' && r.unitPrice > 0,
+    );
+    if (coreBOM.rows.length === 0 || !hasValidPrice) {
+      return NextResponse.json(
+        {
+          error:
+            'BOM has no rows with valid pricing. Please generate a BOM with priced components first.',
+        },
+        { status: 422 },
+      );
+    }
+
     const roughQuote = calculateRoughQuote(coreBOM, {
       designAutomationFee: 500,
       engineeringReviewFee: 300,

@@ -1,4 +1,4 @@
-import { createSupplierAdapters, type SupplierAdapter } from '@raino/supplier-clients';
+import { createSupplierAdapters, HttpError, type SupplierAdapter } from '@raino/supplier-clients';
 
 export interface SupplierPriceInput {
   mpn: string;
@@ -56,7 +56,24 @@ async function querySingleSupplier(
       inStock: (info.stock ?? 0) >= input.quantity,
       isEstimate: info.isEstimate ?? true,
     };
-  } catch {
+  } catch (error) {
+    const errorInfo = {
+      supplier: adapter.name,
+      query: input.mpn,
+      error: error instanceof Error ? error.message : String(error),
+      type:
+        error instanceof HttpError
+          ? error.status === 404
+            ? 'part_not_found'
+            : error.status === 429
+              ? 'rate_limited'
+              : error.status >= 500
+                ? 'api_error'
+                : 'auth_error'
+          : 'unknown_error',
+      timestamp: new Date().toISOString(),
+    };
+    console.error('[supplier-comparison]', JSON.stringify(errorInfo));
     return null;
   }
 }
@@ -69,15 +86,16 @@ async function queryAllSuppliers(
   return results.filter((r): r is SupplierQuoteResult => r !== null);
 }
 
-function selectBestQuote(quotes: SupplierQuoteResult[]): {
+export function selectBestQuote(quotes: SupplierQuoteResult[]): {
   bestPrice: number | null;
   bestSupplier: string | null;
 } {
-  if (quotes.length === 0) {
+  const valid = quotes.filter((q) => q.price !== null && q.price > 0);
+  if (valid.length === 0) {
     return { bestPrice: null, bestSupplier: null };
   }
 
-  const sorted = [...quotes].sort((a, b) => a.price - b.price);
+  const sorted = [...valid].sort((a, b) => a.price - b.price);
   const best = sorted[0]!;
   return { bestPrice: best.price, bestSupplier: best.supplier };
 }

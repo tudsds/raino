@@ -8,44 +8,18 @@ import type {
 import type { DigiKeyAdapter } from './adapter.js';
 import { FetchHttpClient, HttpError } from '../common/http-client.js';
 import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers.js';
+import {
+  DigiKeyCategoriesResponseSchema,
+  DigiKeyProductSchema,
+  DigiKeySearchResponseSchema,
+  DigiKeyTokenResponseSchema,
+} from '../common/response-schemas.js';
 
 export interface DigiKeyConfig {
   clientId: string;
   clientSecret: string;
   redirectUri: string;
   sandbox?: boolean;
-}
-
-interface DigiKeyTokenResponse {
-  access_token: string;
-  expires_in: number;
-  token_type: string;
-}
-
-interface DigiKeyProduct {
-  DigiKeyPartNumber?: string;
-  Manufacturer?: { Name?: string };
-  ManufacturerPartNumber?: string;
-  ProductDescription?: string;
-  Category?: { Name?: string };
-  PackageType?: { Name?: string };
-  ProductStatus?: string;
-  QuantityAvailable?: number;
-  UnitPrice?: number;
-  Currency?: string;
-  MinimumOrderQuantity?: number;
-  StandardPricing?: Array<{ BreakQuantity?: number; UnitPrice?: number }>;
-  PrimaryDatasheet?: string;
-  LeadTime?: string;
-}
-
-interface DigiKeySearchResponse {
-  Products?: DigiKeyProduct[];
-  ProductsCount?: number;
-}
-
-interface DigiKeyCategoriesResponse {
-  Categories?: Array<{ CategoryId?: number; Name?: string }>;
 }
 
 export class RealDigiKeyAdapter implements DigiKeyAdapter {
@@ -75,43 +49,71 @@ export class RealDigiKeyAdapter implements DigiKeyAdapter {
       params.limit = String(options.maxResults);
     }
 
-    const response = await this.authenticatedGet<DigiKeySearchResponse>(
-      '/products/v4/search/keyword',
-      params,
-    );
+    const raw = await this.authenticatedGet<unknown>('/products/v4/search/keyword', params);
+    const parsed = DigiKeySearchResponseSchema.safeParse(raw);
+    if (!parsed.success) {
+      console.error('DigiKey search response validation failed:', parsed.error.flatten());
+      return {
+        supplier: this.name,
+        query,
+        results: [],
+        totalResults: 0,
+        isEstimate: false,
+      };
+    }
 
-    let products = response.Products ?? [];
+    let products = parsed.data.Products ?? [];
 
     if (options?.category) {
       const cat = options.category.toLowerCase();
-      products = products.filter((p) => p.Category?.Name?.toLowerCase().includes(cat) ?? false);
+      products = products.filter((p) => {
+        const prod = p as Record<string, unknown>;
+        const categoryName = (prod.Category as Record<string, unknown> | undefined)?.Name;
+        return typeof categoryName === 'string' && categoryName.toLowerCase().includes(cat);
+      });
     }
     if (options?.manufacturer) {
       const mfr = options.manufacturer.toLowerCase();
-      products = products.filter((p) => p.Manufacturer?.Name?.toLowerCase().includes(mfr) ?? false);
+      products = products.filter((p) => {
+        const prod = p as Record<string, unknown>;
+        const mfrName = (prod.Manufacturer as Record<string, unknown> | undefined)?.Name;
+        return typeof mfrName === 'string' && mfrName.toLowerCase().includes(mfr);
+      });
     }
     if (options?.inStockOnly) {
-      products = products.filter((p) => (p.QuantityAvailable ?? 0) > 0);
+      products = products.filter((p) => {
+        const qty = (p as Record<string, unknown>).QuantityAvailable;
+        return typeof qty === 'number' && qty > 0;
+      });
     }
     if (options?.maxResults && options.maxResults > 0) {
       products = products.slice(0, options.maxResults);
     }
 
+    const mapped = products
+      .map((p) => this.mapProduct(p))
+      .filter((p): p is SupplierPartInfo => p !== null);
+
     return {
       supplier: this.name,
       query,
-      results: products.map((p) => this.mapProduct(p)),
-      totalResults: response.ProductsCount ?? products.length,
+      results: mapped,
+      totalResults: parsed.data.ProductsCount ?? mapped.length,
       isEstimate: false,
     };
   }
 
   async getPartInfo(skuOrMpn: string): Promise<SupplierPartInfo | null> {
     try {
-      const response = await this.authenticatedGet<DigiKeyProduct>('/products/v4/product/details', {
+      const raw = await this.authenticatedGet<unknown>('/products/v4/product/details', {
         digikeypartnumber: skuOrMpn,
       });
-      return this.mapProduct(response);
+      const parsed = DigiKeyProductSchema.safeParse(raw);
+      if (!parsed.success) {
+        console.error('DigiKey product detail validation failed:', parsed.error.flatten());
+      } else {
+        return this.mapProduct(parsed.data);
+      }
     } catch {
       // Not a DigiKey part number — fall back to keyword search
     }
@@ -132,6 +134,8 @@ export class RealDigiKeyAdapter implements DigiKeyAdapter {
       if (!part) continue;
 
       const unitPrice = resolvePrice(part, li.quantity);
+      if (unitPrice === null || unitPrice <= 0) continue;
+
       const inStock = part.stock >= li.quantity;
 
       items.push({
@@ -162,12 +166,16 @@ export class RealDigiKeyAdapter implements DigiKeyAdapter {
   }
 
   async getCategories(): Promise<Array<{ id: string; name: string }>> {
-    const response =
-      await this.authenticatedGet<DigiKeyCategoriesResponse>('/products/v4/categories');
+    const raw = await this.authenticatedGet<unknown>('/products/v4/categories');
+    const parsed = DigiKeyCategoriesResponseSchema.safeParse(raw);
+    if (!parsed.success) {
+      console.error('DigiKey categories response validation failed:', parsed.error.flatten());
+      return [];
+    }
 
-    return (response.Categories ?? []).map((c) => ({
-      id: String(c.CategoryId ?? ''),
-      name: c.Name ?? '',
+    return parsed.data.Categories.map((c) => ({
+      id: String(c.CategoryId),
+      name: c.Name,
     }));
   }
 
@@ -176,15 +184,20 @@ export class RealDigiKeyAdapter implements DigiKeyAdapter {
       return this.accessToken;
     }
 
-    const response = await this.http.postForm<DigiKeyTokenResponse>('/v1/oauth2/token', {
+    const raw = await this.http.postForm<unknown>('/v1/oauth2/token', {
       grant_type: 'client_credentials',
       client_id: this.config.clientId,
       client_secret: this.config.clientSecret,
     });
 
-    this.accessToken = response.access_token;
-    // Refresh 60 seconds before actual expiry
-    this.tokenExpiresAt = Date.now() + (response.expires_in - 60) * 1000;
+    const parsed = DigiKeyTokenResponseSchema.safeParse(raw);
+    if (!parsed.success) {
+      console.error('DigiKey token response validation failed:', parsed.error.flatten());
+      throw new Error('Invalid DigiKey token response');
+    }
+
+    this.accessToken = parsed.data.access_token;
+    this.tokenExpiresAt = Date.now() + (parsed.data.expires_in - 60) * 1000;
 
     return this.accessToken;
   }
@@ -229,27 +242,34 @@ export class RealDigiKeyAdapter implements DigiKeyAdapter {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  private mapProduct(product: DigiKeyProduct): SupplierPartInfo {
+  private mapProduct(product: unknown): SupplierPartInfo | null {
+    const parsed = DigiKeyProductSchema.safeParse(product);
+    if (!parsed.success) {
+      console.error('DigiKey product validation failed:', parsed.error.flatten());
+      return null;
+    }
+
+    const p = parsed.data;
     return {
       supplier: this.name,
-      supplierSku: product.DigiKeyPartNumber ?? '',
-      manufacturer: product.Manufacturer?.Name ?? '',
-      mpn: product.ManufacturerPartNumber ?? '',
-      description: product.ProductDescription ?? '',
-      category: product.Category?.Name ?? '',
-      packageType: product.PackageType?.Name,
-      lifecycle: mapLifecycleStatus(product.ProductStatus),
-      stock: product.QuantityAvailable ?? 0,
+      supplierSku: p.DigiKeyPartNumber,
+      manufacturer: p.Manufacturer.Name,
+      mpn: p.ManufacturerPartNumber,
+      description: p.ProductDescription,
+      category: p.Category.Name,
+      packageType: p.PackageType.Name || undefined,
+      lifecycle: mapLifecycleStatus(p.ProductStatus),
+      stock: p.QuantityAvailable,
       stockUpdatedAt: Date.now(),
-      unitPrice: product.UnitPrice ?? null,
-      currency: product.Currency ?? 'USD',
-      moq: product.MinimumOrderQuantity ?? null,
-      breakpoints: product.StandardPricing?.map((bp) => ({
-        quantity: bp.BreakQuantity ?? 0,
+      unitPrice: p.UnitPrice,
+      currency: p.Currency,
+      moq: p.MinimumOrderQuantity,
+      breakpoints: p.StandardPricing.map((bp) => ({
+        quantity: bp.BreakQuantity,
         price: bp.UnitPrice ?? 0,
       })),
-      datasheetUrl: product.PrimaryDatasheet,
-      leadTime: product.LeadTime,
+      datasheetUrl: p.PrimaryDatasheet || undefined,
+      leadTime: p.LeadTime || undefined,
       isEstimate: false,
     };
   }

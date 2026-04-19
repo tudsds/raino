@@ -3,14 +3,9 @@ import { requireAuth } from '@/lib/auth/require-auth';
 import { prisma } from '@raino/db';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
-import {
-  updateIngestionStatus,
-  updateIngestionSufficiencyReport,
-} from '@/lib/data/ingestion-queries';
-import { runSufficiencyGate } from '@raino/core';
-import type { IngestionState } from '@raino/core';
+import { runIngestionPipeline } from '@/lib/data/ingestion-pipeline';
 
-export async function POST(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await requireAuth();
   if (auth.error) return auth.error;
 
@@ -22,27 +17,28 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    const manifest = await prisma.ingestionManifest.findUnique({ where: { projectId: id } });
+    const body = await request.json().catch(() => ({}));
+    const mode = body.mode ?? 'fixture';
 
+    const manifest = await prisma.ingestionManifest.findUnique({ where: { projectId: id } });
     if (!manifest) {
-      await prisma.ingestionManifest.create({
-        data: {
-          projectId: id,
-          status: 'running',
-          candidateFamilies: [],
-          stages: [
-            { name: 'datasheet_fetch', status: 'in_progress' },
-            { name: 'errata_check', status: 'pending' },
-            { name: 'app_note_fetch', status: 'pending' },
-            { name: 'chunking', status: 'pending' },
-            { name: 'embedding', status: 'pending' },
-            { name: 'sufficiency_gate', status: 'pending' },
-          ],
-        },
-      });
-    } else {
-      await updateIngestionStatus(id, 'running');
+      return NextResponse.json(
+        { error: 'No ingestion manifest found. Submit candidates first.' },
+        { status: 400 },
+      );
     }
+
+    if (manifest.status === 'running') {
+      return NextResponse.json(
+        { error: 'Ingestion is already running for this project' },
+        { status: 409 },
+      );
+    }
+
+    await prisma.ingestionManifest.update({
+      where: { projectId: id },
+      data: { status: 'running' },
+    });
 
     await updateProjectStatus(id, 'candidates_discovered');
 
@@ -50,43 +46,85 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       category: 'ingestion',
       action: 'ingestion_run_started',
       actor: auth.user.id,
+      details: { mode },
     });
 
-    const runId = manifest?.id ?? `run-${Date.now()}`;
+    const candidateFamilies = Array.isArray(manifest.candidateFamilies)
+      ? (manifest.candidateFamilies as Array<{
+          family: string;
+          manufacturer: string;
+          mpns: string[];
+          documentTypes?: string[];
+        }>)
+      : [];
 
-    const currentManifest = await prisma.ingestionManifest.findUnique({ where: { projectId: id } });
-    if (currentManifest) {
-      const ingestionState: IngestionState = {
-        stages: currentManifest.stages as IngestionState['stages'],
-        candidateFamilies: currentManifest.candidateFamilies as IngestionState['candidateFamilies'],
-      };
-
-      const sufficiencyReport = runSufficiencyGate(id, ingestionState);
-
-      await updateIngestionSufficiencyReport(
-        id,
-        sufficiencyReport as unknown as Record<string, unknown>,
-      );
-
-      await createAuditEntry(id, {
-        category: 'ingestion',
-        action: 'sufficiency_gate_evaluated',
-        actor: 'system',
-        details: {
-          overallPass: sufficiencyReport.overallPass,
-          gaps: sufficiencyReport.gaps,
-          checkCount: sufficiencyReport.checks.length,
+    if (candidateFamilies.length === 0) {
+      await prisma.ingestionManifest.update({
+        where: { projectId: id },
+        data: {
+          status: 'failed',
+          stages: [
+            {
+              name: 'candidate_discovery',
+              status: 'failed',
+              errors: ['No candidate families found in manifest'],
+            },
+          ],
         },
       });
+      return NextResponse.json(
+        { error: 'No candidate families found in manifest' },
+        { status: 400 },
+      );
     }
+
+    const result = await runIngestionPipeline({
+      projectId: id,
+      candidateFamilies,
+      mode,
+    });
+
+    await createAuditEntry(id, {
+      category: 'ingestion',
+      action: 'ingestion_run_completed',
+      actor: 'system',
+      details: {
+        runId: result.runId,
+        status: result.status,
+        candidateCount: result.candidates,
+        documentCount: result.documents,
+        chunkCount: result.chunks,
+        embeddingCount: result.embeddings,
+        duration: result.duration,
+      },
+    });
 
     return NextResponse.json({
       projectId: id,
-      runId,
-      status: 'started',
-      message: 'Ingestion pipeline started',
+      runId: result.runId,
+      status: result.status,
+      progress: 100,
+      stages: result.stages.map((s) => ({
+        name: s.stage,
+        status:
+          s.status === 'success' ? 'completed' : s.status === 'failure' ? 'failed' : 'pending',
+        inputCount: s.inputCount,
+        outputCount: s.outputCount,
+        errors: s.errors,
+        duration: s.duration,
+      })),
+      summary: {
+        candidates: result.candidates,
+        documents: result.documents,
+        chunks: result.chunks,
+        embeddings: result.embeddings,
+        sufficiencyPassCount: result.sufficiencyPassCount,
+        sufficiencyFailCount: result.sufficiencyFailCount,
+        duration: result.duration,
+      },
     });
-  } catch {
-    return NextResponse.json({ error: 'Failed to start ingestion run' }, { status: 400 });
+  } catch (err) {
+    const error = err instanceof Error ? err.message : 'Ingestion pipeline failed';
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

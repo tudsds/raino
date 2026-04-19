@@ -1,14 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@raino/db/supabase/browser';
 
-export default function LoginPage() {
+function LoginForm() {
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const errorParam = searchParams.get('error');
+  const [paramError] = useState<string | null>(
+    errorParam === 'provisioning_failed'
+      ? 'Account setup failed. Please try signing up again.'
+      : null,
+  );
+
+  const displayError = error || paramError;
 
   const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,9 +80,9 @@ export default function LoginPage() {
               />
             </div>
 
-            {error && (
+            {displayError && (
               <div className="border-2 border-[#ff3366] bg-[rgba(255,51,102,0.1)] px-4 py-3 text-[#ff3366] font-[family-name:var(--font-body)]">
-                {error}
+                {displayError}
               </div>
             )}
 
@@ -104,5 +115,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }

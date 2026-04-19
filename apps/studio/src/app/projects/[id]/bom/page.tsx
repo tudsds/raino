@@ -2,6 +2,7 @@ import { prisma } from '@raino/db';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
+import { DegradedModeBanner } from '@/components/DegradedModeBanner';
 
 interface BOMPageProps {
   params: Promise<{ id: string }>;
@@ -103,6 +104,12 @@ export default async function BOMPage({ params }: BOMPageProps) {
       </div>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
+        {bom?.isEstimate && (
+          <DegradedModeBanner
+            message="BOM prices are estimates. Some components use fixture data rather than live supplier pricing."
+            severity="amber"
+          />
+        )}
         {rows.length === 0 ? (
           <div className="card p-8 text-center">
             <h2 className="text-lg font-semibold text-[#e4e4e7] mb-2">No BOM Generated</h2>

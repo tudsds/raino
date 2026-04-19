@@ -1,6 +1,7 @@
-import { prisma } from '@raino/db';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
+import { getCurrentUser } from '@/lib/auth/get-current-user';
+import { verifyProjectOwnership } from '@/lib/data/project-queries';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import WorkflowProgress from '@/components/WorkflowProgress';
 import NeonButton from '@/components/NeonButton';
@@ -12,20 +13,17 @@ interface ProjectPageProps {
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { id } = await params;
 
-  const project = await prisma.project.findUnique({
-    where: { id },
-    include: {
-      spec: true,
-      bom: { include: { rows: true } },
-      quotes: { orderBy: { createdAt: 'desc' } },
-      intakeMessages: { orderBy: { createdAt: 'asc' } },
-      auditEntries: { orderBy: { createdAt: 'desc' }, take: 5 },
-    },
-  });
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect('/login');
+  }
 
-  if (!project) {
+  const ownership = await verifyProjectOwnership(id, user.id);
+  if (!ownership.authorized) {
     notFound();
   }
+
+  const project = ownership.project;
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}`, active: true },

@@ -6,14 +6,14 @@
 export function resolvePrice(
   part: { unitPrice: number | null; breakpoints?: Array<{ quantity: number; price: number }> },
   qty: number,
-): number {
+): number | null {
   if (part.breakpoints && part.breakpoints.length > 0) {
     const sorted = [...part.breakpoints].sort((a, b) => b.quantity - a.quantity);
     for (const bp of sorted) {
       if (qty >= bp.quantity) return bp.price;
     }
   }
-  return part.unitPrice ?? 0;
+  return part.unitPrice ?? null;
 }
 
 export function round2(n: number): number {

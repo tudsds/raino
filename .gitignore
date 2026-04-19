@@ -34,3 +34,7 @@ data/raw-docs/
 data/ingestion/
 .vercel
 .env*.local
+# Runtime data artifacts
+apps/studio/data/
+test-results/
+EOF

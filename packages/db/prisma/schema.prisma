@@ -12,13 +12,13 @@ datasource db {
 // ─── Auth-linked ───────────────────────────────────────────────────────────────
 
 model User {
-  id              String   @id @default(uuid())
-  supabaseUserId  String   @unique @map("supabase_user_id")
-  email           String   @unique
-  fullName        String?  @map("full_name")
-  avatarUrl       String?  @map("avatar_url")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  id             String   @id @default(uuid())
+  supabaseUserId String   @unique @map("supabase_user_id")
+  email          String   @unique
+  fullName       String?  @map("full_name")
+  avatarUrl      String?  @map("avatar_url")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
   memberships OrganizationMember[]
 
@@ -58,27 +58,27 @@ model OrganizationMember {
 // ─── Core Project ──────────────────────────────────────────────────────────────
 
 model Project {
-  id              String   @id @default(uuid())
-  name            String
-  description     String?
-  organizationId  String   @map("organization_id")
-  status          String   @default("intake")
-  currentStep     Int      @default(0) @map("current_step")
-  totalSteps      Int      @default(12) @map("total_steps")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  id             String   @id @default(uuid())
+  name           String
+  description    String?
+  organizationId String   @map("organization_id")
+  status         String   @default("intake")
+  currentStep    Int      @default(0) @map("current_step")
+  totalSteps     Int      @default(12) @map("total_steps")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
-  spec          Spec?
-  architecture  Architecture?
-  bom           BOM?
-  quotes        Quote[]
-  ingestion     IngestionManifest?
-  artifacts     DesignArtifact[]
-  jobs          DesignJob[]
-  auditEntries  AuditEntry[]
-  handoffs      HandoffRequest[]
+  spec           Spec?
+  architecture   Architecture?
+  bom            BOM?
+  quotes         Quote[]
+  ingestion      IngestionManifest?
+  artifacts      DesignArtifact[]
+  jobs           DesignJob[]
+  auditEntries   AuditEntry[]
+  handoffs       HandoffRequest[]
   intakeMessages IntakeMessage[]
 
   @@map("projects")
@@ -102,15 +102,15 @@ model IntakeMessage {
 // ─── Workflow Models ───────────────────────────────────────────────────────────
 
 model Spec {
-  id          String   @id @default(uuid())
-  projectId   String   @unique @map("project_id")
-  requirements Json    @db.JsonB
-  constraints  Json    @db.JsonB
-  interfaces   Json    @db.JsonB
-  rawText     String?  @map("raw_text") @db.Text
-  compiledAt  DateTime? @map("compiled_at")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id           String    @id @default(uuid())
+  projectId    String    @unique @map("project_id")
+  requirements Json      @db.JsonB
+  constraints  Json      @db.JsonB
+  interfaces   Json      @db.JsonB
+  rawText      String?   @map("raw_text") @db.Text
+  compiledAt   DateTime? @map("compiled_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
@@ -145,7 +145,7 @@ model BOM {
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
-  project Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   rows    BOMRow[]
 
   @@map("boms")
@@ -200,14 +200,14 @@ model Quote {
 // ─── Ingestion ─────────────────────────────────────────────────────────────────
 
 model IngestionManifest {
-  id                 String   @id @default(uuid())
-  projectId          String   @unique @map("project_id")
-  status             String
-  stages             Json     @db.JsonB
-  candidateFamilies  Json     @map("candidate_families") @db.JsonB
-  sufficiencyReport  Json?    @map("sufficiency_report") @db.JsonB
-  createdAt          DateTime @default(now()) @map("created_at")
-  updatedAt          DateTime @updatedAt @map("updated_at")
+  id                String   @id @default(uuid())
+  projectId         String   @unique @map("project_id")
+  status            String
+  stages            Json     @db.JsonB
+  candidateFamilies Json     @map("candidate_families") @db.JsonB
+  sufficiencyReport Json?    @map("sufficiency_report") @db.JsonB
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 

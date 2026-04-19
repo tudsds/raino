@@ -45,6 +45,18 @@ export type { EmbeddingGenerator } from './embeddings/contracts.js';
 // Mock embedding generator
 export { MockEmbeddingGenerator } from './embeddings/mock-generator.js';
 
+// OpenAI embedding generator
+export { OpenAIEmbeddingGenerator } from './embeddings/openai-generator.js';
+export type { OpenAIEmbeddingConfig } from './embeddings/openai-generator.js';
+
+// Embedding factory
+export {
+  createEmbeddingGenerator,
+  getEmbeddingGenerator,
+  resetEmbeddingGenerator,
+} from './embeddings/factory.js';
+export type { EmbeddingFactoryConfig } from './embeddings/factory.js';
+
 // Retrieval engine
 export { RetrievalEngine } from './retrieval/engine.js';
 export type { RetrievalOptions, RetrievalDeps } from './retrieval/engine.js';

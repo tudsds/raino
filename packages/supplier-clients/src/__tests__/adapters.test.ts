@@ -568,8 +568,14 @@ describe('shared helpers', () => {
       expect(resolvePrice(part, 1)).toBe(10.0);
     });
 
-    it('returns 0 when unitPrice is null and no breakpoints', () => {
-      expect(resolvePrice({ unitPrice: null }, 5)).toBe(0);
+    it('returns null when unitPrice is null and no breakpoints', () => {
+      expect(resolvePrice({ unitPrice: null }, 5)).toBeNull();
+    });
+
+    it('returns null when unitPrice is null even with breakpoints that do not match', () => {
+      expect(
+        resolvePrice({ unitPrice: null, breakpoints: [{ quantity: 100, price: 8.0 }] }, 5),
+      ).toBeNull();
     });
   });
 

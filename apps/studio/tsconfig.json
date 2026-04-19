@@ -17,7 +17,12 @@
       "@raino/core": ["../../packages/core/src"],
       "@raino/agents": ["../../packages/agents/src"],
       "@raino/db": ["../../packages/db/src"],
-      "@raino/db/*": ["../../packages/db/src/*"]
+      "@raino/db/*": ["../../packages/db/src/*"],
+      "@raino/rag": ["../../packages/rag/src"],
+      "@raino/ingest-worker": ["../../services/ingest-worker/src"],
+      "@raino/design-worker": ["../../services/design-worker/src"],
+      "@raino/quote-worker": ["../../services/quote-worker/src"],
+      "@raino/audit-worker": ["../../services/audit-worker/src"]
     },
     "allowJs": true,
     "incremental": true

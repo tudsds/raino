@@ -67,6 +67,7 @@ export async function GET(request: Request) {
       }
     } catch (provisioningError) {
       console.error('[auth/callback] User provisioning failed:', provisioningError);
+      return NextResponse.redirect(new URL('/login?error=provisioning_failed', requestUrl.origin));
     }
   }
 

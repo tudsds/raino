@@ -8,6 +8,16 @@ const packages = [
     color: '#00f0ff',
   },
   {
+    name: '@raino/db',
+    description: 'Prisma ORM, Supabase auth, storage, and pgvector clients',
+    color: '#00ff88',
+  },
+  {
+    name: '@raino/llm',
+    description: 'Kimi K2.5 gateway, structured output, retry logic',
+    color: '#ff00aa',
+  },
+  {
     name: '@raino/rag',
     description: 'Chunking, embeddings, retrieval for engineering documents',
     color: '#8b5cf6',
@@ -15,12 +25,12 @@ const packages = [
   {
     name: '@raino/agents',
     description: 'Workflow contracts, orchestration, state machines',
-    color: '#ff00aa',
+    color: '#ff3366',
   },
   {
     name: '@raino/ui',
     description: 'Shared React components, cyberpunk design system',
-    color: '#00ff88',
+    color: '#00ffaa',
   },
   {
     name: '@raino/kicad-worker-client',
@@ -29,8 +39,8 @@ const packages = [
   },
   {
     name: '@raino/supplier-clients',
-    description: 'DigiKey, Mouser, JLCPCB adapter interfaces',
-    color: '#ff3366',
+    description: 'DigiKey, Mouser, JLCPCB adapter interfaces + factory',
+    color: '#ff6633',
   },
 ];
 
@@ -88,7 +98,7 @@ const boundaries = [
     details: [
       'Engineering document chunking and embedding',
       'Provenance tracking for every retrieval',
-      'In-memory or vector database storage',
+      'Supabase pgvector storage',
       'Explicit fixture/mock modes',
     ],
   },
@@ -104,10 +114,10 @@ function ArchitectureDiagram() {
 │   ┌──────────────────┐          ┌──────────────────────┐         │
 │   │   apps/site      │          │     apps/studio      │         │
 │   │   Marketing      │───CTA───▶│     Product App      │         │
-│   │   raino-site      │          │     raino-studio     │         │
+│   │   (port 3000)    │          │     (port 3001)      │         │
 │   └──────────────────┘          └──────────┬───────────┘         │
 │                                            │                     │
-│                                    API Routes                    │
+│                              Route Handlers + Server Actions     │
 │                                            │                     │
 │   ┌────────────────────────────────────────┴─────────────────┐   │
 │   │                   packages/core                            │   │
@@ -115,8 +125,9 @@ function ArchitectureDiagram() {
 │   └──────┬─────────────┬─────────────┬─────────────┬───────────┘   │
 │          │             │             │             │               │
 │   ┌──────┴──┐   ┌──────┴──┐   ┌─────┴────┐   ┌────┴──────┐        │
-│   │ packages/│   │ packages/│   │ packages/│   │ packages/ │        │
-│   │ agents   │   │   rag    │   │kicad-w-c │   │supplier-c │        │
+│   │packages/│   │packages/│   │packages/ │   │packages/  │        │
+│   │  db     │   │  llm    │   │  rag     │   │  agents   │        │
+│   │ ui      │   │kicad-w-c│   │supplier-c│   │           │        │
 │   └─────────┘   └─────────┘   └──────────┘   └───────────┘        │
 │                                                                    │
 │   ┌─────────────────────────────────────────────────────────┐      │
@@ -126,11 +137,11 @@ function ArchitectureDiagram() {
 │                              │                                     │
 │   ┌──────────────────────────┼──────────────────────────┐         │
 │   │     External Boundaries  │                          │         │
-│   │  ┌────────────────┐  ┌───┴──────────────┐          │         │
-│   │  │    KiCad       │  │   Suppliers      │          │         │
-│   │  │  (GPL CLI)     │  │ DigiKey/Mouser   │          │         │
-│   │  └────────────────┘  │    /JLCPCB       │          │         │
-│   │                      └──────────────────┘          │         │
+│   │  ┌────────┐ ┌────────┐  ┌─┴────────────────┐       │         │
+│   │  │Supabase│  │ KiCad  │  │   Suppliers      │       │         │
+│   │  │Auth+DB │  │(GPL)   │  │ DigiKey/Mouser   │       │         │
+│   │  │pgvector│  │ CLI    │  │    /JLCPCB       │       │         │
+│   │  └────────┘ └────────┘  └──────────────────┘       │         │
 │   └────────────────────────────────────────────────────┘         │
 └─────────────────────────────────────────────────────────────────┘`}
       </pre>
@@ -251,6 +262,12 @@ function Footer() {
             </Link>
             <Link href="/features" className="hover:text-[#00f0ff] transition-colors">
               Features
+            </Link>
+            <Link href="/workflow" className="hover:text-[#00f0ff] transition-colors">
+              Workflow
+            </Link>
+            <Link href="/docs" className="hover:text-[#00f0ff] transition-colors">
+              Docs
             </Link>
             <a
               href="https://github.com/tudsds/raino"

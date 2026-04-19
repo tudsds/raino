@@ -8,7 +8,7 @@ import type {
   ChunkStore,
   VectorStore,
 } from '@raino/rag';
-import { createStores } from '@raino/rag';
+import { createStores, getEmbeddingGenerator } from '@raino/rag';
 
 const DEFAULT_DATA_DIR = path.resolve(process.cwd(), 'data');
 
@@ -75,7 +75,7 @@ export async function querySimilar(
   topK: number,
   filter?: Partial<ChunkMetadata>,
 ): Promise<Array<{ chunkId: string; score: number }>> {
-  const generator = new (await import('@raino/rag')).MockEmbeddingGenerator();
+  const generator = getEmbeddingGenerator();
   const vector = await generator.generate(queryText);
   return vectorStore.query(vector, topK, filter);
 }

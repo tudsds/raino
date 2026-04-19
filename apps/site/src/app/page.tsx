@@ -47,8 +47,12 @@ const workflowSteps = [
   { num: 4, title: 'Architecture Selection', desc: 'Approved template matched to your needs' },
   { num: 5, title: 'Part Family Selection', desc: 'Candidate components with sourcing data' },
   { num: 6, title: 'Document Ingestion', desc: 'Datasheets, errata, and app notes analyzed' },
-  { num: 7, title: 'BOM Generation', desc: 'Full BOM with alternates and risk indicators' },
-  { num: 8, title: 'KiCad Output', desc: 'Production-ready schematic and PCB files' },
+  { num: 7, title: 'Supplier Metadata', desc: 'Real prices, stock, and MOQs from suppliers' },
+  { num: 8, title: 'RAG Reasoning', desc: 'Engineering knowledge informs design decisions' },
+  { num: 9, title: 'BOM Generation', desc: 'Full BOM with alternates and risk indicators' },
+  { num: 10, title: 'KiCad Project', desc: 'Production-ready schematic and PCB files' },
+  { num: 11, title: 'Validation & Export', desc: 'ERC/DRC checks and manufacturing exports' },
+  { num: 12, title: 'Quote & Handoff', desc: 'Rough quote with confidence bands' },
 ];
 
 function Hero() {
@@ -69,7 +73,7 @@ function Hero() {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href={process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'}
+            href={process.env.NEXT_PUBLIC_APP_URL}
             className="px-8 py-4 bg-[#00f0ff] text-[#0a0a0f] font-semibold hover:neon-glow transition-all duration-300"
           >
             Get Started
@@ -137,9 +141,9 @@ function Architecture() {
               {[
                 'Marketing site — Public-facing information and documentation',
                 'Product studio — Design workflow application',
-                'Core packages — Schemas, validation, domain logic',
+                'Core packages — Schemas, validation, domain logic, RAG, LLM gateway',
                 'Worker services — Ingest, design, quote, audit',
-                'External boundaries — KiCad CLI, supplier APIs',
+                'External boundaries — Supabase, KiCad CLI, supplier APIs',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-[#a1a1aa]">
                   <span className="text-[#00f0ff] mt-1">›</span>
@@ -157,24 +161,30 @@ function Architecture() {
           </div>
           <div className="bg-[#0a0a0f] border-2 border-[#27272a] p-6 font-mono text-sm overflow-x-auto">
             <pre className="text-[#a1a1aa]">
-              {`┌─────────────────────────────────────┐
-│            Users                     │
-│                                      │
-│  ┌──────────┐    ┌──────────────┐    │
-│  │  site    │───▶│   studio     │    │
-│  │  site    │    │   studio     │    │
-│  └──────────┘    └──────┬───────┘    │
-│                         │            │
-│  ┌──────────────────────┴─────────┐  │
-│  │        packages/core           │  │
-│  │  Schemas · Validation · Logic  │  │
-│  └──────┬──────────┬──────────────┘  │
-│         │          │                 │
-│  ┌──────┴──┐ ┌─────┴────┐ ┌────────┐│
-│  │  RAG    │ │  KiCad   │ │Supplier││
-│  │         │ │  Worker  │ │Clients ││
-│  └─────────┘ └──────────┘ └────────┘│
-└─────────────────────────────────────┘`}
+              {`┌─────────────────────────────────────────────┐
+│                  Users                       │
+│                                              │
+│  ┌──────────┐          ┌────────────────┐    │
+│  │  site    │───CTA───▶│    studio      │    │
+│  │ (marketing)│        │  (product app) │    │
+│  └──────────┘          └───────┬────────┘    │
+│                                │             │
+│  ┌─────────────────────────────┴──────────┐  │
+│  │         packages/core (schemas, logic) │  │
+│  ├────────┬────────┬────────┬────────────┤  │
+│  │  rag   │  llm   │   db   │  agents    │  │
+│  │  ui    │kicad-w-c│supplier-c│        │  │
+│  └────────┴────────┴────────┴────────────┘  │
+│                                              │
+│  ┌────────────────────────────────────────┐  │
+│  │  ingest · design · quote · audit       │  │
+│  └────────────────────────────────────────┘  │
+│                                              │
+│  ┌──────────┬──────────┬──────────────────┐  │
+│  │ Supabase │  KiCad   │ DigiKey/Mouser   │  │
+│  │(Auth+DB) │ (GPL CLI)│    /JLCPCB       │  │
+│  └──────────┴──────────┴──────────────────┘  │
+└─────────────────────────────────────────────┘`}
             </pre>
           </div>
         </div>
@@ -192,7 +202,7 @@ function HowItWorks() {
             How It <span className="gradient-text">Works</span>
           </h2>
           <p className="text-[#a1a1aa] max-w-2xl mx-auto">
-            An 8-step workflow from natural language to manufacturing handoff. Every step has formal
+            A 12-step workflow from natural language to manufacturing handoff. Every step has formal
             validation and audit trails.
           </p>
         </div>
@@ -281,8 +291,18 @@ function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/workflow" className="hover:text-[#00f0ff] transition-colors">
+                  Workflow
+                </Link>
+              </li>
+              <li>
+                <Link href="/docs" className="hover:text-[#00f0ff] transition-colors">
+                  Docs
+                </Link>
+              </li>
+              <li>
                 <a
-                  href={process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'}
+                  href={process.env.NEXT_PUBLIC_APP_URL}
                   className="hover:text-[#00f0ff] transition-colors"
                 >
                   Studio

@@ -110,7 +110,7 @@ function Navbar() {
             </a>
           </div>
           <a
-            href={process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'}
+            href={process.env.NEXT_PUBLIC_APP_URL}
             className="px-4 py-2 bg-[#111118] border-2 border-[#00f0ff] text-[#00f0ff] hover:neon-glow transition-all duration-300 font-medium"
           >
             Launch Studio
@@ -143,6 +143,9 @@ function Footer() {
             </Link>
             <Link href="/workflow" className="hover:text-[#00f0ff] transition-colors">
               Workflow
+            </Link>
+            <Link href="/docs" className="text-[#00f0ff]">
+              Docs
             </Link>
             <a
               href="https://github.com/tudsds/raino"

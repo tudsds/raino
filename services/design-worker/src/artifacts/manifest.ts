@@ -125,19 +125,32 @@ export async function generateArtifactManifest(
   };
 }
 
+export interface ArtifactUploadEntry {
+  fileName: string;
+  storagePath: string;
+  success: boolean;
+}
+
+export interface ArtifactUploadResult {
+  uploaded: number;
+  failed: number;
+  entries: ArtifactUploadEntry[];
+}
+
 export async function uploadArtifactsToStorage(
   manifest: ArtifactManifest,
   bucket: string,
   supabaseUrl: string,
   supabaseKey: string,
-): Promise<{ uploaded: number; failed: number }> {
+): Promise<ArtifactUploadResult> {
   let uploaded = 0;
   let failed = 0;
+  const entries: ArtifactUploadEntry[] = [];
 
   for (const entry of manifest.entries) {
+    const storagePath = `${manifest.projectId}/${entry.fileName}`;
     try {
       const fileContent = await readFile(entry.filePath);
-      const storagePath = `${manifest.projectId}/${entry.fileName}`;
 
       const response = await fetch(`${supabaseUrl}/storage/v1/object/${bucket}/${storagePath}`, {
         method: 'POST',
@@ -151,13 +164,16 @@ export async function uploadArtifactsToStorage(
 
       if (response.ok) {
         uploaded++;
+        entries.push({ fileName: entry.fileName, storagePath, success: true });
       } else {
         failed++;
+        entries.push({ fileName: entry.fileName, storagePath, success: false });
       }
     } catch {
       failed++;
+      entries.push({ fileName: entry.fileName, storagePath, success: false });
     }
   }
 
-  return { uploaded, failed };
+  return { uploaded, failed, entries };
 }

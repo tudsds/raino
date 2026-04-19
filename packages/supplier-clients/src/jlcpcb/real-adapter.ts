@@ -9,48 +9,16 @@ import type {
 import type { JLCPCBAdapter } from './adapter.js';
 import { FetchHttpClient, HttpError } from '../common/http-client.js';
 import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers.js';
+import {
+  JLCPCBComponentSchema,
+  JLCPCBDetailResponseSchema,
+  JLCPCBSearchResponseSchema,
+} from '../common/response-schemas.js';
 
 export interface JLCPCBConfig {
   appId: string;
   accessKey: string;
   secretKey: string;
-}
-
-interface JLCPCBComponent {
-  productId: number;
-  productCode: string;
-  productName: string;
-  productIntro: string;
-  manufacturerName: string;
-  parentCatalogName: string;
-  encapsulation: string;
-  stockNumber: number;
-  productPriceList: Array<{
-    startNumber: number;
-    productPrice: number;
-  }>;
-  pdfUrl: string;
-  leadTime: string;
-  isBasic: boolean;
-  isExtend: boolean;
-  paramVOList: Array<{
-    paramName: string;
-    paramValue: string;
-  }>;
-}
-
-interface JLCPCBSearchResponse {
-  code: number;
-  data: {
-    tip: string;
-    count: number;
-    list: JLCPCBComponent[];
-  };
-}
-
-interface JLCPCBDetailResponse {
-  code: number;
-  data: JLCPCBComponent;
 }
 
 export class RealJLCPCBAdapter implements JLCPCBAdapter {
@@ -99,50 +67,75 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
       params.pageSize = String(options.maxResults);
     }
 
-    const response = await this.withRetry(() =>
-      this.http.get<JLCPCBSearchResponse>('product/search', { params: this.authParams(params) }),
+    const raw = await this.withRetry(() =>
+      this.http.get<unknown>('product/search', { params: this.authParams(params) }),
     );
+    const parsed = JLCPCBSearchResponseSchema.safeParse(raw);
+    if (!parsed.success) {
+      console.error('JLCPCB search response validation failed:', parsed.error.flatten());
+      return {
+        supplier: this.name,
+        query,
+        results: [],
+        totalResults: 0,
+        isEstimate: false,
+      };
+    }
 
-    let components = response.data?.list ?? [];
+    let components = parsed.data.data.list;
 
     if (options?.category) {
       const cat = options.category.toLowerCase();
-      components = components.filter(
-        (c) => c.parentCatalogName?.toLowerCase().includes(cat) ?? false,
-      );
+      components = components.filter((c) => {
+        const parentCatalogName = (c as Record<string, unknown>).parentCatalogName;
+        return (
+          typeof parentCatalogName === 'string' && parentCatalogName.toLowerCase().includes(cat)
+        );
+      });
     }
     if (options?.manufacturer) {
       const mfr = options.manufacturer.toLowerCase();
-      components = components.filter(
-        (c) => c.manufacturerName?.toLowerCase().includes(mfr) ?? false,
-      );
+      components = components.filter((c) => {
+        const manufacturerName = (c as Record<string, unknown>).manufacturerName;
+        return typeof manufacturerName === 'string' && manufacturerName.toLowerCase().includes(mfr);
+      });
     }
     if (options?.inStockOnly) {
-      components = components.filter((c) => c.stockNumber > 0);
+      components = components.filter((c) => {
+        const stockNumber = (c as Record<string, unknown>).stockNumber;
+        return typeof stockNumber === 'number' && stockNumber > 0;
+      });
     }
     if (options?.maxResults && options.maxResults > 0) {
       components = components.slice(0, options.maxResults);
     }
 
+    const mapped = components
+      .map((c) => this.mapComponent(c))
+      .filter((c): c is SupplierPartInfo => c !== null);
+
     return {
       supplier: this.name,
       query,
-      results: components.map((c) => this.mapComponent(c)),
-      totalResults: response.data?.count ?? components.length,
+      results: mapped,
+      totalResults: parsed.data.data.count ?? mapped.length,
       isEstimate: false,
     };
   }
 
   async getPartInfo(skuOrMpn: string): Promise<SupplierPartInfo | null> {
-    // Try product detail by product code first
     try {
-      const response = await this.withRetry(() =>
-        this.http.get<JLCPCBDetailResponse>('product/detail', {
+      const raw = await this.withRetry(() =>
+        this.http.get<unknown>('product/detail', {
           params: this.authParams({ productCode: skuOrMpn }),
         }),
       );
-      if (response.data) {
-        return this.mapComponent(response.data);
+      const parsed = JLCPCBDetailResponseSchema.safeParse(raw);
+      if (parsed.success && parsed.data.data) {
+        const compParsed = JLCPCBComponentSchema.safeParse(parsed.data.data);
+        if (compParsed.success) {
+          return this.mapComponent(compParsed.data);
+        }
       }
     } catch {
       // Not a product code — fall back to search
@@ -164,6 +157,8 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
       if (!part) continue;
 
       const unitPrice = resolvePrice(part, li.quantity);
+      if (unitPrice === null || unitPrice <= 0) continue;
+
       const inStock = part.stock >= li.quantity;
 
       items.push({
@@ -200,14 +195,20 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
     specs: Record<string, string>;
   } | null> {
     try {
-      const response = await this.withRetry(() =>
-        this.http.get<JLCPCBDetailResponse>('product/detail', {
+      const raw = await this.withRetry(() =>
+        this.http.get<unknown>('product/detail', {
           params: this.authParams({ productCode: jlcpcbPartId }),
         }),
       );
+      const parsed = JLCPCBDetailResponseSchema.safeParse(raw);
+      if (!parsed.success || !parsed.data.data) return null;
 
-      if (!response.data) return null;
-      const comp = response.data;
+      const compParsed = JLCPCBComponentSchema.safeParse(parsed.data.data);
+      if (!compParsed.success) {
+        console.error('JLCPCB component specs validation failed:', compParsed.error.flatten());
+        return null;
+      }
+      const comp = compParsed.data;
 
       return {
         partId: comp.productCode,
@@ -230,18 +231,45 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
     return part?.isExtend ?? false;
   }
 
-  private async findComponentByMpn(mpn: string): Promise<JLCPCBComponent | null> {
-    const response = await this.withRetry(() =>
-      this.http.get<JLCPCBSearchResponse>('product/search', {
+  private async findComponentByMpn(
+    mpn: string,
+  ): Promise<{ isBasic: boolean; isExtend: boolean } | null> {
+    const raw = await this.withRetry(() =>
+      this.http.get<unknown>('product/search', {
         params: this.authParams({ keyword: mpn, pageSize: '1' }),
       }),
     );
+    const parsed = JLCPCBSearchResponseSchema.safeParse(raw);
+    if (!parsed.success) {
+      console.error(
+        'JLCPCB findComponentByMpn response validation failed:',
+        parsed.error.flatten(),
+      );
+      return null;
+    }
 
+    const list = parsed.data.data.list;
     const key = mpn.toLowerCase();
-    const exactMatch = response.data?.list?.find(
-      (c) => c.productName?.toLowerCase() === key || c.productCode?.toLowerCase() === key,
-    );
-    return exactMatch ?? response.data?.list?.[0] ?? null;
+    const exactMatch = list.find((c) => {
+      const productName = (c as Record<string, unknown>).productName;
+      const productCode = (c as Record<string, unknown>).productCode;
+      return (
+        (typeof productName === 'string' && productName.toLowerCase() === key) ||
+        (typeof productCode === 'string' && productCode.toLowerCase() === key)
+      );
+    });
+    const selected = exactMatch ?? list[0];
+    if (!selected) return null;
+
+    const compParsed = JLCPCBComponentSchema.safeParse(selected);
+    if (!compParsed.success) {
+      console.error(
+        'JLCPCB findComponentByMpn component validation failed:',
+        compParsed.error.flatten(),
+      );
+      return null;
+    }
+    return compParsed.data;
   }
 
   private async withRetry<T>(fn: () => Promise<T>): Promise<T> {
@@ -267,29 +295,36 @@ export class RealJLCPCBAdapter implements JLCPCBAdapter {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  private mapComponent(comp: JLCPCBComponent): SupplierPartInfo {
-    const breakpoints = comp.productPriceList?.map((pp) => ({
+  private mapComponent(comp: unknown): SupplierPartInfo | null {
+    const parsed = JLCPCBComponentSchema.safeParse(comp);
+    if (!parsed.success) {
+      console.error('JLCPCB component validation failed:', parsed.error.flatten());
+      return null;
+    }
+
+    const c = parsed.data;
+    const breakpoints = c.productPriceList.map((pp) => ({
       quantity: pp.startNumber,
-      price: pp.productPrice,
+      price: pp.productPrice ?? 0,
     }));
 
     return {
       supplier: this.name,
-      supplierSku: comp.productCode,
-      manufacturer: comp.manufacturerName,
-      mpn: comp.productName,
-      description: comp.productIntro,
-      category: comp.parentCatalogName,
-      packageType: comp.encapsulation,
+      supplierSku: c.productCode,
+      manufacturer: c.manufacturerName,
+      mpn: c.productName,
+      description: c.productIntro,
+      category: c.parentCatalogName,
+      packageType: c.encapsulation || undefined,
       lifecycle: mapLifecycleStatus(undefined),
-      stock: comp.stockNumber,
+      stock: c.stockNumber,
       stockUpdatedAt: Date.now(),
-      unitPrice: breakpoints?.[0]?.price ?? null,
+      unitPrice: breakpoints[0]?.price ?? null,
       currency: 'CNY',
       moq: null,
       breakpoints,
-      datasheetUrl: comp.pdfUrl,
-      leadTime: comp.leadTime,
+      datasheetUrl: c.pdfUrl || undefined,
+      leadTime: c.leadTime || undefined,
       isEstimate: false,
     };
   }

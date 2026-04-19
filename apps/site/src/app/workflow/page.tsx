@@ -138,7 +138,7 @@ function Navbar() {
             </a>
           </div>
           <a
-            href={process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'}
+            href={process.env.NEXT_PUBLIC_APP_URL}
             className="px-4 py-2 bg-[#111118] border-2 border-[#00f0ff] text-[#00f0ff] hover:neon-glow transition-all duration-300 font-medium"
           >
             Launch Studio
@@ -168,6 +168,9 @@ function Footer() {
             </Link>
             <Link href="/architecture" className="hover:text-[#00f0ff] transition-colors">
               Architecture
+            </Link>
+            <Link href="/workflow" className="text-[#00f0ff]">
+              Workflow
             </Link>
             <Link href="/docs" className="hover:text-[#00f0ff] transition-colors">
               Docs
@@ -317,7 +320,7 @@ export default function WorkflowPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href={process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001'}
+                href={process.env.NEXT_PUBLIC_APP_URL}
                 className="px-8 py-4 bg-[#00f0ff] text-[#0a0a0f] font-semibold hover:neon-glow transition-all duration-300"
               >
                 Try the Workflow

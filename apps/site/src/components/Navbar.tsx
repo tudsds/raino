@@ -12,7 +12,7 @@ const languages = [
 ];
 
 export default function Navbar({ activePath }: NavbarProps) {
-  const studioUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3001';
+  const studioUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   const linkClass = (path: string) =>
     activePath === path
@@ -38,15 +38,11 @@ export default function Navbar({ activePath }: NavbarProps) {
             <Link href="/architecture" className={linkClass('/architecture')}>
               Architecture
             </Link>
-            <Link
-              href="/#how-it-works"
-              className={
-                activePath === '/'
-                  ? 'text-[#00f0ff]'
-                  : 'text-[#a1a1aa] hover:text-[#00f0ff] transition-colors'
-              }
-            >
-              How It Works
+            <Link href="/workflow" className={linkClass('/workflow')}>
+              Workflow
+            </Link>
+            <Link href="/docs" className={linkClass('/docs')}>
+              Docs
             </Link>
             <a
               href="https://github.com/tudsds/raino"

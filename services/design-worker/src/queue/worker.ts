@@ -1,7 +1,8 @@
 import { generateKiCadProject } from '../generator/project';
 import { runValidationAsync } from '../validator/engine';
 import { runExportAsync } from '../exporter/engine';
-import { generateArtifactManifest } from '../artifacts/manifest';
+import { generateArtifactManifest, uploadArtifactsToStorage } from '../artifacts/manifest';
+import type { ArtifactManifest } from '../artifacts/manifest';
 import type { ProjectGenerationRequest, ExportFormat } from '../index';
 
 export type JobType = 'generate' | 'validate' | 'export';
@@ -21,6 +22,7 @@ export interface JobResult {
   output?: unknown;
   error?: string;
   artifactCount?: number;
+  manifest?: ArtifactManifest;
 }
 
 interface PendingJob {
@@ -39,6 +41,8 @@ interface JobUpdate {
   error?: string | null;
   [key: string]: unknown;
 }
+
+const STORAGE_BUCKET = 'design-artifacts';
 
 async function executeJob(input: JobInput): Promise<JobResult> {
   switch (input.type) {
@@ -89,9 +93,10 @@ async function executeJob(input: JobInput): Promise<JobResult> {
       });
 
       let artifactCount = 0;
+      let manifest: ArtifactManifest | undefined;
       if (result.success && result.outputFiles.length > 0) {
         try {
-          const manifest = await generateArtifactManifest(input.projectId, result.outputFiles);
+          manifest = await generateArtifactManifest(input.projectId, result.outputFiles);
           artifactCount = manifest.totalFiles;
         } catch {
           artifactCount = result.outputFiles.length;
@@ -103,11 +108,66 @@ async function executeJob(input: JobInput): Promise<JobResult> {
         output: result,
         error: result.errors.join('; ') || undefined,
         artifactCount,
+        manifest,
       };
     }
 
     default:
       return { success: false, error: `Unknown job type: ${String(input.type)}` };
+  }
+}
+
+async function persistArtifactsToStorage(
+  projectId: string,
+  manifest: ArtifactManifest,
+): Promise<void> {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  const hasCredentials = supabaseUrl && supabaseKey;
+
+  let uploadEntries: Array<{ fileName: string; storagePath: string; success: boolean }> = [];
+  if (hasCredentials) {
+    try {
+      const uploadResult = await uploadArtifactsToStorage(
+        manifest,
+        STORAGE_BUCKET,
+        supabaseUrl,
+        supabaseKey,
+      );
+      uploadEntries = uploadResult.entries;
+    } catch {
+      // Upload failed entirely — artifacts will be stored as local-only
+    }
+  }
+
+  const { prisma } = await import('@raino/db');
+
+  const uploadSuccessMap = new Map(uploadEntries.map((e) => [e.fileName, e.success]));
+
+  for (const entry of manifest.entries) {
+    const wasUploaded = uploadSuccessMap.get(entry.fileName) ?? false;
+    const storagePath = `${projectId}/${entry.fileName}`;
+
+    await prisma.designArtifact.create({
+      data: {
+        projectId,
+        artifactType: entry.artifactType,
+        filePath: entry.filePath,
+        fileName: entry.fileName,
+        fileSize: entry.fileSize,
+        checksum: entry.checksum,
+        mimeType: entry.mimeType,
+        storageBucket: wasUploaded ? STORAGE_BUCKET : '',
+        storageKey: wasUploaded ? storagePath : '',
+        metadata: {
+          manifestId: manifest.id,
+          checksumAlgorithm: entry.checksumAlgorithm,
+          generatedAt: entry.generatedAt,
+          ...entry.metadata,
+        },
+      },
+    });
   }
 }
 
@@ -163,6 +223,15 @@ export async function pollAndExecuteWithPrisma(): Promise<void> {
     const input = (job.result ?? {}) as unknown as JobInput;
     input.projectId = job.projectId;
     const result = await executeJob(input);
+
+    if (result.success && result.manifest) {
+      try {
+        await persistArtifactsToStorage(job.projectId, result.manifest);
+      } catch {
+        // Artifact persistence is best-effort and must not fail the overall job.
+        // The design was generated successfully; storage upload can be retried later.
+      }
+    }
 
     await prisma.designJob.update({
       where: { id: job.id },

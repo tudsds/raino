@@ -8,31 +8,10 @@ import type {
 import type { MouserAdapter } from './adapter.js';
 import { FetchHttpClient, HttpError } from '../common/http-client.js';
 import { resolvePrice, round2, parseLeadWeeks, mapLifecycleStatus } from '../common/helpers.js';
+import { MouserPartSchema, MouserSearchResponseSchema } from '../common/response-schemas.js';
 
 export interface MouserConfig {
   apiKey: string;
-}
-
-interface MouserSearchResponse {
-  Errors?: Array<{ Code?: number; Message?: string }>;
-  SearchResults?: {
-    NumberOfResult?: number;
-    Parts?: MouserPart[];
-  };
-}
-
-interface MouserPart {
-  MouserPartNumber?: string;
-  Manufacturer?: string;
-  ManufacturerPartNumber?: string;
-  ProductDescription?: string;
-  Category?: string;
-  PackageType?: string;
-  LifecycleStatus?: string;
-  Availability?: string;
-  PriceBreaks?: Array<{ Quantity?: number; Price?: string; Currency?: string }>;
-  DataSheetUrl?: string;
-  LeadTime?: string;
 }
 
 export class RealMouserAdapter implements MouserAdapter {
@@ -62,32 +41,54 @@ export class RealMouserAdapter implements MouserAdapter {
       params.limit = String(options.maxResults);
     }
 
-    const response = await this.withRetry(() =>
-      this.http.get<MouserSearchResponse>('search/keyword', { params }),
-    );
+    const raw = await this.withRetry(() => this.http.get<unknown>('search/keyword', { params }));
+    const parsed = MouserSearchResponseSchema.safeParse(raw);
+    if (!parsed.success) {
+      console.error('Mouser search response validation failed:', parsed.error.flatten());
+      return {
+        supplier: this.name,
+        query,
+        results: [],
+        totalResults: 0,
+        isEstimate: false,
+      };
+    }
 
-    let parts = response.SearchResults?.Parts ?? [];
+    let parts = parsed.data.SearchResults.Parts;
 
     if (options?.category) {
       const cat = options.category.toLowerCase();
-      parts = parts.filter((p) => p.Category?.toLowerCase().includes(cat) ?? false);
+      parts = parts.filter((p) => {
+        const category = (p as Record<string, unknown>).Category;
+        return typeof category === 'string' && category.toLowerCase().includes(cat);
+      });
     }
     if (options?.manufacturer) {
       const mfr = options.manufacturer.toLowerCase();
-      parts = parts.filter((p) => p.Manufacturer?.toLowerCase().includes(mfr) ?? false);
+      parts = parts.filter((p) => {
+        const manufacturer = (p as Record<string, unknown>).Manufacturer;
+        return typeof manufacturer === 'string' && manufacturer.toLowerCase().includes(mfr);
+      });
     }
     if (options?.inStockOnly) {
-      parts = parts.filter((p) => this.parseStock(p.Availability) > 0);
+      parts = parts.filter((p) => {
+        const availability = (p as Record<string, unknown>).Availability;
+        return typeof availability === 'string' && this.parseStock(availability) > 0;
+      });
     }
     if (options?.maxResults && options.maxResults > 0) {
       parts = parts.slice(0, options.maxResults);
     }
 
+    const mapped = parts
+      .map((p) => this.mapPart(p))
+      .filter((p): p is SupplierPartInfo => p !== null);
+
     return {
       supplier: this.name,
       query,
-      results: parts.map((p) => this.mapPart(p)),
-      totalResults: response.SearchResults?.NumberOfResult ?? parts.length,
+      results: mapped,
+      totalResults: parsed.data.SearchResults.NumberOfResult ?? mapped.length,
       isEstimate: false,
     };
   }
@@ -99,20 +100,29 @@ export class RealMouserAdapter implements MouserAdapter {
     };
 
     try {
-      const response = await this.withRetry(() =>
-        this.http.get<MouserSearchResponse>('search/partnumber', { params }),
+      const raw = await this.withRetry(() =>
+        this.http.get<unknown>('search/partnumber', { params }),
       );
+      const parsed = MouserSearchResponseSchema.safeParse(raw);
+      if (!parsed.success) {
+        console.error('Mouser part info response validation failed:', parsed.error.flatten());
+        return null;
+      }
 
-      const parts = response.SearchResults?.Parts ?? [];
+      const parts = parsed.data.SearchResults.Parts;
       if (parts.length === 0) return null;
 
       const key = skuOrMpn.toLowerCase();
-      const exactMatch = parts.find(
-        (p) =>
-          p.MouserPartNumber?.toLowerCase() === key ||
-          p.ManufacturerPartNumber?.toLowerCase() === key,
-      );
-      return this.mapPart(exactMatch ?? parts[0]!);
+      const exactMatch = parts.find((p) => {
+        const mpn = (p as Record<string, unknown>).MouserPartNumber;
+        const mfrPn = (p as Record<string, unknown>).ManufacturerPartNumber;
+        return (
+          (typeof mpn === 'string' && mpn.toLowerCase() === key) ||
+          (typeof mfrPn === 'string' && mfrPn.toLowerCase() === key)
+        );
+      });
+      const selected = exactMatch ?? parts[0];
+      return selected ? this.mapPart(selected) : null;
     } catch {
       return null;
     }
@@ -126,6 +136,8 @@ export class RealMouserAdapter implements MouserAdapter {
       if (!part) continue;
 
       const unitPrice = resolvePrice(part, li.quantity);
+      if (unitPrice === null || unitPrice <= 0) continue;
+
       const inStock = part.stock >= li.quantity;
 
       items.push({
@@ -190,31 +202,38 @@ export class RealMouserAdapter implements MouserAdapter {
     return match ? parseInt(match[1]!, 10) : 0;
   }
 
-  private mapPart(part: MouserPart): SupplierPartInfo {
-    const breakpoints = part.PriceBreaks?.map((pb) => ({
-      quantity: pb.Quantity ?? 0,
-      price: parseFloat(pb.Price ?? '0'),
+  private mapPart(part: unknown): SupplierPartInfo | null {
+    const parsed = MouserPartSchema.safeParse(part);
+    if (!parsed.success) {
+      console.error('Mouser part validation failed:', parsed.error.flatten());
+      return null;
+    }
+
+    const p = parsed.data;
+    const breakpoints = p.PriceBreaks.map((pb) => ({
+      quantity: pb.Quantity,
+      price: parseFloat(pb.Price) || 0,
     }));
 
-    const currency = part.PriceBreaks?.[0]?.Currency ?? 'USD';
+    const currency = p.PriceBreaks[0]?.Currency ?? 'USD';
 
     return {
       supplier: this.name,
-      supplierSku: part.MouserPartNumber ?? '',
-      manufacturer: part.Manufacturer ?? '',
-      mpn: part.ManufacturerPartNumber ?? '',
-      description: part.ProductDescription ?? '',
-      category: part.Category ?? '',
-      packageType: part.PackageType,
-      lifecycle: mapLifecycleStatus(part.LifecycleStatus),
-      stock: this.parseStock(part.Availability),
+      supplierSku: p.MouserPartNumber,
+      manufacturer: p.Manufacturer,
+      mpn: p.ManufacturerPartNumber,
+      description: p.ProductDescription,
+      category: p.Category,
+      packageType: p.PackageType || undefined,
+      lifecycle: mapLifecycleStatus(p.LifecycleStatus),
+      stock: this.parseStock(p.Availability),
       stockUpdatedAt: Date.now(),
-      unitPrice: breakpoints?.[0]?.price ?? null,
+      unitPrice: breakpoints[0]?.price ?? null,
       currency,
       moq: null,
       breakpoints,
-      datasheetUrl: part.DataSheetUrl,
-      leadTime: part.LeadTime,
+      datasheetUrl: p.DataSheetUrl || undefined,
+      leadTime: p.LeadTime || undefined,
       isEstimate: false,
     };
   }

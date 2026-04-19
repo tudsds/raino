@@ -1,7 +1,17 @@
+import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/require-auth';
 import { verifyProjectOwnership } from '@/lib/data/project-queries';
 import { getArtifacts } from '@/lib/data/artifact-queries';
+
+const SIGNED_URL_EXPIRY_SECONDS = 3600;
+
+function createStorageClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const auth = await requireAuth();
@@ -29,26 +39,66 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
       });
     }
 
-    const downloads = artifacts.map((a) => ({
-      id: a.id,
-      name: a.fileName,
-      type: a.artifactType,
-      sizeBytes: a.fileSize,
-      checksum: a.checksum,
-      generatedAt: a.createdAt.toISOString(),
-      mimeType: a.mimeType,
-      filePath: a.filePath,
-      storageBucket: a.storageBucket,
-      storageKey: a.storageKey,
-    }));
+    const hasPersistedArtifacts = artifacts.some((a) => a.storageBucket && a.storageKey);
+    const storageClient = hasPersistedArtifacts ? createStorageClient() : null;
+
+    const downloads = await Promise.all(
+      artifacts.map(async (a) => {
+        const base = {
+          id: a.id,
+          name: a.fileName,
+          type: a.artifactType,
+          sizeBytes: a.fileSize,
+          checksum: a.checksum,
+          generatedAt: a.createdAt.toISOString(),
+          mimeType: a.mimeType,
+          filePath: a.filePath,
+          storageBucket: a.storageBucket,
+          storageKey: a.storageKey,
+        };
+
+        if (!a.storageBucket || !a.storageKey || !storageClient) {
+          return { ...base, downloadUrl: null, persisted: false as const };
+        }
+
+        const { data, error } = await storageClient.storage
+          .from(a.storageBucket)
+          .createSignedUrl(a.storageKey, SIGNED_URL_EXPIRY_SECONDS);
+
+        if (error || !data?.signedUrl) {
+          return { ...base, downloadUrl: null, persisted: false as const };
+        }
+
+        return { ...base, downloadUrl: data.signedUrl, persisted: true as const };
+      }),
+    );
+
+    const allPersisted = downloads.every((d) => d.persisted);
+    const somePersisted = downloads.some((d) => d.persisted);
+
+    const artifactPersistence = allPersisted
+      ? ('persisted_to_cloud' as const)
+      : somePersisted
+        ? ('partially_persisted' as const)
+        : ('not_persisted_to_cloud' as const);
 
     return NextResponse.json({
       projectId: id,
       downloads,
       isPlaceholder: false,
-      artifactPersistence: 'not_persisted_to_cloud' as const,
-      warning:
-        'Artifacts are generated on the local filesystem during design worker execution and are not yet persisted to Supabase Storage. Download links reference local paths only.',
+      artifactPersistence,
+      ...(artifactPersistence === 'not_persisted_to_cloud'
+        ? {
+            warning:
+              'Artifacts are generated on the local filesystem during design worker execution and are not yet persisted to Supabase Storage. Download links reference local paths only.',
+          }
+        : {}),
+      ...(artifactPersistence === 'partially_persisted'
+        ? {
+            warning:
+              'Some artifacts failed to persist to Supabase Storage. Only successfully uploaded files have download URLs.',
+          }
+        : {}),
     });
   } catch {
     return NextResponse.json({

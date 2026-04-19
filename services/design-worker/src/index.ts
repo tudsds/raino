@@ -29,6 +29,8 @@ export {
   uploadArtifactsToStorage,
   type ArtifactManifestEntry,
   type ArtifactManifest,
+  type ArtifactUploadEntry,
+  type ArtifactUploadResult,
 } from './artifacts/manifest';
 
 export {

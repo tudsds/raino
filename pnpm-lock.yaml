@@ -97,6 +97,9 @@ importers:
       '@raino/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@raino/design-worker':
+        specifier: workspace:*
+        version: link:../../services/design-worker
       '@raino/llm':
         specifier: workspace:*
         version: link:../../packages/llm
@@ -259,6 +262,9 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.103.0
         version: 2.103.0
+      openai:
+        specifier: ^6.34.0
+        version: 6.34.0(ws@8.20.0)(zod@3.25.76)
       zod:
         specifier: ^3.24.0
         version: 3.25.76

@@ -1,8 +1,10 @@
 import { prisma } from '@raino/db';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { getAdapterStatus } from '@raino/supplier-clients';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import NeonButton from '@/components/NeonButton';
+import { DegradedModeBanner } from '@/components/DegradedModeBanner';
 
 interface QuotePageProps {
   params: Promise<{ id: string }>;
@@ -41,6 +43,15 @@ export default async function QuotePage({ params }: QuotePageProps) {
   const assumptions = Array.isArray(quoteRow?.assumptions)
     ? (quoteRow.assumptions as string[])
     : [];
+
+  const adapterStatus = getAdapterStatus();
+  const statusEntries = [
+    { name: 'DigiKey', ...adapterStatus.digikey },
+    { name: 'Mouser', ...adapterStatus.mouser },
+    { name: 'JLCPCB', ...adapterStatus.jlcpcb },
+  ] as const;
+  const mockSuppliers = statusEntries.filter((s) => s.mode === 'mock').map((s) => s.name);
+  const liveSuppliers = statusEntries.filter((s) => s.mode === 'live').map((s) => s.name);
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },
@@ -104,6 +115,12 @@ export default async function QuotePage({ params }: QuotePageProps) {
       </div>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
+        {mockSuppliers.length > 0 && (
+          <DegradedModeBanner
+            message={`Supplier pricing: ${liveSuppliers.join(', ') || 'none'} live; ${mockSuppliers.join(', ')} using fixture estimates.`}
+            severity={mockSuppliers.length === 3 ? 'red' : 'amber'}
+          />
+        )}
         {!quoteRow ? (
           <div className="card p-8 text-center">
             <h2 className="text-lg font-semibold text-[#e4e4e7] mb-2">No Quote Generated</h2>

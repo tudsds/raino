@@ -1,0 +1,71 @@
+{
+  "active_plan": "/mnt/d/raino/.sisyphus/plans/launch-overhaul.md",
+  "started_at": "2026-04-19T01:38:31.664Z",
+  "session_ids": [
+    "ses_25cc938a1ffe3qrkEKpV6OVyVB",
+    "ses_25bcbf30bffekCoVQlPeFflwsW",
+    "ses_25bcbebdfffe1ptxC6it619b91"
+  ],
+  "session_origins": {
+    "ses_25cc938a1ffe3qrkEKpV6OVyVB": "direct",
+    "ses_25bcbf30bffekCoVQlPeFflwsW": "appended",
+    "ses_25bcbebdfffe1ptxC6it619b91": "appended"
+  },
+  "plan_name": "launch-overhaul",
+  "agent": "atlas",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "Fix project ownership bypass on project detail page 🔴",
+      "session_id": "ses_25c9a85bdffeXDCMmJwSTqmYFC",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-19T01:47:21.297Z"
+    },
+    "todo:5": {
+      "task_key": "todo:5",
+      "task_label": "5",
+      "task_title": "Wire design job dispatch mechanism",
+      "session_id": "ses_25c82a35fffe7Y0T4zrI7vxhwb",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-04-19T02:27:48.451Z"
+    },
+    "todo:9": {
+      "task_key": "todo:9",
+      "task_label": "9",
+      "task_title": "Migrate pgvector dimension from 384 to 1536",
+      "session_id": "ses_25c6d6fe4ffeeuDtWC7zilybEF",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-19T02:42:59.225Z"
+    },
+    "todo:11": {
+      "task_key": "todo:11",
+      "task_label": "11",
+      "task_title": "Add structured error logging to supplier adapters",
+      "session_id": "ses_25c4ed698ffevVbZ4WkqyI4wfz",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-19T03:05:06.190Z"
+    },
+    "todo:23": {
+      "task_key": "todo:23",
+      "task_label": "23",
+      "task_title": "Final build + typecheck + lint + test verification",
+      "session_id": "ses_25c33377affeDksqrjtrS8L0p8",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-19T03:56:58.349Z"
+    },
+    "final-wave:f1": {
+      "task_key": "final-wave:f1",
+      "task_label": "F1",
+      "task_title": "**Plan Compliance Audit** — `oracle`",
+      "session_id": "ses_25bcbebdfffe1ptxC6it619b91",
+      "agent": "explore",
+      "updated_at": "2026-04-19T05:27:22.188Z"
+    }
+  }
+}

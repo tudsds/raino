@@ -41,7 +41,7 @@ const detailedFeatures = [
       'Template library with validation rules',
       'Requirement-to-template matching',
       'Architecture constraint enforcement',
-      'Custom template upload (enterprise)',
+      'Traceability to source requirements',
     ],
     useCase:
       'Based on the sensor board requirements, Raino recommends the "Low-Power Sensor Node" template, which includes validated power management and communication subcircuits.',
@@ -273,6 +273,12 @@ function Footer() {
             </Link>
             <Link href="/architecture" className="hover:text-[#00f0ff] transition-colors">
               Architecture
+            </Link>
+            <Link href="/workflow" className="hover:text-[#00f0ff] transition-colors">
+              Workflow
+            </Link>
+            <Link href="/docs" className="hover:text-[#00f0ff] transition-colors">
+              Docs
             </Link>
             <a
               href="https://github.com/tudsds/raino"
