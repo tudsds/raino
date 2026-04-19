@@ -3,8 +3,9 @@
 ## TL;DR
 
 > **Quick Summary**: Fix all issues discovered during exhaustive audit of Raino's live sites, GitHub repo, codebase, and external integrations. Bring professionalism to match reference frameworks (oh-my-opencode, OpenHarness, Hermes Agent, OpenClaw).
-> 
+>
 > **Deliverables**:
+>
 > - All site nav/footer/meta/favicon inconsistencies fixed
 > - All code bugs fixed (CSS typo, auth inconsistency, env var naming, Kimi model)
 > - GitHub repo polished (community files, CI badge, description, topics, corrupted dir removed)
@@ -20,7 +21,7 @@
 > - raino-studio enhanced with settings page, integration status, auth fix
 > - Resend config cleaned up (remove dead config)
 > - Post-fix audit cycle (2 rounds) to verify all fixes
-> 
+>
 > **Estimated Effort**: Large (25 tasks + 2 audit rounds)
 > **Parallel Execution**: YES - 6 waves
 > **Critical Path**: Wave 1 → Wave 2 → Wave 3 → Wave 4 → Wave 5 → Wave 6 → Final Verification
@@ -30,10 +31,13 @@
 ## Context
 
 ### Original Request
+
 User requested exhaustive audit of raino-site.vercel.app, raino-studio.vercel.app, github.com/tudsds/raino, all external integrations, and comparison against reference open-source frameworks (oh-my-opencode, OpenHarness, Hermes Agent, OpenClaw). All discovered issues must be fixed, and the README/site must match the professionalism of these frameworks.
 
 ### Audit Summary
+
 **7 parallel agents** audited every dimension:
+
 - raino-site.vercel.app: All 5 pages, links, content, meta tags
 - raino-studio.vercel.app: All pages, auth flow, 25 API routes, degraded mode
 - GitHub repo: Structure, CI, community files, professionalism scorecard
@@ -44,7 +48,9 @@ User requested exhaustive audit of raino-site.vercel.app, raino-studio.vercel.ap
 **Issues Found**: 23 total (6 HIGH, 9 MEDIUM, 8 LOW)
 
 ### Metis Review
+
 **Identified Gaps** (addressed):
+
 - Nav/Footer problem is structural (inline copies per page, not shared via layout) — plan uses layout-based fix
 - Kimi model name verified: `kimi-k2.5` IS the correct API model ID (confirmed from platform.moonshot.ai)
 - Supabase env var rename must be atomic across 7 source files + .env.example + Vercel env
@@ -57,9 +63,11 @@ User requested exhaustive audit of raino-site.vercel.app, raino-studio.vercel.ap
 ## Work Objectives
 
 ### Core Objective
+
 Fix every issue found during the comprehensive audit and bring Raino's presentation to the same professional level as oh-my-opencode, OpenHarness, Hermes Agent, and OpenClaw.
 
 ### Concrete Deliverables
+
 - Shared Navbar + Footer via root layout in apps/site
 - Unique page titles + OG meta tags on all marketing pages
 - Cyberpunk favicon + OG image
@@ -89,18 +97,21 @@ Fix every issue found during the comprehensive audit and bring Raino's presentat
 - Post-fix audit Round 2 report with final verdict
 
 ### Definition of Done
+
 - [ ] `pnpm typecheck && pnpm lint && pnpm test && pnpm build` all pass
 - [ ] Both Vercel deployments live with fixes applied
 - [ ] GitHub CI green
 - [ ] All QA scenarios pass
 
 ### Must Have
+
 - Every HIGH and MEDIUM issue fixed
 - README matches reference framework professionalism
 - No test regressions (692+ tests still pass)
 - Both sites render correctly on desktop and mobile
 
 ### Must NOT Have (Guardrails)
+
 - No new npm dependencies (unless justified — Task 22 Resend is the exception)
 - No prisma schema changes
 - No worker service modifications (design-worker, ingest-worker, quote-worker, audit-worker)
@@ -117,12 +128,15 @@ Fix every issue found during the comprehensive audit and bring Raino's presentat
 > The following rules apply to ALL tasks. Atlas MUST follow these protocols.
 
 ### Rule 1: Consult Official Docs Before Implementation
+
 Before implementing ANY integration change (Tasks 16-22), Atlas MUST:
+
 1. Read the official documentation for the relevant platform
 2. Verify the current Raino implementation matches the documented API
 3. If there's a mismatch, use the OFFICIAL docs as the source of truth
 
 **Platform Documentation URLs:**
+
 - **Kimi/Moonshot**: https://platform.moonshot.ai/docs/api/chat
 - **Supabase Auth**: https://supabase.com/docs/guides/auth/server-side-rendering
 - **Supabase Storage**: https://supabase.com/docs/guides/storage
@@ -133,13 +147,16 @@ Before implementing ANY integration change (Tasks 16-22), Atlas MUST:
 - **Vercel**: https://vercel.com/docs/monorepos/turborepo
 
 ### Rule 2: Stop and Ask If Blocked
+
 If Atlas encounters ANY of the following blockers, it MUST STOP and create a step-by-step guide for the user:
+
 - Missing credentials that cannot be found in `.env.example` or environment
 - Platform configuration that requires dashboard access (e.g., Supabase dashboard, Vercel settings)
 - API behavior that contradicts official documentation
 - Unclear business logic that could go multiple ways with 2x+ effort difference
 
 **Step-by-step guide format (MANDATORY):**
+
 ```
 ### Manual Step Required: [Description]
 
@@ -152,12 +169,15 @@ If Atlas encounters ANY of the following blockers, it MUST STOP and create a ste
 ```
 
 ### Rule 3: No Faking Integration Data
+
 - Never fabricate live supplier pricing data — always use fixture/degraded mode when credentials are missing
 - Never claim a live API connection when using fixture data
 - Every degraded-mode path must be clearly labeled and inspectable
 
 ### Rule 4: Verify Before Proceeding
+
 After each wave, Atlas MUST:
+
 1. Run `pnpm typecheck && pnpm lint && pnpm test && pnpm build`
 2. Verify all tests pass (692+ tests)
 3. Check for any new TypeScript errors
@@ -170,11 +190,13 @@ After each wave, Atlas MUST:
 > **ZERO HUMAN INTERVENTION** — ALL verification is agent-executed.
 
 ### Test Decision
+
 - **Infrastructure exists**: YES (Vitest + Playwright)
 - **Automated tests**: YES (Tests-after — update existing tests that reference changed values)
 - **Framework**: Vitest
 
 ### QA Policy
+
 Every task includes agent-executed QA scenarios.
 Evidence saved to `.sisyphus/evidence/task-{N}-{scenario-slug}.{ext}`.
 
@@ -236,33 +258,33 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
 
 ### Dependency Matrix
 
-| Task | Depends On | Blocks | Wave |
-|------|-----------|--------|------|
-| T1 | - | T6, T14 | 1 |
-| T2 | - | T4, T14 | 1 |
-| T3 | - | T4, T14 | 1 |
-| T4 | T3 | T14 | 1 |
-| T5 | - | T14 | 2 |
-| T6 | T1 | T14 | 2 |
-| T7 | T1 | T14 | 2 |
-| T8 | - | T14 | 2 |
-| T9 | - | T14 | 2 |
-| T10 | - | T14 | 2 |
-| T11 | - | T14 | 3 |
-| T12 | T11 | T14 | 3 |
-| T13 | - | T14 | 3 |
-| T14 | All above (T1-T13) | T16-T22 | 4 |
-| T15 | - | User | 4 |
-| T16 | - | T20, F1-F4 | 5 |
-| T17 | - | T20, F1-F4 | 5 |
-| T18 | - | T20, T21, T22, F1-F4 | 5 |
-| T19 | - | T20, F1-F4 | 5 |
-| T20 | T3, T16, T17, T19 | T22, F1-F4 | 5 |
-| T21 | T18 | T22, F1-F4 | 5 |
-| T22 | T20, T21 | F1-F4 | 5 |
-| T23 | ALL Waves 1-5 (T1-T22) | T24 | 6 |
-| T24 | T23 | T25 | 6 |
-| T25 | T24 | F1-F4 | 6 |
+| Task | Depends On             | Blocks               | Wave |
+| ---- | ---------------------- | -------------------- | ---- |
+| T1   | -                      | T6, T14              | 1    |
+| T2   | -                      | T4, T14              | 1    |
+| T3   | -                      | T4, T14              | 1    |
+| T4   | T3                     | T14                  | 1    |
+| T5   | -                      | T14                  | 2    |
+| T6   | T1                     | T14                  | 2    |
+| T7   | T1                     | T14                  | 2    |
+| T8   | -                      | T14                  | 2    |
+| T9   | -                      | T14                  | 2    |
+| T10  | -                      | T14                  | 2    |
+| T11  | -                      | T14                  | 3    |
+| T12  | T11                    | T14                  | 3    |
+| T13  | -                      | T14                  | 3    |
+| T14  | All above (T1-T13)     | T16-T22              | 4    |
+| T15  | -                      | User                 | 4    |
+| T16  | -                      | T20, F1-F4           | 5    |
+| T17  | -                      | T20, F1-F4           | 5    |
+| T18  | -                      | T20, T21, T22, F1-F4 | 5    |
+| T19  | -                      | T20, F1-F4           | 5    |
+| T20  | T3, T16, T17, T19      | T22, F1-F4           | 5    |
+| T21  | T18                    | T22, F1-F4           | 5    |
+| T22  | T20, T21               | F1-F4                | 5    |
+| T23  | ALL Waves 1-5 (T1-T22) | T24                  | 6    |
+| T24  | T23                    | T25                  | 6    |
+| T25  | T24                    | F1-F4                | 6    |
 
 ### Agent Dispatch Summary
 
@@ -317,6 +339,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm typecheck && pnpm lint && pnpm test` pass
 
   **QA Scenarios**:
+
   ```
   Scenario: CSS typo fixed
     Tool: Bash (grep)
@@ -385,6 +408,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm build --filter @raino/site` succeeds
 
   **QA Scenarios**:
+
   ```
   Scenario: Unique page titles
     Tool: Bash (curl)
@@ -459,6 +483,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm build --filter @raino/site` succeeds
 
   **QA Scenarios**:
+
   ```
   Scenario: No inline nav/footer functions
     Tool: Bash (grep)
@@ -525,6 +550,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm build --filter @raino/site` succeeds
 
   **QA Scenarios**:
+
   ```
   Scenario: Hamburger menu exists in HTML
     Tool: Bash (grep)
@@ -584,6 +610,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm typecheck && pnpm test` pass
 
   **QA Scenarios**:
+
   ```
   Scenario: Signup uses magic link
     Tool: Bash (grep)
@@ -654,6 +681,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm typecheck && pnpm lint && pnpm test && pnpm build` all pass
 
   **QA Scenarios**:
+
   ```
   Scenario: Old name completely removed
     Tool: Bash (grep)
@@ -723,6 +751,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm test --filter @raino/llm` passes with updated model name
 
   **QA Scenarios**:
+
   ```
   Scenario: Old model name removed
     Tool: Bash (grep)
@@ -747,7 +776,6 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
 
   **What to do**:
   The Phase 1 plan specified `apps/studio/src/lib/workers/dispatch.ts` but it was never created. The design route currently runs generation synchronously. Create a proper dispatch module:
-
   1. Create `apps/studio/src/lib/workers/dispatch.ts` with a `triggerDesignJob(projectId: string, spec: unknown): Promise<{ jobId: string }>` function
   2. This function should:
      - Create a DesignJob record via Prisma with status `pending`
@@ -789,6 +817,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm typecheck && pnpm test` pass
 
   **QA Scenarios**:
+
   ```
   Scenario: dispatch.ts exists with triggerDesignJob
     Tool: Bash (grep)
@@ -813,7 +842,6 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
 
   **What to do**:
   Create a simple health check endpoint for monitoring:
-
   1. Create `apps/studio/src/app/api/health/route.ts`
   2. Return JSON with: `{ status: "ok", timestamp: new Date().toISOString(), version: "0.1.0" }`
   3. Optionally check Supabase connectivity (try a simple query, report degraded if unavailable)
@@ -844,6 +872,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm build --filter @raino/studio` succeeds
 
   **QA Scenarios**:
+
   ```
   Scenario: Health endpoint returns 200
     Tool: Bash (curl)
@@ -861,7 +890,6 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
 
   **What to do**:
   Create custom error pages matching the cyberpunk theme for both apps:
-
   1. `apps/site/src/app/not-found.tsx` — 404 page with Raino branding, "Page Not Found" message, and link back to homepage
   2. `apps/site/src/app/error.tsx` — Generic error boundary with error message + "Try Again" button (must be client component)
   3. `apps/studio/src/app/not-found.tsx` — 404 page with Raino Studio branding and link to dashboard
@@ -898,6 +926,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm build` succeeds for both apps
 
   **QA Scenarios**:
+
   ```
   Scenario: Custom 404 for site
     Tool: Bash (curl)
@@ -915,7 +944,6 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
 
   **What to do**:
   Create the standard open-source community files that all 4 reference frameworks have:
-
   1. `CONTRIBUTING.md` — Development setup guide (clone, install, env vars, dev commands), PR process, code standards (from AGENTS.md), testing requirements. Use honest tone: "This is a young project. PRs welcome but response times may vary."
 
   2. `SECURITY.md` — Security policy: how to report vulnerabilities (email 27jamesgong@gmail.com), what's in scope (auth bypass, data leaks, credential exposure), response timeline expectations. Note the No-Fake-Integration Policy as a security feature.
@@ -966,6 +994,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] All files have professional, honest content
 
   **QA Scenarios**:
+
   ```
   Scenario: All community files exist
     Tool: Bash (ls)
@@ -986,7 +1015,6 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   Overhaul the README to match the professionalism, structure, and voice of oh-my-opencode, OpenHarness, Hermes Agent, and OpenClaw. Keep the existing technical content but restructure and enhance it.
 
   **New README structure** (follow reference frameworks):
-
   1. **Hero section**: Logo/ASCII art banner + tagline "From fuzzy hardware idea to manufacturing-ready PCB" + badge row (CI status, MIT license, GitHub repo)
   2. **"What is Raino?" explainer**: 3-4 sentences like OpenHarness's "What is an Agent Harness" — explain the problem Raino solves and why it's different from a chatbot
   3. **Screenshot/Demo**: ASCII art or embedded image placeholder showing the workflow
@@ -1047,6 +1075,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] Translated READMEs (zh-CN, ja, ko) updated to match new structure
 
   **QA Scenarios**:
+
   ```
   Scenario: README has CI badge
     Tool: Bash (grep)
@@ -1114,6 +1143,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] Concurrency control is configured
 
   **QA Scenarios**:
+
   ```
   Scenario: Corrupted directory removed
     Tool: Bash (ls)
@@ -1183,6 +1213,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] /api/health returns 200
 
   **QA Scenarios**:
+
   ```
   Scenario: Full verification passes
     Tool: Bash
@@ -1275,6 +1306,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `.sisyphus/drafts/manual-steps.md` exists with all 5 manual steps detailed
 
   **QA Scenarios**:
+
   ```
   Scenario: Manual steps guide exists
     Tool: Bash (ls)
@@ -1352,6 +1384,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `.env.example` has comment documenting bucket names
 
   **QA Scenarios**:
+
   ```
   Scenario: No stale bucket references in codebase
     Tool: Bash (grep)
@@ -1433,6 +1466,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] DigiKey adapter has comment explaining 2-legged OAuth
 
   **QA Scenarios**:
+
   ```
   Scenario: No DigiKey redirect URI references
     Tool: Bash (grep)
@@ -1535,6 +1569,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm test` still passes (692+ tests)
 
   **QA Scenarios**:
+
   ```
   Scenario: Memory bootstrap files exist and are well-formed
     Tool: Bash (cat/wc)
@@ -1591,16 +1626,20 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
     - **Hermes Agent**: MIT license with proper attribution
     - **EvoMap**: GPL-3.0 with contributor acknowledgements
   - Structure of NOTICES.md:
+
     ```markdown
     # Notices & Acknowledgements
 
     ## Raino License
+
     Raino is released under the MIT License. See [LICENSE](LICENSE) for full text.
 
     ## Third-Party Open Source Acknowledgements
+
     The following open-source projects inspired or informed Raino's architecture:
 
     ### Agent Frameworks
+
     - **Oh-my-opencode** — Dual-prompt agent orchestration, hook system, MCP integration
       - Repository: https://github.com/code-yeongyu/oh-my-openagent
       - License: SUL-1.0
@@ -1627,6 +1666,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
       - License: MIT
 
     ### Platform Integrations
+
     - **KiCad** — EDA tool (external GPL boundary, not embedded)
     - **Supabase** — Auth, database, storage, pgvector
     - **Moonshot AI (Kimi)** — LLM reasoning via OpenAI-compatible API
@@ -1634,6 +1674,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
     - **Mouser** — Component search API
     - **JLCPCB/LCSC** — Component search API
     ```
+
   - Add a brief reference to NOTICES.md at the END of README.md (after License section):
     ```
     ## Acknowledgements
@@ -1681,6 +1722,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] No acknowledgements in raino-site or raino-studio pages
 
   **QA Scenarios**:
+
   ```
   Scenario: NOTICES.md exists with all 8 frameworks
     Tool: Bash (grep)
@@ -1788,6 +1830,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm build` succeeds for `@raino/site`
 
   **QA Scenarios**:
+
   ```
   Scenario: All new pages render correctly
     Tool: Bash (curl)
@@ -1903,6 +1946,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm build --filter @raino/studio` succeeds
 
   **QA Scenarios**:
+
   ```
   Scenario: Settings page renders
     Tool: Bash (curl)
@@ -2044,6 +2088,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] `pnpm build --filter @raino/studio` succeeds
 
   **QA Scenarios**:
+
   ```
   Scenario: Resend package installed and client initialized
     Tool: Bash (grep)
@@ -2175,6 +2220,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] All issues classified by severity (HIGH/MEDIUM/LOW)
 
   **QA Scenarios**:
+
   ```
   Scenario: Audit report exists and is comprehensive
     Tool: Bash (wc)
@@ -2256,6 +2302,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] Both Vercel deployments updated
 
   **QA Scenarios**:
+
   ```
   Scenario: All audit issues addressed
     Tool: Bash (grep)
@@ -2338,6 +2385,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - [ ] Final verdict clearly stated: PASS or PARTIAL PASS with remaining issues listed
 
   **QA Scenarios**:
+
   ```
   Scenario: Final audit report exists with clear verdict
     Tool: Bash (grep)
@@ -2365,20 +2413,20 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
 > 4 review agents run in PARALLEL. ALL must APPROVE. Present consolidated results to user and get explicit "okay" before completing.
 
 - [ ] F1. **Plan Compliance Audit** — `oracle`
-  Read the plan end-to-end. For each "Must Have": verify implementation exists (read file, curl endpoint, run command). For each "Must NOT Have": search codebase for forbidden patterns — reject with file:line if found. Check evidence files exist in .sisyphus/evidence/. Compare deliverables against plan.
-  Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [N/N] | VERDICT: APPROVE/REJECT`
+      Read the plan end-to-end. For each "Must Have": verify implementation exists (read file, curl endpoint, run command). For each "Must NOT Have": search codebase for forbidden patterns — reject with file:line if found. Check evidence files exist in .sisyphus/evidence/. Compare deliverables against plan.
+      Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [N/N] | VERDICT: APPROVE/REJECT`
 
 - [ ] F2. **Code Quality Review** — `unspecified-high`
-  Run `tsc --noEmit` + linter + `bun test`. Review all changed files for: `as any`/`@ts-ignore`, empty catches, console.log in prod, commented-out code, unused imports. Check AI slop: excessive comments, over-abstraction, generic names.
-  Output: `Build [PASS/FAIL] | Lint [PASS/FAIL] | Tests [N pass/N fail] | Files [N clean/N issues] | VERDICT`
+      Run `tsc --noEmit` + linter + `bun test`. Review all changed files for: `as any`/`@ts-ignore`, empty catches, console.log in prod, commented-out code, unused imports. Check AI slop: excessive comments, over-abstraction, generic names.
+      Output: `Build [PASS/FAIL] | Lint [PASS/FAIL] | Tests [N pass/N fail] | Files [N clean/N issues] | VERDICT`
 
 - [ ] F3. **Real Manual QA** — `unspecified-high` (+ `playwright` skill if possible)
-  Start from clean state. Execute EVERY QA scenario from EVERY task — follow exact steps, capture evidence. Test cross-task integration. Test edge cases: empty state, invalid input, rapid actions. Save to `.sisyphus/evidence/final-qa/`.
-  Output: `Scenarios [N/N pass] | Integration [N/N] | Edge Cases [N tested] | VERDICT`
+      Start from clean state. Execute EVERY QA scenario from EVERY task — follow exact steps, capture evidence. Test cross-task integration. Test edge cases: empty state, invalid input, rapid actions. Save to `.sisyphus/evidence/final-qa/`.
+      Output: `Scenarios [N/N pass] | Integration [N/N] | Edge Cases [N tested] | VERDICT`
 
 - [ ] F4. **Scope Fidelity Check** — `deep`
-  For each task: read "What to do", read actual diff (git log/diff). Verify 1:1 — everything in spec was built (no missing), nothing beyond spec was built (no creep). Check "Must NOT do" compliance. Detect cross-task contamination. Flag unaccounted changes.
-  Output: `Tasks [N/N compliant] | Contamination [CLEAN/N issues] | Unaccounted [CLEAN/N files] | VERDICT`
+      For each task: read "What to do", read actual diff (git log/diff). Verify 1:1 — everything in spec was built (no missing), nothing beyond spec was built (no creep). Check "Must NOT do" compliance. Detect cross-task contamination. Flag unaccounted changes.
+      Output: `Tasks [N/N compliant] | Contamination [CLEAN/N issues] | Unaccounted [CLEAN/N files] | VERDICT`
 
 ---
 
@@ -2396,6 +2444,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
 ## Success Criteria
 
 ### Verification Commands
+
 ```bash
 pnpm typecheck    # Expected: 0 errors
 pnpm lint         # Expected: 0 errors
@@ -2404,6 +2453,7 @@ pnpm build        # Expected: success for both apps
 ```
 
 ### Final Checklist
+
 - [ ] All 6 HIGH issues resolved
 - [ ] All 9 MEDIUM issues resolved
 - [ ] All 8 LOW issues resolved

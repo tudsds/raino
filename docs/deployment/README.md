@@ -56,11 +56,11 @@ Or run them all at once:
 
 Confirm the three storage buckets exist in the Supabase dashboard under Storage:
 
-| Bucket       | Public | Purpose                                           |
-| ------------ | ------ | ------------------------------------------------- |
-| `reports`    | No     | Generated reports and audit trails                |
-| `artifacts`  | No     | Design artifacts (KiCad projects, Gerber files)   |
-| `uploads`    | Yes    | User-uploaded documents (datasheets, specs)       |
+| Bucket      | Public | Purpose                                         |
+| ----------- | ------ | ----------------------------------------------- |
+| `reports`   | No     | Generated reports and audit trails              |
+| `artifacts` | No     | Design artifacts (KiCad projects, Gerber files) |
+| `uploads`   | Yes    | User-uploaded documents (datasheets, specs)     |
 
 ## Environment Variables
 
@@ -81,11 +81,11 @@ Copy `.env.example` to `.env.local` and fill in values. The app runs in degraded
 
 ### Supabase
 
-| Variable                               | Purpose                   | Required for        |
-| -------------------------------------- | ------------------------- | ------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`             | Supabase project URL      | Auth, persistence   |
+| Variable                        | Purpose                   | Required for        |
+| ------------------------------- | ------------------------- | ------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL      | Auth, persistence   |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key  | Auth, persistence   |
-| `SUPABASE_SERVICE_ROLE_KEY`            | Supabase service role key | Backend data access |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Supabase service role key | Backend data access |
 
 ### GitHub Actions
 

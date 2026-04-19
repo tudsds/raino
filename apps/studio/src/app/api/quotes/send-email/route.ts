@@ -60,10 +60,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (filteredArtifacts.length === 0) {
-      return NextResponse.json(
-        { error: 'No valid artifacts selected for email' },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: 'No valid artifacts selected for email' }, { status: 400 });
     }
 
     const result = await sendDesignQuoteEmail({
@@ -85,10 +82,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!result.success) {
-      return NextResponse.json(
-        { success: false, error: result.error },
-        { status: 500 },
-      );
+      return NextResponse.json({ success: false, error: result.error }, { status: 500 });
     }
 
     await createAuditEntry(projectId, {
@@ -107,9 +101,6 @@ export async function POST(request: NextRequest) {
       emailId: result.emailId,
     });
   } catch {
-    return NextResponse.json(
-      { success: false, error: 'Failed to send email' },
-      { status: 500 },
-    );
+    return NextResponse.json({ success: false, error: 'Failed to send email' }, { status: 500 });
   }
 }

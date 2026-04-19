@@ -36,13 +36,13 @@ Most AI hardware tools today are either glorified chatbots that hallucinate part
 
 ### Design Principles
 
-| Principle | What it means in practice |
-| --- | --- |
-| **Constrained autonomy** | The agent operates inside approved architecture templates. It does not invent board topologies. |
-| **Source traceability** | Every part selection links to a datasheet, a supplier page, or a labeled estimate. No ghost parts. |
+| Principle                | What it means in practice                                                                                      |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| **Constrained autonomy** | The agent operates inside approved architecture templates. It does not invent board topologies.                |
+| **Source traceability**  | Every part selection links to a datasheet, a supplier page, or a labeled estimate. No ghost parts.             |
 | **Honest degraded mode** | When credentials are missing, the system falls back to fixture data and clearly says so. No silent downgrades. |
-| **Sufficiency gates** | The pipeline does not proceed past a stage until its inputs are complete and consistent. |
-| **Human in the loop** | Critical ambiguity stops the workflow. You are the final authority on your own design. |
+| **Sufficiency gates**    | The pipeline does not proceed past a stage until its inputs are complete and consistent.                       |
+| **Human in the loop**    | Critical ambiguity stops the workflow. You are the final authority on your own design.                         |
 
 ## Features
 
@@ -128,11 +128,11 @@ Idea → Clarify → Specify → Architect → Shortlist → Ingest → Resolve 
 
 The quote engine produces cost estimates with three confidence bands:
 
-| Level | Criteria |
-| --- | --- |
-| **High** | All BOM lines have real supplier prices |
+| Level      | Criteria                                                   |
+| ---------- | ---------------------------------------------------------- |
+| **High**   | All BOM lines have real supplier prices                    |
 | **Medium** | 70%+ of lines have real prices, 30% or fewer are estimates |
-| **Low** | More than 30% of lines use estimated prices |
+| **Low**    | More than 30% of lines use estimated prices                |
 
 ```
 subtotal = design_automation_fee
@@ -208,21 +208,21 @@ For full architectural documentation, see `docs/architecture/`.
 
 ## Tech Stack
 
-| Layer | Technology |
-| --- | --- |
-| Frontend | Next.js 15, React 19, Tailwind CSS v4 |
+| Layer         | Technology                                              |
+| ------------- | ------------------------------------------------------- |
+| Frontend      | Next.js 15, React 19, Tailwind CSS v4                   |
 | Design System | @raino/ui (pixel-art cyberpunk, Press Start 2P + VT323) |
-| Backend | Next.js Route Handlers, Server Actions, Supabase |
-| Database | Supabase Postgres, Prisma ORM, pgvector |
-| Auth | Supabase Auth (magic link) |
-| Storage | Supabase Storage |
-| LLM | Kimi K2.5 via OpenAI SDK (moonshot.ai) |
-| Validation | Zod |
-| Testing | Vitest, Playwright |
-| Build | Turborepo, pnpm workspaces |
-| Deploy | Vercel (monorepo, two apps) |
-| EDA | KiCad CLI (external GPL boundary) |
-| Suppliers | DigiKey, Mouser, JLCPCB (adapter interfaces) |
+| Backend       | Next.js Route Handlers, Server Actions, Supabase        |
+| Database      | Supabase Postgres, Prisma ORM, pgvector                 |
+| Auth          | Supabase Auth (magic link)                              |
+| Storage       | Supabase Storage                                        |
+| LLM           | Kimi K2.5 via OpenAI SDK (moonshot.ai)                  |
+| Validation    | Zod                                                     |
+| Testing       | Vitest, Playwright                                      |
+| Build         | Turborepo, pnpm workspaces                              |
+| Deploy        | Vercel (monorepo, two apps)                             |
+| EDA           | KiCad CLI (external GPL boundary)                       |
+| Suppliers     | DigiKey, Mouser, JLCPCB (adapter interfaces)            |
 
 ## Project Structure
 
@@ -261,52 +261,52 @@ raino/
 
 ## Packages and Services
 
-| Name | Purpose | Location |
-| --- | --- | --- |
-| `@raino/site` | Marketing website | `apps/site` |
-| `@raino/studio` | Product app: auth, intake, spec, BOM, previews, quotes | `apps/studio` |
-| `@raino/core` | Zod schemas, validation, quote engine, domain types | `packages/core` |
-| `@raino/db` | Prisma ORM, Supabase auth/storage/pgvector clients | `packages/db` |
-| `@raino/llm` | Kimi K2.5 gateway, structured output, retry logic | `packages/llm` |
-| `@raino/rag` | Engineering-aware chunking, pgvector retrieval | `packages/rag` |
-| `@raino/agents` | Workflow state machine, agent prompts, orchestration | `packages/agents` |
-| `@raino/ui` | Pixel-art cyberpunk design system | `packages/ui` |
-| `@raino/kicad-worker-client` | KiCad CLI command contracts, job types | `packages/kicad-worker-client` |
-| `@raino/supplier-clients` | DigiKey, Mouser, JLCPCB adapter interfaces + factory | `packages/supplier-clients` |
-| `ingest-worker` | 8-stage document ingestion pipeline | `services/ingest-worker` |
-| `design-worker` | KiCad project generation and export | `services/design-worker` |
-| `quote-worker` | Rough quote calculation with confidence bands | `services/quote-worker` |
-| `audit-worker` | Audit trail, artifact manifests, provenance | `services/audit-worker` |
+| Name                         | Purpose                                                | Location                       |
+| ---------------------------- | ------------------------------------------------------ | ------------------------------ |
+| `@raino/site`                | Marketing website                                      | `apps/site`                    |
+| `@raino/studio`              | Product app: auth, intake, spec, BOM, previews, quotes | `apps/studio`                  |
+| `@raino/core`                | Zod schemas, validation, quote engine, domain types    | `packages/core`                |
+| `@raino/db`                  | Prisma ORM, Supabase auth/storage/pgvector clients     | `packages/db`                  |
+| `@raino/llm`                 | Kimi K2.5 gateway, structured output, retry logic      | `packages/llm`                 |
+| `@raino/rag`                 | Engineering-aware chunking, pgvector retrieval         | `packages/rag`                 |
+| `@raino/agents`              | Workflow state machine, agent prompts, orchestration   | `packages/agents`              |
+| `@raino/ui`                  | Pixel-art cyberpunk design system                      | `packages/ui`                  |
+| `@raino/kicad-worker-client` | KiCad CLI command contracts, job types                 | `packages/kicad-worker-client` |
+| `@raino/supplier-clients`    | DigiKey, Mouser, JLCPCB adapter interfaces + factory   | `packages/supplier-clients`    |
+| `ingest-worker`              | 8-stage document ingestion pipeline                    | `services/ingest-worker`       |
+| `design-worker`              | KiCad project generation and export                    | `services/design-worker`       |
+| `quote-worker`               | Rough quote calculation with confidence bands          | `services/quote-worker`        |
+| `audit-worker`               | Audit trail, artifact manifests, provenance            | `services/audit-worker`        |
 
 ## Environment Variables
 
 See `.env.example` for all 22 placeholders. The app runs in degraded or fixture mode without credentials. No single variable is required for the app to start.
 
-| Variable | Purpose | Fallback |
-| --- | --- | --- |
-| `KIMI_API_KEY` | Moonshot API key for Kimi K2.5 | LLM calls fail gracefully |
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Degraded mode (no persistence) |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key | Degraded mode |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key | Degraded mode |
-| `DATABASE_URL` | Prisma connection string | Degraded mode |
-| `DIGIKEY_CLIENT_ID` | DigiKey API client ID | Fixture mode |
-| `DIGIKEY_CLIENT_SECRET` | DigiKey API client secret | Fixture mode |
-| `MOUSER_API_KEY` | Mouser API key | Fixture mode |
-| `JLCPCB_APP_ID` | JLCPCB API app ID | Fixture mode |
-| `JLCPCB_ACCESS_KEY` | JLCPCB API access key | Fixture mode |
-| `JLCPCB_SECRET_KEY` | JLCPCB API secret key | Fixture mode |
-| `EMBEDDING_PROVIDER` | Embedding backend ("openai" or "mock") | Defaults to "mock" |
-| `OPENAI_API_KEY` | OpenAI key for embeddings | Mock embeddings |
-| `KICAD_CLI_PATH` | Path to KiCad CLI binary | KiCad generation skipped |
+| Variable                        | Purpose                                | Fallback                       |
+| ------------------------------- | -------------------------------------- | ------------------------------ |
+| `KIMI_API_KEY`                  | Moonshot API key for Kimi K2.5         | LLM calls fail gracefully      |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL                   | Degraded mode (no persistence) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key                      | Degraded mode                  |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Supabase service role key              | Degraded mode                  |
+| `DATABASE_URL`                  | Prisma connection string               | Degraded mode                  |
+| `DIGIKEY_CLIENT_ID`             | DigiKey API client ID                  | Fixture mode                   |
+| `DIGIKEY_CLIENT_SECRET`         | DigiKey API client secret              | Fixture mode                   |
+| `MOUSER_API_KEY`                | Mouser API key                         | Fixture mode                   |
+| `JLCPCB_APP_ID`                 | JLCPCB API app ID                      | Fixture mode                   |
+| `JLCPCB_ACCESS_KEY`             | JLCPCB API access key                  | Fixture mode                   |
+| `JLCPCB_SECRET_KEY`             | JLCPCB API secret key                  | Fixture mode                   |
+| `EMBEDDING_PROVIDER`            | Embedding backend ("openai" or "mock") | Defaults to "mock"             |
+| `OPENAI_API_KEY`                | OpenAI key for embeddings              | Mock embeddings                |
+| `KICAD_CLI_PATH`                | Path to KiCad CLI binary               | KiCad generation skipped       |
 
 ## Deployment
 
 Raino deploys to Vercel as a monorepo with two apps.
 
-| App | Root Directory | URL |
-| --- | --- | --- |
-| Site | `apps/site` | [raino-site.vercel.app](https://raino-site.vercel.app) |
-| Studio | `apps/studio` | [raino-studio.vercel.app](https://raino-studio.vercel.app) |
+| App    | Root Directory | URL                                                        |
+| ------ | -------------- | ---------------------------------------------------------- |
+| Site   | `apps/site`    | [raino-site.vercel.app](https://raino-site.vercel.app)     |
+| Studio | `apps/studio`  | [raino-studio.vercel.app](https://raino-studio.vercel.app) |
 
 **Steps:**
 
@@ -323,12 +323,12 @@ Every pull request gets a preview deployment. Merging to main triggers productio
 
 Raino is designed to run without credentials. When keys are missing, it falls back to mock adapters and fixture data, and it labels every fallback clearly. You never have to guess whether the data you are looking at is live or synthetic.
 
-| Missing Credential | What Still Works | What Falls Back |
-| --- | --- | --- |
-| Supabase credentials | Static pages, UI rendering | Auth, project persistence, RAG |
-| `KIMI_API_KEY` | Everything except LLM calls | Natural language intake, reasoning |
-| Supplier API keys | All design workflow steps | Live pricing, stock, MOQ data |
-| KiCad CLI | Project management, BOM, quotes | Actual KiCad project generation |
+| Missing Credential   | What Still Works                | What Falls Back                    |
+| -------------------- | ------------------------------- | ---------------------------------- |
+| Supabase credentials | Static pages, UI rendering      | Auth, project persistence, RAG     |
+| `KIMI_API_KEY`       | Everything except LLM calls     | Natural language intake, reasoning |
+| Supplier API keys    | All design workflow steps       | Live pricing, stock, MOQ data      |
+| KiCad CLI            | Project management, BOM, quotes | Actual KiCad project generation    |
 
 Mock adapters and fixture data are permanent parts of the codebase. They exist so the system is always inspectable and testable without live credentials. They are not temporary scaffolding.
 

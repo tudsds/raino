@@ -72,12 +72,12 @@ All external API keys are environment variables on the server side:
 
 Browser-exposed variables are limited to:
 
-| Variable                               | Purpose                           |
-| -------------------------------------- | --------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`             | Supabase client initialization    |
+| Variable                        | Purpose                           |
+| ------------------------------- | --------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase client initialization    |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key for RLS         |
-| `NEXT_PUBLIC_APP_URL`                  | Studio app URL for auth callbacks |
-| `NEXT_PUBLIC_SITE_URL`                 | Marketing site URL for CTA links  |
+| `NEXT_PUBLIC_APP_URL`           | Studio app URL for auth callbacks |
+| `NEXT_PUBLIC_SITE_URL`          | Marketing site URL for CTA links  |
 
 ### Route Handler Security
 

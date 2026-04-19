@@ -58,9 +58,7 @@ export class MemoryStore {
     }
 
     if (query.workflowStage) {
-      results = results.filter(
-        (e) => e.metadata['workflowStage'] === query.workflowStage,
-      );
+      results = results.filter((e) => e.metadata['workflowStage'] === query.workflowStage);
     }
 
     if (query.since) {
@@ -84,11 +82,13 @@ export class MemoryStore {
 
   async getL0Entries(): Promise<L0IdentityEntry[]> {
     const entries = await this.query({ layer: 'L0_IDENTITY' });
-    return entries.map((e): L0IdentityEntry => ({
-      ...e,
-      layer: 'L0_IDENTITY',
-      source: (e.metadata['source'] as L0IdentityEntry['source']) ?? 'MEMORY.md',
-    }));
+    return entries.map(
+      (e): L0IdentityEntry => ({
+        ...e,
+        layer: 'L0_IDENTITY',
+        source: (e.metadata['source'] as L0IdentityEntry['source']) ?? 'MEMORY.md',
+      }),
+    );
   }
 
   async getL1Entries(maxTokens?: number): Promise<L1EssentialEntry[]> {
@@ -96,27 +96,28 @@ export class MemoryStore {
       layer: 'L1_ESSENTIAL',
       maxTokens,
     });
-    return entries.map((e): L1EssentialEntry => ({
-      ...e,
-      layer: 'L1_ESSENTIAL',
-      summaryOf: (e.metadata['summaryOf'] as string[]) ?? [],
-    }));
+    return entries.map(
+      (e): L1EssentialEntry => ({
+        ...e,
+        layer: 'L1_ESSENTIAL',
+        summaryOf: (e.metadata['summaryOf'] as string[]) ?? [],
+      }),
+    );
   }
 
-  async getL2Entries(
-    workflowStage?: string,
-    maxTokens?: number,
-  ): Promise<L2OnDemandEntry[]> {
+  async getL2Entries(workflowStage?: string, maxTokens?: number): Promise<L2OnDemandEntry[]> {
     const entries = await this.query({
       layer: 'L2_ON_DEMAND',
       workflowStage,
       maxTokens,
     });
-    return entries.map((e): L2OnDemandEntry => ({
-      ...e,
-      layer: 'L2_ON_DEMAND',
-      workflowStage: (e.metadata['workflowStage'] as string) ?? 'unknown',
-    }));
+    return entries.map(
+      (e): L2OnDemandEntry => ({
+        ...e,
+        layer: 'L2_ON_DEMAND',
+        workflowStage: (e.metadata['workflowStage'] as string) ?? 'unknown',
+      }),
+    );
   }
 
   async remove(id: string): Promise<boolean> {
@@ -179,11 +180,7 @@ export class MemoryStore {
 
     const { promises: fs } = await import('fs');
     const serializable = Array.from(this.entries.values());
-    await fs.writeFile(
-      this.filePath,
-      JSON.stringify(serializable, null, 2),
-      'utf-8',
-    );
+    await fs.writeFile(this.filePath, JSON.stringify(serializable, null, 2), 'utf-8');
   }
 
   async loadFromFile(): Promise<void> {

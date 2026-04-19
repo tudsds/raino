@@ -1,9 +1,9 @@
 ---
 name: Bug Report
 about: Report a reproducible bug in Raino
-title: "[Bug] "
+title: '[Bug] '
 labels: bug, triage
-assignees: ""
+assignees: ''
 ---
 
 ## Bug Description

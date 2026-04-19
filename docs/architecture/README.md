@@ -143,11 +143,11 @@ The RAG package stores embeddings in Supabase pgvector columns. Vector dimension
 
 Three storage buckets are created by `packages/db/supabase/migrations/00004_storage_buckets.sql`:
 
-| Bucket       | Public | Purpose                                           |
-| ------------ | ------ | ------------------------------------------------- |
-| `reports`    | No     | Generated reports and audit trails                |
-| `artifacts`  | No     | Design artifacts (KiCad projects, Gerber files)   |
-| `uploads`    | Yes    | User-uploaded documents (datasheets, specs)       |
+| Bucket      | Public | Purpose                                         |
+| ----------- | ------ | ----------------------------------------------- |
+| `reports`   | No     | Generated reports and audit trails              |
+| `artifacts` | No     | Design artifacts (KiCad projects, Gerber files) |
+| `uploads`   | Yes    | User-uploaded documents (datasheets, specs)     |
 
 ## Worker Libraries
 

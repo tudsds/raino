@@ -284,8 +284,8 @@ export default function FeaturesPage() {
             <span className="gradient-text">Features</span>
           </h1>
           <p className="text-xl text-[#a1a1aa]">
-            Every capability in Raino is designed for production hardware workflows. No gimmicks.
-            No autopilot. Just structured engineering.
+            Every capability in Raino is designed for production hardware workflows. No gimmicks. No
+            autopilot. Just structured engineering.
           </p>
         </div>
       </section>

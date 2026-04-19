@@ -104,17 +104,17 @@ pnpm dev
 
 参见 `.env.example` 获取所有 20 个占位符。关键变量：
 
-| 变量                                   | 用途                  | 必需               |
-| -------------------------------------- | --------------------- | ------------------ |
-| `KIMI_API_KEY`                         | Moonshot API 密钥     | 否（LLM 调用失败） |
-| `NEXT_PUBLIC_SUPABASE_URL`             | Supabase 项目 URL     | 否（降级模式）     |
+| 变量                            | 用途                  | 必需               |
+| ------------------------------- | --------------------- | ------------------ |
+| `KIMI_API_KEY`                  | Moonshot API 密钥     | 否（LLM 调用失败） |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase 项目 URL     | 否（降级模式）     |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase 匿名密钥     | 否（降级模式）     |
-| `SUPABASE_SERVICE_ROLE_KEY`            | Supabase 服务角色密钥 | 否（降级模式）     |
-| `DIGIKEY_CLIENT_ID`                    | DigiKey API 客户端 ID | 否（固件模式）     |
-| `MOUSER_API_KEY`                       | Mouser API 密钥       | 否（固件模式）     |
-| `JLCPCB_APP_ID`                        | JLCPCB API 应用 ID    | 否（固件模式）     |
-| `JLCPCB_ACCESS_KEY`                    | JLCPCB API 访问密钥   | 否（固件模式）     |
-| `JLCPCB_SECRET_KEY`                    | JLCPCB API 签名密钥   | 否（固件模式）     |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Supabase 服务角色密钥 | 否（降级模式）     |
+| `DIGIKEY_CLIENT_ID`             | DigiKey API 客户端 ID | 否（固件模式）     |
+| `MOUSER_API_KEY`                | Mouser API 密钥       | 否（固件模式）     |
+| `JLCPCB_APP_ID`                 | JLCPCB API 应用 ID    | 否（固件模式）     |
+| `JLCPCB_ACCESS_KEY`             | JLCPCB API 访问密钥   | 否（固件模式）     |
+| `JLCPCB_SECRET_KEY`             | JLCPCB API 签名密钥   | 否（固件模式）     |
 
 ## 在线部署
 

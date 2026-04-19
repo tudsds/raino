@@ -161,10 +161,7 @@ export default async function SettingsPage() {
                 <div className="flex items-center gap-2">
                   <StatusDot status="live" />
                   <span className="text-[#00ff88] text-sm font-[family-name:var(--font-body)]">
-                    {
-                      integrations.filter((i) => i.status === 'live').length
-                    }{' '}
-                    live
+                    {integrations.filter((i) => i.status === 'live').length} live
                   </span>
                   <span className="text-[#71717a] mx-1">/</span>
                   <StatusDot status="mock" />

@@ -149,10 +149,7 @@ function totalTokens(entries: readonly { tokenCount: number }[]): number {
   return entries.reduce((sum, e) => sum + e.tokenCount, 0);
 }
 
-function trimToBudget<T extends { tokenCount: number }>(
-  entries: T[],
-  budget: number,
-): T[] {
+function trimToBudget<T extends { tokenCount: number }>(entries: T[], budget: number): T[] {
   let remaining = budget;
   const result: T[] = [];
   for (const entry of entries) {

@@ -1,11 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type {
-  DocumentRecord,
-  ChunkRecord,
-  ChunkMetadata,
-  EmbeddingRecord,
-} from '../storage/types';
+import type { DocumentRecord, ChunkRecord, ChunkMetadata, EmbeddingRecord } from '../storage/types';
 import { SupabaseDocumentStore } from '../storage/supabase-document-store';
 import { SupabaseChunkStore } from '../storage/supabase-chunk-store';
 import { SupabaseVectorStore } from '../storage/supabase-vector-store';

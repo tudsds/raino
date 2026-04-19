@@ -3,17 +3,20 @@
 ## Files Created
 
 ### Bootstrap Files (project root)
+
 - `SOUL.md` — Raino's core identity, personality traits, constraints (~50 words)
 - `TOOLS.md` — Full inventory of packages, services, and workflow stages
 - `IDENTITY.md` — Prompt modes (full/minimal/none) and behavior rules
 
 ### Memory Module (`packages/agents/src/memory/`)
+
 - `types.ts` — TypeScript types for 4-layer memory stack (L0-L3), token budgets, prompt modes, store interfaces, dream consolidation config
 - `memory-store.ts` — File-based + in-memory persistence with query filtering, token-budget-aware retrieval, L0/L1/L2 typed accessors
 - `context-builder.ts` — Assembles L0-L3 context per invocation with token budget enforcement, auto-compaction at 80% of 32K window, L0 bootstrap file caching
 - `dream-consolidator.ts` — Periodic L2→L1 summarization with LLM injection, 30-day pruning, batch processing
 
 ### Modified Files
+
 - `packages/agents/src/index.ts` — Added memory module exports (types, MemoryStore, ContextBuilder, DreamConsolidator)
 
 ## Architecture Decisions
@@ -40,6 +43,7 @@ pnpm typecheck — 24/25 tasks pass
 ```
 
 ## What Was NOT Modified
+
 - No existing agent orchestration code touched
 - No existing prompt files changed
 - No new npm dependencies added

@@ -21,7 +21,7 @@ The sufficiency gate runs before design generation. It checks nine conditions (d
 
 ### Quote Formula Correctness
 
-The quote formula is: subtotal = design_automation_fee + engineering_review_fee + pcb_fabrication_estimate + components_estimate + assembly_estimate + qa_packaging_handling. Then mid_quote = subtotal + contingency + margin, low_quote = mid_quote _ 0.8, high_quote = mid_quote _ 1.25. Contingency is 10% of subtotal. Margin is 15% of (subtotal + contingency). These values must produce exact, reproducible results. Golden-output tests must verify this.
+The quote formula is: subtotal = design*automation_fee + engineering_review_fee + pcb_fabrication_estimate + components_estimate + assembly_estimate + qa_packaging_handling. Then mid_quote = subtotal + contingency + margin, low_quote = mid_quote * 0.8, high*quote = mid_quote * 1.25. Contingency is 10% of subtotal. Margin is 15% of (subtotal + contingency). These values must produce exact, reproducible results. Golden-output tests must verify this.
 
 ### BOM Validation Rules
 

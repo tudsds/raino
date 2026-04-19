@@ -26,8 +26,18 @@ const projects = [
     category: 'Environmental Monitoring',
     description:
       'A battery-operated sensor board with temperature, humidity, and air quality sensing. Raino generated the full KiCad project from a plain-language description including power budget and communication constraints.',
-    specs: ['STM32L072KZ microcontroller', 'I2C sensor array', '40 x 30 mm', '6-month battery life'],
-    deliverables: ['KiCad project', 'Gerber exports', 'BOM with alternates', 'Rough quote: $18-24/unit'],
+    specs: [
+      'STM32L072KZ microcontroller',
+      'I2C sensor array',
+      '40 x 30 mm',
+      '6-month battery life',
+    ],
+    deliverables: [
+      'KiCad project',
+      'Gerber exports',
+      'BOM with alternates',
+      'Rough quote: $18-24/unit',
+    ],
     color: '#00f0ff',
   },
   {
@@ -35,8 +45,18 @@ const projects = [
     category: 'Motor Control',
     description:
       'Three-phase brushless DC motor controller with current sensing and over-temperature protection. Raino selected an approved architecture template and matched driver ICs to the torque requirements.',
-    specs: ['DRV8323RS gate driver', 'Current sense: 0.01 ohm shunt', '50 x 40 mm', '24V / 10A peak'],
-    deliverables: ['KiCad project', 'ERC/DRC passed', 'BOM with 3 alternates', 'Rough quote: $32-45/unit'],
+    specs: [
+      'DRV8323RS gate driver',
+      'Current sense: 0.01 ohm shunt',
+      '50 x 40 mm',
+      '24V / 10A peak',
+    ],
+    deliverables: [
+      'KiCad project',
+      'ERC/DRC passed',
+      'BOM with 3 alternates',
+      'Rough quote: $32-45/unit',
+    ],
     color: '#8b5cf6',
   },
   {
@@ -45,7 +65,12 @@ const projects = [
     description:
       'Multi-port USB-C power delivery hub with dynamic load balancing. Raino resolved ambiguities about port configurations and power profiles through the clarifying question loop.',
     specs: ['FUSB302B PD controller', '4 downstream ports', '80 x 50 mm', '100W total output'],
-    deliverables: ['KiCad project', 'Pick-and-place file', 'BOM with sourcing data', 'Rough quote: $28-38/unit'],
+    deliverables: [
+      'KiCad project',
+      'Pick-and-place file',
+      'BOM with sourcing data',
+      'Rough quote: $28-38/unit',
+    ],
     color: '#ff00aa',
   },
   {
@@ -54,7 +79,12 @@ const projects = [
     description:
       'High-resolution load cell amplifier with 24-bit ADC and digital filtering. Raino ingested the ADC datasheet and validated the analog front-end against noise and drift specifications.',
     specs: ['HX711 24-bit ADC', 'Wheatstone bridge input', '35 x 25 mm', '0.1 mg resolution'],
-    deliverables: ['KiCad project', 'Gerber + drill', 'BOM with lifecycle checks', 'Rough quote: $12-16/unit'],
+    deliverables: [
+      'KiCad project',
+      'Gerber + drill',
+      'BOM with lifecycle checks',
+      'Rough quote: $12-16/unit',
+    ],
     color: '#00ff88',
   },
   {
@@ -63,7 +93,12 @@ const projects = [
     description:
       'Sub-GHz LoRa transceiver module with onboard antenna matching and FCC pre-certified RF layout. Raino matched the RF architecture template to the frequency band and output power requirements.',
     specs: ['SX1262 transceiver', '868 / 915 MHz', '45 x 30 mm', '+22 dBm output'],
-    deliverables: ['KiCad project', 'Antenna matching report', 'BOM with RF parts', 'Rough quote: $22-30/unit'],
+    deliverables: [
+      'KiCad project',
+      'Antenna matching report',
+      'BOM with RF parts',
+      'Rough quote: $22-30/unit',
+    ],
     color: '#ffaa00',
   },
   {
@@ -72,7 +107,12 @@ const projects = [
     description:
       'Multi-channel capacitive touch sensing board with haptic feedback driver. Raino generated the touch electrode layout and validated trace lengths against the controller datasheet.',
     specs: ['CY8CMBR3116 controller', '12 touch channels', '50 x 35 mm', 'I2C + interrupt output'],
-    deliverables: ['KiCad project', 'ERC/DRC passed', 'BOM with 2 alternates', 'Rough quote: $15-20/unit'],
+    deliverables: [
+      'KiCad project',
+      'ERC/DRC passed',
+      'BOM with 2 alternates',
+      'Rough quote: $15-20/unit',
+    ],
     color: '#ff3366',
   },
 ];
@@ -101,13 +141,7 @@ const testimonials = [
   },
 ];
 
-function ProjectCard({
-  project,
-  index,
-}: {
-  project: (typeof projects)[0];
-  index: number;
-}) {
+function ProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
   const isEven = index % 2 === 0;
 
   return (
@@ -119,7 +153,11 @@ function ProjectCard({
           <div className={isEven ? '' : 'lg:order-2'}>
             <div
               className="inline-flex items-center gap-2 px-3 py-1 border-2 text-sm font-mono mb-4"
-              style={{ backgroundColor: `${project.color}10`, borderColor: `${project.color}30`, color: project.color }}
+              style={{
+                backgroundColor: `${project.color}10`,
+                borderColor: `${project.color}30`,
+                color: project.color,
+              }}
             >
               {project.category}
             </div>
@@ -156,7 +194,10 @@ function ProjectCard({
               <div className="relative z-10 w-full max-w-sm">
                 <div
                   className="w-full aspect-video border-2 relative"
-                  style={{ borderColor: `${project.color}40`, backgroundColor: `${project.color}05` }}
+                  style={{
+                    borderColor: `${project.color}40`,
+                    backgroundColor: `${project.color}05`,
+                  }}
                 >
                   <div className="absolute top-2 left-2 right-2 bottom-2">
                     <div
@@ -179,8 +220,14 @@ function ProjectCard({
                       className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-8 border-2"
                       style={{ borderColor: `${project.color}40` }}
                     />
-                    <div className="absolute top-1/2 left-8 right-8 h-px" style={{ backgroundColor: `${project.color}30` }} />
-                    <div className="absolute left-1/2 top-8 bottom-8 w-px" style={{ backgroundColor: `${project.color}30` }} />
+                    <div
+                      className="absolute top-1/2 left-8 right-8 h-px"
+                      style={{ backgroundColor: `${project.color}30` }}
+                    />
+                    <div
+                      className="absolute left-1/2 top-8 bottom-8 w-px"
+                      style={{ backgroundColor: `${project.color}30` }}
+                    />
                   </div>
                   <div
                     className="absolute bottom-2 right-2 text-xs font-mono"

@@ -59,11 +59,11 @@ export default async function DashboardPage() {
   const hasKimi = !!process.env.KIMI_API_KEY;
 
   const integrationStatuses = [
-    { name: 'Kimi', status: hasKimi ? 'live' : 'mock' as const },
-    { name: 'Supabase', status: hasSupabase ? 'live' : 'unavailable' as const },
-    { name: 'DigiKey', status: adapterStatus.digikey.mode === 'live' ? 'live' : 'mock' as const },
-    { name: 'Mouser', status: adapterStatus.mouser.mode === 'live' ? 'live' : 'mock' as const },
-    { name: 'JLCPCB', status: adapterStatus.jlcpcb.mode === 'live' ? 'live' : 'mock' as const },
+    { name: 'Kimi', status: hasKimi ? 'live' : ('mock' as const) },
+    { name: 'Supabase', status: hasSupabase ? 'live' : ('unavailable' as const) },
+    { name: 'DigiKey', status: adapterStatus.digikey.mode === 'live' ? 'live' : ('mock' as const) },
+    { name: 'Mouser', status: adapterStatus.mouser.mode === 'live' ? 'live' : ('mock' as const) },
+    { name: 'JLCPCB', status: adapterStatus.jlcpcb.mode === 'live' ? 'live' : ('mock' as const) },
   ];
 
   return (

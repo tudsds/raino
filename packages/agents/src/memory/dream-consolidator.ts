@@ -42,27 +42,20 @@ export class DreamConsolidator {
       .map((e) => `[${e.metadata['workflowStage'] ?? 'unknown'}] ${e.content}`)
       .join('\n\n');
 
-    const summary = await this.summarize(
-      combinedContent,
-      TokenBudgets.L1_MAX,
-    );
+    const summary = await this.summarize(combinedContent, TokenBudgets.L1_MAX);
 
     const entryIds = toSummarize.map((e) => e.id);
     const summaryOf = toSummarize.map((e) => e.id);
 
-    await this.store.replaceEntries(
-      entryIds,
-      'L1_ESSENTIAL',
-      summary,
-      { summaryOf, consolidatedAt: new Date().toISOString() },
-    );
+    await this.store.replaceEntries(entryIds, 'L1_ESSENTIAL', summary, {
+      summaryOf,
+      consolidatedAt: new Date().toISOString(),
+    });
 
     return {
       entriesSummarized: toSummarize.length,
       entriesPruned: pruned,
-      summaryTokenCount: combinedContent.length > 0
-        ? Math.ceil(summary.length / 4)
-        : 0,
+      summaryTokenCount: combinedContent.length > 0 ? Math.ceil(summary.length / 4) : 0,
       durationMs: Date.now() - startTime,
     };
   }

@@ -11,7 +11,7 @@ import { storeEmbeddings } from './src/pipeline/vector-store.js';
 async function main() {
   const candidates = discoverCandidates(BOOTSTRAP_SEED);
   const docs = fetchDocuments(candidates, 'fixture', BOOTSTRAP_SEED.sourcePreferences);
-  const normalized = docs.map(d => normalizeDocument(d));
+  const normalized = docs.map((d) => normalizeDocument(d));
   const chunks = chunkDocuments(normalized);
   const enriched = enrichMetadata(chunks);
   const embeddings = await generateEmbeddings(enriched);
@@ -26,7 +26,17 @@ async function main() {
   for (const hit of r1) {
     const chunk = await stores.chunkStore.get(hit.chunkId);
     if (chunk) {
-      console.log('  [' + hit.score.toFixed(4) + '] ' + chunk.metadata.manufacturer + ' | ' + chunk.metadata.documentType + ' | ' + chunk.content.slice(0, 60) + '...');
+      console.log(
+        '  [' +
+          hit.score.toFixed(4) +
+          '] ' +
+          chunk.metadata.manufacturer +
+          ' | ' +
+          chunk.metadata.documentType +
+          ' | ' +
+          chunk.content.slice(0, 60) +
+          '...',
+      );
     }
   }
 
@@ -35,7 +45,17 @@ async function main() {
   for (const hit of r2) {
     const chunk = await stores.chunkStore.get(hit.chunkId);
     if (chunk) {
-      console.log('  [' + hit.score.toFixed(4) + '] ' + chunk.metadata.manufacturer + ' | ' + chunk.metadata.documentType + ' | ' + chunk.content.slice(0, 60) + '...');
+      console.log(
+        '  [' +
+          hit.score.toFixed(4) +
+          '] ' +
+          chunk.metadata.manufacturer +
+          ' | ' +
+          chunk.metadata.documentType +
+          ' | ' +
+          chunk.content.slice(0, 60) +
+          '...',
+      );
     }
   }
 
@@ -43,13 +63,35 @@ async function main() {
   const stm32Chunks = await stores.chunkStore.queryByMpn('STM32F407VGT6');
   console.log('  ' + stm32Chunks.length + ' chunks for STM32F407VGT6');
   for (const c of stm32Chunks.slice(0, 3)) {
-    console.log('  ' + c.metadata.documentType + ' | ' + c.metadata.manufacturer + ' | source: ' + (c.metadata.sourceUrl ? 'YES' : 'NO') + ' | trust: ' + c.metadata.trustLevel);
+    console.log(
+      '  ' +
+        c.metadata.documentType +
+        ' | ' +
+        c.metadata.manufacturer +
+        ' | source: ' +
+        (c.metadata.sourceUrl ? 'YES' : 'NO') +
+        ' | trust: ' +
+        c.metadata.trustLevel,
+    );
   }
 
   console.log('\nTest 4: Totals');
-  console.log('  ' + candidates.length + ' candidates, ' + docs.length + ' docs, ' + enriched.length + ' chunks, ' + embeddings.length + ' embeddings');
+  console.log(
+    '  ' +
+      candidates.length +
+      ' candidates, ' +
+      docs.length +
+      ' docs, ' +
+      enriched.length +
+      ' chunks, ' +
+      embeddings.length +
+      ' embeddings',
+  );
 
   console.log('\n=== All smoke tests passed ===');
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

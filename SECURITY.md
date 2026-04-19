@@ -43,11 +43,13 @@ We take security seriously. If you discover a vulnerability in Raino, please rep
 ## Scope
 
 This policy covers:
+
 - The Raino source code in this repository.
 - Raino services deployed under the raino-eda.com domain.
 - Dependencies that are part of the Raino distribution.
 
 This policy does not cover:
+
 - Vulnerabilities in third-party services (Supabase, DigiKey, Mouser, JLCPCB). Report those to their respective security teams.
 - Vulnerabilities in KiCad, which is a separate project with its own security policy.
 - Social engineering or phishing attacks against Raino users.

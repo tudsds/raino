@@ -3,10 +3,12 @@
 ## Changes Made
 
 ### 1. Removed `DIGIKEY_REDIRECT_URI` from `.env.example`
+
 - Before: `DIGIKEY_REDIRECT_URI=  # Note: unused for client_credentials OAuth flow`
 - After: Comment-only note explaining 2-legged OAuth
 
 ### 2. Added comment in `real-adapter.ts` explaining 2-legged OAuth
+
 - Comment placed above `ensureToken()` method (lines 182-185)
 - Documents that DigiKey uses `client_credentials` flow, no redirect URI needed
 
@@ -35,6 +37,7 @@ These references are **NOT part of the OAuth flow**:
    - The env var is not read by the OAuth flow
 
 ### Typecheck: PASSED
+
 ```
 Tasks:    25 successful, 25 total
 Cached:   16 cached, 25 total

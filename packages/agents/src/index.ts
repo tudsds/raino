@@ -78,9 +78,6 @@ export {
 
 export { MemoryStore, estimateTokens } from './memory/memory-store';
 
-export {
-  ContextBuilder,
-  type ContextBuilderOptions,
-} from './memory/context-builder';
+export { ContextBuilder, type ContextBuilderOptions } from './memory/context-builder';
 
 export { DreamConsolidator } from './memory/dream-consolidator';

@@ -104,11 +104,11 @@ This guide covers every manual step you need to complete after the code is ready
    - Click the **Add** button
 3. Add these variables (only the ones that the site needs):
 
-   | Key | Where to get the value |
-   |---|---|
-   | `NEXT_PUBLIC_SITE_URL` | Type: `https://raino-site.vercel.app` |
-   | `NEXT_PUBLIC_APP_URL` | Type: `https://raino-studio.vercel.app` |
-   | `NEXT_PUBLIC_SUPABASE_URL` | Supabase dashboard > Project Settings > API > Project URL |
+   | Key                             | Where to get the value                                                         |
+   | ------------------------------- | ------------------------------------------------------------------------------ |
+   | `NEXT_PUBLIC_SITE_URL`          | Type: `https://raino-site.vercel.app`                                          |
+   | `NEXT_PUBLIC_APP_URL`           | Type: `https://raino-studio.vercel.app`                                        |
+   | `NEXT_PUBLIC_SUPABASE_URL`      | Supabase dashboard > Project Settings > API > Project URL                      |
    | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase dashboard > Project Settings > API > Project API keys > `anon public` |
 
    Note: `NEXT_PUBLIC_` variables are embedded into the client-side JavaScript bundle at build time. They are not secret. Never put server-only secrets (like service role keys) in variables prefixed with `NEXT_PUBLIC_`.
@@ -122,48 +122,50 @@ This guide covers every manual step you need to complete after the code is ready
 
    **Client-side (public) variables:**
 
-   | Key | Where to get the value |
-   |---|---|
-   | `NEXT_PUBLIC_APP_URL` | Type: `https://raino-studio.vercel.app` |
-   | `NEXT_PUBLIC_SITE_URL` | Type: `https://raino-site.vercel.app` |
-   | `NEXT_PUBLIC_SUPABASE_URL` | Supabase dashboard > Project Settings > API > Project URL |
+   | Key                             | Where to get the value                                      |
+   | ------------------------------- | ----------------------------------------------------------- |
+   | `NEXT_PUBLIC_APP_URL`           | Type: `https://raino-studio.vercel.app`                     |
+   | `NEXT_PUBLIC_SITE_URL`          | Type: `https://raino-site.vercel.app`                       |
+   | `NEXT_PUBLIC_SUPABASE_URL`      | Supabase dashboard > Project Settings > API > Project URL   |
    | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase dashboard > Project Settings > API > `anon public` |
 
    **Server-side (secret) variables:**
 
-   | Key | Where to get the value |
-   |---|---|
-   | `DATABASE_URL` | Supabase dashboard > Project Settings > Database > Connection string > URI tab. Replace `[YOUR-PASSWORD]` with your database password. The format is: `postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:6543/postgres` |
-   | `SUPABASE_SERVICE_ROLE_KEY` | Supabase dashboard > Project Settings > API > `service_role secret`. This is a secret key with full database access. Never expose it client-side. |
-   | `KIMI_API_KEY` | Moonshot AI dashboard (https://platform.moonshot.cn/console/api-keys). Create a new API key if you do not have one. |
-   | `KIMI_API_BASE_URL` | Type: `https://api.moonshot.ai/v1` |
-   | `GITHUB_ACTIONS_DISPATCH_TOKEN` | GitHub Settings > Developer settings > Personal access tokens > Fine-grained tokens. Create a token with `repo` permissions (read/write). |
-   | `GITHUB_REPOSITORY_OWNER` | Type: `tudsds` |
-   | `GITHUB_REPOSITORY_NAME` | Type: `raino` |
-   | `VERCEL_TOKEN` | Vercel dashboard > Settings > Tokens > Create token. Give it a name like "Raino Worker Deploy". |
-   | `RESEND_API_KEY` | Resend dashboard (https://resend.com/api-keys). Create an API key. |
-   | `DIGIKEY_CLIENT_ID` | DigiKey API developer portal (https://developer.digikey.com). Create an OAuth app. |
-   | `DIGIKEY_CLIENT_SECRET` | Same DigiKey developer portal, shown after creating the OAuth app. |
-   | `MOUSER_API_KEY` | Mouser API dashboard (https://api.mouser.com). Request API access and create a key. |
-   | `JLCPCB_APP_ID` | JLCPCB developer portal. Apply for API access. |
-   | `JLCPCB_ACCESS_KEY` | Same JLCPCB developer portal. |
-   | `JLCPCB_SECRET_KEY` | Same JLCPCB developer portal. |
-   | `EMBEDDING_PROVIDER` | Type `openai` if you have an OpenAI API key. Type `mock` if you do not. The default is `mock`. |
-   | `EMBEDDING_MODEL` | Type: `text-embedding-3-small` (this is the default, set it explicitly to be safe) |
-   | `OPENAI_API_KEY` | OpenAI dashboard (https://platform.openai.com/api-keys). Create a new secret key. Only needed if `EMBEDDING_PROVIDER` is `openai`. |
-   | `OPENAI_BASE_URL` | Leave empty unless you use a custom OpenAI-compatible endpoint for embeddings. |
+   | Key                             | Where to get the value                                                                                                                                                                                                                          |
+   | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   | `DATABASE_URL`                  | Supabase dashboard > Project Settings > Database > Connection string > URI tab. Replace `[YOUR-PASSWORD]` with your database password. The format is: `postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:6543/postgres` |
+   | `SUPABASE_SERVICE_ROLE_KEY`     | Supabase dashboard > Project Settings > API > `service_role secret`. This is a secret key with full database access. Never expose it client-side.                                                                                               |
+   | `KIMI_API_KEY`                  | Moonshot AI dashboard (https://platform.moonshot.cn/console/api-keys). Create a new API key if you do not have one.                                                                                                                             |
+   | `KIMI_API_BASE_URL`             | Type: `https://api.moonshot.ai/v1`                                                                                                                                                                                                              |
+   | `GITHUB_ACTIONS_DISPATCH_TOKEN` | GitHub Settings > Developer settings > Personal access tokens > Fine-grained tokens. Create a token with `repo` permissions (read/write).                                                                                                       |
+   | `GITHUB_REPOSITORY_OWNER`       | Type: `tudsds`                                                                                                                                                                                                                                  |
+   | `GITHUB_REPOSITORY_NAME`        | Type: `raino`                                                                                                                                                                                                                                   |
+   | `VERCEL_TOKEN`                  | Vercel dashboard > Settings > Tokens > Create token. Give it a name like "Raino Worker Deploy".                                                                                                                                                 |
+   | `RESEND_API_KEY`                | Resend dashboard (https://resend.com/api-keys). Create an API key.                                                                                                                                                                              |
+   | `DIGIKEY_CLIENT_ID`             | DigiKey API developer portal (https://developer.digikey.com). Create an OAuth app.                                                                                                                                                              |
+   | `DIGIKEY_CLIENT_SECRET`         | Same DigiKey developer portal, shown after creating the OAuth app.                                                                                                                                                                              |
+   | `MOUSER_API_KEY`                | Mouser API dashboard (https://api.mouser.com). Request API access and create a key.                                                                                                                                                             |
+   | `JLCPCB_APP_ID`                 | JLCPCB developer portal. Apply for API access.                                                                                                                                                                                                  |
+   | `JLCPCB_ACCESS_KEY`             | Same JLCPCB developer portal.                                                                                                                                                                                                                   |
+   | `JLCPCB_SECRET_KEY`             | Same JLCPCB developer portal.                                                                                                                                                                                                                   |
+   | `EMBEDDING_PROVIDER`            | Type `openai` if you have an OpenAI API key. Type `mock` if you do not. The default is `mock`.                                                                                                                                                  |
+   | `EMBEDDING_MODEL`               | Type: `text-embedding-3-small` (this is the default, set it explicitly to be safe)                                                                                                                                                              |
+   | `OPENAI_API_KEY`                | OpenAI dashboard (https://platform.openai.com/api-keys). Create a new secret key. Only needed if `EMBEDDING_PROVIDER` is `openai`.                                                                                                              |
+   | `OPENAI_BASE_URL`               | Leave empty unless you use a custom OpenAI-compatible endpoint for embeddings.                                                                                                                                                                  |
 
 ### 2.5 Redeploy both projects after setting variables
 
 After setting all environment variables, both projects need a fresh deployment so the variables are picked up at build time.
 
 **For raino-site:**
+
 1. Open `https://vercel.com/tudsds/raino-site/deployments`
 2. Click the three-dot menu (⋯) on the most recent deployment
 3. Click **Redeploy**
 4. In the confirmation dialog, click **Redeploy** again
 
 **For raino-studio:**
+
 1. Open `https://vercel.com/tudsds/raino-studio/deployments`
 2. Click the three-dot menu (⋯) on the most recent deployment
 3. Click **Redeploy**
@@ -230,12 +232,12 @@ This is the critical step that makes Supabase magic-link authentication work wit
 10. Press Enter to add it
 11. Click the **Add URL** button again
 12. Type:
-   ```
-   http://localhost:3001/auth/callback
-   ```
-   This is for local development.
-13. Press Enter to add it
-14. Click the **Save** button at the bottom of the page
+
+```
+http://localhost:3001/auth/callback
+```
+
+This is for local development. 13. Press Enter to add it 14. Click the **Save** button at the bottom of the page
 
 ### 3.4 Enable magic-link sign-in (email provider)
 
@@ -265,18 +267,18 @@ After completing all steps above, verify everything works:
 
 ## Quick Reference: All URLs
 
-| Service | URL |
-|---|---|
-| GitHub repo | `https://github.com/tudsds/raino` |
-| GitHub branch settings | `https://github.com/tudsds/raino/settings/branches` |
-| Vercel dashboard | `https://vercel.com/dashboard` |
-| raino-site env vars | `https://vercel.com/tudsds/raino-site/settings/environment-variables` |
-| raino-studio env vars | `https://vercel.com/tudsds/raino-studio/settings/environment-variables` |
-| Supabase dashboard | `https://supabase.com/dashboard` |
-| Moonshot API keys | `https://platform.moonshot.cn/console/api-keys` |
-| OpenAI API keys | `https://platform.openai.com/api-keys` |
-| Resend API keys | `https://resend.com/api-keys` |
-| DigiKey developer portal | `https://developer.digikey.com` |
-| Mouser API | `https://api.mouser.com` |
-| GitHub PAT tokens | `https://github.com/settings/personal-access-tokens/new` |
-| Vercel tokens | `https://vercel.com/account/tokens` |
+| Service                  | URL                                                                     |
+| ------------------------ | ----------------------------------------------------------------------- |
+| GitHub repo              | `https://github.com/tudsds/raino`                                       |
+| GitHub branch settings   | `https://github.com/tudsds/raino/settings/branches`                     |
+| Vercel dashboard         | `https://vercel.com/dashboard`                                          |
+| raino-site env vars      | `https://vercel.com/tudsds/raino-site/settings/environment-variables`   |
+| raino-studio env vars    | `https://vercel.com/tudsds/raino-studio/settings/environment-variables` |
+| Supabase dashboard       | `https://supabase.com/dashboard`                                        |
+| Moonshot API keys        | `https://platform.moonshot.cn/console/api-keys`                         |
+| OpenAI API keys          | `https://platform.openai.com/api-keys`                                  |
+| Resend API keys          | `https://resend.com/api-keys`                                           |
+| DigiKey developer portal | `https://developer.digikey.com`                                         |
+| Mouser API               | `https://api.mouser.com`                                                |
+| GitHub PAT tokens        | `https://github.com/settings/personal-access-tokens/new`                |
+| Vercel tokens            | `https://vercel.com/account/tokens`                                     |

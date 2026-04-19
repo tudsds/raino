@@ -1,9 +1,7 @@
 {
   "active_plan": "/mnt/d/raino/.sisyphus/plans/phase2-fix.md",
   "started_at": "2026-04-19T10:56:42.221Z",
-  "session_ids": [
-    "ses_25cc938a1ffe3qrkEKpV6OVyVB"
-  ],
+  "session_ids": ["ses_25cc938a1ffe3qrkEKpV6OVyVB"],
   "session_origins": {
     "ses_25cc938a1ffe3qrkEKpV6OVyVB": "direct"
   },

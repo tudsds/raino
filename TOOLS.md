@@ -1,6 +1,7 @@
 # Raino Tools & Agents
 
 ## Packages
+
 - `@raino/core` — Zod schemas, validation, quote engine, domain types
 - `@raino/db` — Prisma ORM, Supabase auth/storage/pgvector clients
 - `@raino/llm` — Kimi K2.5 gateway (OpenAI-compatible), structured output, retry
@@ -11,12 +12,14 @@
 - `@raino/supplier-clients` — DigiKey, Mouser, JLCPCB adapter interfaces + factory
 
 ## Services
+
 - `ingest-worker` — 8-stage document ingestion pipeline (datasheets, errata, app notes)
 - `design-worker` — KiCad project generation and export
 - `quote-worker` — Rough quote calculation with confidence bands (high/medium/low)
 - `audit-worker` — Audit trail, artifact manifests, provenance logging
 
 ## Workflow Stages
+
 1. **Intake** — Natural language description of the board
 2. **Clarifying** — Question-answer loop to resolve ambiguity
 3. **Spec Compiled** — Formal machine-readable product specification

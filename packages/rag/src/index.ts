@@ -16,11 +16,7 @@ export type {
 export type { DocumentStore, ChunkStore, VectorStore } from './storage/interfaces';
 
 // Memory store implementations
-export {
-  MemoryDocumentStore,
-  MemoryChunkStore,
-  MemoryVectorStore,
-} from './storage/memory-store';
+export { MemoryDocumentStore, MemoryChunkStore, MemoryVectorStore } from './storage/memory-store';
 
 // Supabase store implementations
 export { SupabaseDocumentStore } from './storage/supabase-document-store';

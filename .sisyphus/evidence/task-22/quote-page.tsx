@@ -209,11 +209,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
             </div>
 
             <div className="space-y-6">
-              <QuoteActions
-                projectId={id}
-                defaultEmail={userEmail}
-                artifacts={artifactOptions}
-              />
+              <QuoteActions projectId={id} defaultEmail={userEmail} artifacts={artifactOptions} />
 
               <div className="card p-6">
                 <h3 className="text-sm font-medium text-[#a1a1aa] mb-4 uppercase tracking-wider">

@@ -10,6 +10,7 @@
 ## Design System Compliance
 
 All pages use:
+
 - Dark background `bg-[#0a0a0f]`
 - Cyan accent `text-[#00f0ff]` / `border-[#00f0ff]`
 - Press Start 2P heading font via `font-[family-name:var(--font-heading)]`
@@ -23,6 +24,7 @@ All pages use:
 ## Build Verification
 
 ### Site App
+
 ```
 Tasks:    2 successful, 2 total
 Cached:    1 cached, 2 total
@@ -30,6 +32,7 @@ Time:    2m51.887s
 ```
 
 ### Studio App
+
 ```
 Tasks:    12 successful, 12 total
 Cached:    10 cached, 12 total

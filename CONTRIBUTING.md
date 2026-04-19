@@ -40,6 +40,7 @@ pnpm dev
 ```
 
 The development servers start on:
+
 - Marketing site: http://localhost:3000
 - Studio app: http://localhost:3001
 
@@ -63,17 +64,20 @@ All four commands must pass. Fix any failures before opening a PR.
 These rules are non-negotiable. CI will reject violations.
 
 **TypeScript**
+
 - Strict mode is enabled. All code must pass strict type checking.
 - Never use `as any`, `@ts-ignore`, or `@ts-expect-error`. If the types are wrong, fix the types.
 - Never leave empty catch blocks. At minimum, log or rethrow.
 
 **General**
+
 - Prefer plain language. "Use" not "utilize". "Help" not "facilitate".
 - No em dashes or en dashes in prose. Use commas, periods, or line breaks.
 - Remove AI-sounding filler phrases. Write like a human.
 - Keep functions focused and small. If a function does more than one thing, split it.
 
 **Architecture**
+
 - KiCad is an external worker boundary. Do not embed GPL-licensed code.
 - Supplier adapters follow the interface + adapter pattern. Never couple directly to a supplier API.
 - RAG is for engineering knowledge retrieval only. Never use it for live pricing, stock, or order state.
@@ -116,12 +120,14 @@ Keep the subject line under 72 characters. Write it in imperative mood: "add fea
 5. Squash commits if requested by maintainers.
 
 **What gets merged:**
+
 - Bug fixes with tests.
 - New features with tests and documentation.
 - Documentation improvements.
 - Refactors that improve clarity without changing behavior.
 
 **What does not get merged:**
+
 - Changes that break existing tests without replacement.
 - Code with `as any`, `@ts-ignore`, or empty catch blocks.
 - PRs that fake live integration data.

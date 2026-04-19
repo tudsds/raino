@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  MemoryDocumentStore,
-  MemoryChunkStore,
-  MemoryVectorStore,
-} from '../storage/memory-store';
+import { MemoryDocumentStore, MemoryChunkStore, MemoryVectorStore } from '../storage/memory-store';
 import { MockEmbeddingGenerator } from '../embeddings/mock-generator';
 import { RetrievalEngine } from '../retrieval/engine';
 import { chunkDocument } from '../chunking/engine';

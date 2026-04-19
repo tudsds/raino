@@ -110,8 +110,18 @@ export default function QuoteEmailModal({
         {status === 'success' ? (
           <div className="text-center py-4">
             <div className="w-16 h-16 mx-auto mb-4 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] flex items-center justify-center">
-              <svg className="w-8 h-8 text-[#22c55e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                className="w-8 h-8 text-[#22c55e]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-[#e4e4e7] mb-2">Email Sent Successfully</h3>
@@ -119,13 +129,16 @@ export default function QuoteEmailModal({
               Your design files have been sent for a professional quote.
             </p>
             <div className="mt-6">
-              <Button variant="primary" onClick={handleClose}>Done</Button>
+              <Button variant="primary" onClick={handleClose}>
+                Done
+              </Button>
             </div>
           </div>
         ) : (
           <>
             <p className="text-sm text-[#a1a1aa]">
-              Would you like us to send your design files to a manufacturer for a professional quote?
+              Would you like us to send your design files to a manufacturer for a professional
+              quote?
             </p>
 
             <div className="space-y-2">
@@ -140,7 +153,9 @@ export default function QuoteEmailModal({
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs text-[#64748b] uppercase tracking-wider">Select Files to Attach</label>
+              <label className="text-xs text-[#64748b] uppercase tracking-wider">
+                Select Files to Attach
+              </label>
               <div className="space-y-1">
                 {artifacts.length === 0 ? (
                   <p className="text-sm text-[#64748b]">No downloadable artifacts available yet.</p>
