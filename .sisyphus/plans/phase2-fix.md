@@ -911,7 +911,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `feat: add custom not-found and error pages to both apps`
   - Files: 4 new files (not-found.tsx × 2, error.tsx × 2)
 
-- [ ] 11. Create all community files
+- [x] 11. Create all community files
 
   **What to do**:
   Create the standard open-source community files that all 4 reference frameworks have:
@@ -980,7 +980,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `docs: add community files (CONTRIBUTING, SECURITY, CoC, templates)`
   - Files: 6 new files
 
-- [ ] 12. Overhaul README to match reference frameworks
+- [x] 12. Overhaul README to match reference frameworks
 
   **What to do**:
   Overhaul the README to match the professionalism, structure, and voice of oh-my-opencode, OpenHarness, Hermes Agent, and OpenClaw. Keep the existing technical content but restructure and enhance it.
@@ -1067,7 +1067,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `docs: overhaul README to match reference framework professionalism`
   - Files: README.md, README.zh-CN.md, README.ja.md, README.ko.md
 
-- [ ] 13. Fix CI pipeline (parallelize) and remove corrupted directory
+- [x] 13. Fix CI pipeline (parallelize) and remove corrupted directory
 
   **What to do**:
 
