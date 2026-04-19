@@ -22,6 +22,7 @@ const navLinks = [
   { label: 'Architecture', href: '/architecture' },
   { label: 'Workflow', href: '/workflow' },
   { label: 'Docs', href: '/docs' },
+  { label: 'Changelog', href: '/changelog' },
   { label: 'Trust', href: '/trust' },
 ];
 

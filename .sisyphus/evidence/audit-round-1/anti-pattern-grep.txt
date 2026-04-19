@@ -1,0 +1,27 @@
+ANTI-PATTERN GREP CHECKS
+=========================
+Date: 2026-04-19T13:24Z
+
+1. py-32xl
+   Result: PASS (0 occurrences)
+
+2. PUBLISHABLE_KEY (outside .sisyphus)
+   Result: PASS (0 occurrences)
+
+3. kimi-k2-0711
+   Result: PASS (0 occurrences)
+
+4. design-artifacts
+   Result: PASS (0 occurrences)
+
+5. DIGIKEY_REDIRECT_URI (outside .sisyphus)
+   Result: FAIL (2 occurrences)
+   Files:
+   - packages/supplier-clients/src/factory.ts:20
+     Code: redirectUri: process.env.DIGIKEY_REDIRECT_URI ?? '',
+   - packages/supplier-clients/src/__tests__/adapters.test.ts:436
+     Code: vi.stubEnv('DIGIKEY_REDIRECT_URI', 'https://localhost/callback');
+
+6. as any / @ts-ignore / @ts-expect-error
+   Result: PASS (0 in source code)
+   Note: Auto-generated .next/types/validator.ts files contain @ts-ignore but these are not user code

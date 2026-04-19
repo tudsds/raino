@@ -17,7 +17,7 @@ function createDigiKeyAdapter(): SupplierAdapter {
     return new RealDigiKeyAdapter({
       clientId,
       clientSecret,
-      redirectUri: process.env.DIGIKEY_REDIRECT_URI ?? '',
+      redirectUri: '',
     });
   }
   return new MockDigiKeyAdapter();

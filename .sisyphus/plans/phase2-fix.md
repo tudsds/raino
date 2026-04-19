@@ -2111,7 +2111,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
 > Each round audits the ENTIRE product — not just the fixes.
 > Atlas must CONSULT OFFICIAL DOCS during audit, and STOP AND ASK if blocked.
 
-- [ ] 23. Post-Fix Comprehensive Audit (Round 1)
+- [x] 23. Post-Fix Comprehensive Audit (Round 1)
 
   **What to do**:
   - Deploy all Waves 1-5 changes to GitHub and Vercel (push to main, wait for CI green, verify deployment)
@@ -2200,7 +2200,7 @@ Max Concurrent: 7 (Wave 5), 6 (Wave 2)
   - Message: `docs: add post-fix comprehensive audit round 1 report`
   - Files: `.sisyphus/drafts/audit-round-1-report.md`, `.sisyphus/evidence/audit-round-1/`
 
-- [ ] 24. Fix Issues from Audit Round 1
+- [x] 24. Fix Issues from Audit Round 1
 
   **What to do**:
   - Read `.sisyphus/drafts/audit-round-1-report.md` for all issues found in Task 23

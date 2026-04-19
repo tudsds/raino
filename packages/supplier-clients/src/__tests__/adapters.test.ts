@@ -433,7 +433,6 @@ describe('SupplierAdapterFactory', () => {
   it('returns real DigiKey adapter when DIGIKEY env vars are set', () => {
     vi.stubEnv('DIGIKEY_CLIENT_ID', 'test-client-id');
     vi.stubEnv('DIGIKEY_CLIENT_SECRET', 'test-client-secret');
-    vi.stubEnv('DIGIKEY_REDIRECT_URI', 'https://localhost/callback');
 
     const adapters = createSupplierAdapters();
     const digikey = adapters.find((a) => a.name === 'DigiKey');

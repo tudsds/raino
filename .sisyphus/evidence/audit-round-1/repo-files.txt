@@ -1,0 +1,36 @@
+REPOSITORY FILES CHECK
+========================
+Date: 2026-04-19T13:24Z
+
+1. README.md
+   Result: PASS
+   - File exists and renders correctly on GitHub
+   - Contains badges, description, architecture, tech stack, etc.
+   - Multi-language links (EN, zh-CN, ja, ko)
+
+2. NOTICES.md
+   Result: PASS
+   - File exists at root
+
+3. LICENSE
+   Result: PASS (referenced in README badges)
+
+4. Community Files
+   Result: PARTIAL
+   Present:
+   - .github/ISSUE_TEMPLATE/
+   - .github/PULL_REQUEST_TEMPLATE.md
+   - .github/workflows/ci.yml
+   Missing:
+   - .github/CODE_OF_CONDUCT.md
+   - .github/CONTRIBUTING.md
+
+5. GitHub Repository
+   Result: PASS
+   - https://github.com/tudsds/raino returns HTTP 200
+   - Latest commit: 58bb0ac feat: add agent memory, overhaul sites, wire Resend for quotes
+
+6. CI Badge
+   Result: FAIL
+   - Badge shows "build: failing"
+   - API check: latest CI run has conclusion: "failure"

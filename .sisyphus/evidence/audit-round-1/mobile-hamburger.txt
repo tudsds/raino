@@ -1,0 +1,18 @@
+MOBILE HAMBURGER MENU CHECK
+============================
+Date: 2026-04-19T13:27Z
+
+File: apps/site/src/components/Navbar.tsx
+
+IMPLEMENTATION DETAILS:
+- useState for isOpen state (line 29)
+- useRef for menuRef (line 30)
+- useEffect with mousedown listener for click-outside-to-close (lines 43-55)
+- Properly adds/removes event listener based on isOpen state
+- Button has aria-label="Toggle menu" and aria-expanded={isOpen} (lines 112-113)
+- Hamburger icon (3 horizontal lines) when closed, X icon when open (lines 122-135)
+- Mobile menu panel rendered conditionally with isOpen (line 142)
+- All nav links included in mobile menu
+- Links close menu on click via onClick={() => setIsOpen(false)}
+
+VERDICT: PASS - Mobile hamburger menu properly implemented with all required features.

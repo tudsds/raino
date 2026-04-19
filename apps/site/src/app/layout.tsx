@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://raino-site.vercel.app'),
   title: 'Raino — Agentic PCB & PCBA Workflow Platform',
   description:
     'Constrained, auditable, source-traceable hardware design and manufacturing handoff system',

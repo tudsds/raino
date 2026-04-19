@@ -1,0 +1,15 @@
+STUDIO ROUTES HTTP STATUS CHECK
+================================
+Date: 2026-04-19T13:23Z
+
+Route                  URL                                              HTTP Status  Notes
+-----                  ---                                              -----------  -----
+/                      https://raino-studio.vercel.app/                 200          Landing page
+/api/health            https://raino-studio.vercel.app/api/health       200          {"status":"ok","timestamp":"2026-04-19T13:23:18.420Z","version":"0.1.0"}
+/login                 https://raino-studio.vercel.app/login            200          Login page
+/signup                https://raino-studio.vercel.app/signup           200          Signup page
+/settings              https://raino-studio.vercel.app/settings         200          Settings page
+/auth/callback         https://raino-studio.vercel.app/auth/callback    307          Redirect (expected)
+/api/projects          https://raino-studio.vercel.app/api/projects     401          Unauthorized (expected without auth)
+
+SUMMARY: All studio routes respond as expected.

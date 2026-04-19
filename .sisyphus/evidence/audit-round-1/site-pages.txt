@@ -1,0 +1,20 @@
+SITE PAGES HTTP STATUS CHECK
+=============================
+Date: 2026-04-19T13:23Z
+
+Page            URL                                         HTTP Status  Title
+----            ---                                         -----------  -----
+/               https://raino-site.vercel.app/              200          Raino — Agentic PCB Design
+/features       https://raino-site.vercel.app/features      200          Raino — Features
+/architecture   https://raino-site.vercel.app/architecture  200          Raino — Architecture
+/workflow       https://raino-site.vercel.app/workflow      200          Raino — Workflow
+/docs           https://raino-site.vercel.app/docs          200          Raino — Documentation
+/showcase       https://raino-site.vercel.app/showcase      404          (default layout title)
+/integrations   https://raino-site.vercel.app/integrations  404          (default layout title)
+/changelog      https://raino-site.vercel.app/changelog     404          (default layout title)
+/trust          https://raino-site.vercel.app/trust         404          (default layout title)
+
+SUMMARY: 5/9 pages return 200. 4 pages return 404.
+ISSUE: The 404 pages exist in source code and build successfully locally (all 13 static pages generated in build output).
+The metadata titles in source are correct (e.g., "Raino — Showcase") but Vercel serves the not-found page instead.
+This is a DEPLOYMENT issue, not a code issue.
