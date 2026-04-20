@@ -1,15 +1,16 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Create client inside handler so env vars are available at runtime
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
   try {
     const { id } = await params;
     console.log('Fetching project with ID (Supabase Direct):', id);
