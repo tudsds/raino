@@ -1,31 +1,38 @@
-import type { Metadata } from 'next';
-import StudioHeader from '@/components/StudioHeader';
-import './globals.css';
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+import { ReactNode } from 'react';
+import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
+import '@/app/globals.css';
 
-export const metadata: Metadata = {
-  title: 'Raino Studio - Agentic PCB Design Platform',
-  description:
-    'Transform your hardware ideas into manufacturable PCB designs with AI-assisted workflow',
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: ReactNode;
+}) {
+  const cookieStore = await cookies();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+      },
+    }
+  );
+
+  const { data: { session } } = await supabase.auth.getSession();
+
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="antialiased">
-        <StudioHeader />
-        {children}
+    <html lang="en" className="dark">
+      <body className="bg-background text-foreground antialiased">
+        <div className="relative flex min-h-screen flex-col">
+          <Header session={session} />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
