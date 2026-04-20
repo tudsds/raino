@@ -1,10 +1,22 @@
-import { prisma } from '@raino/db';
+/**
+ * Quote queries using Supabase client directly.
+ * Bypasses Prisma ORM to avoid the table name mapping issue.
+ */
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
+import type { DbQuote } from '@/lib/db/supabase-admin';
 
 export async function getQuote(projectId: string) {
-  return prisma.quote.findFirst({
-    where: { projectId },
-    orderBy: { createdAt: 'desc' },
-  });
+  const db = getSupabaseAdmin();
+  const { data, error } = await db
+    .from('quotes')
+    .select('*')
+    .eq('project_id', projectId)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) throw new Error(`getQuote failed: ${error.message}`);
+  return data as DbQuote | null;
 }
 
 export async function createQuote(
@@ -21,18 +33,24 @@ export async function createQuote(
     quantity: number;
   },
 ) {
-  return prisma.quote.create({
-    data: {
-      projectId,
-      lowQuote: data.lowQuote,
-      midQuote: data.midQuote,
-      highQuote: data.highQuote,
+  const db = getSupabaseAdmin();
+  const { data: quote, error } = await db
+    .from('quotes')
+    .insert({
+      project_id: projectId,
+      low_quote: data.lowQuote,
+      mid_quote: data.midQuote,
+      high_quote: data.highQuote,
       confidence: data.confidence,
       currency: data.currency,
       assumptions: data.assumptions,
       breakdown: data.breakdown,
-      isEstimate: data.isEstimate,
+      is_estimate: data.isEstimate,
       quantity: data.quantity,
-    },
-  });
+    })
+    .select()
+    .single();
+
+  if (error) throw new Error(`createQuote failed: ${error.message}`);
+  return quote as DbQuote;
 }

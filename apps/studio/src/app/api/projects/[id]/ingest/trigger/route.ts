@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/require-auth';
-import { prisma } from '@raino/db';
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 import { runIngestionPipeline } from '@/lib/data/ingestion-pipeline';
@@ -11,7 +11,6 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
   try {
     const { id } = await params;
-
     const ownership = await verifyProjectOwnership(id, auth.user.id);
     if (!ownership.authorized) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
@@ -20,7 +19,15 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const body = await request.json().catch(() => ({}));
     const mode = body.mode ?? 'fixture';
 
-    const manifest = await prisma.ingestionManifest.findUnique({ where: { projectId: id } });
+    const db = getSupabaseAdmin();
+    const { data: manifest, error: manifestError } = await db
+      .from('ingestion_manifests')
+      .select('*')
+      .eq('project_id', id)
+      .maybeSingle();
+
+    if (manifestError) throw manifestError;
+
     if (!manifest) {
       return NextResponse.json(
         { error: 'No ingestion manifest found. Submit candidates first.' },
@@ -35,13 +42,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       );
     }
 
-    await prisma.ingestionManifest.update({
-      where: { projectId: id },
-      data: { status: 'running' },
-    });
+    await db
+      .from('ingestion_manifests')
+      .update({ status: 'running', updated_at: new Date().toISOString() })
+      .eq('project_id', id);
 
     await updateProjectStatus(id, 'candidates_discovered');
-
     await createAuditEntry(id, {
       category: 'ingestion',
       action: 'ingestion_triggered',
@@ -49,8 +55,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       details: { mode },
     });
 
-    const candidateFamilies = Array.isArray(manifest.candidateFamilies)
-      ? (manifest.candidateFamilies as Array<{
+    const candidateFamilies = Array.isArray(manifest.candidate_families)
+      ? (manifest.candidate_families as Array<{
           family: string;
           manufacturer: string;
           mpns: string[];
@@ -59,30 +65,22 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       : [];
 
     if (candidateFamilies.length === 0) {
-      await prisma.ingestionManifest.update({
-        where: { projectId: id },
-        data: {
+      await db
+        .from('ingestion_manifests')
+        .update({
           status: 'failed',
-          stages: [
-            {
-              name: 'candidate_discovery',
-              status: 'failed',
-              errors: ['No candidate families found in manifest'],
-            },
-          ],
-        },
-      });
+          stages: [{ name: 'candidate_discovery', status: 'failed', errors: ['No candidate families found in manifest'] }],
+          updated_at: new Date().toISOString(),
+        })
+        .eq('project_id', id);
+
       return NextResponse.json(
         { error: 'No candidate families found in manifest' },
         { status: 400 },
       );
     }
 
-    const result = await runIngestionPipeline({
-      projectId: id,
-      candidateFamilies,
-      mode,
-    });
+    const result = await runIngestionPipeline({ projectId: id, candidateFamilies, mode });
 
     await createAuditEntry(id, {
       category: 'ingestion',
@@ -106,8 +104,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       progress: 100,
       stages: result.stages.map((s) => ({
         name: s.stage,
-        status:
-          s.status === 'success' ? 'completed' : s.status === 'failure' ? 'failed' : 'pending',
+        status: s.status === 'success' ? 'completed' : s.status === 'failure' ? 'failed' : 'pending',
         inputCount: s.inputCount,
         outputCount: s.outputCount,
         errors: s.errors,

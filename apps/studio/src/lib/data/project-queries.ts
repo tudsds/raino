@@ -1,34 +1,114 @@
-import { prisma } from '@raino/db';
+/**
+ * Project queries using Supabase client directly.
+ * Bypasses Prisma ORM to avoid the table name mapping issue.
+ */
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
+import type {
+  DbProject,
+  DbIntakeMessage,
+  DbSpec,
+  DbArchitecture,
+  DbBOM,
+  DbBOMRow,
+  DbQuote,
+  DbIngestionManifest,
+  DbDesignArtifact,
+  DbDesignJob,
+  DbHandoffRequest,
+  DbAuditEntry,
+} from '@/lib/db/supabase-admin';
+
+// ─── Full project type (with all relations) ───────────────────────────────────
+
+export type FullProject = DbProject & {
+  spec: DbSpec | null;
+  architecture: DbArchitecture | null;
+  bom: (DbBOM & { rows: DbBOMRow[] }) | null;
+  quotes: DbQuote[];
+  ingestion: DbIngestionManifest | null;
+  artifacts: DbDesignArtifact[];
+  jobs: DbDesignJob[];
+  auditEntries: DbAuditEntry[];
+  handoffs: DbHandoffRequest[];
+  intakeMessages: DbIntakeMessage[];
+};
+
+async function fetchProjectRelations(project: DbProject): Promise<FullProject> {
+  const db = getSupabaseAdmin();
+  const id = project.id;
+
+  const [
+    specRes,
+    archRes,
+    bomRes,
+    quotesRes,
+    ingestionRes,
+    artifactsRes,
+    jobsRes,
+    auditRes,
+    handoffsRes,
+    intakeRes,
+  ] = await Promise.all([
+    db.from('specs').select('*').eq('project_id', id).maybeSingle(),
+    db.from('architectures').select('*').eq('project_id', id).maybeSingle(),
+    db.from('boms').select('*').eq('project_id', id).maybeSingle(),
+    db.from('quotes').select('*').eq('project_id', id).order('created_at', { ascending: false }),
+    db.from('ingestion_manifests').select('*').eq('project_id', id).maybeSingle(),
+    db.from('design_artifacts').select('*').eq('project_id', id).order('created_at', { ascending: false }),
+    db.from('design_jobs').select('*').eq('project_id', id).order('created_at', { ascending: false }),
+    db.from('audit_entries').select('*').eq('project_id', id).order('created_at', { ascending: false }),
+    db.from('handoff_requests').select('*').eq('project_id', id).order('created_at', { ascending: false }),
+    db.from('intake_messages').select('*').eq('project_id', id).order('created_at', { ascending: true }),
+  ]);
+
+  let bomWithRows: (DbBOM & { rows: DbBOMRow[] }) | null = null;
+  if (bomRes.data) {
+    const rowsRes = await db.from('bom_rows').select('*').eq('bom_id', bomRes.data.id);
+    bomWithRows = { ...bomRes.data, rows: rowsRes.data ?? [] };
+  }
+
+  return {
+    ...project,
+    spec: specRes.data ?? null,
+    architecture: archRes.data ?? null,
+    bom: bomWithRows,
+    quotes: quotesRes.data ?? [],
+    ingestion: ingestionRes.data ?? null,
+    artifacts: artifactsRes.data ?? [],
+    jobs: jobsRes.data ?? [],
+    auditEntries: auditRes.data ?? [],
+    handoffs: handoffsRes.data ?? [],
+    intakeMessages: intakeRes.data ?? [],
+  };
+}
 
 export async function getProjects(organizationId: string) {
-  return prisma.project.findMany({
-    where: { organizationId },
-    orderBy: { updatedAt: 'desc' },
-    include: {
-      spec: true,
-      bom: { include: { rows: true } },
-      quotes: true,
-      intakeMessages: { orderBy: { createdAt: 'asc' } },
-    },
-  });
+  const db = getSupabaseAdmin();
+  const { data: projects, error } = await db
+    .from('projects')
+    .select('*')
+    .eq('organization_id', organizationId)
+    .order('updated_at', { ascending: false });
+
+  if (error) throw new Error(`getProjects failed: ${error.message}`);
+  if (!projects) return [];
+
+  return Promise.all(projects.map(fetchProjectRelations));
 }
 
 export async function getProject(projectId: string, organizationId: string) {
-  return prisma.project.findUnique({
-    where: { id: projectId, organizationId },
-    include: {
-      spec: true,
-      architecture: true,
-      bom: { include: { rows: true } },
-      quotes: { orderBy: { createdAt: 'desc' } },
-      ingestion: true,
-      artifacts: true,
-      jobs: { orderBy: { createdAt: 'desc' } },
-      auditEntries: { orderBy: { createdAt: 'desc' } },
-      handoffs: { orderBy: { createdAt: 'desc' } },
-      intakeMessages: { orderBy: { createdAt: 'asc' } },
-    },
-  });
+  const db = getSupabaseAdmin();
+  const { data: project, error } = await db
+    .from('projects')
+    .select('*')
+    .eq('id', projectId)
+    .eq('organization_id', organizationId)
+    .maybeSingle();
+
+  if (error) throw new Error(`getProject failed: ${error.message}`);
+  if (!project) return null;
+
+  return fetchProjectRelations(project);
 }
 
 export async function createProject(data: {
@@ -36,114 +116,167 @@ export async function createProject(data: {
   description?: string;
   organizationId: string;
 }) {
-  return prisma.project.create({
-    data: {
+  const db = getSupabaseAdmin();
+  const { data: project, error } = await db
+    .from('projects')
+    .insert({
       name: data.name,
       description: data.description ?? null,
-      organizationId: data.organizationId,
+      organization_id: data.organizationId,
       status: 'intake',
-    },
-  });
+    })
+    .select()
+    .single();
+
+  if (error) throw new Error(`createProject failed: ${error.message}`);
+  return project as DbProject;
 }
 
 export async function updateProjectStatus(projectId: string, status: string) {
-  return prisma.project.update({
-    where: { id: projectId },
-    data: { status },
-  });
+  const db = getSupabaseAdmin();
+  const { data, error } = await db
+    .from('projects')
+    .update({ status, updated_at: new Date().toISOString() })
+    .eq('id', projectId)
+    .select()
+    .single();
+
+  if (error) throw new Error(`updateProjectStatus failed: ${error.message}`);
+  return data as DbProject;
 }
 
 export async function getProjectForUser(projectId: string, userId: string) {
-  const user = await prisma.user.findUnique({
-    where: { supabaseUserId: userId },
-    include: {
-      memberships: {
-        include: { organization: { include: { projects: { where: { id: projectId } } } } },
-      },
-    },
-  });
+  const db = getSupabaseAdmin();
 
-  if (!user) return null;
+  // Find the user by supabase_user_id
+  const { data: user, error: userError } = await db
+    .from('users')
+    .select('id')
+    .eq('supabase_user_id', userId)
+    .maybeSingle();
 
-  for (const membership of user.memberships) {
-    const project = membership.organization.projects[0];
-    if (project) {
-      return getProject(project.id, membership.organizationId);
-    }
-  }
-  return null;
+  if (userError || !user) return null;
+
+  // Get org memberships
+  const { data: memberships, error: memberError } = await db
+    .from('organization_members')
+    .select('organization_id')
+    .eq('user_id', user.id);
+
+  if (memberError || !memberships || memberships.length === 0) return null;
+
+  const orgIds = memberships.map((m) => m.organization_id);
+
+  // Find the project in one of the user's orgs
+  const { data: project, error: projectError } = await db
+    .from('projects')
+    .select('*')
+    .eq('id', projectId)
+    .in('organization_id', orgIds)
+    .maybeSingle();
+
+  if (projectError || !project) return null;
+
+  return fetchProjectRelations(project);
 }
 
 export async function getProjectsForUser(userId: string) {
-  const user = await prisma.user.findUnique({
-    where: { supabaseUserId: userId },
-    include: {
-      memberships: {
-        include: { organization: { include: { projects: { orderBy: { updatedAt: 'desc' } } } } },
-      },
-    },
-  });
+  const db = getSupabaseAdmin();
 
-  if (!user) return [];
+  // Find the user by supabase_user_id
+  const { data: user, error: userError } = await db
+    .from('users')
+    .select('id')
+    .eq('supabase_user_id', userId)
+    .maybeSingle();
 
-  const allProjects = [];
-  for (const membership of user.memberships) {
-    for (const project of membership.organization.projects) {
-      allProjects.push({
-        ...project,
-        organizationId: membership.organizationId,
-      });
-    }
-  }
-  return allProjects;
+  if (userError || !user) return [];
+
+  // Get org memberships
+  const { data: memberships, error: memberError } = await db
+    .from('organization_members')
+    .select('organization_id')
+    .eq('user_id', user.id);
+
+  if (memberError || !memberships || memberships.length === 0) return [];
+
+  const orgIds = memberships.map((m) => m.organization_id);
+
+  // Get all projects for those orgs
+  const { data: projects, error: projectError } = await db
+    .from('projects')
+    .select('*')
+    .in('organization_id', orgIds)
+    .order('updated_at', { ascending: false });
+
+  if (projectError || !projects) return [];
+
+  return projects as DbProject[];
 }
 
 export async function verifyProjectOwnership(
   projectId: string,
   userId: string,
 ): Promise<
-  | {
-      authorized: true;
-      project: NonNullable<Awaited<ReturnType<typeof getProject>>>;
-    }
+  | { authorized: true; project: FullProject }
   | { authorized: false }
 > {
-  const user = await prisma.user.findUnique({
-    where: { supabaseUserId: userId },
-    include: {
-      memberships: { select: { organizationId: true } },
-    },
-  });
+  const db = getSupabaseAdmin();
 
-  if (!user) return { authorized: false };
+  // Find the user by supabase_user_id
+  const { data: user, error: userError } = await db
+    .from('users')
+    .select('id')
+    .eq('supabase_user_id', userId)
+    .maybeSingle();
 
-  const userOrgIds = user.memberships.map((m) => m.organizationId);
+  if (userError || !user) return { authorized: false };
 
-  const project = await prisma.project.findUnique({
-    where: { id: projectId },
-    select: { organizationId: true },
-  });
+  // Get org memberships
+  const { data: memberships, error: memberError } = await db
+    .from('organization_members')
+    .select('organization_id')
+    .eq('user_id', user.id);
 
-  if (!project) return { authorized: false };
+  if (memberError || !memberships || memberships.length === 0) return { authorized: false };
 
-  if (!userOrgIds.includes(project.organizationId)) {
-    return { authorized: false };
-  }
+  const orgIds = memberships.map((m) => m.organization_id);
 
-  const fullProject = await getProject(projectId, project.organizationId);
-  if (!fullProject) return { authorized: false };
+  // Find the project in one of the user's orgs
+  const { data: project, error: projectError } = await db
+    .from('projects')
+    .select('*')
+    .eq('id', projectId)
+    .in('organization_id', orgIds)
+    .maybeSingle();
 
+  if (projectError || !project) return { authorized: false };
+
+  const fullProject = await fetchProjectRelations(project);
   return { authorized: true, project: fullProject };
 }
 
 export async function getUserOrgId(userId: string): Promise<string | null> {
-  const user = await prisma.user.findUnique({
-    where: { supabaseUserId: userId },
-    include: { memberships: { take: 1 } },
-  });
+  const db = getSupabaseAdmin();
 
-  if (!user || user.memberships.length === 0) return null;
+  // Find the user by supabase_user_id
+  const { data: user, error: userError } = await db
+    .from('users')
+    .select('id')
+    .eq('supabase_user_id', userId)
+    .maybeSingle();
 
-  const membership = user.memberships[0];
-  return membership?.organizationId ?? null;
+  if (userError || !user) return null;
+
+  // Get the first org membership
+  const { data: membership, error: memberError } = await db
+    .from('organization_members')
+    .select('organization_id')
+    .eq('user_id', user.id)
+    .limit(1)
+    .maybeSingle();
+
+  if (memberError || !membership) return null;
+
+  return membership.organization_id;
 }

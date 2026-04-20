@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/require-auth';
-import { prisma } from '@raino/db';
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
@@ -89,24 +89,46 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       // intentionally empty — keep fallback specContent with empty structured fields
     }
 
-    const spec = await prisma.spec.upsert({
-      where: { projectId: id },
-      update: {
-        requirements: structuredRequirements,
-        constraints: structuredConstraints,
-        interfaces: structuredInterfaces,
-        rawText: specContent,
-        compiledAt: new Date(),
-      },
-      create: {
-        projectId: id,
-        requirements: structuredRequirements,
-        constraints: structuredConstraints,
-        interfaces: structuredInterfaces,
-        rawText: specContent,
-        compiledAt: new Date(),
-      },
-    });
+    const db = getSupabaseAdmin();
+    const { data: existingSpec } = await db
+      .from('specs')
+      .select('id')
+      .eq('project_id', id)
+      .maybeSingle();
+
+    let spec;
+    if (existingSpec) {
+      const { data, error } = await db
+        .from('specs')
+        .update({
+          requirements: structuredRequirements,
+          constraints: structuredConstraints,
+          interfaces: structuredInterfaces,
+          raw_text: specContent,
+          compiled_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })
+        .eq('project_id', id)
+        .select()
+        .single();
+      if (error) throw error;
+      spec = data;
+    } else {
+      const { data, error } = await db
+        .from('specs')
+        .insert({
+          project_id: id,
+          requirements: structuredRequirements,
+          constraints: structuredConstraints,
+          interfaces: structuredInterfaces,
+          raw_text: specContent,
+          compiled_at: new Date().toISOString(),
+        })
+        .select()
+        .single();
+      if (error) throw error;
+      spec = data;
+    }
 
     await updateProjectStatus(id, 'spec_compiled');
 
@@ -121,11 +143,11 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       projectId: id,
       spec: {
         id: spec.id,
-        rawText: spec.rawText,
+        rawText: spec.raw_text,
         requirements: spec.requirements,
         constraints: spec.constraints,
         interfaces: spec.interfaces,
-        compiledAt: spec.compiledAt?.toISOString(),
+        compiledAt: spec.compiled_at,
       },
       status: 'compiled',
     });

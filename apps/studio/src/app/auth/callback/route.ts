@@ -1,7 +1,11 @@
+/**
+ * Auth callback route - handles Supabase magic link authentication.
+ * Uses Supabase client directly instead of Prisma to avoid table name issues.
+ */
 import { createServerClient } from '@supabase/ssr';
+import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { prisma } from '@raino/db';
 import type { CookieOptions } from '@supabase/ssr';
 
 export async function GET(request: Request) {
@@ -31,56 +35,83 @@ export async function GET(request: Request) {
     const { data: { user }, error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error && user) {
-      // Auto-provision user and organization using correct Prisma camelCase field names
+      // Auto-provision user and organization using Supabase admin client
       try {
-        await prisma.$transaction(async (tx) => {
-          // Find or create user
-          let dbUser = await tx.user.findFirst({
-            where: { email: user.email! }
-          });
+        const adminClient = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!,
+          { auth: { autoRefreshToken: false, persistSession: false } }
+        );
 
-          if (!dbUser) {
-            dbUser = await tx.user.create({
-              data: {
-                supabaseUserId: user.id,
-                email: user.email!,
-                fullName: user.user_metadata?.full_name || user.user_metadata?.name || 'New User',
-              }
-            });
-          } else if (!dbUser.supabaseUserId) {
-            // Update existing user with supabase ID if missing
-            dbUser = await tx.user.update({
-              where: { id: dbUser.id },
-              data: { supabaseUserId: user.id }
-            });
+        // Find or create user
+        const { data: existingUser } = await adminClient
+          .from('users')
+          .select('id, supabase_user_id, full_name')
+          .eq('email', user.email!)
+          .maybeSingle();
+
+        let dbUserId: string;
+        let dbUserFullName: string;
+
+        if (!existingUser) {
+          const fullName = user.user_metadata?.full_name || user.user_metadata?.name || 'New User';
+          const { data: newUser, error: createError } = await adminClient
+            .from('users')
+            .insert({
+              supabase_user_id: user.id,
+              email: user.email!,
+              full_name: fullName,
+            })
+            .select('id, full_name')
+            .single();
+
+          if (createError) throw createError;
+          dbUserId = newUser.id;
+          dbUserFullName = newUser.full_name ?? 'User';
+        } else {
+          dbUserId = existingUser.id;
+          dbUserFullName = existingUser.full_name ?? 'User';
+
+          // Update supabase_user_id if missing
+          if (!existingUser.supabase_user_id) {
+            await adminClient
+              .from('users')
+              .update({ supabase_user_id: user.id })
+              .eq('id', dbUserId);
           }
+        }
 
-          // Check if user already has an org membership
-          const membership = await tx.organizationMember.findFirst({
-            where: { userId: dbUser.id }
-          });
+        // Check if user already has an org membership
+        const { data: membership } = await adminClient
+          .from('organization_members')
+          .select('organization_id')
+          .eq('user_id', dbUserId)
+          .maybeSingle();
 
-          if (!membership) {
-            // Create a personal organization for the user
-            const orgSlug = 'org-' + dbUser.id.slice(0, 8) + '-' + Date.now().toString(36);
-            const org = await tx.organization.create({
-              data: {
-                name: (dbUser.fullName || 'User') + "'s Organization",
-                slug: orgSlug,
-              }
+        if (!membership) {
+          // Create a personal organization for the user
+          const orgSlug = 'org-' + dbUserId.slice(0, 8) + '-' + Date.now().toString(36);
+          const { data: org, error: orgError } = await adminClient
+            .from('organizations')
+            .insert({
+              name: dbUserFullName + "'s Organization",
+              slug: orgSlug,
+            })
+            .select('id')
+            .single();
+
+          if (orgError) throw orgError;
+
+          await adminClient
+            .from('organization_members')
+            .insert({
+              user_id: dbUserId,
+              organization_id: org.id,
+              role: 'owner',
             });
 
-            await tx.organizationMember.create({
-              data: {
-                userId: dbUser.id,
-                organizationId: org.id,
-                role: 'owner'
-              }
-            });
-
-            console.log('[auth/callback] Provisioned user ' + dbUser.email + ' with org ' + org.id);
-          }
-        });
+          console.log('[auth/callback] Provisioned user with org', org.id);
+        }
       } catch (dbError) {
         // Log but don't fail — user is still authenticated via Supabase
         console.error('[auth/callback] Failed to provision user/org:', dbError);

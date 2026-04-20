@@ -1,5 +1,4 @@
-import { prisma } from '@raino/db';
-import type { Prisma } from '@raino/db';
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 
 export interface DispatchResult {
   jobId: string;
@@ -16,14 +15,18 @@ export async function dispatchDesignJob(
   jobType: string,
   input?: Record<string, unknown>,
 ): Promise<DispatchResult> {
-  const job = await prisma.designJob.create({
-    data: {
-      projectId,
-      jobType,
+  const db = getSupabaseAdmin();
+  const { data: job, error } = await db
+    .from('design_jobs')
+    .insert({
+      project_id: projectId,
+      job_type: jobType,
       status: 'pending',
-      result: input as Prisma.InputJsonValue | undefined,
-    },
-  });
+      result: input ?? null,
+    })
+    .select('id')
+    .single();
 
+  if (error) throw new Error(`dispatchDesignJob failed: ${error.message}`);
   return { jobId: job.id, status: 'queued' };
 }

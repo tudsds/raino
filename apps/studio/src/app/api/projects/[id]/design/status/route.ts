@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/require-auth';
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import { verifyProjectOwnership } from '@/lib/data/project-queries';
-import { prisma } from '@raino/db';
 
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await requireAuth();
@@ -9,16 +9,22 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
 
   try {
     const { id } = await params;
-
     const ownership = await verifyProjectOwnership(id, auth.user.id);
     if (!ownership.authorized) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    const job = await prisma.designJob.findFirst({
-      where: { projectId: id, jobType: 'DESIGN' },
-      orderBy: { createdAt: 'desc' },
-    });
+    const db = getSupabaseAdmin();
+    const { data: job, error } = await db
+      .from('design_jobs')
+      .select('*')
+      .eq('project_id', id)
+      .eq('job_type', 'DESIGN')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) throw error;
 
     if (!job) {
       return NextResponse.json({
@@ -35,11 +41,12 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
       progress: Number(job.progress),
       result: job.result,
       error: job.error,
-      createdAt: job.createdAt.toISOString(),
-      startedAt: job.startedAt?.toISOString() ?? null,
-      completedAt: job.completedAt?.toISOString() ?? null,
+      createdAt: job.created_at,
+      startedAt: job.started_at ?? null,
+      completedAt: job.completed_at ?? null,
     });
-  } catch {
+  } catch (err) {
+    console.error('[api/design/status] Failed:', err);
     return NextResponse.json({ error: 'Failed to fetch design status' }, { status: 400 });
   }
 }

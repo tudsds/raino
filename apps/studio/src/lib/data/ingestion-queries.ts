@@ -1,10 +1,20 @@
-import { prisma } from '@raino/db';
-import type { Prisma } from '@raino/db';
+/**
+ * Ingestion manifest queries using Supabase client directly.
+ * Bypasses Prisma ORM to avoid the table name mapping issue.
+ */
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
+import type { DbIngestionManifest } from '@/lib/db/supabase-admin';
 
 export async function getIngestionManifest(projectId: string) {
-  return prisma.ingestionManifest.findUnique({
-    where: { projectId },
-  });
+  const db = getSupabaseAdmin();
+  const { data, error } = await db
+    .from('ingestion_manifests')
+    .select('*')
+    .eq('project_id', projectId)
+    .maybeSingle();
+
+  if (error) throw new Error(`getIngestionManifest failed: ${error.message}`);
+  return data as DbIngestionManifest | null;
 }
 
 export async function createIngestionManifest(
@@ -15,41 +25,66 @@ export async function createIngestionManifest(
     stages: Record<string, unknown>[];
   },
 ) {
-  const existing = await prisma.ingestionManifest.findUnique({ where: { projectId } });
+  const db = getSupabaseAdmin();
+
+  const existing = await getIngestionManifest(projectId);
   if (existing) {
-    return prisma.ingestionManifest.update({
-      where: { id: existing.id },
-      data: {
+    const { data: updated, error } = await db
+      .from('ingestion_manifests')
+      .update({
         status: data.status,
-        candidateFamilies: data.candidateFamilies as Prisma.InputJsonValue,
-        stages: data.stages as Prisma.InputJsonValue,
-      },
-    });
+        candidate_families: data.candidateFamilies,
+        stages: data.stages,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', existing.id)
+      .select()
+      .single();
+
+    if (error) throw new Error(`updateIngestionManifest failed: ${error.message}`);
+    return updated as DbIngestionManifest;
   }
 
-  return prisma.ingestionManifest.create({
-    data: {
-      projectId,
+  const { data: manifest, error } = await db
+    .from('ingestion_manifests')
+    .insert({
+      project_id: projectId,
       status: data.status,
-      candidateFamilies: data.candidateFamilies as Prisma.InputJsonValue,
-      stages: data.stages as Prisma.InputJsonValue,
-    },
-  });
+      candidate_families: data.candidateFamilies,
+      stages: data.stages,
+    })
+    .select()
+    .single();
+
+  if (error) throw new Error(`createIngestionManifest failed: ${error.message}`);
+  return manifest as DbIngestionManifest;
 }
 
 export async function updateIngestionStatus(projectId: string, status: string) {
-  return prisma.ingestionManifest.update({
-    where: { projectId },
-    data: { status },
-  });
+  const db = getSupabaseAdmin();
+  const { data, error } = await db
+    .from('ingestion_manifests')
+    .update({ status, updated_at: new Date().toISOString() })
+    .eq('project_id', projectId)
+    .select()
+    .single();
+
+  if (error) throw new Error(`updateIngestionStatus failed: ${error.message}`);
+  return data as DbIngestionManifest;
 }
 
 export async function updateIngestionSufficiencyReport(
   projectId: string,
   report: Record<string, unknown>,
 ) {
-  return prisma.ingestionManifest.update({
-    where: { projectId },
-    data: { sufficiencyReport: report as Prisma.InputJsonValue },
-  });
+  const db = getSupabaseAdmin();
+  const { data, error } = await db
+    .from('ingestion_manifests')
+    .update({ sufficiency_report: report, updated_at: new Date().toISOString() })
+    .eq('project_id', projectId)
+    .select()
+    .single();
+
+  if (error) throw new Error(`updateIngestionSufficiencyReport failed: ${error.message}`);
+  return data as DbIngestionManifest;
 }

@@ -1,5 +1,4 @@
-import { prisma } from '@raino/db';
-import type { Prisma } from '@raino/db';
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import type { DocumentRecord, ChunkRecord, EmbeddingRecord } from '@raino/rag';
 import {
   discoverCandidates,
@@ -100,13 +99,15 @@ function toManifestStage(s: PipelineStageResult) {
 }
 
 async function updateManifestStages(projectId: string, stages: PipelineStageResult[]) {
-  await prisma.ingestionManifest.update({
-    where: { projectId },
-    data: {
-      stages: stages.map(toManifestStage) as Prisma.InputJsonValue,
+  const db = getSupabaseAdmin();
+  await db
+    .from('ingestion_manifests')
+    .update({
+      stages: stages.map(toManifestStage),
       status: stages.some((s) => s.status === 'failure') ? 'failed' : 'running',
-    },
-  });
+      updated_at: new Date().toISOString(),
+    })
+    .eq('project_id', projectId);
 }
 
 // ── Pipeline Runner ────────────────────────────────────────────────────────────
@@ -367,11 +368,12 @@ export async function runIngestionPipeline(
   const hasFailures = stages.some((s) => s.status === 'failure');
   const finalStatus = hasFailures ? 'failed' : 'completed';
 
-  await prisma.ingestionManifest.update({
-    where: { projectId: options.projectId },
-    data: {
+  const db = getSupabaseAdmin();
+  await db
+    .from('ingestion_manifests')
+    .update({
       status: finalStatus,
-      sufficiencyReport: {
+      sufficiency_report: {
         runId,
         overallPass: sufficiencyReports.every((r) => r.overallPass),
         reports: sufficiencyReports,
@@ -380,9 +382,10 @@ export async function runIngestionPipeline(
         chunkCount: chunks.length,
         embeddingCount: embeddings.length,
         duration: Date.now() - startedAt,
-      } as unknown as Prisma.InputJsonValue,
-    },
-  });
+      },
+      updated_at: new Date().toISOString(),
+    })
+    .eq('project_id', options.projectId);
 
   return {
     runId,
