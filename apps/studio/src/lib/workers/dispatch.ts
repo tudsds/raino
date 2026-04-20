@@ -1,5 +1,5 @@
 import { prisma } from '@raino/db';
-import type { Prisma } from '@prisma/client';
+import type { Prisma } from '@raino/db';
 
 export interface DispatchResult {
   jobId: string;

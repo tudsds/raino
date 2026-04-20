@@ -19,4 +19,5 @@ export type {
   HandoffRequest,
   AuditEntry,
   IntakeMessage,
-} from '@prisma/client';
+  Prisma,
+} from './generated/prisma';

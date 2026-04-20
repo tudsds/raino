@@ -1,5 +1,5 @@
 import { prisma } from '@raino/db';
-import type { Prisma } from '@prisma/client';
+import type { Prisma } from '@raino/db';
 import type { DocumentRecord, ChunkRecord, EmbeddingRecord } from '@raino/rag';
 import {
   discoverCandidates,

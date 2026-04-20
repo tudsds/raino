@@ -38,3 +38,6 @@ data/ingestion/
 apps/studio/data/
 test-results/
 EOF
+
+# Prisma generated client
+packages/db/src/generated/
