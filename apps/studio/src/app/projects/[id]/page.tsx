@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { ProjectDetail } from '@/components/projects/project-detail';
 import { LoadingState } from '@/components/ui/loading-state';
+import type { Status } from '@/components/StatusBadge';
 
 interface ProjectData {
   id: string;
   name: string;
   description?: string;
-  status: string;
+  status: Status;
   currentStep: number;
   totalSteps: number;
   createdAt: string;

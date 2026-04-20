@@ -1,13 +1,13 @@
 'use client';
 import Link from 'next/link';
 import WorkflowProgress from '@/components/WorkflowProgress';
-import StatusBadge from '@/components/StatusBadge';
+import StatusBadge, { type Status } from '@/components/StatusBadge';
 
 interface Project {
   id: string;
   name: string;
   description?: string;
-  status: string;
+  status: Status;
   currentStep: number;
   totalSteps: number;
   createdAt: string;
