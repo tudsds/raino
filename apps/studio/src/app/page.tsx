@@ -160,7 +160,7 @@ export default async function DashboardPage() {
                   </p>
 
                   <WorkflowProgress
-                    progress={Math.round((project.current_step / project.totalSteps) * 100)}
+                    progress={Math.round((project.currentStep / project.totalSteps) * 100)}
                   />
 
                   <div className="mt-4 pt-4 border-t border-[#27273a] flex items-center justify-between text-xs text-[#71717a] font-[family-name:var(--font-body)]">

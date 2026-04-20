@@ -1,6 +1,11 @@
 /**
- * Auth callback route - handles Supabase magic link authentication.
- * Uses Supabase client directly instead of Prisma to avoid table name issues.
+ * Auth callback route — Supabase magic-link PKCE exchange.
+ *
+ * User/org provisioning is owned by the `on_auth_user_created` trigger in
+ * Supabase (see supabase/migrations/20260420_auto_provision_user_and_org.sql).
+ * This route just calls the same `ensure_user_and_org` RPC as a belt-and-braces
+ * second path so re-signups, historical accounts, and trigger failures still
+ * recover instead of landing the user on an "org missing" error.
  */
 import { createServerClient } from '@supabase/ssr';
 import { createClient } from '@supabase/supabase-js';
@@ -12,111 +17,60 @@ export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
 
-  if (code) {
-    const cookieStore = await cookies();
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get(name: string) {
-            return cookieStore.get(name)?.value;
-          },
-          set(name: string, value: string, options: CookieOptions) {
-            cookieStore.set({ name, value, ...options });
-          },
-          remove(name: string, options: CookieOptions) {
-            cookieStore.delete({ name, ...options });
-          },
+  if (!code) {
+    return NextResponse.redirect(requestUrl.origin);
+  }
+
+  const cookieStore = await cookies();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
         },
-      }
-    );
-
-    const { data: { user }, error } = await supabase.auth.exchangeCodeForSession(code);
-
-    if (!error && user) {
-      // Auto-provision user and organization using Supabase admin client
-      try {
-        const adminClient = createClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL!,
-          process.env.SUPABASE_SERVICE_ROLE_KEY!,
-          { auth: { autoRefreshToken: false, persistSession: false } }
-        );
-
-        // Find or create user
-        const { data: existingUser } = await adminClient
-          .from('users')
-          .select('id, supabase_user_id, full_name')
-          .eq('email', user.email!)
-          .maybeSingle();
-
-        let dbUserId: string;
-        let dbUserFullName: string;
-
-        if (!existingUser) {
-          const fullName = user.user_metadata?.full_name || user.user_metadata?.name || 'New User';
-          const { data: newUser, error: createError } = await adminClient
-            .from('users')
-            .insert({
-              supabase_user_id: user.id,
-              email: user.email!,
-              full_name: fullName,
-            })
-            .select('id, full_name')
-            .single();
-
-          if (createError) throw createError;
-          dbUserId = newUser.id;
-          dbUserFullName = newUser.full_name ?? 'User';
-        } else {
-          dbUserId = existingUser.id;
-          dbUserFullName = existingUser.full_name ?? 'User';
-
-          // Update supabase_user_id if missing
-          if (!existingUser.supabase_user_id) {
-            await adminClient
-              .from('users')
-              .update({ supabase_user_id: user.id })
-              .eq('id', dbUserId);
-          }
-        }
-
-        // Check if user already has an org membership
-        const { data: membership } = await adminClient
-          .from('organization_members')
-          .select('organization_id')
-          .eq('user_id', dbUserId)
-          .maybeSingle();
-
-        if (!membership) {
-          // Create a personal organization for the user
-          const orgSlug = 'org-' + dbUserId.slice(0, 8) + '-' + Date.now().toString(36);
-          const { data: org, error: orgError } = await adminClient
-            .from('organizations')
-            .insert({
-              name: dbUserFullName + "'s Organization",
-              slug: orgSlug,
-            })
-            .select('id')
-            .single();
-
-          if (orgError) throw orgError;
-
-          await adminClient
-            .from('organization_members')
-            .insert({
-              user_id: dbUserId,
-              organization_id: org.id,
-              role: 'owner',
-            });
-
-          console.log('[auth/callback] Provisioned user with org', org.id);
-        }
-      } catch (dbError) {
-        // Log but don't fail — user is still authenticated via Supabase
-        console.error('[auth/callback] Failed to provision user/org:', dbError);
-      }
+        set(name: string, value: string, options: CookieOptions) {
+          cookieStore.set({ name, value, ...options });
+        },
+        remove(name: string, options: CookieOptions) {
+          cookieStore.delete({ name, ...options });
+        },
+      },
     }
+  );
+
+  const {
+    data: { user },
+    error: exchangeError,
+  } = await supabase.auth.exchangeCodeForSession(code);
+
+  if (exchangeError || !user) {
+    const url = new URL('/login', requestUrl.origin);
+    url.searchParams.set('error', 'auth_exchange_failed');
+    return NextResponse.redirect(url);
+  }
+
+  const adminClient = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+
+  const fullName =
+    user.user_metadata?.full_name || user.user_metadata?.name || null;
+
+  const { error: rpcError } = await adminClient.rpc('ensure_user_and_org', {
+    p_supabase_user_id: user.id,
+    p_email: user.email!,
+    p_full_name: fullName,
+  });
+
+  if (rpcError) {
+    console.error('[auth/callback] ensure_user_and_org failed:', rpcError);
+    const url = new URL('/login', requestUrl.origin);
+    url.searchParams.set('error', 'provision_failed');
+    return NextResponse.redirect(url);
   }
 
   return NextResponse.redirect(requestUrl.origin);
