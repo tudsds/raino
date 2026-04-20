@@ -77,58 +77,75 @@ function makeParams(id = 'proj-123') {
   return Promise.resolve({ id });
 }
 
+function makeBomRow(overrides: Record<string, unknown> = {}) {
+  const now = new Date().toISOString();
+  return {
+    id: 'r1',
+    bom_id: 'bom-1',
+    ref: 'R1',
+    value: '10k',
+    mpn: 'RC0603JR-0710KL',
+    manufacturer: 'Yageo',
+    package: '0603',
+    quantity: 10,
+    unit_price: 0.5,
+    currency: 'USD',
+    lifecycle: 'active',
+    risk: 'low',
+    description: null,
+    alternates: null,
+    provenance_source: 'supplier',
+    created_at: now,
+    updated_at: now,
+    ...overrides,
+  };
+}
+
 function makeMockBOM(
-  overrides: { rows?: Array<Record<string, unknown>>; isEstimate?: boolean } = {},
+  overrides: { rows?: Array<Record<string, unknown>>; is_estimate?: boolean } = {},
 ) {
+  const now = new Date().toISOString();
   return {
     id: 'bom-1',
-    projectId: 'proj-123',
-    totalCost: 50,
+    project_id: 'proj-123',
+    total_cost: 50,
     currency: 'USD',
-    lineCount: 2,
-    isEstimate: overrides.isEstimate ?? false,
+    line_count: 2,
+    is_estimate: overrides.is_estimate ?? false,
     rows: overrides.rows ?? [
-      {
-        id: 'r1',
-        ref: 'R1',
-        value: '10k',
-        mpn: 'RC0603JR-0710KL',
-        manufacturer: 'Yageo',
-        pkg: '0603',
-        quantity: 10,
-        unitPrice: 0.5,
-        currency: 'USD',
-        lifecycle: 'active',
-        risk: 'low',
-        description: null,
-        alternates: null,
-        provenanceSource: 'supplier',
-        bomId: 'bom-1',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
+      makeBomRow(),
+      makeBomRow({
         id: 'r2',
         ref: 'R2',
         value: '100nF',
         mpn: 'C0603C104K5RACTU',
         manufacturer: 'Kemet',
-        pkg: '0603',
         quantity: 5,
-        unitPrice: 0.3,
-        currency: 'USD',
-        lifecycle: 'active',
-        risk: 'low',
-        description: null,
-        alternates: null,
-        provenanceSource: 'supplier',
-        bomId: 'bom-1',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+        unit_price: 0.3,
+      }),
     ],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    created_at: now,
+    updated_at: now,
+  };
+}
+
+function makeMockQuote(overrides: Record<string, unknown> = {}) {
+  const now = new Date().toISOString();
+  return {
+    id: 'quote-1',
+    project_id: 'proj-123',
+    low_quote: 100,
+    mid_quote: 150,
+    high_quote: 200,
+    confidence: 'medium',
+    currency: 'USD',
+    breakdown: [],
+    assumptions: [],
+    is_estimate: false,
+    quantity: 100,
+    created_at: now,
+    updated_at: now,
+    ...overrides,
   };
 }
 
@@ -136,21 +153,7 @@ describe('GET /api/projects/[id]/quote', () => {
   it('returns existing quote', async () => {
     mockRequireAuth.mockResolvedValue(makeAuthUser());
     mockVerifyOwnership.mockResolvedValue({ authorized: true, project: { id: 'proj-123' } });
-    mockGetQuote.mockResolvedValue({
-      id: 'quote-1',
-      lowQuote: 100,
-      midQuote: 150,
-      highQuote: 200,
-      confidence: 'medium',
-      breakdown: [],
-      assumptions: [],
-      isEstimate: false,
-      quantity: 100,
-      createdAt: new Date('2024-01-01'),
-      projectId: 'proj-123',
-      currency: 'USD',
-      updatedAt: new Date(),
-    });
+    mockGetQuote.mockResolvedValue(makeMockQuote());
 
     const response = await GET(
       new NextRequest('http://localhost:3001/api/projects/proj-123/quote'),
@@ -228,21 +231,15 @@ describe('POST /api/projects/[id]/quote', () => {
       nextRecommendedAction: '',
       isEstimate: false,
     });
-    mockCreateQuote.mockResolvedValue({
-      id: 'quote-new',
-      lowQuote: 849,
-      midQuote: 1016,
-      highQuote: 1219,
-      confidence: 'high',
-      breakdown: [],
-      assumptions: [],
-      isEstimate: false,
-      quantity: 100,
-      createdAt: new Date(),
-      projectId: 'proj-123',
-      currency: 'USD',
-      updatedAt: new Date(),
-    });
+    mockCreateQuote.mockResolvedValue(
+      makeMockQuote({
+        id: 'quote-new',
+        low_quote: 849,
+        mid_quote: 1016,
+        high_quote: 1219,
+        confidence: 'high',
+      }),
+    );
 
     const request = new NextRequest('http://localhost:3001/api/projects/proj-123/quote', {
       method: 'POST',
@@ -284,6 +281,7 @@ describe('POST /api/projects/[id]/quote', () => {
     mockRequireAuth.mockResolvedValue(makeAuthUser());
     mockVerifyOwnership.mockResolvedValue({ authorized: true, project: { id: 'proj-123' } });
     mockGetBOM.mockResolvedValue(makeMockBOM({ rows: [] }));
+    mockAggregateSupplierPrices.mockResolvedValue([]);
 
     const request = new NextRequest('http://localhost:3001/api/projects/proj-123/quote', {
       method: 'POST',
@@ -303,29 +301,10 @@ describe('POST /api/projects/[id]/quote', () => {
     mockVerifyOwnership.mockResolvedValue({ authorized: true, project: { id: 'proj-123' } });
     mockGetBOM.mockResolvedValue(
       makeMockBOM({
-        rows: [
-          {
-            id: 'r1',
-            ref: 'R1',
-            value: '10k',
-            mpn: 'RC0603JR-0710KL',
-            manufacturer: 'Yageo',
-            pkg: '0603',
-            quantity: 10,
-            unitPrice: 0,
-            currency: 'USD',
-            lifecycle: 'active',
-            risk: 'low',
-            description: null,
-            alternates: null,
-            provenanceSource: 'supplier',
-            bomId: 'bom-1',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          },
-        ],
+        rows: [makeBomRow({ unit_price: 0 })],
       }),
     );
+    mockAggregateSupplierPrices.mockResolvedValue([]);
 
     const request = new NextRequest('http://localhost:3001/api/projects/proj-123/quote', {
       method: 'POST',

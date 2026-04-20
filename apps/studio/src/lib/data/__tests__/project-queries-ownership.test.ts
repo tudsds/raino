@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock the admin client before importing the queries module so it picks up
-// the mock instead of trying to build a real Supabase client at import time.
 const mockFrom = vi.fn();
 vi.mock('@/lib/db/supabase-admin', () => ({
   getSupabaseAdmin: () => ({ from: mockFrom }),
@@ -19,20 +17,22 @@ function arrayResult<T>(rows: T[]): { data: T[] | null; error: { message: string
   return { data: rows, error: null };
 }
 
-// Build a chainable query-builder stub that resolves to the provided terminator.
-function qb(terminalKey: 'maybeSingle' | 'then', terminalValue: unknown) {
-  const chain: any = {
-    select: () => chain,
-    eq: () => chain,
-    in: () => chain,
-    order: () => chain,
-    limit: () => chain,
-  };
-  if (terminalKey === 'maybeSingle') {
-    chain.maybeSingle = vi.fn().mockResolvedValue(terminalValue);
-  } else {
-    chain.then = (resolve: any) => Promise.resolve(terminalValue).then(resolve);
-  }
+// Chainable stub that terminates on either `.maybeSingle()` or thenable await.
+// fetchProjectRelations awaits `db.from(...).select().eq(...).order(...)` directly
+// and sometimes `...maybeSingle()`, so both must be supported.
+function qb(
+  maybeSingleValue: unknown | null = null,
+  thenValue: unknown = arrayResult([]),
+) {
+  const chain: any = {};
+  const passthrough = () => chain;
+  chain.select = passthrough;
+  chain.eq = passthrough;
+  chain.in = passthrough;
+  chain.order = passthrough;
+  chain.limit = passthrough;
+  chain.maybeSingle = vi.fn().mockResolvedValue(maybeSingleValue);
+  chain.then = (resolve: any) => Promise.resolve(thenValue).then(resolve);
   return chain;
 }
 
@@ -47,8 +47,8 @@ describe('verifyProjectOwnership', () => {
 
   it('returns authorized:false when user not found', async () => {
     mockFrom.mockImplementation((table: string) => {
-      if (table === 'users') return qb('maybeSingle', singleResult(null));
-      throw new Error('unexpected table ' + table);
+      if (table === 'users') return qb(singleResult(null));
+      return qb(singleResult(null), arrayResult([]));
     });
 
     const result = await verifyProjectOwnership(projectId, userId);
@@ -57,9 +57,9 @@ describe('verifyProjectOwnership', () => {
 
   it('returns authorized:false when user has no memberships', async () => {
     mockFrom.mockImplementation((table: string) => {
-      if (table === 'users') return qb('maybeSingle', singleResult({ id: 'db-user-1' }));
-      if (table === 'organization_members') return qb('then', arrayResult([]));
-      throw new Error('unexpected table ' + table);
+      if (table === 'users') return qb(singleResult({ id: 'db-user-1' }));
+      if (table === 'organization_members') return qb(null, arrayResult([]));
+      return qb(singleResult(null), arrayResult([]));
     });
 
     const result = await verifyProjectOwnership(projectId, userId);
@@ -68,11 +68,11 @@ describe('verifyProjectOwnership', () => {
 
   it('returns authorized:false when project not in user org', async () => {
     mockFrom.mockImplementation((table: string) => {
-      if (table === 'users') return qb('maybeSingle', singleResult({ id: 'db-user-1' }));
+      if (table === 'users') return qb(singleResult({ id: 'db-user-1' }));
       if (table === 'organization_members')
-        return qb('then', arrayResult([{ organization_id: 'other-org' }]));
-      if (table === 'projects') return qb('maybeSingle', singleResult(null));
-      throw new Error('unexpected table ' + table);
+        return qb(null, arrayResult([{ organization_id: 'other-org' }]));
+      if (table === 'projects') return qb(singleResult(null));
+      return qb(singleResult(null), arrayResult([]));
     });
 
     const result = await verifyProjectOwnership(projectId, userId);
@@ -93,12 +93,12 @@ describe('verifyProjectOwnership', () => {
     };
 
     mockFrom.mockImplementation((table: string) => {
-      if (table === 'users') return qb('maybeSingle', singleResult({ id: 'db-user-1' }));
+      if (table === 'users') return qb(singleResult({ id: 'db-user-1' }));
       if (table === 'organization_members')
-        return qb('then', arrayResult([{ organization_id: orgId }]));
-      if (table === 'projects') return qb('maybeSingle', singleResult(project));
-      // fetchProjectRelations follows up with many other tables; all empty is fine.
-      return qb('then', arrayResult([]));
+        return qb(null, arrayResult([{ organization_id: orgId }]));
+      if (table === 'projects') return qb(singleResult(project));
+      // fetchProjectRelations queries specs/architectures/boms/... — all empty is fine.
+      return qb(singleResult(null), arrayResult([]));
     });
 
     const result = await verifyProjectOwnership(projectId, userId);
@@ -112,10 +112,10 @@ describe('verifyProjectOwnership', () => {
 describe('getUserOrgId', () => {
   it('returns the first org id when user has a membership', async () => {
     mockFrom.mockImplementation((table: string) => {
-      if (table === 'users') return qb('maybeSingle', singleResult({ id: 'db-user-1' }));
+      if (table === 'users') return qb(singleResult({ id: 'db-user-1' }));
       if (table === 'organization_members')
-        return qb('maybeSingle', singleResult({ organization_id: 'org-abc' }));
-      throw new Error('unexpected table ' + table);
+        return qb(singleResult({ organization_id: 'org-abc' }));
+      return qb(singleResult(null));
     });
 
     const result = await getUserOrgId('supabase-user-1');
@@ -124,8 +124,8 @@ describe('getUserOrgId', () => {
 
   it('returns null when user not found', async () => {
     mockFrom.mockImplementation((table: string) => {
-      if (table === 'users') return qb('maybeSingle', singleResult(null));
-      throw new Error('unexpected table ' + table);
+      if (table === 'users') return qb(singleResult(null));
+      return qb(singleResult(null));
     });
 
     const result = await getUserOrgId('nonexistent');
@@ -134,9 +134,9 @@ describe('getUserOrgId', () => {
 
   it('returns null when user has no memberships', async () => {
     mockFrom.mockImplementation((table: string) => {
-      if (table === 'users') return qb('maybeSingle', singleResult({ id: 'db-user-1' }));
-      if (table === 'organization_members') return qb('maybeSingle', singleResult(null));
-      throw new Error('unexpected table ' + table);
+      if (table === 'users') return qb(singleResult({ id: 'db-user-1' }));
+      if (table === 'organization_members') return qb(singleResult(null));
+      return qb(singleResult(null));
     });
 
     const result = await getUserOrgId('supabase-user-2');
