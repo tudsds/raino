@@ -41,3 +41,5 @@ EOF
 
 # Prisma generated client - committed to git for reliable Vercel builds
 # packages/db/src/generated/
+!packages/db/dist/generated/
+!packages/db/dist/generated/**
