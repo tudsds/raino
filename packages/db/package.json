@@ -23,6 +23,7 @@
     }
   },
   "scripts": {
+    "postinstall": "prisma generate",
     "build": "prisma generate && tsc",
     "dev": "tsc --watch",
     "lint": "eslint src/",
