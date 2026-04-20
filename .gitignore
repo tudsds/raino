@@ -39,5 +39,5 @@ apps/studio/data/
 test-results/
 EOF
 
-# Prisma generated client
-packages/db/src/generated/
+# Prisma generated client - committed to git for reliable Vercel builds
+# packages/db/src/generated/
