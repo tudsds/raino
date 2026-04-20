@@ -37,20 +37,20 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
       projectId: id,
       quote: {
         id: quote.id,
-        low: Number(quote.lowQuote),
-        mid: Number(quote.midQuote),
-        high: Number(quote.highQuote),
+        low: Number(quote.low_quote),
+        mid: Number(quote.mid_quote),
+        high: Number(quote.high_quote),
         confidence: quote.confidence,
         breakdown: quote.breakdown,
         assumptions: quote.assumptions,
-        isEstimate: quote.isEstimate,
-        dataSource: quote.isEstimate ? 'llm_estimates' : 'live_supplier',
-        disclaimer: quote.isEstimate
+        isEstimate: quote.is_estimate,
+        dataSource: quote.is_estimate ? 'llm_estimates' : 'live_supplier',
+        disclaimer: quote.is_estimate
           ? 'This is a rough estimate based on AI-generated component pricing. Actual costs may vary significantly. Request a formal quote for verified pricing.'
           : 'Quote based on live supplier pricing data. Final costs subject to change at time of order.',
         quantity: quote.quantity,
-        generatedAt: quote.createdAt.toISOString(),
-        validUntil: new Date(quote.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        generatedAt: quote.created_at,
+        validUntil: new Date(new Date(quote.created_at).getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),
       },
     });
   } catch {
@@ -94,16 +94,16 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       reference: r.ref,
       value: r.value,
       symbol: r.mpn,
-      footprint: r.pkg,
+      footprint: r.package,
       manufacturer: r.manufacturer,
       mpn: r.mpn,
       lifecycle: (r.lifecycle as BOMRow['lifecycle']) || 'unknown',
       alternates: [],
       dnp: false,
-      unitPrice: Number(r.unitPrice),
+      unitPrice: Number(r.unit_price),
       currency: r.currency,
       provenance: {
-        source: r.provenanceSource ?? 'system',
+        source: r.provenance_source ?? 'system',
         timestamp: new Date(),
         confidence: 0.5,
       },
@@ -112,15 +112,15 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     const coreBOM: BOM = {
       id: bom.id,
-      projectId: bom.projectId,
+      projectId: bom.project_id,
       rows: coreRows,
-      createdAt: bom.createdAt,
-      updatedAt: bom.updatedAt,
+      createdAt: bom.created_at,
+      updatedAt: bom.updated_at,
       version: 1,
     };
 
     let supplierComparison: SupplierPriceResult[] = [];
-    let supplierHasEstimates = bom.isEstimate;
+    let supplierHasEstimates = bom.is_estimate;
 
     try {
       const supplierInputs = coreRows
@@ -166,14 +166,14 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const roughQuote = calculateRoughQuote(coreBOM, {
       designAutomationFee: 500,
       engineeringReviewFee: 300,
-      isEstimate: bom.isEstimate,
+      isEstimate: bom.is_estimate,
       assumptions: [
         `Quote is for ${quantity} units with standard 2-week lead time`,
         'PCB specifications: 4-layer, 1.6mm, ENIG finish',
         'Assembly includes AOI and basic functional test',
         'Does not include custom tooling or NRE charges',
         'Shipping and customs not included',
-        bom.isEstimate
+        bom.is_estimate
           ? 'All component prices are LLM-generated estimates, not verified against live supplier data'
           : 'Component prices sourced from live supplier queries',
       ],
@@ -207,14 +207,14 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       details: {
         quoteId: quote.id,
         quantity,
-        midQuote: Number(quote.midQuote),
+        midQuote: Number(quote.mid_quote),
         confidence: quote.confidence,
       },
     });
 
     let dataSource: 'live_supplier' | 'mixed_supplier_estimates' | 'llm_estimates';
     if (supplierComparison.length === 0) {
-      dataSource = bom.isEstimate ? 'llm_estimates' : 'live_supplier';
+      dataSource = bom.is_estimate ? 'llm_estimates' : 'live_supplier';
     } else if (supplierComparison.every((r) => !r.isEstimate && r.bestPrice !== null)) {
       dataSource = 'live_supplier';
     } else {
@@ -230,18 +230,18 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       projectId: id,
       quote: {
         id: quote.id,
-        low: Number(quote.lowQuote),
-        mid: Number(quote.midQuote),
-        high: Number(quote.highQuote),
+        low: Number(quote.low_quote),
+        mid: Number(quote.mid_quote),
+        high: Number(quote.high_quote),
         confidence: quote.confidence,
         breakdown: quote.breakdown,
         assumptions: quote.assumptions,
-        isEstimate: quote.isEstimate,
+        isEstimate: quote.is_estimate,
         dataSource,
         disclaimer,
         quantity: quote.quantity,
-        generatedAt: quote.createdAt.toISOString(),
-        validUntil: new Date(quote.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        generatedAt: quote.created_at,
+        validUntil: new Date(new Date(quote.created_at).getTime() + 30 * 24 * 60 * 60 * 1000).toISOString(),
         supplierComparison: supplierComparison.map((r) => ({
           mpn: r.mpn,
           bestPrice: r.bestPrice,

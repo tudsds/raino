@@ -44,16 +44,16 @@ export async function POST(request: NextRequest) {
     const artifacts = await getArtifacts(projectId);
     const validArtifactUrls = new Set(
       artifacts
-        .filter((a) => a.storageBucket && a.storageKey)
+        .filter((a) => a.storage_bucket && a.storage_key)
         .map((a) => {
           const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-            ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${a.storageBucket}/${a.storageKey}`
-            : a.filePath;
+            ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${a.storage_bucket}/${a.storage_key}`
+            : a.file_path;
           return url;
         }),
     );
 
-    const validFilePaths = new Set(artifacts.map((a) => a.filePath));
+    const validFilePaths = new Set(artifacts.map((a) => a.file_path));
 
     const filteredArtifacts = artifactUrls.filter((artifact) => {
       return validArtifactUrls.has(artifact.url) || validFilePaths.has(artifact.url);

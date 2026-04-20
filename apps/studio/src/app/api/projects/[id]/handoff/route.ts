@@ -54,7 +54,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         status: handoff.status,
         type: handoff.type,
         quantity: handoff.quantity,
-        createdAt: handoff.createdAt.toISOString(),
+        createdAt: handoff.created_at,
         message: 'Handoff request submitted successfully',
         nextSteps: [
           'Raino team will review your project',

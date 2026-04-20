@@ -41,7 +41,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
         lastAction: entries[0]?.action ?? null,
         entries: entries.map((e) => ({
           id: e.id,
-          timestamp: e.createdAt.toISOString(),
+          timestamp: e.created_at,
           action: e.action,
           category: e.category,
           actor: e.actor ?? 'system',

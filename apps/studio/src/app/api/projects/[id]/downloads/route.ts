@@ -39,31 +39,32 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
       });
     }
 
-    const hasPersistedArtifacts = artifacts.some((a) => a.storageBucket && a.storageKey);
+    // Use snake_case field names from DbDesignArtifact (Supabase direct)
+    const hasPersistedArtifacts = artifacts.some((a) => a.storage_bucket && a.storage_key);
     const storageClient = hasPersistedArtifacts ? createStorageClient() : null;
 
     const downloads = await Promise.all(
       artifacts.map(async (a) => {
         const base = {
           id: a.id,
-          name: a.fileName,
-          type: a.artifactType,
-          sizeBytes: a.fileSize,
+          name: a.file_name,
+          type: a.artifact_type,
+          sizeBytes: a.file_size,
           checksum: a.checksum,
-          generatedAt: a.createdAt.toISOString(),
-          mimeType: a.mimeType,
-          filePath: a.filePath,
-          storageBucket: a.storageBucket,
-          storageKey: a.storageKey,
+          generatedAt: a.created_at,
+          mimeType: a.mime_type,
+          filePath: a.file_path,
+          storageBucket: a.storage_bucket,
+          storageKey: a.storage_key,
         };
 
-        if (!a.storageBucket || !a.storageKey || !storageClient) {
+        if (!a.storage_bucket || !a.storage_key || !storageClient) {
           return { ...base, downloadUrl: null, persisted: false as const };
         }
 
         const { data, error } = await storageClient.storage
-          .from(a.storageBucket)
-          .createSignedUrl(a.storageKey, SIGNED_URL_EXPIRY_SECONDS);
+          .from(a.storage_bucket)
+          .createSignedUrl(a.storage_key, SIGNED_URL_EXPIRY_SECONDS);
 
         if (error || !data?.signedUrl) {
           return { ...base, downloadUrl: null, persisted: false as const };
