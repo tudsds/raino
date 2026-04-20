@@ -114,8 +114,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       id: bom.id,
       projectId: bom.project_id,
       rows: coreRows,
-      createdAt: bom.created_at,
-      updatedAt: bom.updated_at,
+      createdAt: new Date(bom.created_at),
+      updatedAt: new Date(bom.updated_at),
       version: 1,
     };
 

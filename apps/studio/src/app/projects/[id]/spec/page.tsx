@@ -202,7 +202,7 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                 <div className="flex justify-between">
                   <span className="text-[#64748b]">Progress</span>
                   <span className="text-[#00f0ff] font-mono">
-                    {Math.round((project.current_step / project.totalSteps) * 100)}%
+                    {Math.round((project.currentStep / project.totalSteps) * 100)}%
                   </span>
                 </div>
               </div>

@@ -56,7 +56,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       : 'No architecture selected';
 
     const candidateParts = project.ingestion
-      ? JSON.stringify(project.ingestion.candidateFamilies)
+      ? JSON.stringify(project.ingestion.candidate_families)
       : 'No candidates ingested';
 
     let bomGuidance: string;
@@ -137,19 +137,19 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       projectId: id,
       bom: {
         id: bom.id,
-        totalCost: Number(bom.totalCost),
+        totalCost: Number(bom.total_cost),
         currency: bom.currency,
-        lineCount: bom.lineCount,
-        isEstimate: bom.isEstimate,
+        lineCount: bom.line_count,
+        isEstimate: bom.is_estimate,
         items: bom.rows.map((r) => ({
           id: r.id,
           ref: r.ref,
           value: r.value,
           mpn: r.mpn,
           manufacturer: r.manufacturer,
-          package: r.pkg,
+          package: r.package,
           quantity: r.quantity,
-          unitPrice: Number(r.unitPrice),
+          unitPrice: Number(r.unit_price),
           currency: r.currency,
           lifecycle: r.lifecycle,
           risk: r.risk,

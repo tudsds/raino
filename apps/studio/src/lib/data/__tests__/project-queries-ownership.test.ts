@@ -20,11 +20,21 @@ function arrayResult<T>(rows: T[]): { data: T[] | null; error: { message: string
 // Chainable stub that terminates on either `.maybeSingle()` or thenable await.
 // fetchProjectRelations awaits `db.from(...).select().eq(...).order(...)` directly
 // and sometimes `...maybeSingle()`, so both must be supported.
+type ChainableStub = {
+  select: () => ChainableStub;
+  eq: () => ChainableStub;
+  in: () => ChainableStub;
+  order: () => ChainableStub;
+  limit: () => ChainableStub;
+  maybeSingle: () => Promise<unknown>;
+  then: <T>(resolve: (value: unknown) => T) => Promise<T>;
+};
+
 function qb(
   maybeSingleValue: unknown | null = null,
   thenValue: unknown = arrayResult([]),
-) {
-  const chain: any = {};
+): ChainableStub {
+  const chain = {} as ChainableStub;
   const passthrough = () => chain;
   chain.select = passthrough;
   chain.eq = passthrough;
@@ -32,7 +42,8 @@ function qb(
   chain.order = passthrough;
   chain.limit = passthrough;
   chain.maybeSingle = vi.fn().mockResolvedValue(maybeSingleValue);
-  chain.then = (resolve: any) => Promise.resolve(thenValue).then(resolve);
+  chain.then = <T>(resolve: (value: unknown) => T) =>
+    Promise.resolve(thenValue).then(resolve);
   return chain;
 }
 

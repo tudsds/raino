@@ -1,4 +1,4 @@
-import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
+import { getSupabaseAdmin, type DbBOM, type DbBOMRow } from '@/lib/db/supabase-admin';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
@@ -42,9 +42,13 @@ export default async function BOMPage({ params }: BOMPageProps) {
     .eq('project_id', id)
     .maybeSingle();
 
-  const bom = bomData ?? null;
-  const rows = (bom as any)?.rows ?? [];
-  const totalCost = rows.reduce((sum: number, item: any) => sum + Number(item.unit_price ?? 0) * (item.quantity ?? 1), 0);
+  const bom = (bomData as (DbBOM & { rows: DbBOMRow[] }) | null) ?? null;
+  const rows: DbBOMRow[] = bom?.rows ?? [];
+  const totalCost = rows.reduce(
+    (sum: number, item: DbBOMRow) =>
+      sum + Number(item.unit_price ?? 0) * (item.quantity ?? 1),
+    0,
+  );
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },
@@ -81,7 +85,7 @@ export default async function BOMPage({ params }: BOMPageProps) {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            {bom?.isEstimate && (
+            {bom?.is_estimate && (
               <span className="px-3 py-1.5 bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] text-xs text-[#f59e0b] font-medium">
                 Estimate
               </span>
@@ -112,7 +116,7 @@ export default async function BOMPage({ params }: BOMPageProps) {
       </div>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {bom?.isEstimate && (
+        {bom?.is_estimate && (
           <DegradedModeBanner
             message="BOM prices are estimates. Some components use fixture data rather than live supplier pricing."
             severity="amber"
@@ -156,7 +160,7 @@ export default async function BOMPage({ params }: BOMPageProps) {
                     </tr>
                   </thead>
                   <tbody>
-                    {rows.map((item) => (
+                    {rows.map((item: DbBOMRow) => (
                       <tr key={item.id}>
                         <td className="font-mono text-[#00f0ff]">{item.ref}</td>
                         <td>{item.value}</td>
@@ -164,10 +168,10 @@ export default async function BOMPage({ params }: BOMPageProps) {
                         <td>{item.manufacturer}</td>
                         <td className="text-right font-mono">{item.quantity}</td>
                         <td className="text-right font-mono">
-                          ${Number(item.unitPrice).toFixed(2)}
+                          ${Number(item.unit_price).toFixed(2)}
                         </td>
                         <td className="text-right font-mono text-[#e4e4e7]">
-                          ${(Number(item.unitPrice) * item.quantity).toFixed(2)}
+                          ${(Number(item.unit_price) * item.quantity).toFixed(2)}
                         </td>
                         <td>
                           <RiskBadge level={item.risk} />
@@ -211,7 +215,7 @@ export default async function BOMPage({ params }: BOMPageProps) {
                   <span className="text-sm text-[#a1a1aa]">Low Risk</span>
                 </div>
                 <p className="text-2xl font-bold text-[#22c55e]">
-                  {rows.filter((i) => i.risk === 'low').length}
+                  {rows.filter((i: DbBOMRow) => i.risk === 'low').length}
                 </p>
               </div>
 
@@ -235,7 +239,7 @@ export default async function BOMPage({ params }: BOMPageProps) {
                   <span className="text-sm text-[#a1a1aa]">Medium Risk</span>
                 </div>
                 <p className="text-2xl font-bold text-[#f59e0b]">
-                  {rows.filter((i) => i.risk === 'medium').length}
+                  {rows.filter((i: DbBOMRow) => i.risk === 'medium').length}
                 </p>
               </div>
 
@@ -259,7 +263,7 @@ export default async function BOMPage({ params }: BOMPageProps) {
                   <span className="text-sm text-[#a1a1aa]">High Risk</span>
                 </div>
                 <p className="text-2xl font-bold text-[#ef4444]">
-                  {rows.filter((i) => i.risk === 'high').length}
+                  {rows.filter((i: DbBOMRow) => i.risk === 'high').length}
                 </p>
               </div>
             </div>

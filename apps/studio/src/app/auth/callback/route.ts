@@ -12,6 +12,7 @@ import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { CookieOptions } from '@supabase/ssr';
+import type { Database } from '@/lib/db/supabase-admin';
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
@@ -51,7 +52,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(url);
   }
 
-  const adminClient = createClient(
+  const adminClient = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { autoRefreshToken: false, persistSession: false } }

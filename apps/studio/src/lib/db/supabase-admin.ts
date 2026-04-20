@@ -5,28 +5,6 @@
  */
 import { createClient } from '@supabase/supabase-js';
 
-let _adminClient: ReturnType<typeof createClient> | null = null;
-
-export function getSupabaseAdmin() {
-  if (_adminClient) return _adminClient;
-
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!url || !key) {
-    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
-  }
-
-  _adminClient = createClient(url, key, {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  });
-
-  return _adminClient;
-}
-
 // ─── Type definitions matching the DB schema ──────────────────────────────────
 
 export interface DbUser {
@@ -214,4 +192,107 @@ export interface DbAuditEntry {
   severity: string;
   source: string | null;
   created_at: string;
+}
+
+// ─── Supabase-shaped Database generic ─────────────────────────────────────────
+// The shape matches what @supabase/supabase-js expects for `createClient<Database>`:
+// public.Tables.<name>.{ Row, Insert, Update }. Insert/Update are permissive
+// `Partial<Row>` for our direct-client usage — we rely on runtime validation
+// plus explicit column names at call sites rather than per-field required
+// markers. Views/Functions/Enums/CompositeTypes are declared so the type
+// satisfies the Supabase `GenericSchema` contract.
+
+export type Database = {
+  public: {
+    Tables: {
+      users: { Row: DbUser; Insert: Partial<DbUser>; Update: Partial<DbUser> };
+      organizations: {
+        Row: DbOrganization;
+        Insert: Partial<DbOrganization>;
+        Update: Partial<DbOrganization>;
+      };
+      organization_members: {
+        Row: DbOrganizationMember;
+        Insert: Partial<DbOrganizationMember>;
+        Update: Partial<DbOrganizationMember>;
+      };
+      projects: { Row: DbProject; Insert: Partial<DbProject>; Update: Partial<DbProject> };
+      intake_messages: {
+        Row: DbIntakeMessage;
+        Insert: Partial<DbIntakeMessage>;
+        Update: Partial<DbIntakeMessage>;
+      };
+      specs: { Row: DbSpec; Insert: Partial<DbSpec>; Update: Partial<DbSpec> };
+      architectures: {
+        Row: DbArchitecture;
+        Insert: Partial<DbArchitecture>;
+        Update: Partial<DbArchitecture>;
+      };
+      boms: { Row: DbBOM; Insert: Partial<DbBOM>; Update: Partial<DbBOM> };
+      bom_rows: { Row: DbBOMRow; Insert: Partial<DbBOMRow>; Update: Partial<DbBOMRow> };
+      quotes: { Row: DbQuote; Insert: Partial<DbQuote>; Update: Partial<DbQuote> };
+      ingestion_manifests: {
+        Row: DbIngestionManifest;
+        Insert: Partial<DbIngestionManifest>;
+        Update: Partial<DbIngestionManifest>;
+      };
+      design_artifacts: {
+        Row: DbDesignArtifact;
+        Insert: Partial<DbDesignArtifact>;
+        Update: Partial<DbDesignArtifact>;
+      };
+      design_jobs: {
+        Row: DbDesignJob;
+        Insert: Partial<DbDesignJob>;
+        Update: Partial<DbDesignJob>;
+      };
+      handoff_requests: {
+        Row: DbHandoffRequest;
+        Insert: Partial<DbHandoffRequest>;
+        Update: Partial<DbHandoffRequest>;
+      };
+      audit_entries: {
+        Row: DbAuditEntry;
+        Insert: Partial<DbAuditEntry>;
+        Update: Partial<DbAuditEntry>;
+      };
+    };
+    Views: Record<string, never>;
+    Functions: {
+      ensure_user_and_org: {
+        Args: {
+          p_supabase_user_id: string;
+          p_email: string;
+          p_full_name: string | null;
+        };
+        Returns: { user_id: string; organization_id: string }[];
+      };
+    };
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
+  };
+};
+
+// ─── Client singleton ─────────────────────────────────────────────────────────
+
+let _adminClient: ReturnType<typeof createClient<Database>> | null = null;
+
+export function getSupabaseAdmin() {
+  if (_adminClient) return _adminClient;
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
+  }
+
+  _adminClient = createClient<Database>(url, key, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
+
+  return _adminClient;
 }

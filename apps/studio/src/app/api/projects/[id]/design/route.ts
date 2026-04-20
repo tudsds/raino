@@ -33,7 +33,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       reference: row.ref,
       value: row.value,
       mpn: row.mpn,
-      footprint: row.pkg,
+      footprint: row.package,
       symbol: '',
       manufacturer: row.manufacturer,
       quantity: row.quantity,
@@ -44,7 +44,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       projectName: project.name,
       bom: bomComponents,
       architecture: {
-        name: project.architecture?.templateName ?? 'generic',
+        name: project.architecture?.template_name ?? 'generic',
         processorType: project.architecture?.mcu ?? 'unknown',
         powerTopology: project.architecture?.power ?? 'unknown',
         interfaceSet: Array.isArray(project.architecture?.interfaces)

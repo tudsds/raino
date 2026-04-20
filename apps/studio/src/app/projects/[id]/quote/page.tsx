@@ -66,7 +66,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
     return {
       id: a.id,
       name: a.file_name,
-      type: a.artifactType,
+      type: a.artifact_type,
       url,
     };
   });
@@ -165,19 +165,19 @@ export default async function QuotePage({ params }: QuotePageProps) {
                   <div className="text-center p-6 bg-[#1a1a2e] border border-[#27273a]">
                     <p className="text-sm text-[#64748b] mb-2">Low Estimate</p>
                     <p className="text-3xl font-bold text-[#22c55e] font-mono">
-                      ${Number(quoteRow.lowQuote).toLocaleString()}
+                      ${Number(quoteRow.low_quote).toLocaleString()}
                     </p>
                   </div>
                   <div className="text-center p-6 bg-gradient-to-b from-[#00f0ff]/10 to-[#8b5cf6]/10 border border-[#00f0ff]/30 neon-glow-cyan">
                     <p className="text-sm text-[#00f0ff] mb-2">Mid Estimate</p>
                     <p className="text-4xl font-bold gradient-text font-mono">
-                      ${Number(quoteRow.midQuote).toLocaleString()}
+                      ${Number(quoteRow.mid_quote).toLocaleString()}
                     </p>
                   </div>
                   <div className="text-center p-6 bg-[#1a1a2e] border border-[#27273a]">
                     <p className="text-sm text-[#64748b] mb-2">High Estimate</p>
                     <p className="text-3xl font-bold text-[#f59e0b] font-mono">
-                      ${Number(quoteRow.highQuote).toLocaleString()}
+                      ${Number(quoteRow.high_quote).toLocaleString()}
                     </p>
                   </div>
                 </div>
@@ -197,7 +197,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
                   <div className="flex justify-between items-center pt-4 border-t-2 border-[#27273a]">
                     <span className="text-lg font-semibold text-[#e4e4e7]">Mid Estimate Total</span>
                     <span className="text-2xl font-bold text-[#00f0ff] font-mono">
-                      ${Number(quoteRow.midQuote).toLocaleString()}
+                      ${Number(quoteRow.mid_quote).toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -235,7 +235,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
                   <div className="flex justify-between">
                     <span className="text-[#64748b]">Generated</span>
                     <span className="text-[#e4e4e7]">
-                      {new Date(quoteRow.createdAt).toLocaleDateString()}
+                      {new Date(quoteRow.created_at).toLocaleDateString()}
                     </span>
                   </div>
                   <div className="flex justify-between">
