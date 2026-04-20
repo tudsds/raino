@@ -1,4 +1,4 @@
-import { prisma } from '@raino/db';
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
@@ -25,18 +25,26 @@ function RiskBadge({ level }: { level: string }) {
 
 export default async function BOMPage({ params }: BOMPageProps) {
   const { id } = await params;
-  const project = await prisma.project.findUnique({
-    where: { id },
-    include: { bom: { include: { rows: true } } },
-  });
+  const db = getSupabaseAdmin();
+  const { data: project } = await db
+    .from('projects')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
 
   if (!project) {
     notFound();
   }
 
-  const bom = project.bom;
-  const rows = bom?.rows ?? [];
-  const totalCost = rows.reduce((sum, item) => sum + Number(item.unitPrice) * item.quantity, 0);
+  const { data: bomData } = await db
+    .from('boms')
+    .select('*, rows:bom_rows(*)')
+    .eq('project_id', id)
+    .maybeSingle();
+
+  const bom = bomData ?? null;
+  const rows = (bom as any)?.rows ?? [];
+  const totalCost = rows.reduce((sum: number, item: any) => sum + Number(item.unit_price ?? 0) * (item.quantity ?? 1), 0);
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },

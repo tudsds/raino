@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { prisma } from '@raino/db';
+import { getProjectsForUser } from '@/lib/data/project-queries';
 import { getAdapterStatus } from '@raino/supplier-clients';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import NeonButton from '@/components/NeonButton';
@@ -28,27 +28,18 @@ export default async function DashboardPage() {
 
   try {
     if (user) {
-      const dbUser = await prisma.user.findUnique({
-        where: { supabaseUserId: user.id },
-        include: {
-          memberships: {
-            include: {
-              organization: {
-                include: {
-                  projects: { orderBy: { updatedAt: 'desc' } },
-                },
-              },
-            },
-          },
-        },
-      });
-
-      if (dbUser) {
-        for (const membership of dbUser.memberships) {
-          for (const project of membership.organization.projects) {
-            projects.push(project);
-          }
-        }
+      const dbProjects = await getProjectsForUser(user.id);
+      for (const project of dbProjects) {
+        projects.push({
+          id: project.id,
+          name: project.name,
+          description: project.description ?? null,
+          status: project.status,
+          currentStep: project.current_step ?? 1,
+          totalSteps: project.total_steps ?? 12,
+          createdAt: new Date(project.created_at),
+          updatedAt: new Date(project.updated_at),
+        });
       }
     }
   } catch {

@@ -1,4 +1,4 @@
-import { prisma } from '@raino/db';
+import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAdapterStatus } from '@raino/supplier-clients';
@@ -29,16 +29,24 @@ function ConfidenceBadge({ level }: { level: string }) {
 
 export default async function QuotePage({ params }: QuotePageProps) {
   const { id } = await params;
-  const project = await prisma.project.findUnique({
-    where: { id },
-    include: { quotes: { orderBy: { createdAt: 'desc' } } },
-  });
+  const db = getSupabaseAdmin();
+  const { data: project } = await db
+    .from('projects')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  const { data: quotes } = project ? await db
+    .from('quotes')
+    .select('*')
+    .eq('project_id', id)
+    .order('created_at', { ascending: false }) : { data: [] };
 
   if (!project) {
     notFound();
   }
 
-  const quoteRow = project.quotes[0];
+  const quoteRow = (quotes ?? [])[0];
   const breakdown = Array.isArray(quoteRow?.breakdown)
     ? (quoteRow.breakdown as Array<{ label: string; value: number }>)
     : [];
@@ -52,12 +60,12 @@ export default async function QuotePage({ params }: QuotePageProps) {
   const artifacts = await getArtifacts(id);
   const artifactOptions = artifacts.map((a) => {
     const url =
-      a.storageBucket && a.storageKey && process.env.NEXT_PUBLIC_SUPABASE_URL
-        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${a.storageBucket}/${a.storageKey}`
-        : a.filePath;
+      a.storage_bucket && a.storage_key && process.env.NEXT_PUBLIC_SUPABASE_URL
+        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${a.storage_bucket}/${a.storage_key}`
+        : a.file_path;
     return {
       id: a.id,
-      name: a.fileName,
+      name: a.file_name,
       type: a.artifactType,
       url,
     };
