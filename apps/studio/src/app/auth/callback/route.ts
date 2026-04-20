@@ -1,6 +1,6 @@
-import { createServerClient } from '@supabase/ssr';
-import { NextResponse } from 'next/server';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 import { prisma } from '@raino/db';
 
 export async function GET(request: Request) {
@@ -8,68 +8,47 @@ export async function GET(request: Request) {
   const code = requestUrl.searchParams.get('code');
 
   if (code) {
-    const cookieStore = await cookies();
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
-      {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll();
-          },
-          setAll(cookiesToSet) {
-            try {
-              cookiesToSet.forEach(({ name, value, options }) =>
-                cookieStore.set(name, value, options),
-              );
-            } catch {
-              // Server Components cannot set cookies — this is expected
-              // when called from a Server Component context
-            }
-          },
-        },
-      },
-    );
+    const supabase = createRouteHandlerClient({ cookies });
     await supabase.auth.exchangeCodeForSession(code);
 
-    // Provision User + personal Organization on first sign-in
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
-      if (user?.id && user.email) {
-        const email = user.email;
-        const fullName = user.user_metadata?.full_name ?? user.user_metadata?.name ?? null;
+    if (user) {
+      // Ensure user exists in our DB and has an organization
+      await prisma.$transaction(async (tx) => {
+        const dbUser = await tx.user.upsert({
+          where: { supabaseUserId: user.id },
+          update: { email: user.email! },
+          create: {
+            supabaseUserId: user.id,
+            email: user.email!,
+            fullName: user.user_metadata?.full_name,
+          },
+        });
 
-        await prisma.$transaction(async (tx) => {
-          await tx.user.upsert({
-            where: { supabaseUserId: user.id },
-            update: {},
-            create: {
-              supabaseUserId: user.id,
-              email,
-              fullName,
-              memberships: {
-                create: {
-                  role: 'owner',
-                  organization: {
-                    create: {
-                      name: 'Personal',
-                      slug: `personal-${user.id.slice(0, 8)}`,
-                    },
-                  },
-                },
-              },
+        const existingMembership = await tx.organizationMember.findFirst({
+          where: { userId: dbUser.id },
+        });
+
+        if (!existingMembership) {
+          const org = await tx.organization.create({
+            data: {
+              name: `${dbUser.fullName || dbUser.email}'s Org`,
+              slug: `org-${dbUser.id.slice(0, 8)}`,
             },
           });
-        });
-      }
-    } catch (provisioningError) {
-      console.error('[auth/callback] User provisioning failed:', provisioningError);
-      return NextResponse.redirect(new URL('/login?error=provisioning_failed', requestUrl.origin));
+
+          await tx.organizationMember.create({
+            data: {
+              userId: dbUser.id,
+              organizationId: org.id,
+              role: 'owner',
+            },
+          });
+        }
+      });
     }
   }
 
-  return NextResponse.redirect(new URL('/', requestUrl.origin));
+  return NextResponse.redirect(requestUrl.origin);
 }
