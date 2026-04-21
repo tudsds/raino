@@ -58,13 +58,13 @@ export async function GET(request: Request) {
     { auth: { autoRefreshToken: false, persistSession: false } }
   );
 
-  const fullName =
-    user.user_metadata?.full_name || user.user_metadata?.name || null;
+  const fullName: string | undefined =
+    user.user_metadata?.full_name || user.user_metadata?.name || undefined;
 
   const { error: rpcError } = await adminClient.rpc('ensure_user_and_org', {
     p_supabase_user_id: user.id,
     p_email: user.email!,
-    p_full_name: fullName,
+    ...(fullName !== undefined ? { p_full_name: fullName } : {}),
   });
 
   if (rpcError) {
