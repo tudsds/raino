@@ -1,0 +1,74 @@
+name: design-worker
+
+on:
+  repository_dispatch:
+    types: [design-job]
+  workflow_dispatch:
+    inputs:
+      job_id:
+        description: design_jobs.id to process
+        required: true
+        type: string
+
+concurrency:
+  # Run jobs for the same project serially; different projects can run in parallel.
+  group: design-worker-${{ github.event.client_payload.project_id || github.event.inputs.job_id }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    name: Run KiCad design job
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      JOB_ID: ${{ github.event.client_payload.job_id || github.event.inputs.job_id }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      KICAD_CLI_PATH: /usr/bin/kicad-cli
+
+    steps:
+      - name: Validate inputs
+        run: |
+          if [ -z "$JOB_ID" ]; then
+            echo "::error::JOB_ID is empty — dispatch payload missing job_id."
+            exit 1
+          fi
+          echo "Running job $JOB_ID"
+
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install KiCad CLI
+        run: |
+          sudo add-apt-repository --yes ppa:kicad/kicad-9.0-releases
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y kicad
+          which kicad-cli
+          kicad-cli --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build design-worker
+        run: pnpm --filter @raino/design-worker build
+
+      - name: Run job
+        working-directory: services/design-worker
+        run: node dist/cli/run-job.js
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: design-worker-logs-${{ env.JOB_ID }}
+          path: /tmp/raino-projects/
+          if-no-files-found: ignore
+          retention-days: 7
