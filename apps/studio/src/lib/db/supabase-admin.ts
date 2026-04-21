@@ -202,60 +202,31 @@ export interface DbAuditEntry {
 // markers. Views/Functions/Enums/CompositeTypes are declared so the type
 // satisfies the Supabase `GenericSchema` contract.
 
+type TableOf<TRow> = {
+  Row: TRow;
+  Insert: Partial<TRow>;
+  Update: Partial<TRow>;
+  Relationships: [];
+};
+
 export type Database = {
   public: {
     Tables: {
-      users: { Row: DbUser; Insert: Partial<DbUser>; Update: Partial<DbUser> };
-      organizations: {
-        Row: DbOrganization;
-        Insert: Partial<DbOrganization>;
-        Update: Partial<DbOrganization>;
-      };
-      organization_members: {
-        Row: DbOrganizationMember;
-        Insert: Partial<DbOrganizationMember>;
-        Update: Partial<DbOrganizationMember>;
-      };
-      projects: { Row: DbProject; Insert: Partial<DbProject>; Update: Partial<DbProject> };
-      intake_messages: {
-        Row: DbIntakeMessage;
-        Insert: Partial<DbIntakeMessage>;
-        Update: Partial<DbIntakeMessage>;
-      };
-      specs: { Row: DbSpec; Insert: Partial<DbSpec>; Update: Partial<DbSpec> };
-      architectures: {
-        Row: DbArchitecture;
-        Insert: Partial<DbArchitecture>;
-        Update: Partial<DbArchitecture>;
-      };
-      boms: { Row: DbBOM; Insert: Partial<DbBOM>; Update: Partial<DbBOM> };
-      bom_rows: { Row: DbBOMRow; Insert: Partial<DbBOMRow>; Update: Partial<DbBOMRow> };
-      quotes: { Row: DbQuote; Insert: Partial<DbQuote>; Update: Partial<DbQuote> };
-      ingestion_manifests: {
-        Row: DbIngestionManifest;
-        Insert: Partial<DbIngestionManifest>;
-        Update: Partial<DbIngestionManifest>;
-      };
-      design_artifacts: {
-        Row: DbDesignArtifact;
-        Insert: Partial<DbDesignArtifact>;
-        Update: Partial<DbDesignArtifact>;
-      };
-      design_jobs: {
-        Row: DbDesignJob;
-        Insert: Partial<DbDesignJob>;
-        Update: Partial<DbDesignJob>;
-      };
-      handoff_requests: {
-        Row: DbHandoffRequest;
-        Insert: Partial<DbHandoffRequest>;
-        Update: Partial<DbHandoffRequest>;
-      };
-      audit_entries: {
-        Row: DbAuditEntry;
-        Insert: Partial<DbAuditEntry>;
-        Update: Partial<DbAuditEntry>;
-      };
+      users: TableOf<DbUser>;
+      organizations: TableOf<DbOrganization>;
+      organization_members: TableOf<DbOrganizationMember>;
+      projects: TableOf<DbProject>;
+      intake_messages: TableOf<DbIntakeMessage>;
+      specs: TableOf<DbSpec>;
+      architectures: TableOf<DbArchitecture>;
+      boms: TableOf<DbBOM>;
+      bom_rows: TableOf<DbBOMRow>;
+      quotes: TableOf<DbQuote>;
+      ingestion_manifests: TableOf<DbIngestionManifest>;
+      design_artifacts: TableOf<DbDesignArtifact>;
+      design_jobs: TableOf<DbDesignJob>;
+      handoff_requests: TableOf<DbHandoffRequest>;
+      audit_entries: TableOf<DbAuditEntry>;
     };
     Views: Record<string, never>;
     Functions: {
