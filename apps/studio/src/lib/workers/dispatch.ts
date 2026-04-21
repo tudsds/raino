@@ -1,4 +1,4 @@
-import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
+import { getSupabaseAdmin, type Json } from '@/lib/db/supabase-admin';
 
 export interface DispatchResult {
   jobId: string;
@@ -22,7 +22,7 @@ export async function dispatchDesignJob(
       project_id: projectId,
       job_type: jobType,
       status: 'pending',
-      result: input ?? null,
+      result: (input ?? null) as Json | null,
     })
     .select('id')
     .single();

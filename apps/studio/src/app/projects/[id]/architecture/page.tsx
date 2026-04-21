@@ -21,7 +21,10 @@ export default async function ArchitecturePage({ params }: ArchitecturePageProps
     notFound();
   }
 
-  const architecture = project.architecture ?? null;
+  const architectures = project.architecture ?? [];
+  const architecture = Array.isArray(architectures)
+    ? (architectures[0] ?? null)
+    : architectures;
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] circuit-grid">

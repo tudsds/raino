@@ -1,4 +1,4 @@
-import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
+import { getSupabaseAdmin, type Json } from '@/lib/db/supabase-admin';
 import type { DocumentRecord, ChunkRecord, EmbeddingRecord } from '@raino/rag';
 import {
   discoverCandidates,
@@ -382,7 +382,7 @@ export async function runIngestionPipeline(
         chunkCount: chunks.length,
         embeddingCount: embeddings.length,
         duration: Date.now() - startedAt,
-      },
+      } as unknown as Json,
       updated_at: new Date().toISOString(),
     })
     .eq('project_id', options.projectId);

@@ -3,7 +3,7 @@
  * Bypasses Prisma ORM to avoid the table name mapping issue.
  */
 import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
-import type { DbAuditEntry } from '@/lib/db/supabase-admin';
+import type { DbAuditEntry, Json } from '@/lib/db/supabase-admin';
 
 export async function getAuditEntries(projectId: string) {
   const db = getSupabaseAdmin();
@@ -36,7 +36,7 @@ export async function createAuditEntry(
       category: data.category,
       action: data.action,
       actor: data.actor,
-      details: data.details ?? null,
+      details: (data.details ?? null) as Json | null,
       severity: data.severity ?? 'info',
       source: data.source ?? 'studio-api',
     })

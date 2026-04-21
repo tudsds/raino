@@ -3,7 +3,7 @@
  * Bypasses Prisma ORM to avoid the table name mapping issue.
  */
 import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
-import type { DbIngestionManifest } from '@/lib/db/supabase-admin';
+import type { DbIngestionManifest, Json } from '@/lib/db/supabase-admin';
 
 export async function getIngestionManifest(projectId: string) {
   const db = getSupabaseAdmin();
@@ -33,8 +33,8 @@ export async function createIngestionManifest(
       .from('ingestion_manifests')
       .update({
         status: data.status,
-        candidate_families: data.candidateFamilies,
-        stages: data.stages,
+        candidate_families: data.candidateFamilies as unknown as Json,
+        stages: data.stages as unknown as Json,
         updated_at: new Date().toISOString(),
       })
       .eq('id', existing.id)
@@ -50,8 +50,8 @@ export async function createIngestionManifest(
     .insert({
       project_id: projectId,
       status: data.status,
-      candidate_families: data.candidateFamilies,
-      stages: data.stages,
+      candidate_families: data.candidateFamilies as unknown as Json,
+      stages: data.stages as unknown as Json,
     })
     .select()
     .single();
@@ -80,7 +80,7 @@ export async function updateIngestionSufficiencyReport(
   const db = getSupabaseAdmin();
   const { data, error } = await db
     .from('ingestion_manifests')
-    .update({ sufficiency_report: report, updated_at: new Date().toISOString() })
+    .update({ sufficiency_report: report as unknown as Json, updated_at: new Date().toISOString() })
     .eq('project_id', projectId)
     .select()
     .single();

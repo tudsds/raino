@@ -3,7 +3,7 @@
  * Bypasses Prisma ORM to avoid the table name mapping issue.
  */
 import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
-import type { DbDesignArtifact, DbDesignJob, DbHandoffRequest } from '@/lib/db/supabase-admin';
+import type { DbDesignArtifact, DbDesignJob, DbHandoffRequest, Json } from '@/lib/db/supabase-admin';
 
 export async function getArtifacts(projectId: string, artifactType?: string) {
   const db = getSupabaseAdmin();
@@ -34,7 +34,7 @@ export async function createDesignJob(
       project_id: projectId,
       job_type: jobType,
       status: 'pending',
-      result: input ?? null,
+      result: (input ?? null) as Json | null,
     })
     .select()
     .single();
@@ -72,7 +72,7 @@ export async function createHandoffRequest(
       type: data.type,
       quantity: data.quantity,
       quote_id: data.quoteId ?? null,
-      metadata: data.metadata ?? null,
+      metadata: (data.metadata ?? null) as Json | null,
     })
     .select()
     .single();
