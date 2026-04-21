@@ -49,11 +49,11 @@ async function triggerGitHubWorkflow(
   projectId: string,
   jobType: string,
 ): Promise<boolean> {
-  const token = process.env.GITHUB_DISPATCH_TOKEN;
+  const token = process.env.GITHUB_ACTIONS_DISPATCH_TOKEN ?? process.env.GITHUB_DISPATCH_TOKEN;
   const repo = process.env.GITHUB_REPO ?? 'tudsds/raino';
   if (!token) {
     console.warn(
-      '[dispatch] GITHUB_DISPATCH_TOKEN not set — job queued but not dispatched',
+      '[dispatch] GITHUB_ACTIONS_DISPATCH_TOKEN not set — job queued but not dispatched',
     );
     return false;
   }
