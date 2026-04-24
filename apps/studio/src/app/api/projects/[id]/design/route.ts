@@ -54,7 +54,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       },
     };
 
-    const { jobId, status } = await dispatchDesignJob(
+    const { jobId, status, triggered } = await dispatchDesignJob(
       id,
       'DESIGN',
       generateRequest as unknown as Record<string, unknown>,
@@ -69,12 +69,17 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       details: { jobId, jobType: 'DESIGN' },
     });
 
+    const warning = !triggered
+      ? 'GITHUB_ACTIONS_DISPATCH_TOKEN is not configured. The design job is queued but will not be dispatched to GitHub Actions. Set GITHUB_ACTIONS_DISPATCH_TOKEN to enable automatic execution.'
+      : undefined;
+
     return NextResponse.json(
       {
         projectId: id,
         jobId,
         status,
         message: 'Design job queued',
+        warning,
       },
       { status: 202 },
     );

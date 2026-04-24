@@ -340,7 +340,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/ubuntu/raino/packages/db/src/generated/prisma",
+      "value": "/mnt/d/raino/packages/db/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -356,11 +356,12 @@ const config = {
     "previewFeatures": [
       "postgresqlExtensions"
     ],
-    "sourceFilePath": "/home/ubuntu/raino/packages/db/prisma/schema.prisma",
+    "sourceFilePath": "/mnt/d/raino/packages/db/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.19.3",

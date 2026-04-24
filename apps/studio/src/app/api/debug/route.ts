@@ -10,6 +10,7 @@ export async function GET() {
     hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
     hasServiceRoleKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
     supabaseUrlPrefix: process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 30),
+    hasDispatchToken: !!(process.env.GITHUB_ACTIONS_DISPATCH_TOKEN ?? process.env.GITHUB_DISPATCH_TOKEN),
   };
 
   // Check auth

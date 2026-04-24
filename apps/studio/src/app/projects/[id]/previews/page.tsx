@@ -26,6 +26,7 @@ export default async function PreviewsPage({ params }: PreviewsPageProps) {
         .maybeSingle();
 
       const designJob = (job as DbDesignJob | null) ?? null;
+      const hasDispatchToken = !!(process.env.GITHUB_ACTIONS_DISPATCH_TOKEN ?? process.env.GITHUB_DISPATCH_TOKEN);
 
       if (!designJob) {
         degradedMessage =
@@ -34,7 +35,12 @@ export default async function PreviewsPage({ params }: PreviewsPageProps) {
         switch (designJob.status) {
           case 'pending':
           case 'running':
-            degradedMessage = 'Design generation in progress via GitHub Actions...';
+            if (!hasDispatchToken) {
+              degradedMessage =
+                'Design generation is queued but cannot be dispatched. The GITHUB_ACTIONS_DISPATCH_TOKEN environment variable is not configured. Without it, the design job will remain pending indefinitely. Set GITHUB_ACTIONS_DISPATCH_TOKEN to enable automatic execution via GitHub Actions.';
+            } else {
+              degradedMessage = 'Design generation in progress via GitHub Actions...';
+            }
             break;
           case 'completed':
             degradedMessage = undefined;

@@ -1,0 +1,20 @@
+@raino/ingest-worker:build: cache miss, executing c99cdaee4002bc02
+@raino/ingest-worker:typecheck: cache miss, executing 885c8fe31b96d402
+@raino/ingest-worker:build: 
+@raino/ingest-worker:build: > @raino/ingest-worker@0.1.0 build /mnt/d/raino/services/ingest-worker
+@raino/ingest-worker:build: > tsc
+@raino/ingest-worker:build: 
+@raino/ingest-worker:typecheck: 
+@raino/ingest-worker:typecheck: > @raino/ingest-worker@0.1.0 typecheck /mnt/d/raino/services/ingest-worker
+@raino/ingest-worker:typecheck: > tsc --noEmit
+@raino/ingest-worker:typecheck: 
+@raino/studio:typecheck: cache miss, executing 8db27846cb5d1c99
+@raino/studio:typecheck: 
+@raino/studio:typecheck: > @raino/studio@0.1.0 typecheck /mnt/d/raino/apps/studio
+@raino/studio:typecheck: > tsc --noEmit
+@raino/studio:typecheck: 
+
+ Tasks:    25 successful, 25 total
+Cached:    2 cached, 25 total
+  Time:    1m50.276s 
+

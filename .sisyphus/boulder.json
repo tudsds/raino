@@ -1,82 +1,23 @@
 {
-  "active_plan": "/mnt/d/raino/.sisyphus/plans/phase2-fix.md",
-  "started_at": "2026-04-19T10:56:42.221Z",
-  "session_ids": ["ses_25cc938a1ffe3qrkEKpV6OVyVB"],
+  "active_plan": "/mnt/d/raino/.sisyphus/plans/raino-browser-debug.md",
+  "started_at": "2026-04-24T07:51:50.033Z",
+  "session_ids": [
+    "ses_2422dbb50ffe33R4Q5dwPLTNPc"
+  ],
   "session_origins": {
-    "ses_25cc938a1ffe3qrkEKpV6OVyVB": "direct"
+    "ses_2422dbb50ffe33R4Q5dwPLTNPc": "direct"
   },
-  "plan_name": "phase2-fix",
+  "plan_name": "raino-browser-debug",
   "agent": "atlas",
   "task_sessions": {
     "todo:1": {
       "task_key": "todo:1",
       "task_label": "1",
-      "task_title": "Fix CSS typo, .env.example comment, and copyright year",
-      "session_id": "ses_25a7c4ab4ffeFDydDXwRMfUjOX",
+      "task_title": "Fix Playwright Browser Connectivity (WSL2 → Chrome CDP)",
+      "session_id": "ses_24166eb0cffeMJsTcqLmarImat",
       "agent": "Sisyphus-Junior",
       "category": "quick",
-      "updated_at": "2026-04-19T11:55:27.250Z"
-    },
-    "todo:5": {
-      "task_key": "todo:5",
-      "task_label": "5",
-      "task_title": "Fix auth consistency — make signup use magic link",
-      "session_id": "ses_25a64d0c4ffeL4VUtfVxvhBUDV",
-      "agent": "Sisyphus-Junior",
-      "category": "quick",
-      "updated_at": "2026-04-19T12:08:52.575Z"
-    },
-    "todo:11": {
-      "task_key": "todo:11",
-      "task_label": "11",
-      "task_title": "Create all community files",
-      "session_id": "ses_25a4e0131ffeOHGoJZn7XfmoJz",
-      "agent": "Sisyphus-Junior",
-      "category": "writing",
-      "updated_at": "2026-04-19T12:27:45.700Z"
-    },
-    "todo:14": {
-      "task_key": "todo:14",
-      "task_label": "14",
-      "task_title": "Push all changes, verify CI green, verify Vercel deployments",
-      "session_id": "ses_25a445fdaffeMTbl5JS6nQ4F0I",
-      "agent": "Sisyphus-Junior",
-      "category": "quick",
-      "updated_at": "2026-04-19T12:35:27.867Z"
-    },
-    "todo:16": {
-      "task_key": "todo:16",
-      "task_label": "16",
-      "task_title": "Fix Supabase Storage Bucket Mismatch (CRITICAL)",
-      "session_id": "ses_25a3fca3cffeo9hiBJFV05th1L",
-      "agent": "Sisyphus-Junior",
-      "category": "quick",
-      "updated_at": "2026-04-19T12:44:09.796Z"
-    },
-    "todo:18": {
-      "task_key": "todo:18",
-      "task_label": "18",
-      "task_title": "Add Raino Agent Memory System (Inspired by MemPalace + Nanobot + OpenClaw)",
-      "session_id": "ses_25a3819a9ffec1zZCk8tDIqYSX",
-      "agent": "Sisyphus-Junior",
-      "category": "deep",
-      "updated_at": "2026-04-19T13:07:57.550Z"
-    },
-    "todo:23": {
-      "task_key": "todo:23",
-      "task_label": "23",
-      "task_title": "Post-Fix Comprehensive Audit (Round 1)",
-      "session_id": "ses_25a054488ffemttIW9P8G2q9ju",
-      "agent": "build",
-      "updated_at": "2026-04-19T13:47:22.282Z"
-    },
-    "todo:25": {
-      "task_key": "todo:25",
-      "task_label": "25",
-      "task_title": "Post-Fix Re-Audit (Round 2 — Final Verification)",
-      "session_id": "ses_259fe7d32ffeNa6jMSFMI8ceYI",
-      "agent": "general",
-      "updated_at": "2026-04-19T14:02:44.032Z"
+      "updated_at": "2026-04-24T08:27:16.364Z"
     }
   }
 }

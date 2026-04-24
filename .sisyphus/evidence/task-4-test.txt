@@ -1,0 +1,30 @@
+@raino/studio:test: 
+@raino/studio:test:  RUN  v2.1.9 /mnt/d/raino/apps/studio
+@raino/studio:test: 
+@raino/ingest-worker:test:  ✓ src/__tests__/redteam-integration.test.ts (13 tests) 12ms
+@raino/studio:test:  ✓ src/lib/data/__tests__/project-queries-ownership.test.ts (7 tests) 9ms
+@raino/studio:test:  ✓ src/app/auth/__tests__/callback.test.ts (5 tests) 12ms
+@raino/studio:test:  ✓ src/__tests__/format.test.ts (10 tests) 63ms
+@raino/ingest-worker:test:  ✓ src/__tests__/retrieval-smoke.test.ts (8 tests) 155ms
+@raino/ingest-worker:test: 
+@raino/ingest-worker:test:  Test Files  3 passed (3)
+@raino/ingest-worker:test:       Tests  41 passed (41)
+@raino/ingest-worker:test:    Start at  17:53:46
+@raino/ingest-worker:test:    Duration  27.08s (transform 7.62s, setup 0ms, collect 21.84s, tests 180ms, environment 1ms, prepare 20.78s)
+@raino/ingest-worker:test: 
+@raino/studio:test:  ✓ src/app/api/__tests__/bom.test.ts (6 tests) 17ms
+@raino/studio:test:  ✓ src/app/api/__tests__/projects.test.ts (8 tests) 31ms
+@raino/studio:test:  ✓ src/app/api/__tests__/quote.test.ts (9 tests) 39ms
+@raino/studio:test:  ✓ src/lib/quotes/__tests__/supplier-comparison.test.ts (7 tests) 5ms
+@raino/studio:test:  ✓ src/app/api/__tests__/ownership.test.ts (5 tests) 39ms
+@raino/studio:test: 
+@raino/studio:test:  Test Files  8 passed (8)
+@raino/studio:test:       Tests  57 passed (57)
+@raino/studio:test:    Start at  17:53:54
+@raino/studio:test:    Duration  13.29s (transform 7.66s, setup 0ms, collect 25.53s, tests 215ms, environment 2ms, prepare 38.00s)
+@raino/studio:test: 
+
+ Tasks:    25 successful, 25 total
+Cached:    12 cached, 25 total
+  Time:    1m19.37s 
+

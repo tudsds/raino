@@ -1,0 +1,20 @@
+@raino/ingest-worker:build: > tsc
+@raino/ingest-worker:build: 
+@raino/studio:lint: cache miss, executing 1bb5bb3f32c58f78
+@raino/studio:lint: 
+@raino/studio:lint: > @raino/studio@0.1.0 lint /mnt/d/raino/apps/studio
+@raino/studio:lint: > next lint
+@raino/studio:lint: 
+@raino/studio:lint: `next lint` is deprecated and will be removed in Next.js 16.
+@raino/studio:lint: For new projects, use create-next-app to choose your preferred linter.
+@raino/studio:lint: For existing projects, migrate to the ESLint CLI:
+@raino/studio:lint: npx @next/codemod@canary next-lint-to-eslint-cli .
+@raino/studio:lint: 
+@raino/studio:lint: 
+@raino/studio:lint:  ⚠ The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/app/api-reference/config/eslint#migrating-existing-config
+@raino/studio:lint: ✔ No ESLint warnings or errors
+
+ Tasks:    25 successful, 25 total
+Cached:    8 cached, 25 total
+  Time:    3m5.081s 
+
