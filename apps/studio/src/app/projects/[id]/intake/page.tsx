@@ -25,9 +25,9 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
         const res = await fetch(`/api/projects/${id}`);
         if (res.ok) {
           const data = await res.json();
-          if (data.project?.intakeMessages) {
+          if (data.intakeMessages) {
             setMessages(
-              data.project.intakeMessages.map(
+              data.intakeMessages.map(
                 (m: { id: string; role: string; content: string; createdAt: string }) => ({
                   id: m.id,
                   role: m.role as 'user' | 'assistant',

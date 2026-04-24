@@ -1,6 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
+/** Transform Supabase snake_case row to camelCase for API consumers. */
+function toCamelCase(row: Record<string, unknown>) {
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(row)) {
+    // Convert snake_case keys to camelCase
+    const camel = key.replace(/_([a-z])/g, (_, c: string) => c.toUpperCase());
+    out[camel] = value;
+  }
+  return out;
+}
+
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -30,7 +41,7 @@ export async function GET(
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    return NextResponse.json(project);
+    return NextResponse.json(toCamelCase(project));
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     console.error('Unexpected error in project API:', error);

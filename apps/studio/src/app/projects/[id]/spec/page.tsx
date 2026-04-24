@@ -27,7 +27,7 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
         const res = await fetch(`/api/projects/${id}`);
         if (res.ok) {
           const data = await res.json();
-          setProject(data.project);
+          setProject(data);
         }
       } catch {
         // project data unavailable — show not found
