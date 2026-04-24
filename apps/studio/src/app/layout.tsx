@@ -1,8 +1,8 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
-import { ReactNode } from 'react';
+import type { Session } from '@supabase/supabase-js';
+import type { ReactNode } from 'react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
+import { getCurrentUser } from '@/lib/auth/get-current-user';
 import '@/app/globals.css';
 
 export default async function RootLayout({
@@ -10,20 +10,31 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
+  let session: Session | null = null;
+  try {
+    const user = await getCurrentUser();
+    if (user) {
+      const { createServerClient } = await import('@supabase/ssr');
+      const { cookies } = await import('next/headers');
+      const cookieStore = await cookies();
+      const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+          cookies: {
+            getAll() {
+              return cookieStore.getAll();
+            },
+            setAll() {},
+          },
         },
-      },
+      );
+      const { data } = await supabase.auth.getSession();
+      session = data.session;
     }
-  );
-
-  const { data: { session } } = await supabase.auth.getSession();
+  } catch {
+    // degraded mode — no session available
+  }
 
   return (
     <html lang="en" className="dark">

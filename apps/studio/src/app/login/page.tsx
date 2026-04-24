@@ -14,9 +14,11 @@ function LoginForm() {
 
   const errorParam = searchParams.get('error');
   const [paramError] = useState<string | null>(
-    errorParam === 'provisioning_failed'
-      ? 'Account setup failed. Please try signing up again.'
-      : null,
+    errorParam === 'auth_exchange_failed'
+      ? 'Login link expired or invalid. Please try again.'
+      : errorParam === 'provision_failed' || errorParam === 'provisioning_failed'
+        ? 'Account setup failed. Please try signing up again.'
+        : null,
   );
 
   const displayError = error || paramError;
