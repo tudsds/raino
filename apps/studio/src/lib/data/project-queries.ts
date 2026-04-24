@@ -132,11 +132,32 @@ export async function createProject(data: {
   return project as DbProject;
 }
 
+const STATUS_TO_STEP: Record<string, number> = {
+  intake: 0,
+  clarifying: 1,
+  spec_compiled: 2,
+  architecture_planned: 3,
+  candidates_discovered: 4,
+  ingested: 5,
+  bom_generated: 6,
+  design_running: 7,
+  validated: 8,
+  completed: 9,
+  quoted: 10,
+};
+const TOTAL_STEPS = 12;
+
 export async function updateProjectStatus(projectId: string, status: string) {
   const db = getSupabaseAdmin();
+  const step = STATUS_TO_STEP[status] ?? 0;
   const { data, error } = await db
     .from('projects')
-    .update({ status, updated_at: new Date().toISOString() })
+    .update({
+      status,
+      current_step: step,
+      total_steps: TOTAL_STEPS,
+      updated_at: new Date().toISOString(),
+    })
     .eq('id', projectId)
     .select()
     .single();

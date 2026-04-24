@@ -6,7 +6,7 @@
 
 CREATE TABLE IF NOT EXISTS public.documents (
   id uuid PRIMARY KEY DEFAULT extensions.gen_random_uuid(),
-  project_id uuid REFERENCES public.projects(id) ON DELETE CASCADE,
+  project_id text REFERENCES public.projects(id) ON DELETE CASCADE,
   title text NOT NULL,
   source_url text,
   source_type text DEFAULT 'unknown',

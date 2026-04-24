@@ -45,6 +45,10 @@ export { MockEmbeddingGenerator } from './embeddings/mock-generator';
 export { OpenAIEmbeddingGenerator } from './embeddings/openai-generator';
 export type { OpenAIEmbeddingConfig } from './embeddings/openai-generator';
 
+// Voyage AI embedding generator
+export { VoyageEmbeddingGenerator } from './embeddings/voyage-generator';
+export type { VoyageEmbeddingConfig } from './embeddings/voyage-generator';
+
 // Embedding factory
 export {
   createEmbeddingGenerator,

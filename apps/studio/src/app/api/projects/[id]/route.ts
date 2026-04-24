@@ -41,7 +41,18 @@ export async function GET(
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    return NextResponse.json(toCamelCase(project));
+    const result = toCamelCase(project) as Record<string, unknown>;
+    if (!result.currentStep) {
+      const STATUS_TO_STEP: Record<string, number> = {
+        intake: 0, clarifying: 1, spec_compiled: 2, architecture_planned: 3,
+        candidates_discovered: 4, ingested: 5, bom_generated: 6, design_running: 7,
+        validated: 8, completed: 9, quoted: 10,
+      };
+      const status = result.status as string;
+      result.currentStep = STATUS_TO_STEP[status] ?? 0;
+      result.totalSteps = 12;
+    }
+    return NextResponse.json(result);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     console.error('Unexpected error in project API:', error);

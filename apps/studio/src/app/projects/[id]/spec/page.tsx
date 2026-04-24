@@ -2,7 +2,6 @@
 
 import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 
 interface ProjectData {
@@ -37,7 +36,14 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
   }, [id]);
 
   if (!project) {
-    notFound();
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-pulse text-[#00f0ff] text-lg mb-2">Loading specification...</div>
+          <p className="text-[#64748b] text-sm">Fetching project data</p>
+        </div>
+      </div>
+    );
   }
 
   const requirements: string[] = Array.isArray(project.spec?.requirements)

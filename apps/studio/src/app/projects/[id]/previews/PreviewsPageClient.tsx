@@ -97,6 +97,26 @@ export default function PreviewsPageClient({ params, degradedMessage }: Previews
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [designLoading, setDesignLoading] = useState(false);
+  const [designMessage, setDesignMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  const hasPlaceholder = degradedMessage || Object.values(previewData).some(
+    (p) => p && (p.isPlaceholder || !p.available)
+  );
+
+  const handleGenerateDesign = async () => {
+    setDesignLoading(true);
+    setDesignMessage(null);
+    try {
+      const res = await fetch(`/api/projects/${id}/design`, { method: 'POST' });
+      if (!res.ok) throw new Error('Failed to generate design');
+      setDesignMessage({ type: 'success', text: 'Design generation started successfully' });
+    } catch (err) {
+      setDesignMessage({ type: 'error', text: err instanceof Error ? err.message : 'Failed to start design generation' });
+    } finally {
+      setDesignLoading(false);
+    }
+  };
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },
@@ -224,6 +244,15 @@ export default function PreviewsPageClient({ params, degradedMessage }: Previews
               <h1 className="text-xl font-bold text-[#e4e4e7]">Design Previews</h1>
               <p className="text-xs text-[#a1a1aa] font-mono">{id}</p>
             </div>
+            {hasPlaceholder && (
+              <button
+                onClick={handleGenerateDesign}
+                disabled={designLoading}
+                className="border border-[#00f0ff] text-[#00f0ff] px-4 py-2 text-sm hover:bg-[#00f0ff] hover:text-[#0a0a0f] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {designLoading ? 'Generating...' : 'Generate Design'}
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -250,6 +279,17 @@ export default function PreviewsPageClient({ params, degradedMessage }: Previews
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {degradedMessage && <DegradedModeBanner message={degradedMessage} severity="amber" />}
+        {designMessage && (
+          <div
+            className={`mb-4 px-4 py-3 text-sm font-mono border ${
+              designMessage.type === 'success'
+                ? 'border-[#00ff88] text-[#00ff88] bg-[#00ff8820]'
+                : 'border-[#ff4444] text-[#ff4444] bg-[#ff444420]'
+            }`}
+          >
+            {designMessage.text}
+          </div>
+        )}
         <div className="card overflow-hidden">
           <div className="border-b border-[#27273a] px-6 py-4">
             <div className="flex gap-6">

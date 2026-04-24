@@ -1,13 +1,14 @@
 // ── Embedding Generator Factory ──────────────────────────────────────────────
 // Selects the appropriate embedding backend based on environment configuration.
-// OpenAI provider when credentials are present; mock as honest fallback.
+// OpenAI or Voyage provider when credentials are present; mock as honest fallback.
 
 import type { EmbeddingGenerator } from './contracts';
 import { MockEmbeddingGenerator } from './mock-generator';
 import { OpenAIEmbeddingGenerator } from './openai-generator';
+import { VoyageEmbeddingGenerator } from './voyage-generator';
 
 export interface EmbeddingFactoryConfig {
-  /** Provider to use: "openai" or "mock". Defaults to "mock". */
+  /** Provider to use: "openai", "voyage", or "mock". Defaults to "mock". */
   provider?: string;
   /** OpenAI API key (required when provider is "openai"). */
   openaiApiKey?: string;
@@ -17,6 +18,12 @@ export interface EmbeddingFactoryConfig {
   openaiModel?: string;
   /** Optional dimension override. */
   openaiDimensions?: number;
+  /** Voyage AI API key (required when provider is "voyage"). */
+  voyageApiKey?: string;
+  /** Optional Voyage model name override. */
+  voyageModel?: string;
+  /** Optional Voyage dimension override. */
+  voyageDimensions?: number;
 }
 
 let cachedGenerator: EmbeddingGenerator | null = null;
@@ -37,6 +44,14 @@ export function createEmbeddingGenerator(config: EmbeddingFactoryConfig = {}): E
     });
   }
 
+  if (config.provider === 'voyage' && config.voyageApiKey && config.voyageApiKey.length > 0) {
+    return new VoyageEmbeddingGenerator({
+      apiKey: config.voyageApiKey,
+      model: config.voyageModel,
+      dimensions: config.voyageDimensions,
+    });
+  }
+
   return new MockEmbeddingGenerator();
 }
 
@@ -53,6 +68,7 @@ export function getEmbeddingGenerator(): EmbeddingGenerator {
     provider: process.env.EMBEDDING_PROVIDER,
     openaiApiKey: process.env.OPENAI_API_KEY,
     openaiBaseURL: process.env.OPENAI_BASE_URL,
+    voyageApiKey: process.env.VOYAGE_API_KEY,
   });
 
   return cachedGenerator;

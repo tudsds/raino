@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/require-auth';
-import { verifyProjectOwnership } from '@/lib/data/project-queries';
+import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
 import { createAuditEntry } from '@/lib/data/audit-queries';
@@ -83,6 +83,19 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       actor: auth.user.id,
       details: { userMessageId: userMsg.id, assistantMessageId: assistantMsg.id },
     });
+
+    const { count: userMsgCount } = await db
+      .from('intake_messages')
+      .select('*', { count: 'exact', head: true })
+      .eq('project_id', id)
+      .eq('role', 'user');
+
+    const currentStatus = ownership.project.status;
+    if (userMsgCount && userMsgCount >= 2 && currentStatus === 'intake') {
+      await updateProjectStatus(id, 'clarifying');
+    } else if (userMsgCount && userMsgCount >= 4 && currentStatus === 'clarifying') {
+      await updateProjectStatus(id, 'spec_compiled');
+    }
 
     return NextResponse.json({
       message: {
