@@ -77,15 +77,28 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         clarificationAnswers: '',
       });
 
-      try {
-        const structured = await gateway.chatStructured(messages, SpecOutputSchema);
-        specContent = structured.summary;
-        structuredRequirements = structured.requirements;
-        structuredConstraints = structured.constraints;
-        structuredInterfaces = structured.interfaces;
-      } catch {
-        const response = await gateway.chat(messages);
-        specContent = response.content;
+      let accumulatedText = '';
+      for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
+        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+      }
+
+      if (accumulatedText) {
+        try {
+          const jsonMatch = accumulatedText.match(/\{[\s\S]*\}/);
+          const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
+          const parsed = JSON.parse(jsonStr);
+          const validated = SpecOutputSchema.safeParse(parsed);
+          if (validated.success) {
+            specContent = validated.data.summary;
+            structuredRequirements = validated.data.requirements;
+            structuredConstraints = validated.data.constraints;
+            structuredInterfaces = validated.data.interfaces;
+          } else {
+            specContent = accumulatedText;
+          }
+        } catch {
+          specContent = accumulatedText;
+        }
       }
     } catch {
       // intentionally empty — keep fallback specContent with empty structured fields

@@ -100,21 +100,34 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         boardArea: specConstraints.boardArea,
         layerCount: specConstraints.layerCount,
       });
-      const structured = await gateway.chatStructured(messages, BOMOutputSchema);
-      bomGuidance = structured.notes ?? 'BOM generated from LLM estimates.';
-      bomRows = structured.components.map((c) => ({
-        ref: c.ref,
-        value: c.value,
-        mpn: c.mpn,
-        manufacturer: c.manufacturer,
-        pkg: c.package,
-        quantity: c.quantity,
-        unitPrice: c.unitPrice,
-        currency: 'USD',
-        lifecycle: c.lifecycle ?? 'unknown',
-        risk: c.risk ?? 'low',
-        description: c.description,
-      }));
+
+      let accumulatedText = '';
+      for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
+        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+      }
+
+      if (accumulatedText) {
+        const jsonMatch = accumulatedText.match(/\{[\s\S]*\}/);
+        const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
+        const parsed = JSON.parse(jsonStr);
+        const validated = BOMOutputSchema.safeParse(parsed);
+        if (validated.success) {
+          bomGuidance = validated.data.notes ?? 'BOM generated from LLM estimates.';
+          bomRows = validated.data.components.map((c) => ({
+            ref: c.ref,
+            value: c.value,
+            mpn: c.mpn,
+            manufacturer: c.manufacturer,
+            pkg: c.package,
+            quantity: c.quantity,
+            unitPrice: c.unitPrice,
+            currency: 'USD',
+            lifecycle: c.lifecycle ?? 'unknown',
+            risk: c.risk ?? 'low',
+            description: c.description,
+          }));
+        }
+      }
     } catch {
       bomGuidance = 'BOM generation unavailable — AI service could not be reached.';
     }

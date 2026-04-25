@@ -44,8 +44,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         projectContext: intakeMessages,
         currentSpec: project.spec ? JSON.stringify(project.spec.requirements) : 'No spec yet',
       });
-      const response = await gateway.chat(messages);
-      clarificationContent = response.content;
+
+      let accumulatedText = '';
+      for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
+        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+      }
+      clarificationContent =
+        accumulatedText || 'Clarification service returned no content. Please try again.';
     } catch {
       clarificationContent =
         'Clarification service unavailable. Please try again later or provide more details in the intake.';
