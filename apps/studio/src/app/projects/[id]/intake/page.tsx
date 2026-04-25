@@ -64,8 +64,9 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
  const [messages, setMessages] = useState<Message[]>([]);
  const [input, setInput] = useState('');
  const [isReady] = useState(false);
- const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
- const [loading, setLoading] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [streaming, setStreaming] = useState(false);
 
  useEffect(() => {
  async function loadMessages() {
@@ -94,48 +95,136 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
  loadMessages();
  }, [id]);
 
- const handleSend = async () => {
- if (!input.trim() && selectedFiles.length === 0) return;
- if (loading) return;
+  const handleSend = async () => {
+    if (!input.trim() && selectedFiles.length === 0) return;
+    if (loading) return;
 
- const userMessage: Message = {
- id: `msg-${Date.now()}`,
- role: 'user',
- content: input,
- timestamp: new Date().toISOString(),
- attachments: selectedFiles.map((f) => f.name),
- };
+    const userMessage: Message = {
+      id: `msg-${Date.now()}`,
+      role: 'user',
+      content: input,
+      timestamp: new Date().toISOString(),
+      attachments: selectedFiles.map((f) => f.name),
+    };
 
- setMessages((prev) => [...prev, userMessage]);
- setInput('');
- setSelectedFiles([]);
- setLoading(true);
+    const assistantPlaceholder: Message = {
+      id: `msg-${Date.now() + 1}`,
+      role: 'assistant',
+      content: '',
+      timestamp: new Date().toISOString(),
+    };
 
- try {
- const res = await fetch(`/api/projects/${id}/intake`, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({ message: userMessage.content }),
- });
+    setMessages((prev) => [...prev, userMessage, assistantPlaceholder]);
+    setInput('');
+    setSelectedFiles([]);
+    setLoading(true);
+    setStreaming(true);
 
- if (res.ok) {
- const data = await res.json();
- if (data.message) {
- setMessages((prev) => [...prev, data.message]);
- }
- }
- } catch {
- const errorMessage: Message = {
- id: `msg-${Date.now() + 1}`,
- role: 'assistant',
- content: 'Failed to get a response. Please try again.',
- timestamp: new Date().toISOString(),
- };
- setMessages((prev) => [...prev, errorMessage]);
- } finally {
- setLoading(false);
- }
- };
+    try {
+      const res = await fetch(`/api/projects/${id}/intake`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage.content }),
+      });
+
+      if (!res.ok || !res.body) {
+        throw new Error(`Request failed: ${res.status}`);
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let accumulated = '';
+      let finalMessageId = assistantPlaceholder.id;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() ?? '';
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const payload = line.slice(6).trim();
+          if (!payload) continue;
+
+          let event: Record<string, unknown>;
+          try {
+            event = JSON.parse(payload);
+          } catch {
+            continue;
+          }
+
+          if (event.type === 'content' && typeof event.content === 'string') {
+            accumulated += event.content;
+            const currentContent = accumulated;
+            setMessages((prev) =>
+              prev.map((m) =>
+                m.id === assistantPlaceholder.id ? { ...m, content: currentContent } : m,
+              ),
+            );
+          } else if (event.type === 'done' && event.message && typeof event.message === 'object') {
+            const msg = event.message as {
+              id: string;
+              role: string;
+              content: string;
+              timestamp: string;
+            };
+            finalMessageId = msg.id;
+            setMessages((prev) =>
+              prev.map((m) =>
+                m.id === assistantPlaceholder.id
+                  ? {
+                      ...m,
+                      id: msg.id,
+                      content: msg.content,
+                      timestamp: new Date(msg.timestamp).toISOString(),
+                    }
+                  : m,
+              ),
+            );
+          } else if (event.type === 'error') {
+            setMessages((prev) =>
+              prev.map((m) =>
+                m.id === assistantPlaceholder.id
+                  ? {
+                      ...m,
+                      content:
+                        typeof event.error === 'string'
+                          ? event.error
+                          : 'An error occurred during streaming.',
+                    }
+                  : m,
+              ),
+            );
+          }
+        }
+      }
+
+      if (!accumulated) {
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === finalMessageId
+              ? { ...m, content: 'No response received. Please try again.' }
+              : m,
+          ),
+        );
+      }
+    } catch {
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === assistantPlaceholder.id
+            ? { ...m, content: 'Failed to get a response. Please try again.' }
+            : m,
+        ),
+      );
+    } finally {
+      setLoading(false);
+      setStreaming(false);
+    }
+  };
 
  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
  if (e.target.files) {
@@ -231,10 +320,12 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
  : 'bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] shadow-[0_8px_32px_rgba(0,0,0,0.20)] text-[#E2E8F0]'
  }`}
  >
- {message.role === 'assistant' && message.thinking && (
- <ThinkingBlock thinking={message.thinking} />
- )}
- {message.role === 'assistant' ? (
+  {message.role === 'assistant' && message.thinking && (
+  <ThinkingBlock thinking={message.thinking} />
+  )}
+  {message.role === 'assistant' && streaming && !message.content ? (
+  <p className="text-sm text-[#64748B] animate-pulse">●●●</p>
+  ) : message.role === 'assistant' ? (
  <div className="prose prose-invert max-w-none">
  <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
  {message.content}
@@ -340,7 +431,7 @@ export default function IntakePage({ params }: { params: Promise<{ id: string }>
  disabled={(!input.trim() && selectedFiles.length === 0) || loading}
  className="px-6 py-3 bg-[#1565C0] text-white font-medium hover:bg-[#1976D2] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 rounded-lg"
  >
- {loading ? 'Sending...' : 'Send'}
+  {streaming ? 'Streaming...' : loading ? 'Sending...' : 'Send'}
  </button>
  </div>
  <p className="text-xs text-[#64748B] mt-2">
