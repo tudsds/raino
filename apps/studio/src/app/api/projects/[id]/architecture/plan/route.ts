@@ -80,7 +80,9 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           const response = await gateway.chat(enrichedMessages, { maxTokens: 1024 });
           accumulatedText = response.content;
         } catch (llmError) {
+          const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
           console.error('[api/architecture/plan] LLM call failed:', llmError);
+          controller.enqueue(encoder.encode(sseEncode({ type: 'error', error: errMsg })));
         }
 
         let archData: z.infer<typeof ArchitectureOutputSchema>;
