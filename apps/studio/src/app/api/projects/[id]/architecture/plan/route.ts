@@ -82,7 +82,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           const provider = new KimiProvider();
           const gateway = new LLMGateway(provider, { maxRetries: 1 });
 
-          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 4096 })) {
+          for await (const evt of gateway.chatStream(enrichedMessages, { model: 'moonshot-v1-8k', maxTokens: 2048 })) {
             if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
           }
         } catch (llmError) {
