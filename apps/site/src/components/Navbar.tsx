@@ -9,9 +9,9 @@ interface NavbarProps {
 
 const languages = [
   { code: 'en', label: 'EN', href: '/' },
-  { code: 'zh', label: '中文', href: 'https://github.com/tudsds/raino/blob/main/README.zh-CN.md' },
-  { code: 'ja', label: '日本語', href: 'https://github.com/tudsds/raino/blob/main/README.ja.md' },
-  { code: 'ko', label: '한국어', href: 'https://github.com/tudsds/raino/blob/main/README.ko.md' },
+  { code: 'zh', label: '中文', href: '/zh' },
+  { code: 'ja', label: '日本語', href: '/ja' },
+  { code: 'ko', label: '한국어', href: '/ko' },
 ];
 
 const navLinks = [
