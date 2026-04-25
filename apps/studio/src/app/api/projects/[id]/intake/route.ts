@@ -76,12 +76,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       const priorHistory: LLMMessage[] = allHistory.slice(-MAX_HISTORY_MESSAGES);
 
       const messages: LLMMessage[] = [...templateMessages.slice(0, 1), ...priorHistory, ...templateMessages.slice(1)];
-      const response = await gateway.chat(messages);
+      const response = await gateway.chat(messages, { maxTokens: 2048 });
       assistantContent = response.content;
     } catch (llmError) {
       console.error('[api/projects/intake] LLM call failed:', llmError);
       assistantContent =
-        'I received your message. The AI service is currently unavailable — your input has been saved and will be processed when the service is restored.';
+        'I\'m having trouble connecting to the AI service right now. Your message has been saved. Please try sending it again — the AI service may recover momentarily.';
     }
 
     // Save assistant response
