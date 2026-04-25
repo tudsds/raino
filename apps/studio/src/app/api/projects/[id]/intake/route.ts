@@ -37,7 +37,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const { message, attachments } = parsed.data;
     const db = getSupabaseAdmin();
 
-    // Save user message
+    const { data: historyMessages } = await db
+      .from('intake_messages')
+      .select('role, content')
+      .eq('project_id', id)
+      .order('created_at', { ascending: true });
+
     const { data: userMsg, error: userMsgError } = await db
       .from('intake_messages')
       .insert({
@@ -51,16 +56,10 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     if (userMsgError) throw new Error(`Failed to save user message: ${userMsgError.message}`);
 
-    const { data: historyMessages } = await db
-      .from('intake_messages')
-      .select('role, content')
-      .eq('project_id', id)
-      .order('created_at', { ascending: true });
-
     let assistantContent: string;
     try {
       const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider, { maxRetries: 1 });
+      const gateway = new LLMGateway(provider, { maxRetries: 0 });
       const templateMessages = templateToMessages('intake', {
         message,
         files: attachments?.join(', ') ?? '',

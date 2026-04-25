@@ -24,7 +24,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     let archContent: string;
     try {
       const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider, { maxRetries: 1 });
+      const gateway = new LLMGateway(provider, { maxRetries: 0 });
       const messages = templateToMessages('architecture_selection', {
         spec: specText,
         requirementCount: '0',
