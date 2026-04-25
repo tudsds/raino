@@ -2,6 +2,7 @@ import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
+import ArchitecturePageClient from './ArchitecturePageClient';
 
 interface ArchitecturePageProps {
   params: Promise<{ id: string }>;
@@ -52,15 +53,19 @@ export default async function ArchitecturePage({ params }: ArchitecturePageProps
         {!architecture ? (
           <div className="card p-8 text-center">
             <p className="text-[#a1a1aa] mb-4">No architecture plan generated yet.</p>
-            <p className="text-sm text-[#71717a]">
-              Complete the intake and spec compilation steps first, then trigger architecture planning.
+            <p className="text-sm text-[#71717a] mb-4">
+              Trigger architecture planning to generate an AI-recommended architecture.
             </p>
+            <ArchitecturePageClient params={params} hasArchitecture={false} />
           </div>
         ) : (
           <div className="card p-6">
-            <h2 className="text-xl font-semibold text-[#e4e4e7] mb-4 font-[family-name:var(--font-heading)]">
-              {architecture.template_name ?? 'AI Recommended Architecture'}
-            </h2>
+            <div className="flex items-start justify-between mb-4">
+              <h2 className="text-xl font-semibold text-[#e4e4e7] font-[family-name:var(--font-heading)]">
+                {architecture.template_name ?? 'AI Recommended Architecture'}
+              </h2>
+              <ArchitecturePageClient params={params} hasArchitecture={true} />
+            </div>
             {architecture.rationale && (
               <div className="prose prose-invert max-w-none">
                 <pre className="whitespace-pre-wrap text-sm text-[#a1a1aa] font-[family-name:var(--font-body)]">

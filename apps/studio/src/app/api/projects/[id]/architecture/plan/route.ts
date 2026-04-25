@@ -5,6 +5,8 @@ import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 
+export const maxDuration = 60;
+
 export async function POST(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await requireAuth();
   if (auth.error) return auth.error;

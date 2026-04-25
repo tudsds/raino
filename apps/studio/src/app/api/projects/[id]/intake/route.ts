@@ -6,6 +6,8 @@ import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 
+export const maxDuration = 60;
+
 const IntakeMessageSchema = z.object({
   message: z.string().min(1).max(10000),
   attachments: z.array(z.string()).optional(),
@@ -94,6 +96,42 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     if (userMsgCount && userMsgCount >= 2 && currentStatus === 'intake') {
       await updateProjectStatus(id, 'clarifying');
     } else if (userMsgCount && userMsgCount >= 4 && currentStatus === 'clarifying') {
+      const { data: allMessages } = await db
+        .from('intake_messages')
+        .select('role, content')
+        .eq('project_id', id)
+        .order('created_at', { ascending: true });
+
+      const conversationText = (allMessages ?? [])
+        .map((m: { role: string; content: string }) => `${m.role}: ${m.content}`)
+        .join('\n\n');
+
+      const { data: existingSpec } = await db
+        .from('specs')
+        .select('id')
+        .eq('project_id', id)
+        .maybeSingle();
+
+      if (existingSpec) {
+        await db
+          .from('specs')
+          .update({
+            raw_text: conversationText,
+            compiled_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .eq('project_id', id);
+      } else {
+        await db.from('specs').insert({
+          project_id: id,
+          raw_text: conversationText,
+          requirements: [],
+          constraints: [],
+          interfaces: [],
+          compiled_at: new Date().toISOString(),
+        });
+      }
+
       await updateProjectStatus(id, 'spec_compiled');
     }
 

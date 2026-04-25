@@ -6,6 +6,8 @@ import { createBOM } from '@/lib/data/bom-queries';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 
+export const maxDuration = 60;
+
 const BOMComponentSchema = z.object({
   ref: z.string().describe('Reference designator, e.g. U1, R2, C3'),
   value: z.string().describe('Component value, e.g. 10kΩ, 100nF, STM32F407'),

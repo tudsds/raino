@@ -6,6 +6,8 @@ import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 
+export const maxDuration = 60;
+
 const RequirementSchema = z.object({
   id: z.string(),
   category: z.enum([

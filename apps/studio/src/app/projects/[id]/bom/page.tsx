@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import { DegradedModeBanner } from '@/components/DegradedModeBanner';
+import BOMPageClient from './BOMPageClient';
 
 interface BOMPageProps {
   params: Promise<{ id: string }>;
@@ -125,9 +126,10 @@ export default async function BOMPage({ params }: BOMPageProps) {
         {rows.length === 0 ? (
           <div className="card p-8 text-center">
             <h2 className="text-lg font-semibold text-[#e4e4e7] mb-2">No BOM Generated</h2>
-            <p className="text-[#64748b]">
-              Complete the architecture phase first to generate a BOM.
+            <p className="text-[#64748b] mb-4">
+              Generate a Bill of Materials based on the architecture plan.
             </p>
+            <BOMPageClient params={params} hasBOM={false} />
           </div>
         ) : (
           <>
