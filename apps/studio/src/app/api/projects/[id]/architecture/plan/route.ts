@@ -81,7 +81,6 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           accumulatedText = response.content;
         } catch (llmError) {
           console.error('[api/architecture/plan] LLM call failed:', llmError);
-          accumulatedText = '';
         }
 
         let archData: z.infer<typeof ArchitectureOutputSchema>;
