@@ -41,12 +41,14 @@ export class KimiProvider implements LLMProvider {
   readonly defaultModel = KIMI_DEFAULT_MODEL;
 
   private client: OpenAI;
+  private requestTimeout: number;
 
   constructor(timeout?: number) {
+    this.requestTimeout = timeout ?? 25_000;
     this.client = new OpenAI({
       apiKey: process.env.KIMI_API_KEY ?? '',
       baseURL: process.env.KIMI_API_BASE_URL ?? KIMI_DEFAULT_BASE_URL,
-      timeout: timeout ?? 25_000,
+      timeout: this.requestTimeout,
       maxRetries: 0,
     });
   }
@@ -89,6 +91,9 @@ export class KimiProvider implements LLMProvider {
     messages: LLMMessage[],
     options?: LLMRequestOptions,
   ): AsyncGenerator<LLMStreamEvent> {
+    const abortController = new AbortController();
+    const overallTimeout = setTimeout(() => abortController.abort(), this.requestTimeout);
+
     const stream: AsyncIterable<ChatCompletionChunk> = await this.client.chat.completions.create(
       {
         model: options?.model ?? this.defaultModel,
@@ -102,24 +107,28 @@ export class KimiProvider implements LLMProvider {
         stream: true,
         ...(options?.jsonMode ? { response_format: { type: 'json_object' } } : {}),
       },
-      { signal: options?.signal ?? undefined },
+      { signal: abortController.signal },
     );
 
-    for await (const chunk of stream) {
-      const delta = chunk.choices[0]?.delta;
-      if (delta?.content) {
-        yield { type: 'content', content: delta.content };
-      }
+    try {
+      for await (const chunk of stream) {
+        const delta = chunk.choices[0]?.delta;
+        if (delta?.content) {
+          yield { type: 'content', content: delta.content };
+        }
 
-      if (chunk.usage) {
-        yield {
-          type: 'usage',
-          usage: {
-            promptTokens: chunk.usage.prompt_tokens,
-            completionTokens: chunk.usage.completion_tokens,
-          },
-        };
+        if (chunk.usage) {
+          yield {
+            type: 'usage',
+            usage: {
+              promptTokens: chunk.usage.prompt_tokens,
+              completionTokens: chunk.usage.completion_tokens,
+            },
+          };
+        }
       }
+    } finally {
+      clearTimeout(overallTimeout);
     }
 
     yield { type: 'done' };
