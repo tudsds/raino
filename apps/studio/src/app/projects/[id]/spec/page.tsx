@@ -123,7 +123,11 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
   const requirements: StructuredRequirement[] = rawReqs.map((r) =>
     typeof r === 'string' ? { description: r } : (r as StructuredRequirement),
   );
-  const isCompiled = requirements.length > 0 || !!project.spec?.rawText;
+  const hasValidSpec = requirements.length > 0 || (
+    !!project.spec?.rawText &&
+    !project.spec.rawText.includes('unavailable') &&
+    !project.spec.rawText.includes('could not be reached')
+  );
 
   const tabs = [
     { id: 'overview', label: 'Overview', href: `/projects/${id}` },
@@ -160,16 +164,14 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
             </div>
           </div>
           <div className="flex items-center gap-4">
-            {!isCompiled && (
-              <button
+            <button
                 onClick={handleCompile}
                 disabled={compiling}
                 className="px-4 py-2 text-sm font-medium border border-[#1565C0] text-[#1565C0] hover:bg-[#1565C0] hover:text-[#0A1929] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {compiling ? 'Compiling...' : 'Compile Spec'}
+                {compiling ? 'Compiling...' : hasValidSpec ? 'Recompile' : 'Compile Spec'}
               </button>
-            )}
-            {isCompiled ? (
+            {hasValidSpec ? (
               <span className="px-3 py-1.5 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-xs text-[#22c55e] font-medium">
                 Compiled
               </span>
@@ -276,10 +278,10 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                   <span className="text-[#94A3B8]">Compilation Status</span>
                   <span
                     className={`text-sm font-medium ${
-                      isCompiled ? 'text-[#22c55e]' : 'text-[#f59e0b]'
+                      hasValidSpec ? 'text-[#22c55e]' : 'text-[#f59e0b]'
                     }`}
                   >
-                    {isCompiled ? 'Complete' : 'Pending'}
+                    {hasValidSpec ? 'Complete' : 'Pending'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between py-2 border-b border-[#1E3A5F]">
@@ -290,10 +292,10 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                   <span className="text-[#94A3B8]">Ready for Architecture</span>
                   <span
                     className={`text-sm font-medium ${
-                      isCompiled ? 'text-[#22c55e]' : 'text-[#64748b]'
+                      hasValidSpec ? 'text-[#22c55e]' : 'text-[#64748b]'
                     }`}
                   >
-                    {isCompiled ? 'Yes' : 'No'}
+                    {hasValidSpec ? 'Yes' : 'No'}
                   </span>
                 </div>
               </div>
@@ -328,7 +330,7 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                 Next Steps
               </h3>
               <div className="space-y-3">
-                {isCompiled ? (
+                {hasValidSpec ? (
                   <>
                     <Link
                       href={`/projects/${id}/architecture`}
