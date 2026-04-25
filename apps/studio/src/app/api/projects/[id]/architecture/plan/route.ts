@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/require-auth';
 import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
@@ -18,6 +18,18 @@ const ArchitectureOutputSchema = z.object({
   risks: z.array(z.string()).optional(),
 });
 
+const fallbackArchitecture: z.infer<typeof ArchitectureOutputSchema> = {
+  mcu: '',
+  power: '',
+  interfaces: [],
+  features: [],
+  rationale: 'Architecture planning unavailable — AI service could not be reached.',
+};
+
+function sseEncode(data: Record<string, unknown>): string {
+  return `data: ${JSON.stringify(data)}\n\n`;
+}
+
 export async function POST(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await requireAuth();
   if (auth.error) return auth.error;
@@ -26,110 +38,153 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     const { id } = await params;
     const ownership = await verifyProjectOwnership(id, auth.user.id);
     if (!ownership.authorized) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+      return new Response(JSON.stringify({ error: 'Project not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     const project = ownership.project;
     const specText = project.spec?.raw_text ?? project.description ?? '';
 
-    let archData: z.infer<typeof ArchitectureOutputSchema>;
-    try {
-      const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider, { maxRetries: 2 });
-      const messages = templateToMessages('architecture_selection', {
-        spec: specText,
-        requirementCount: '0',
-        keyInterfaces: '',
-        powerSource: '',
-        targetVolume: '',
-      });
-      const enrichedMessages = messages.map((msg, idx) => {
-        if (idx === messages.length - 1) {
-          return {
-            ...msg,
-            content: `${typeof msg.content === 'string' ? msg.content : ''}\n\nRespond with a JSON object matching this exact schema:\n{\n  "mcu": "Recommended MCU part",\n  "power": "Power architecture description",\n  "interfaces": ["list", "of", "interfaces"],\n  "features": ["list", "of", "features"],\n  "rationale": "Why this architecture was chosen",\n  "estimatedComponentCount": 30,\n  "risks": ["list of risk factors"]\n}`,
-          };
-        }
-        return msg;
-      });
-      archData = await gateway.chatStructured(enrichedMessages, ArchitectureOutputSchema);
-    } catch (err) {
-      console.error('[api/architecture/plan] LLM failed:', err);
-      archData = {
-        mcu: '',
-        power: '',
-        interfaces: [],
-        features: [],
-        rationale: 'Architecture planning unavailable — AI service could not be reached.',
-      };
-    }
-
-    const db = getSupabaseAdmin();
-
-    const { data: existing } = await db
-      .from('architectures')
-      .select('id')
-      .eq('project_id', id)
-      .maybeSingle();
-
-    const archRecord = {
-      template_name: 'ai-recommended',
-      mcu: archData.mcu || null,
-      power: archData.power || null,
-      interfaces: archData.interfaces ?? [],
-      features: archData.features ?? [],
-      rationale: archData.rationale,
-      updated_at: new Date().toISOString(),
-    };
-
-    let architecture;
-    if (existing) {
-      const { data, error } = await db
-        .from('architectures')
-        .update(archRecord)
-        .eq('project_id', id)
-        .select()
-        .single();
-      if (error) throw error;
-      architecture = data;
-    } else {
-      const { data, error } = await db
-        .from('architectures')
-        .insert({
-          project_id: id,
-          template_id: 'ai-recommended',
-          ...archRecord,
-        })
-        .select()
-        .single();
-      if (error) throw error;
-      architecture = data;
-    }
-
-    await updateProjectStatus(id, 'architecture_planned');
-    await createAuditEntry(id, {
-      category: 'architecture',
-      action: 'architecture_planned',
-      actor: auth.user.id,
-      details: { architectureId: architecture.id, mcu: archData.mcu },
+    const messages = templateToMessages('architecture_selection', {
+      spec: specText,
+      requirementCount: '0',
+      keyInterfaces: '',
+      powerSource: '',
+      targetVolume: '',
+    });
+    const enrichedMessages = messages.map((msg, idx) => {
+      if (idx === messages.length - 1) {
+        return {
+          ...msg,
+          content: `${typeof msg.content === 'string' ? msg.content : ''}\n\nRespond with a JSON object matching this exact schema:\n{\n  "mcu": "Recommended MCU part",\n  "power": "Power architecture description",\n  "interfaces": ["list", "of", "interfaces"],\n  "features": ["list", "of", "features"],\n  "rationale": "Why this architecture was chosen",\n  "estimatedComponentCount": 30,\n  "risks": ["list of risk factors"]\n}`,
+        };
+      }
+      return msg;
     });
 
-    return NextResponse.json({
-      projectId: id,
-      architecture: {
-        id: architecture.id,
-        templateId: architecture.template_id,
-        templateName: architecture.template_name,
-        mcu: architecture.mcu,
-        power: architecture.power,
-        interfaces: architecture.interfaces,
-        features: architecture.features,
-        rationale: architecture.rationale,
+    const encoder = new TextEncoder();
+    const db = getSupabaseAdmin();
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        controller.enqueue(encoder.encode(sseEncode({ type: 'progress', status: 'generating' })));
+
+        let accumulatedText = '';
+
+        try {
+          const provider = new KimiProvider();
+          const gateway = new LLMGateway(provider, { maxRetries: 2 });
+
+          for await (const event of gateway.chatStream(enrichedMessages, {
+            maxTokens: 2048,
+            jsonMode: true,
+          })) {
+            if (event.type === 'content' && event.content) {
+              accumulatedText += event.content;
+            }
+          }
+        } catch (llmError) {
+          console.error('[api/architecture/plan] LLM stream failed:', llmError);
+          accumulatedText = '';
+        }
+
+        let archData: z.infer<typeof ArchitectureOutputSchema>;
+        if (accumulatedText) {
+          try {
+            const parsed = JSON.parse(accumulatedText);
+            const validated = ArchitectureOutputSchema.safeParse(parsed);
+            archData = validated.success ? validated.data : fallbackArchitecture;
+          } catch {
+            archData = fallbackArchitecture;
+          }
+        } else {
+          archData = fallbackArchitecture;
+        }
+
+        const { data: existing } = await db
+          .from('architectures')
+          .select('id')
+          .eq('project_id', id)
+          .maybeSingle();
+
+        const archRecord = {
+          template_name: 'ai-recommended',
+          mcu: archData.mcu || null,
+          power: archData.power || null,
+          interfaces: archData.interfaces ?? [],
+          features: archData.features ?? [],
+          rationale: archData.rationale,
+          updated_at: new Date().toISOString(),
+        };
+
+        let architecture;
+        if (existing) {
+          const { data, error } = await db
+            .from('architectures')
+            .update(archRecord)
+            .eq('project_id', id)
+            .select()
+            .single();
+          if (error) throw error;
+          architecture = data;
+        } else {
+          const { data, error } = await db
+            .from('architectures')
+            .insert({
+              project_id: id,
+              template_id: 'ai-recommended',
+              ...archRecord,
+            })
+            .select()
+            .single();
+          if (error) throw error;
+          architecture = data;
+        }
+
+        await updateProjectStatus(id, 'architecture_planned');
+        await createAuditEntry(id, {
+          category: 'architecture',
+          action: 'architecture_planned',
+          actor: auth.user.id,
+          details: { architectureId: architecture.id, mcu: archData.mcu },
+        });
+
+        controller.enqueue(
+          encoder.encode(
+            sseEncode({
+              type: 'done',
+              architecture: {
+                id: architecture.id,
+                templateId: architecture.template_id,
+                templateName: architecture.template_name,
+                mcu: architecture.mcu,
+                power: architecture.power,
+                interfaces: architecture.interfaces,
+                features: architecture.features,
+                rationale: architecture.rationale,
+              },
+              status: 'planned',
+            }),
+          ),
+        );
+        controller.close();
       },
-      status: 'planned',
+    });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+      },
     });
   } catch (err) {
     console.error('[api/architecture/plan] Failed:', err);
-    return NextResponse.json({ error: 'Failed to plan architecture' }, { status: 400 });
+    return new Response(JSON.stringify({ error: 'Failed to plan architecture' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
