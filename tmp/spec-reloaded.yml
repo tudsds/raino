@@ -1,0 +1,93 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "R Raino Studio Agentic PCB Design Platform" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]: R
+          - generic [ref=e9]:
+            - heading "Raino Studio" [level=1] [ref=e10]
+            - paragraph [ref=e11]: Agentic PCB Design Platform
+        - generic [ref=e12]:
+          - link "Dashboard" [ref=e13] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e14]:
+            - generic [ref=e15]: realvaluecp@gmail.com
+            - button "Sign Out" [ref=e17]
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - link [ref=e30] [cursor=pointer]:
+              - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a
+              - img [ref=e31]
+            - generic [ref=e33]:
+              - heading "Specification" [level=1] [ref=e34]
+              - paragraph [ref=e35]: d2aa6d88-7b10-46be-ad8c-c85ca596672a
+          - generic [ref=e36]:
+            - button "Compile Spec" [ref=e37]
+            - generic [ref=e38]: Pending
+            - generic [ref=e39]: Intake
+        - navigation [ref=e42]:
+          - link "Overview" [ref=e43] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a
+          - link "Intake" [ref=e44] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/intake
+          - link "Spec" [ref=e45] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/spec
+          - link "Architecture" [ref=e46] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/architecture
+          - link "BOM" [ref=e47] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/bom
+          - link "Previews" [ref=e48] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/previews
+          - link "Downloads" [ref=e49] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/downloads
+          - link "Quote" [ref=e50] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/quote
+        - main [ref=e51]:
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - generic [ref=e54]:
+                - heading "Compiled Requirements" [level=2] [ref=e55]
+                - generic [ref=e56]:
+                  - paragraph [ref=e57]: No requirements compiled yet.
+                  - paragraph [ref=e58]: Complete the intake process and click Compile Spec to generate specifications.
+              - generic [ref=e59]:
+                - heading "Specification Status" [level=2] [ref=e60]
+                - generic [ref=e61]:
+                  - generic [ref=e62]:
+                    - generic [ref=e63]: Compilation Status
+                    - generic [ref=e64]: Pending
+                  - generic [ref=e65]:
+                    - generic [ref=e66]: Requirements Extracted
+                    - generic [ref=e67]: "0"
+                  - generic [ref=e68]:
+                    - generic [ref=e69]: Ready for Architecture
+                    - generic [ref=e70]: "No"
+            - generic [ref=e71]:
+              - generic [ref=e72]:
+                - heading "Project Info" [level=3] [ref=e73]
+                - generic [ref=e74]:
+                  - generic [ref=e75]:
+                    - generic [ref=e76]: Project Name
+                    - generic [ref=e77]: RP2040 Pico Clone - Clean E2E
+                  - generic [ref=e78]:
+                    - generic [ref=e79]: Status
+                    - generic [ref=e80]: Intake
+                  - generic [ref=e81]:
+                    - generic [ref=e82]: Progress
+                    - generic [ref=e83]: 0%
+              - generic [ref=e84]:
+                - heading "Next Steps" [level=3] [ref=e85]
+                - link "Complete Intake Provide more details" [ref=e87] [cursor=pointer]:
+                  - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/intake
+                  - img [ref=e89]
+                  - generic [ref=e91]:
+                    - paragraph [ref=e92]: Complete Intake
+                    - paragraph [ref=e93]: Provide more details
+    - contentinfo [ref=e23]:
+      - generic [ref=e24]:
+        - paragraph [ref=e25]: © 2026 Raino Studio. Agentic PCB Design Platform.
+        - paragraph [ref=e26]: Powered by AI
+  - alert [ref=e94]

@@ -145,77 +145,84 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
               }));
             }
           }
-        } catch {
-          bomGuidance = 'BOM generation unavailable — AI service could not be reached.';
-        } finally {
-          clearInterval(keepalive);
-        }
 
-        if (bomRows.length === 0) {
+          if (bomRows.length === 0) {
+            controller.enqueue(
+              encoder.encode(
+                sseEncode({
+                  type: 'error',
+                  error: 'BOM generation failed: no components were produced.',
+                  guidance: bomGuidance,
+                }),
+              ),
+            );
+            return;
+          }
+
+          const totalCost = bomRows.reduce((sum, r) => sum + r.quantity * r.unitPrice, 0);
+
+          const bom = await createBOM(id, {
+            totalCost,
+            currency: 'USD',
+            lineCount: bomRows.length,
+            isEstimate: true,
+            rows: bomRows,
+          });
+
+          await updateProjectStatus(id, 'bom_generated');
+
+          await createAuditEntry(id, {
+            category: 'bom',
+            action: 'bom_generated',
+            actor: auth.user.id,
+            details: { bomId: bom.id, guidance: bomGuidance.substring(0, 500) },
+          });
+
+          controller.enqueue(
+            encoder.encode(
+              sseEncode({
+                type: 'done',
+                bom: {
+                  id: bom.id,
+                  totalCost: Number(bom.total_cost),
+                  currency: bom.currency,
+                  lineCount: bom.line_count,
+                  isEstimate: bom.is_estimate,
+                  items: bom.rows.map((r) => ({
+                    id: r.id,
+                    ref: r.ref,
+                    value: r.value,
+                    mpn: r.mpn,
+                    manufacturer: r.manufacturer,
+                    package: r.package,
+                    quantity: r.quantity,
+                    unitPrice: Number(r.unit_price),
+                    currency: r.currency,
+                    lifecycle: r.lifecycle,
+                    risk: r.risk,
+                    description: r.description ?? '',
+                    alternates: r.alternates ?? [],
+                  })),
+                },
+                guidance: bomGuidance,
+                generatedAt: new Date().toISOString(),
+              }),
+            ),
+          );
+        } catch (err) {
+          console.error('[api/bom/generate] Stream error:', err);
           controller.enqueue(
             encoder.encode(
               sseEncode({
                 type: 'error',
-                error: 'BOM generation failed: no components were produced.',
-                guidance: bomGuidance,
+                error: err instanceof Error ? err.message : 'BOM generation failed',
               }),
             ),
           );
+        } finally {
+          clearInterval(keepalive);
           controller.close();
-          return;
         }
-
-        const totalCost = bomRows.reduce((sum, r) => sum + r.quantity * r.unitPrice, 0);
-
-        const bom = await createBOM(id, {
-          totalCost,
-          currency: 'USD',
-          lineCount: bomRows.length,
-          isEstimate: true,
-          rows: bomRows,
-        });
-
-        await updateProjectStatus(id, 'bom_generated');
-
-        await createAuditEntry(id, {
-          category: 'bom',
-          action: 'bom_generated',
-          actor: auth.user.id,
-          details: { bomId: bom.id, guidance: bomGuidance.substring(0, 500) },
-        });
-
-        controller.enqueue(
-          encoder.encode(
-            sseEncode({
-              type: 'done',
-              bom: {
-                id: bom.id,
-                totalCost: Number(bom.total_cost),
-                currency: bom.currency,
-                lineCount: bom.line_count,
-                isEstimate: bom.is_estimate,
-                items: bom.rows.map((r) => ({
-                  id: r.id,
-                  ref: r.ref,
-                  value: r.value,
-                  mpn: r.mpn,
-                  manufacturer: r.manufacturer,
-                  package: r.package,
-                  quantity: r.quantity,
-                  unitPrice: Number(r.unit_price),
-                  currency: r.currency,
-                  lifecycle: r.lifecycle,
-                  risk: r.risk,
-                  description: r.description ?? '',
-                  alternates: r.alternates ?? [],
-                })),
-              },
-              guidance: bomGuidance,
-              generatedAt: new Date().toISOString(),
-            }),
-          ),
-        );
-        controller.close();
       },
     });
 

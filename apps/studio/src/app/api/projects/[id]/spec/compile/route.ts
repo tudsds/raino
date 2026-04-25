@@ -116,79 +116,87 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
               specContent = accumulatedText;
             }
           }
-        } catch {
-          // intentionally empty — keep fallback specContent
+
+          const db = getSupabaseAdmin();
+          const { data: existingSpec } = await db
+            .from('specs')
+            .select('id')
+            .eq('project_id', id)
+            .maybeSingle();
+
+          let spec;
+          if (existingSpec) {
+            const { data, error } = await db
+              .from('specs')
+              .update({
+                requirements: structuredRequirements,
+                constraints: structuredConstraints,
+                interfaces: structuredInterfaces,
+                raw_text: specContent,
+                compiled_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+              })
+              .eq('project_id', id)
+              .select()
+              .single();
+            if (error) throw error;
+            spec = data;
+          } else {
+            const { data, error } = await db
+              .from('specs')
+              .insert({
+                project_id: id,
+                requirements: structuredRequirements,
+                constraints: structuredConstraints,
+                interfaces: structuredInterfaces,
+                raw_text: specContent,
+                compiled_at: new Date().toISOString(),
+              })
+              .select()
+              .single();
+            if (error) throw error;
+            spec = data;
+          }
+
+          await updateProjectStatus(id, 'spec_compiled');
+
+          await createAuditEntry(id, {
+            category: 'spec',
+            action: 'spec_compiled',
+            actor: auth.user.id,
+            details: { specId: spec.id },
+          });
+
+          controller.enqueue(
+            encoder.encode(
+              sseEncode({
+                type: 'done',
+                spec: {
+                  id: spec.id,
+                  rawText: spec.raw_text,
+                  requirements: spec.requirements,
+                  constraints: spec.constraints,
+                  interfaces: spec.interfaces,
+                  compiledAt: spec.compiled_at,
+                },
+                status: 'compiled',
+              }),
+            ),
+          );
+        } catch (err) {
+          console.error('[api/spec/compile] Stream error:', err);
+          controller.enqueue(
+            encoder.encode(
+              sseEncode({
+                type: 'error',
+                error: err instanceof Error ? err.message : 'Spec compilation failed',
+              }),
+            ),
+          );
         } finally {
           clearInterval(keepalive);
+          controller.close();
         }
-
-        const db = getSupabaseAdmin();
-        const { data: existingSpec } = await db
-          .from('specs')
-          .select('id')
-          .eq('project_id', id)
-          .maybeSingle();
-
-        let spec;
-        if (existingSpec) {
-          const { data, error } = await db
-            .from('specs')
-            .update({
-              requirements: structuredRequirements,
-              constraints: structuredConstraints,
-              interfaces: structuredInterfaces,
-              raw_text: specContent,
-              compiled_at: new Date().toISOString(),
-              updated_at: new Date().toISOString(),
-            })
-            .eq('project_id', id)
-            .select()
-            .single();
-          if (error) throw error;
-          spec = data;
-        } else {
-          const { data, error } = await db
-            .from('specs')
-            .insert({
-              project_id: id,
-              requirements: structuredRequirements,
-              constraints: structuredConstraints,
-              interfaces: structuredInterfaces,
-              raw_text: specContent,
-              compiled_at: new Date().toISOString(),
-            })
-            .select()
-            .single();
-          if (error) throw error;
-          spec = data;
-        }
-
-        await updateProjectStatus(id, 'spec_compiled');
-
-        await createAuditEntry(id, {
-          category: 'spec',
-          action: 'spec_compiled',
-          actor: auth.user.id,
-          details: { specId: spec.id },
-        });
-
-        controller.enqueue(
-          encoder.encode(
-            sseEncode({
-              type: 'done',
-              spec: {
-                id: spec.id,
-                rawText: spec.raw_text,
-                requirements: spec.requirements,
-                constraints: spec.constraints,
-                interfaces: spec.interfaces,
-                compiledAt: spec.compiled_at,
-              },
-              status: 'compiled',
-            }),
-          ),
-        );
-        controller.close();
       },
     });
 
