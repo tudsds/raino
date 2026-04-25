@@ -128,34 +128,50 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           }
 
           if (accumulatedText) {
-            const jsonMatch = accumulatedText.match(/\{[\s\S]*\}/);
-            const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
-            const parsed = JSON.parse(jsonStr);
-            const validated = BOMOutputSchema.safeParse(parsed);
-            if (validated.success) {
-              bomGuidance = validated.data.notes ?? 'BOM generated from LLM estimates.';
-              bomRows = validated.data.components.map((c) => ({
-                ref: c.ref,
-                value: c.value,
-                mpn: c.mpn,
-                manufacturer: c.manufacturer,
-                pkg: c.package,
-                quantity: c.quantity,
-                unitPrice: c.unitPrice,
-                currency: 'USD',
-                lifecycle: c.lifecycle ?? 'unknown',
-                risk: c.risk ?? 'low',
-                description: c.description,
-              }));
+            try {
+              const jsonMatch = accumulatedText.match(/\{[\s\S]*\}/);
+              const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
+              const parsed = JSON.parse(jsonStr);
+              const validated = BOMOutputSchema.safeParse(parsed);
+              if (validated.success) {
+                bomGuidance = validated.data.notes ?? 'BOM generated from LLM estimates.';
+                bomRows = validated.data.components.map((c) => ({
+                  ref: c.ref,
+                  value: c.value,
+                  mpn: c.mpn,
+                  manufacturer: c.manufacturer,
+                  pkg: c.package,
+                  quantity: c.quantity,
+                  unitPrice: c.unitPrice,
+                  currency: 'USD',
+                  lifecycle: c.lifecycle ?? 'unknown',
+                  risk: c.risk ?? 'low',
+                  description: c.description,
+                }));
+              }
+            } catch {
+              bomGuidance = accumulatedText.substring(0, 3000);
             }
           }
 
-          if (bomRows.length === 0) {
+          if (bomRows.length === 0 && !bomGuidance) {
             controller.enqueue(
               encoder.encode(
                 sseEncode({
                   type: 'error',
                   error: 'BOM generation failed: no components were produced.',
+                }),
+              ),
+            );
+            return;
+          }
+
+          if (bomRows.length === 0 && bomGuidance) {
+            controller.enqueue(
+              encoder.encode(
+                sseEncode({
+                  type: 'error',
+                  error: 'LLM returned guidance text instead of structured BOM data. Try regenerating.',
                   guidance: bomGuidance,
                 }),
               ),
