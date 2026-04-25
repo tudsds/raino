@@ -74,19 +74,14 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         let accumulatedText = '';
 
         try {
-          const provider = new KimiProvider();
-          const gateway = new LLMGateway(provider, { maxRetries: 1 });
+          const provider = new KimiProvider(55_000);
+          const gateway = new LLMGateway(provider, { maxRetries: 0 });
 
-          // Use streaming to avoid timeout — tokens arrive immediately
-          const streamGen = gateway.chatStream(enrichedMessages, { maxTokens: 1024 });
-          for await (const event of streamGen) {
-            if (event.type === 'content' && event.content) {
-              accumulatedText += event.content;
-            }
-          }
+          const response = await gateway.chat(enrichedMessages, { maxTokens: 1024 });
+          accumulatedText = response.content;
         } catch (llmError) {
           const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
-          console.error('[api/architecture/plan] LLM stream failed:', errMsg);
+          console.error('[api/architecture/plan] LLM call failed:', errMsg);
           controller.enqueue(encoder.encode(sseEncode({ type: 'error', error: errMsg })));
         }
 
