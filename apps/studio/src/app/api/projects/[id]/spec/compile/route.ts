@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/require-auth';
 import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
@@ -7,6 +7,10 @@ import { createAuditEntry } from '@/lib/data/audit-queries';
 import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 
 export const maxDuration = 60;
+
+function sseEncode(data: Record<string, unknown>): string {
+  return `data: ${JSON.stringify(data)}\n\n`;
+}
 
 const RequirementSchema = z.object({
   id: z.string(),
@@ -57,116 +61,149 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
     const ownership = await verifyProjectOwnership(id, auth.user.id);
     if (!ownership.authorized) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+      return new Response(JSON.stringify({ error: 'Project not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     const project = ownership.project;
+    const intakeMessages = project.intakeMessages.map((m: { role: string; content: string }) => `${m.role}: ${m.content}`).join('\n');
 
-    const intakeMessages = project.intakeMessages.map((m) => `${m.role}: ${m.content}`).join('\n');
+    const encoder = new TextEncoder();
 
-    let specContent = 'Specification compilation unavailable — AI service could not be reached.';
-    let structuredRequirements: z.infer<typeof RequirementSchema>[] = [];
-    let structuredConstraints: z.infer<typeof ConstraintSchema>[] = [];
-    let structuredInterfaces: z.infer<typeof InterfaceSpecSchema>[] = [];
+    const stream = new ReadableStream({
+      async start(controller) {
+        controller.enqueue(encoder.encode(sseEncode({ type: 'progress', status: 'compiling' })));
 
-    try {
-      const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider, { maxRetries: 2 });
-      const messages = templateToMessages('spec_compilation', {
-        intakeMessages,
-        clarificationAnswers: '',
-      });
+        const keepalive = setInterval(() => {
+          controller.enqueue(encoder.encode(': keepalive\n\n'));
+        }, 10_000);
 
-      let accumulatedText = '';
-      for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
-        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
-      }
+        let specContent = 'Specification compilation unavailable — AI service could not be reached.';
+        let structuredRequirements: z.infer<typeof RequirementSchema>[] = [];
+        let structuredConstraints: z.infer<typeof ConstraintSchema>[] = [];
+        let structuredInterfaces: z.infer<typeof InterfaceSpecSchema>[] = [];
 
-      if (accumulatedText) {
         try {
-          const jsonMatch = accumulatedText.match(/\{[\s\S]*\}/);
-          const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
-          const parsed = JSON.parse(jsonStr);
-          const validated = SpecOutputSchema.safeParse(parsed);
-          if (validated.success) {
-            specContent = validated.data.summary;
-            structuredRequirements = validated.data.requirements;
-            structuredConstraints = validated.data.constraints;
-            structuredInterfaces = validated.data.interfaces;
-          } else {
-            specContent = accumulatedText;
+          const provider = new KimiProvider();
+          const gateway = new LLMGateway(provider, { maxRetries: 2 });
+          const messages = templateToMessages('spec_compilation', {
+            intakeMessages,
+            clarificationAnswers: '',
+          });
+
+          let accumulatedText = '';
+          for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
+            if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+          }
+
+          if (accumulatedText) {
+            try {
+              const jsonMatch = accumulatedText.match(/\{[\s\S]*\}/);
+              const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
+              const parsed = JSON.parse(jsonStr);
+              const validated = SpecOutputSchema.safeParse(parsed);
+              if (validated.success) {
+                specContent = validated.data.summary;
+                structuredRequirements = validated.data.requirements;
+                structuredConstraints = validated.data.constraints;
+                structuredInterfaces = validated.data.interfaces;
+              } else {
+                specContent = accumulatedText;
+              }
+            } catch {
+              specContent = accumulatedText;
+            }
           }
         } catch {
-          specContent = accumulatedText;
+          // intentionally empty — keep fallback specContent
+        } finally {
+          clearInterval(keepalive);
         }
-      }
-    } catch {
-      // intentionally empty — keep fallback specContent with empty structured fields
-    }
 
-    const db = getSupabaseAdmin();
-    const { data: existingSpec } = await db
-      .from('specs')
-      .select('id')
-      .eq('project_id', id)
-      .maybeSingle();
+        const db = getSupabaseAdmin();
+        const { data: existingSpec } = await db
+          .from('specs')
+          .select('id')
+          .eq('project_id', id)
+          .maybeSingle();
 
-    let spec;
-    if (existingSpec) {
-      const { data, error } = await db
-        .from('specs')
-        .update({
-          requirements: structuredRequirements,
-          constraints: structuredConstraints,
-          interfaces: structuredInterfaces,
-          raw_text: specContent,
-          compiled_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        })
-        .eq('project_id', id)
-        .select()
-        .single();
-      if (error) throw error;
-      spec = data;
-    } else {
-      const { data, error } = await db
-        .from('specs')
-        .insert({
-          project_id: id,
-          requirements: structuredRequirements,
-          constraints: structuredConstraints,
-          interfaces: structuredInterfaces,
-          raw_text: specContent,
-          compiled_at: new Date().toISOString(),
-        })
-        .select()
-        .single();
-      if (error) throw error;
-      spec = data;
-    }
+        let spec;
+        if (existingSpec) {
+          const { data, error } = await db
+            .from('specs')
+            .update({
+              requirements: structuredRequirements,
+              constraints: structuredConstraints,
+              interfaces: structuredInterfaces,
+              raw_text: specContent,
+              compiled_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            })
+            .eq('project_id', id)
+            .select()
+            .single();
+          if (error) throw error;
+          spec = data;
+        } else {
+          const { data, error } = await db
+            .from('specs')
+            .insert({
+              project_id: id,
+              requirements: structuredRequirements,
+              constraints: structuredConstraints,
+              interfaces: structuredInterfaces,
+              raw_text: specContent,
+              compiled_at: new Date().toISOString(),
+            })
+            .select()
+            .single();
+          if (error) throw error;
+          spec = data;
+        }
 
-    await updateProjectStatus(id, 'spec_compiled');
+        await updateProjectStatus(id, 'spec_compiled');
 
-    await createAuditEntry(id, {
-      category: 'spec',
-      action: 'spec_compiled',
-      actor: auth.user.id,
-      details: { specId: spec.id },
-    });
+        await createAuditEntry(id, {
+          category: 'spec',
+          action: 'spec_compiled',
+          actor: auth.user.id,
+          details: { specId: spec.id },
+        });
 
-    return NextResponse.json({
-      projectId: id,
-      spec: {
-        id: spec.id,
-        rawText: spec.raw_text,
-        requirements: spec.requirements,
-        constraints: spec.constraints,
-        interfaces: spec.interfaces,
-        compiledAt: spec.compiled_at,
+        controller.enqueue(
+          encoder.encode(
+            sseEncode({
+              type: 'done',
+              spec: {
+                id: spec.id,
+                rawText: spec.raw_text,
+                requirements: spec.requirements,
+                constraints: spec.constraints,
+                interfaces: spec.interfaces,
+                compiledAt: spec.compiled_at,
+              },
+              status: 'compiled',
+            }),
+          ),
+        );
+        controller.close();
       },
-      status: 'compiled',
     });
-  } catch {
-    return NextResponse.json({ error: 'Failed to compile specification' }, { status: 400 });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+      },
+    });
+  } catch (err) {
+    console.error('[api/spec/compile] Failed:', err);
+    return new Response(JSON.stringify({ error: 'Failed to compile specification' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }

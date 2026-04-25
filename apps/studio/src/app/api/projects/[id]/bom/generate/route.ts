@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/require-auth';
 import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
@@ -7,6 +7,10 @@ import { createAuditEntry } from '@/lib/data/audit-queries';
 import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 
 export const maxDuration = 60;
+
+function sseEncode(data: Record<string, unknown>): string {
+  return `data: ${JSON.stringify(data)}\n\n`;
+}
 
 const BOMComponentSchema = z.object({
   ref: z.string().describe('Reference designator, e.g. U1, R2, C3'),
@@ -44,7 +48,10 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
     const ownership = await verifyProjectOwnership(id, auth.user.id);
     if (!ownership.authorized) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+      return new Response(JSON.stringify({ error: 'Project not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     const project = ownership.project;
@@ -75,121 +82,155 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       };
     })();
 
-    let bomGuidance: string;
-    let bomRows: Array<{
-      ref: string;
-      value: string;
-      mpn: string;
-      manufacturer: string;
-      pkg: string;
-      quantity: number;
-      unitPrice: number;
-      currency: string;
-      lifecycle: string;
-      risk: string;
-      description?: string;
-    }> = [];
+    const encoder = new TextEncoder();
 
-    try {
-      const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider, { maxRetries: 2 });
-      const messages = templateToMessages('bom_generation', {
-        architecture,
-        candidateParts,
-        powerBudget: specConstraints.powerBudget,
-        boardArea: specConstraints.boardArea,
-        layerCount: specConstraints.layerCount,
-      });
+    const stream = new ReadableStream({
+      async start(controller) {
+        controller.enqueue(encoder.encode(sseEncode({ type: 'progress', status: 'generating_bom' })));
 
-      let accumulatedText = '';
-      for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
-        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
-      }
+        const keepalive = setInterval(() => {
+          controller.enqueue(encoder.encode(': keepalive\n\n'));
+        }, 10_000);
 
-      if (accumulatedText) {
-        const jsonMatch = accumulatedText.match(/\{[\s\S]*\}/);
-        const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
-        const parsed = JSON.parse(jsonStr);
-        const validated = BOMOutputSchema.safeParse(parsed);
-        if (validated.success) {
-          bomGuidance = validated.data.notes ?? 'BOM generated from LLM estimates.';
-          bomRows = validated.data.components.map((c) => ({
-            ref: c.ref,
-            value: c.value,
-            mpn: c.mpn,
-            manufacturer: c.manufacturer,
-            pkg: c.package,
-            quantity: c.quantity,
-            unitPrice: c.unitPrice,
-            currency: 'USD',
-            lifecycle: c.lifecycle ?? 'unknown',
-            risk: c.risk ?? 'low',
-            description: c.description,
-          }));
+        let bomGuidance = '';
+        let bomRows: Array<{
+          ref: string;
+          value: string;
+          mpn: string;
+          manufacturer: string;
+          pkg: string;
+          quantity: number;
+          unitPrice: number;
+          currency: string;
+          lifecycle: string;
+          risk: string;
+          description?: string;
+        }> = [];
+
+        try {
+          const provider = new KimiProvider();
+          const gateway = new LLMGateway(provider, { maxRetries: 2 });
+          const messages = templateToMessages('bom_generation', {
+            architecture,
+            candidateParts,
+            powerBudget: specConstraints.powerBudget,
+            boardArea: specConstraints.boardArea,
+            layerCount: specConstraints.layerCount,
+          });
+
+          let accumulatedText = '';
+          for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
+            if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+          }
+
+          if (accumulatedText) {
+            const jsonMatch = accumulatedText.match(/\{[\s\S]*\}/);
+            const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
+            const parsed = JSON.parse(jsonStr);
+            const validated = BOMOutputSchema.safeParse(parsed);
+            if (validated.success) {
+              bomGuidance = validated.data.notes ?? 'BOM generated from LLM estimates.';
+              bomRows = validated.data.components.map((c) => ({
+                ref: c.ref,
+                value: c.value,
+                mpn: c.mpn,
+                manufacturer: c.manufacturer,
+                pkg: c.package,
+                quantity: c.quantity,
+                unitPrice: c.unitPrice,
+                currency: 'USD',
+                lifecycle: c.lifecycle ?? 'unknown',
+                risk: c.risk ?? 'low',
+                description: c.description,
+              }));
+            }
+          }
+        } catch {
+          bomGuidance = 'BOM generation unavailable — AI service could not be reached.';
+        } finally {
+          clearInterval(keepalive);
         }
-      }
-    } catch {
-      bomGuidance = 'BOM generation unavailable — AI service could not be reached.';
-    }
 
-    if (bomRows.length === 0) {
-      return NextResponse.json(
-        {
-          error: 'BOM generation failed: no components were produced.',
-          guidance: bomGuidance,
-          suggestion: 'Please refine your project specification or try again.',
-        },
-        { status: 422 },
-      );
-    }
+        if (bomRows.length === 0) {
+          controller.enqueue(
+            encoder.encode(
+              sseEncode({
+                type: 'error',
+                error: 'BOM generation failed: no components were produced.',
+                guidance: bomGuidance,
+              }),
+            ),
+          );
+          controller.close();
+          return;
+        }
 
-    const totalCost = bomRows.reduce((sum, r) => sum + r.quantity * r.unitPrice, 0);
+        const totalCost = bomRows.reduce((sum, r) => sum + r.quantity * r.unitPrice, 0);
 
-    const bom = await createBOM(id, {
-      totalCost,
-      currency: 'USD',
-      lineCount: bomRows.length,
-      isEstimate: true,
-      rows: bomRows,
-    });
+        const bom = await createBOM(id, {
+          totalCost,
+          currency: 'USD',
+          lineCount: bomRows.length,
+          isEstimate: true,
+          rows: bomRows,
+        });
 
-    await updateProjectStatus(id, 'bom_generated');
+        await updateProjectStatus(id, 'bom_generated');
 
-    await createAuditEntry(id, {
-      category: 'bom',
-      action: 'bom_generated',
-      actor: auth.user.id,
-      details: { bomId: bom.id, guidance: bomGuidance.substring(0, 500) },
-    });
+        await createAuditEntry(id, {
+          category: 'bom',
+          action: 'bom_generated',
+          actor: auth.user.id,
+          details: { bomId: bom.id, guidance: bomGuidance.substring(0, 500) },
+        });
 
-    return NextResponse.json({
-      projectId: id,
-      bom: {
-        id: bom.id,
-        totalCost: Number(bom.total_cost),
-        currency: bom.currency,
-        lineCount: bom.line_count,
-        isEstimate: bom.is_estimate,
-        items: bom.rows.map((r) => ({
-          id: r.id,
-          ref: r.ref,
-          value: r.value,
-          mpn: r.mpn,
-          manufacturer: r.manufacturer,
-          package: r.package,
-          quantity: r.quantity,
-          unitPrice: Number(r.unit_price),
-          currency: r.currency,
-          lifecycle: r.lifecycle,
-          risk: r.risk,
-          description: r.description ?? '',
-          alternates: r.alternates ?? [],
-        })),
+        controller.enqueue(
+          encoder.encode(
+            sseEncode({
+              type: 'done',
+              bom: {
+                id: bom.id,
+                totalCost: Number(bom.total_cost),
+                currency: bom.currency,
+                lineCount: bom.line_count,
+                isEstimate: bom.is_estimate,
+                items: bom.rows.map((r) => ({
+                  id: r.id,
+                  ref: r.ref,
+                  value: r.value,
+                  mpn: r.mpn,
+                  manufacturer: r.manufacturer,
+                  package: r.package,
+                  quantity: r.quantity,
+                  unitPrice: Number(r.unit_price),
+                  currency: r.currency,
+                  lifecycle: r.lifecycle,
+                  risk: r.risk,
+                  description: r.description ?? '',
+                  alternates: r.alternates ?? [],
+                })),
+              },
+              guidance: bomGuidance,
+              generatedAt: new Date().toISOString(),
+            }),
+          ),
+        );
+        controller.close();
       },
-      guidance: bomGuidance,
-      generatedAt: new Date().toISOString(),
     });
-  } catch {
-    return NextResponse.json({ error: 'Failed to generate BOM' }, { status: 400 });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+      },
+    });
+  } catch (err) {
+    console.error('[api/bom/generate] Failed:', err);
+    return new Response(JSON.stringify({ error: 'Failed to generate BOM' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }

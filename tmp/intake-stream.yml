@@ -1,0 +1,207 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "R Raino Studio Agentic PCB Design Platform" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]: R
+          - generic [ref=e9]:
+            - heading "Raino Studio" [level=1] [ref=e10]
+            - paragraph [ref=e11]: Agentic PCB Design Platform
+        - generic [ref=e12]:
+          - link "Dashboard" [ref=e13] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e14]:
+            - generic [ref=e15]: realvaluecp@gmail.com
+            - button "Sign Out" [ref=e17]
+    - main [ref=e18]:
+      - generic [ref=e367]:
+        - generic [ref=e369]:
+          - generic [ref=e370]:
+            - link [ref=e371] [cursor=pointer]:
+              - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a
+              - img [ref=e372]
+            - generic [ref=e374]:
+              - heading "Project Intake" [level=1] [ref=e375]
+              - paragraph [ref=e376]: d2aa6d88-7b10-46be-ad8c-c85ca596672a
+          - generic [ref=e380]: Gathering Info
+        - navigation [ref=e383]:
+          - link "Overview" [ref=e384] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a
+          - link "Intake" [ref=e385] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/intake
+          - link "Spec" [ref=e386] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/spec
+          - link "Architecture" [ref=e387] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/architecture
+          - link "BOM" [ref=e388] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/bom
+          - link "Previews" [ref=e389] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/previews
+          - link "Downloads" [ref=e390] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/downloads
+          - link "Quote" [ref=e391] [cursor=pointer]:
+            - /url: /projects/d2aa6d88-7b10-46be-ad8c-c85ca596672a/quote
+        - generic [ref=e392]:
+          - generic [ref=e393]:
+            - generic [ref=e403]:
+              - paragraph [ref=e404]: "I want to build an RP2040-based Pico clone development board. Key requirements: - MCU: RP2040 dual-core ARM Cortex-M0+ at 133MHz - Flash: W25Q128 16MB QSPI - Power: USB-C 5V input, AP2112-3.3 LDO for 3.3V rail - USB: USB-C connector for power and programming (BOOTSEL mode) - LEDs: 1 Neopixel WS2812B on GP23, 1 user LED on GP25, 3 debug LEDs on GP14-16 - Buttons: BOOT button (active low on RUN), RESET button - Headers: 2x 20-pin through-hole headers (GPIO0-29 plus power/ground), SWD debug header - Crystal: 12MHz external crystal - ESD: TVS diode on USB data lines - PCB: 2-layer, 51x21mm, FR4 1.6mm, JLCPCB fabrication - Budget: under $8 for 5 bare boards - Target: educational use, FCC Class B"
+              - generic [ref=e405]: 9:04:12 AM
+            - generic [ref=e494]:
+              - generic [ref=e495]:
+                - paragraph [ref=e496]:
+                  - text: This is a well-defined
+                  - strong [ref=e497]: microcontroller development board
+                  - text: project—specifically a
+                  - strong [ref=e498]: Raspberry Pi Pico-compatible clone
+                  - text: with enhanced features (larger flash, additional debug LEDs, WS2812B Neopixel).
+                - heading "1. Project Classification" [level=2] [ref=e499]
+                - paragraph [ref=e500]:
+                  - strong [ref=e501]: "Type:"
+                  - text: RP2040-based Dev Board (Pico form-factor derivative)
+                  - strong [ref=e502]: "Category:"
+                  - text: Educational/Prototyping Platform
+                  - strong [ref=e503]: "Complexity:"
+                  - text: Low-Medium (2-layer, standard density, no RF/high-speed except USB 2.0)
+                - heading "2. Key Functional Requirements Identified" [level=2] [ref=e504]
+                - paragraph [ref=e505]:
+                  - strong [ref=e506]: "Core System:"
+                - list [ref=e507]:
+                  - listitem [ref=e508]:
+                    - strong [ref=e509]: "MCU:"
+                    - text: RP2040 (dual-core Cortex-M0+, 133MHz)
+                  - listitem [ref=e510]:
+                    - strong [ref=e511]: "Memory:"
+                    - text: 16MB external QSPI flash (W25Q128JV)
+                  - listitem [ref=e512]:
+                    - strong [ref=e513]: "Clocking:"
+                    - text: 12MHz external crystal with loading caps
+                - paragraph [ref=e514]:
+                  - strong [ref=e515]: "Power Architecture:"
+                - list [ref=e516]:
+                  - listitem [ref=e517]:
+                    - strong [ref=e518]: "Input:"
+                    - text: USB-C 5V (VBUS)
+                  - listitem [ref=e519]:
+                    - strong [ref=e520]: "Regulation:"
+                    - text: AP2112-3.3 LDO (3.3V rail)
+                  - listitem [ref=e521]:
+                    - strong [ref=e522]: "Logic Levels:"
+                    - text: 3.3V I/O (RP2040 native)
+                - paragraph [ref=e523]:
+                  - strong [ref=e524]: "Interfaces & I/O:"
+                - list [ref=e525]:
+                  - listitem [ref=e526]:
+                    - strong [ref=e527]: "USB:"
+                    - text: USB-C for power + USB 2.0 Full-Speed (BOOTSEL programming)
+                  - listitem [ref=e528]:
+                    - strong [ref=e529]: "GPIO:"
+                    - text: 2×20-pin 2.54mm headers (GPIO0-29, ADC_VREF, RUN, 3V3, 5V, GND)
+                  - listitem [ref=e530]:
+                    - strong [ref=e531]: "Debug:"
+                    - text: SWD header (3-pin or 5-pin?)
+                - paragraph [ref=e532]:
+                  - strong [ref=e533]: "User Interface:"
+                - list [ref=e534]:
+                  - listitem [ref=e535]:
+                    - strong [ref=e536]: "Indicators:"
+                    - text: WS2812B (GP23), User LED (GP25), 3×Debug LEDs (GP14-16)
+                  - listitem [ref=e537]:
+                    - strong [ref=e538]: "Controls:"
+                    - text: BOOTSEL button (active-low on RUN), RESET button
+                - paragraph [ref=e539]:
+                  - strong [ref=e540]: "Protection:"
+                - list [ref=e541]:
+                  - listitem [ref=e542]:
+                    - strong [ref=e543]: "ESD:"
+                    - text: TVS diode array on USB D+/D- lines
+                - paragraph [ref=e544]:
+                  - strong [ref=e545]: "Mechanical:"
+                - list [ref=e546]:
+                  - listitem [ref=e547]:
+                    - strong [ref=e548]: "Form Factor:"
+                    - text: 51×21mm (standard Pico dimensions)
+                  - listitem [ref=e549]:
+                    - strong [ref=e550]: "Layers:"
+                    - text: 2-layer FR4, 1.6mm thickness
+                  - listitem [ref=e551]:
+                    - strong [ref=e552]: "Target Cost:"
+                    - text: <$8/5pcs bare boards
+                - heading "3. Missing Information for Complete Specification" [level=2] [ref=e553]
+                - paragraph [ref=e554]: "To move to schematic capture and layout, I need a few clarifications:"
+                - paragraph [ref=e555]:
+                  - strong [ref=e556]: "Component Specifics:"
+                - list [ref=e557]:
+                  - listitem [ref=e558]:
+                    - strong [ref=e559]: "TVS Diode:"
+                    - text: Specific part number? (e.g., USBLC6-2SC6, PRTR5V0U2X?)
+                  - listitem [ref=e560]:
+                    - strong [ref=e561]: "USB-C Receptacle:"
+                    - text: 16-pin mid-mount? 24-pin full? (affects routing and cost)
+                  - listitem [ref=e562]:
+                    - strong [ref=e563]: "Crystal:"
+                    - text: Load capacitance value? (typically 20pF for 12MHz, but need confirmation)
+                  - listitem [ref=e564]:
+                    - strong [ref=e565]: "LED Colors:"
+                    - text: What colors for the 3 debug LEDs? (Red/Yellow/Green standard?)
+                  - listitem [ref=e566]:
+                    - strong [ref=e567]: "Buttons:"
+                    - text: Tactile switch dimensions? (3×6mm, 4×4mm, or through-hole?)
+                - paragraph [ref=e568]:
+                  - strong [ref=e569]: "Electrical Details:"
+                - list [ref=e570]:
+                  - listitem [ref=e571]:
+                    - strong [ref=e572]: "LDO Current:"
+                    - text: AP2112K-3.3 (300mA) or AP2112H-3.3 (600mA)? (RP2040 can draw 100mA+ under load)
+                  - listitem [ref=e573]:
+                    - strong [ref=e574]: "Decoupling Strategy:"
+                    - text: 100nF per power pin + bulk capacitance values?
+                  - listitem [ref=e575]:
+                    - strong [ref=e576]: "SWD Header:"
+                    - text: 1.27mm pitch SMD header (Cortex Debug) or 2.54mm through-hole?
+                - paragraph [ref=e577]:
+                  - strong [ref=e578]: "Manufacturing & Logistics:"
+                - list [ref=e579]:
+                  - listitem [ref=e580]:
+                    - strong [ref=e581]: "Assembly:"
+                    - text: Are you hand-soldering prototypes, or do you need a PCBA quote?
+                  - listitem [ref=e582]:
+                    - strong [ref=e583]: "Quantity:"
+                    - text: Is this 5 boards for hobby, or planning volume production later?
+                  - listitem [ref=e584]:
+                    - strong [ref=e585]: "Certification:"
+                    - text: FCC Class B for US—do you need CE/UKCA for international educational use?
+                  - listitem [ref=e586]:
+                    - strong [ref=e587]: "Silkscreen:"
+                    - text: Board labeling requirements? (Pin numbers, logo, version?)
+                - paragraph [ref=e588]:
+                  - strong [ref=e589]: "Design Preferences:"
+                - list [ref=e590]:
+                  - listitem [ref=e591]:
+                    - strong [ref=e592]: "Copper weight:"
+                    - text: 1oz standard, or 2oz for better power handling?
+                  - listitem [ref=e593]:
+                    - strong [ref=e594]: "Finish:"
+                    - text: HASL (cost-effective) or ENIG (better for durability)?
+                  - listitem [ref=e595]:
+                    - strong [ref=e596]: "Test Points:"
+                    - text: Any specific test points for manufacturing testing?
+                - paragraph [ref=e597]:
+                  - text: The specification is quite solid for a dev board. The main risks I see are the
+                  - strong [ref=e598]: AP2112 thermal performance
+                  - text: (if powering external peripherals) and ensuring the
+                  - strong [ref=e599]: USB-C CC pin termination
+                  - text: (5.1k pull-downs) for proper host detection—did you intend to include those resistors?
+                - paragraph [ref=e600]: Would you like to proceed with defaults for the missing items, or can you specify the USB connector type and target production volume?
+              - generic [ref=e601]: 4:05:10 PM
+          - generic [ref=e394]:
+            - generic [ref=e395]:
+              - textbox "Describe your hardware idea..." [active] [ref=e396]
+              - img [ref=e398] [cursor=pointer]
+              - button "Send" [disabled] [ref=e602]
+            - paragraph [ref=e401]: Press Enter to send. Be specific about your requirements, constraints, and target application.
+    - contentinfo [ref=e239]:
+      - generic [ref=e240]:
+        - paragraph [ref=e241]: © 2026 Raino Studio. Agentic PCB Design Platform.
+        - paragraph [ref=e242]: Powered by AI
+  - alert [ref=e243]
