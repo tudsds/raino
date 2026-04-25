@@ -75,19 +75,18 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       const provider = new KimiProvider(55_000);
       const gateway = new LLMGateway(provider, { maxRetries: 0 });
 
-      let testContent = '';
-      for await (const evt of gateway.chatStream(
-        [{ role: 'user', content: 'Say hello in JSON: {"greeting":"..."}' }],
-        { maxTokens: 100 },
-      )) {
-        if (evt.type === 'content' && evt.content) testContent += evt.content;
-      }
-      diagEvents.push({ type: 'debug', label: 'stream_test_outside', content: testContent });
+      const isAvail = await provider.isAvailable();
+      diagEvents.push({ type: 'debug', label: 'provider_available', content: `${isAvail}` });
 
-      for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 1024 })) {
-        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
-      }
-      diagEvents.push({ type: 'debug', label: 'arch_len_outside', content: `${accumulatedText.length}` });
+      const testResponse = await gateway.chat(
+        [{ role: 'user', content: 'Reply with just the word hello' }],
+        { maxTokens: 50 },
+      );
+      diagEvents.push({ type: 'debug', label: 'test_chat_raw', content: JSON.stringify({ id: testResponse.id, content: testResponse.content, model: testResponse.model, finishReason: testResponse.finishReason, usage: testResponse.usage }) });
+
+      const archResponse = await gateway.chat(enrichedMessages, { maxTokens: 1024 });
+      accumulatedText = archResponse.content;
+      diagEvents.push({ type: 'debug', label: 'arch_chat_raw', content: `len=${accumulatedText.length} finish=${archResponse.finishReason}` });
     } catch (llmError) {
       const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
       console.error('[api/architecture/plan] LLM call failed:', errMsg);
