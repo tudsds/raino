@@ -67,35 +67,38 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     const encoder = new TextEncoder();
     const db = getSupabaseAdmin();
 
+    // LLM call OUTSIDE ReadableStream to isolate async context issues
+    let accumulatedText = '';
+    const diagEvents: { type: string; label: string; content: string }[] = [];
+
+    try {
+      const provider = new KimiProvider(55_000);
+      const gateway = new LLMGateway(provider, { maxRetries: 0 });
+
+      let testContent = '';
+      for await (const evt of gateway.chatStream(
+        [{ role: 'user', content: 'Say hello in JSON: {"greeting":"..."}' }],
+        { maxTokens: 100 },
+      )) {
+        if (evt.type === 'content' && evt.content) testContent += evt.content;
+      }
+      diagEvents.push({ type: 'debug', label: 'stream_test_outside', content: testContent });
+
+      for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 1024 })) {
+        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+      }
+      diagEvents.push({ type: 'debug', label: 'arch_len_outside', content: `${accumulatedText.length}` });
+    } catch (llmError) {
+      const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
+      console.error('[api/architecture/plan] LLM call failed:', errMsg);
+      diagEvents.push({ type: 'error', label: 'llm_error', content: errMsg });
+    }
+
     const stream = new ReadableStream({
       async start(controller) {
         controller.enqueue(encoder.encode(sseEncode({ type: 'progress', status: 'generating' })));
-
-        let accumulatedText = '';
-
-        try {
-          const provider = new KimiProvider(55_000);
-          const gateway = new LLMGateway(provider, { maxRetries: 0 });
-
-          // Diagnostic: test chatStream with simple message
-          let testContent = '';
-          for await (const evt of gateway.chatStream(
-            [{ role: 'user', content: 'Say hello in JSON: {"greeting":"..."}' }],
-            { maxTokens: 100 },
-          )) {
-            if (evt.type === 'content' && evt.content) testContent += evt.content;
-          }
-          controller.enqueue(encoder.encode(sseEncode({ type: 'debug', label: 'stream_test', content: testContent })));
-
-          // Main architecture call via streaming
-          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 1024 })) {
-            if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
-          }
-          controller.enqueue(encoder.encode(sseEncode({ type: 'debug', label: 'arch_len', content: `${accumulatedText.length}` })));
-        } catch (llmError) {
-          const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
-          console.error('[api/architecture/plan] LLM call failed:', errMsg);
-          controller.enqueue(encoder.encode(sseEncode({ type: 'error', error: errMsg })));
+        for (const evt of diagEvents) {
+          controller.enqueue(encoder.encode(sseEncode(evt)));
         }
 
         let archData: z.infer<typeof ArchitectureOutputSchema>;
