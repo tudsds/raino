@@ -77,15 +77,21 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           const provider = new KimiProvider(55_000);
           const gateway = new LLMGateway(provider, { maxRetries: 0 });
 
-          const testResponse = await gateway.chat(
-            [{ role: 'user', content: 'Say hello in JSON format: {"greeting":"..."}' }],
+          // Diagnostic: test chatStream with simple message
+          let testContent = '';
+          for await (const evt of gateway.chatStream(
+            [{ role: 'user', content: 'Say hello in JSON: {"greeting":"..."}' }],
             { maxTokens: 100 },
-          );
-          controller.enqueue(encoder.encode(sseEncode({ type: 'debug', label: 'test_response', content: testResponse.content })));
+          )) {
+            if (evt.type === 'content' && evt.content) testContent += evt.content;
+          }
+          controller.enqueue(encoder.encode(sseEncode({ type: 'debug', label: 'stream_test', content: testContent })));
 
-          const response = await gateway.chat(enrichedMessages, { maxTokens: 1024 });
-          accumulatedText = response.content;
-          controller.enqueue(encoder.encode(sseEncode({ type: 'debug', label: 'arch_response_length', content: `${accumulatedText.length}` })));
+          // Main architecture call via streaming
+          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 1024 })) {
+            if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+          }
+          controller.enqueue(encoder.encode(sseEncode({ type: 'debug', label: 'arch_len', content: `${accumulatedText.length}` })));
         } catch (llmError) {
           const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
           console.error('[api/architecture/plan] LLM call failed:', errMsg);
