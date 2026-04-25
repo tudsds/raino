@@ -46,7 +46,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       });
 
       let accumulatedText = '';
-      for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
+      for await (const evt of gateway.chatStream(messages, { maxTokens: 2048, jsonMode: true })) {
         if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
       }
       clarificationContent =
