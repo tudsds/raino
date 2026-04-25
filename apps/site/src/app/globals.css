@@ -1,6 +1,10 @@
 @import 'tailwindcss';
+@import '@raino/ui/styles/glass.css';
 
 :root {
+  /* DEPRECATED: These tokens now live in packages/ui/src/styles/theme.ts.
+     Kept for backward compatibility — prefer importing from @raino/ui/theme. */
+
   /* Liquid glass dark backgrounds */
   --bg-primary: #0A1929;
   --bg-secondary: #0D2137;

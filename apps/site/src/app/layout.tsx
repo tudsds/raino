@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { GlassProvider } from '@raino/ui';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://raino-site.vercel.app'),
@@ -23,9 +24,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen bg-[#0A1929] text-[#E2E8F0] antialiased">
-        <Navbar />
-        {children}
-        <Footer />
+        <GlassProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </GlassProvider>
       </body>
     </html>
   );

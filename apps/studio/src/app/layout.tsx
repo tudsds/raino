@@ -1,6 +1,7 @@
 import type { Session } from '@supabase/supabase-js';
 import type { ReactNode } from 'react';
 import { Noto_Serif } from 'next/font/google';
+import { GlassProvider } from '@raino/ui';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { getCurrentUser } from '@/lib/auth/get-current-user';
@@ -47,11 +48,13 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`dark ${notoSerif.variable}`}>
       <body className="bg-[#0A1929] text-[#E2E8F0] antialiased">
-        <div className="relative flex min-h-screen flex-col">
-          <Header session={session} />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <GlassProvider>
+          <div className="relative flex min-h-screen flex-col">
+            <Header session={session} />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </GlassProvider>
       </body>
     </html>
   );

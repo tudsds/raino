@@ -1,0 +1,331 @@
+/**
+ * Liquid Glass CSS Utilities
+ * iOS 26-inspired glassmorphism design system
+ *
+ * Includes 6+ glass utility classes with:
+ * - Multi-layer shadows (3 layers minimum)
+ * - prefers-reduced-motion fallback
+ * - @supports not (backdrop-filter) fallback
+ * - Noise texture via SVG filter
+ */
+
+/* ==========================================================================
+   SVG Noise Filter (referenced by .glass-noise)
+   ========================================================================== */
+
+.noise-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* ==========================================================================
+   Base Glass Utilities
+   ========================================================================== */
+
+/**
+ * .glass-surface — base glass
+ * Cards resting on the page surface
+ */
+.glass-surface {
+  background: rgba(10, 25, 41, 0.6);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(97, 145, 211, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(10, 25, 41, 0.4),
+    0 4px 12px rgba(10, 25, 41, 0.3),
+    0 16px 40px rgba(10, 25, 41, 0.15);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-surface:hover {
+  transform: scale(1.01);
+  box-shadow:
+    0 2px 4px rgba(10, 25, 41, 0.5),
+    0 8px 20px rgba(10, 25, 41, 0.4),
+    0 24px 60px rgba(10, 25, 41, 0.2);
+}
+
+/**
+ * .glass-elevated — depth 2
+ * Elevated panels and drawers
+ */
+.glass-elevated {
+  background: rgba(10, 25, 41, 0.75);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgba(97, 145, 211, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  box-shadow:
+    0 2px 4px rgba(10, 25, 41, 0.45),
+    0 8px 24px rgba(10, 25, 41, 0.35),
+    0 32px 64px rgba(10, 25, 41, 0.2);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-elevated:hover {
+  transform: scale(1.01);
+  box-shadow:
+    0 4px 8px rgba(10, 25, 41, 0.55),
+    0 12px 32px rgba(10, 25, 41, 0.45),
+    0 40px 80px rgba(10, 25, 41, 0.25);
+}
+
+/**
+ * .glass-floating — depth 3
+ * Modals, tooltips, floating menus
+ */
+.glass-floating {
+  background: rgba(10, 25, 41, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(97, 145, 211, 0.45);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  box-shadow:
+    0 4px 8px rgba(10, 25, 41, 0.5),
+    0 12px 40px rgba(10, 25, 41, 0.4),
+    0 40px 80px rgba(10, 25, 41, 0.25);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-floating:hover {
+  transform: scale(1.01);
+  box-shadow:
+    0 6px 12px rgba(10, 25, 41, 0.6),
+    0 16px 48px rgba(10, 25, 41, 0.5),
+    0 48px 96px rgba(10, 25, 41, 0.3);
+}
+
+/* ==========================================================================
+   Glass Blue Tint Variant
+   ========================================================================== */
+
+/**
+ * .glass-blue-tint — brand-tinted gradient
+ * Blue accent gradient overlay on glass base
+ */
+.glass-blue-tint {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(21, 101, 192, 0.15) 0%,
+    rgba(10, 25, 41, 0.7) 50%,
+    rgba(10, 25, 41, 0.6) 100%
+  );
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(97, 145, 211, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(10, 25, 41, 0.4),
+    0 4px 12px rgba(10, 25, 41, 0.3),
+    0 16px 40px rgba(10, 25, 41, 0.15);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-blue-tint:hover {
+  transform: scale(1.01);
+  background: linear-gradient(
+    135deg,
+    rgba(21, 101, 192, 0.2) 0%,
+    rgba(10, 25, 41, 0.8) 50%,
+    rgba(10, 25, 41, 0.7) 100%
+  );
+  box-shadow:
+    0 2px 4px rgba(10, 25, 41, 0.5),
+    0 8px 20px rgba(10, 25, 41, 0.4),
+    0 24px 60px rgba(10, 25, 41, 0.2);
+}
+
+/* ==========================================================================
+   Glass Specular Highlight
+   ========================================================================== */
+
+/**
+ * .glass-specular — top-light highlight
+ * Adds a subtle top-left light reflection via ::before pseudo-element
+ */
+.glass-specular {
+  position: relative;
+  background: rgba(10, 25, 41, 0.6);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(97, 145, 211, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(10, 25, 41, 0.4),
+    0 4px 12px rgba(10, 25, 41, 0.3),
+    0 16px 40px rgba(10, 25, 41, 0.15);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-specular::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    transparent 60%
+  );
+  border-radius: 12px 12px 0 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-specular:hover {
+  transform: scale(1.01);
+  box-shadow:
+    0 2px 4px rgba(10, 25, 41, 0.5),
+    0 8px 20px rgba(10, 25, 41, 0.4),
+    0 24px 60px rgba(10, 25, 41, 0.2);
+}
+
+.glass-specular:hover::before {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   Glass Noise Texture
+   ========================================================================== */
+
+/**
+ * .glass-noise — noise texture overlay
+ * Applies SVG noise filter for subtle grain effect
+ */
+.glass-noise {
+  position: relative;
+  background: rgba(10, 25, 41, 0.6);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(97, 145, 211, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(10, 25, 41, 0.4),
+    0 4px 12px rgba(10, 25, 41, 0.3),
+    0 16px 40px rgba(10, 25, 41, 0.15);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Noise overlay via pseudo-element using SVG filter */
+.glass-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.glass-noise:hover {
+  transform: scale(1.01);
+  box-shadow:
+    0 2px 4px rgba(10, 25, 41, 0.5),
+    0 8px 20px rgba(10, 25, 41, 0.4),
+    0 24px 60px rgba(10, 25, 41, 0.2);
+}
+
+/* ==========================================================================
+   Accessibility: prefers-reduced-motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-surface,
+  .glass-elevated,
+  .glass-floating,
+  .glass-blue-tint,
+  .glass-specular,
+  .glass-noise {
+    transition: none;
+    animation: none;
+  }
+
+  .glass-surface:hover,
+  .glass-elevated:hover,
+  .glass-floating:hover,
+  .glass-blue-tint:hover,
+  .glass-specular:hover,
+  .glass-noise:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   Fallback: @supports not (backdrop-filter)
+   ========================================================================== */
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-surface {
+    background: #0A1929;
+    border: 1px solid rgba(97, 145, 211, 0.4);
+  }
+
+  .glass-elevated {
+    background: #0D2137;
+    border: 1px solid rgba(97, 145, 211, 0.5);
+  }
+
+  .glass-floating {
+    background: #132F4C;
+    border: 1px solid rgba(97, 145, 211, 0.6);
+  }
+
+  .glass-blue-tint {
+    background: linear-gradient(
+      135deg,
+      rgba(21, 101, 192, 0.25) 0%,
+      #0A1929 100%
+    );
+    border: 1px solid rgba(97, 145, 211, 0.5);
+  }
+
+  .glass-specular {
+    background: #0A1929;
+    border: 1px solid rgba(97, 145, 211, 0.4);
+  }
+
+  .glass-specular::before {
+    display: none;
+  }
+
+  .glass-noise {
+    background: #0A1929;
+    border: 1px solid rgba(97, 145, 211, 0.4);
+  }
+
+  .glass-noise::after {
+    display: none;
+  }
+}

@@ -54,3 +54,5 @@ export type { BOMTableProps } from './components/BOMTable';
 
 export { PreviewPanel } from './components/PreviewPanel';
 export type { PreviewPanelProps } from './components/PreviewPanel';
+
+export { GlassProvider } from './components/Filters';

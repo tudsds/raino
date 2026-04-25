@@ -1,13 +1,68 @@
 {
-  "active_plan": "/mnt/d/raino/.sisyphus/plans/raino-full-workflow-debug.md",
-  "started_at": "2026-04-24T11:58:31.571Z",
-  "completed_at": "2026-04-24T12:25:00.000Z",
+  "active_plan": "/mnt/d/raino/.sisyphus/plans/liquid-glass-overhaul.md",
+  "started_at": "2026-04-25T22:35:00Z",
   "session_ids": [
-    "ses_2413ad58bffeCWpxBjimdC3ljg"
+    "ses_23be7c3beffe1utp2OPtFnBxzL"
   ],
-  "plan_name": "raino-full-workflow-debug",
-  "agent": "atlas",
+  "plan_name": "liquid-glass-overhaul",
   "worktree_path": null,
-  "status": "PAUSED",
-  "note": "User paused work. 6/16 tasks actually completed. Remaining 10 blocked by invalid GitHub token. Resume with /start-work when token available."
+  "session_origins": {
+    "ses_23be7c3beffe1utp2OPtFnBxzL": "direct"
+  },
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "Create PRODUCT.md + DESIGN.md (Impeccable Teach Output)",
+      "session_id": "ses_23935dc00ffeZ0UlpiebZpUmym",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-25T22:39:10.491Z"
+    },
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "Install Dependencies (Framer Motion + next-intl)",
+      "session_id": "ses_239330b75ffecoVV9Ym9dqXEMy",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-25T22:45:08.222Z"
+    },
+    "todo:3": {
+      "task_key": "todo:3",
+      "task_label": "3",
+      "task_title": "Unify Design Tokens + Create Glass Depth System",
+      "session_id": "ses_2392dc197ffedwgk3u6oS772D6",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-04-25T22:53:43.887Z"
+    },
+    "todo:4": {
+      "task_key": "todo:4",
+      "task_label": "4",
+      "task_title": "Create SVG Noise Filter + Specular Highlight System",
+      "session_id": "ses_239258ac6ffeBqk6fA6FYE17WH",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-25T22:58:13.673Z"
+    },
+    "todo:5": {
+      "task_key": "todo:5",
+      "task_label": "5",
+      "task_title": "Create Liquid Glass CSS Utilities",
+      "session_id": "ses_239206301ffeR1NvuosRDhq055",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-25T23:03:35.144Z"
+    },
+    "todo:6": {
+      "task_key": "todo:6",
+      "task_label": "6",
+      "task_title": "Fix STATUS_TO_STEP Mapping Gap",
+      "session_id": "ses_2391c24cbffeNwYM9UTSzlFGBF",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-25T23:06:57.594Z"
+    }
+  }
 }

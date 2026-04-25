@@ -1,6 +1,10 @@
 @import 'tailwindcss';
+@import '@raino/ui/styles/glass.css';
 
 @theme inline {
+  /* DEPRECATED: Color tokens now live in packages/ui/src/styles/theme.ts.
+     Kept for backward compatibility — prefer importing from @raino/ui/theme. */
+
   /* Liquid Glass backgrounds */
   --color-background: #0A1929;
   --color-foreground: #E2E8F0;

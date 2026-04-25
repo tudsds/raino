@@ -140,10 +140,12 @@ const STATUS_TO_STEP: Record<string, number> = {
   candidates_discovered: 4,
   ingested: 5,
   bom_generated: 6,
-  design_running: 7,
-  validated: 8,
-  completed: 9,
-  quoted: 10,
+  design_pending: 7,
+  design_generated: 8,
+  validated: 9,
+  exported: 10,
+  quoted: 11,
+  handed_off: 12,
 };
 const TOTAL_STEPS = 12;
 
