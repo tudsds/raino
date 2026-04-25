@@ -77,18 +77,19 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           const provider = new KimiProvider();
           const gateway = new LLMGateway(provider, { maxRetries: 2 });
 
-          console.log('[api/architecture/plan] Starting LLM stream, messages:', enrichedMessages.length);
           for await (const event of gateway.chatStream(enrichedMessages, {
             maxTokens: 1024,
           })) {
-            console.log('[api/architecture/plan] Stream event:', event.type, event.type === 'content' ? `content[${event.content?.length ?? 0}]` : '');
             if (event.type === 'content' && event.content) {
               accumulatedText += event.content;
+              controller.enqueue(encoder.encode(sseEncode({ type: 'content', content: event.content })));
+            } else if (event.type === 'done') {
+              controller.enqueue(encoder.encode(sseEncode({ type: 'debug', msg: `stream done, accumulated: ${accumulatedText.length} chars` })));
             }
           }
-          console.log('[api/architecture/plan] Stream complete, accumulated:', accumulatedText.length, 'chars');
         } catch (llmError) {
-          console.error('[api/architecture/plan] LLM stream failed:', llmError);
+          const errMsg = llmError instanceof Error ? llmError.message : String(llmError);
+          controller.enqueue(encoder.encode(sseEncode({ type: 'debug', msg: `LLM error: ${errMsg}` })));
           accumulatedText = '';
         }
 
