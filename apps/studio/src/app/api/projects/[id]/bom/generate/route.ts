@@ -118,8 +118,18 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
             layerCount: specConstraints.layerCount,
           });
 
+          const enrichedMessages = messages.map((msg, idx) => {
+            if (idx === messages.length - 1) {
+              return {
+                ...msg,
+                content: `${typeof msg.content === 'string' ? msg.content : ''}\n\nRespond ONLY with a JSON object: {"components":[{"ref":"U1","value":"RP2040","mpn":"RP2040","manufacturer":"Raspberry Pi","package":"QFN-56","quantity":1,"unitPrice":1.10,"lifecycle":"active","risk":"low","description":"Dual-core MCU"},{"ref":"C1","value":"100nF","mpn":"...","manufacturer":"...","package":"0402","quantity":4,"unitPrice":0.01,"lifecycle":"active","risk":"low","description":"Decoupling cap"}],"notes":"BOM notes here"}`,
+              };
+            }
+            return msg;
+          });
+
           let accumulatedText = '';
-          for await (const evt of gateway.chatStream(messages, { maxTokens: 2048, jsonMode: true })) {
+          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 2048, jsonMode: true })) {
             if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
           }
 
