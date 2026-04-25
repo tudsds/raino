@@ -48,10 +48,10 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
       if (contentType.includes('text/event-stream')) {
         const reader = res.body?.getReader();
         const decoder = new TextDecoder();
+        let streamDone = false;
 
         if (reader) {
-          let doneReceived = false;
-          while (!doneReceived) {
+          while (!streamDone) {
             const { done, value } = await reader.read();
             if (done) break;
 
@@ -66,7 +66,7 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                     throw new Error(event.error || 'Compilation failed');
                   }
                   if (event.type === 'done') {
-                    doneReceived = true;
+                    streamDone = true;
                   }
                 } catch (e) {
                   if (e instanceof Error) throw e;
@@ -74,6 +74,10 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
               }
             }
           }
+        }
+
+        if (!streamDone) {
+          throw new Error('Spec compilation timed out — the AI service did not respond in time.');
         }
       } else {
         if (!res.ok) {
