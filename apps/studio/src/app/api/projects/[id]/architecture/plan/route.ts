@@ -45,7 +45,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     }
 
     const project = ownership.project;
-    const specText = project.spec?.raw_text ?? project.description ?? '';
+    const specText = (project.description ?? '').substring(0, 500);
 
     const messages = templateToMessages('architecture_selection', {
       spec: specText,
@@ -58,7 +58,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       if (idx === messages.length - 1) {
         return {
           ...msg,
-          content: `${typeof msg.content === 'string' ? msg.content : ''}\n\nRespond with a JSON object matching this exact schema:\n{\n  "mcu": "Recommended MCU part",\n  "power": "Power architecture description",\n  "interfaces": ["list", "of", "interfaces"],\n  "features": ["list", "of", "features"],\n  "rationale": "Why this architecture was chosen",\n  "estimatedComponentCount": 30,\n  "risks": ["list of risk factors"]\n}`,
+          content: `${typeof msg.content === 'string' ? msg.content : ''}\n\nRespond ONLY with a JSON object: {"mcu":"...","power":"...","interfaces":[...],"features":[...],"rationale":"...","estimatedComponentCount":N,"risks":[...]}`,
         };
       }
       return msg;
@@ -78,7 +78,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           const gateway = new LLMGateway(provider, { maxRetries: 2 });
 
           for await (const event of gateway.chatStream(enrichedMessages, {
-            maxTokens: 2048,
+            maxTokens: 1024,
             jsonMode: true,
           })) {
             if (event.type === 'content' && event.content) {
