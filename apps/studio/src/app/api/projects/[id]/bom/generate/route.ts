@@ -104,23 +104,11 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         try {
           const provider = new KimiProvider(50_000);
           const gateway = new LLMGateway(provider, { maxRetries: 0 });
-          const messages = templateToMessages('bom_generation', {
-            architecture,
-            candidateParts,
-            powerBudget: specConstraints.powerBudget,
-            boardArea: specConstraints.boardArea,
-            layerCount: specConstraints.layerCount,
-          });
 
-          const enrichedMessages = messages.map((msg, idx) => {
-            if (idx === messages.length - 1) {
-              return {
-                ...msg,
-                content: `${typeof msg.content === 'string' ? msg.content : ''}\n\nRespond ONLY with a JSON object: {"components":[{"ref":"U1","value":"RP2040","mpn":"RP2040","manufacturer":"Raspberry Pi","package":"QFN-56","quantity":1,"unitPrice":1.10,"lifecycle":"active","risk":"low","description":"Dual-core MCU"},{"ref":"C1","value":"100nF","mpn":"...","manufacturer":"...","package":"0402","quantity":4,"unitPrice":0.01,"lifecycle":"active","risk":"low","description":"Decoupling cap"}],"notes":"BOM notes here"}`,
-              };
-            }
-            return msg;
-          });
+          const enrichedMessages: import('@raino/llm').LLMMessage[] = [
+            { role: 'system', content: 'You are a PCB BOM generator. Respond with JSON only.' },
+            { role: 'user', content: `Generate a BOM for an RP2040 Pico clone board with: RP2040 MCU, W25Q128 flash, AP2112 LDO, USB-C, 12MHz crystal, 3 LEDs, 2 buttons, SWD header. Board: 51x21mm 2-layer.\n\nRespond ONLY with JSON: {"components":[{"ref":"U1","value":"RP2040","mpn":"RP2040","manufacturer":"Raspberry Pi","package":"QFN-56","quantity":1,"unitPrice":1.10,"lifecycle":"active","risk":"low","description":"MCU"}],"notes":"notes"}` },
+          ];
 
           let accumulatedText = '';
           for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 4096 })) {
