@@ -72,12 +72,13 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     const diagEvents: { type: string; label: string; content: string }[] = [];
 
     try {
-      const provider = new KimiProvider(55_000);
-      const gateway = new LLMGateway(provider, { maxRetries: 0 });
+      const provider = new KimiProvider();
+      const gateway = new LLMGateway(provider, { maxRetries: 1 });
 
-      const archResponse = await gateway.chat(enrichedMessages, { maxTokens: 8192 });
-      accumulatedText = archResponse.content;
-      diagEvents.push({ type: 'debug', label: 'arch_chat_raw', content: `len=${accumulatedText.length} finish=${archResponse.finishReason} usage=${JSON.stringify(archResponse.usage)}` });
+      for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 8192 })) {
+        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+      }
+      diagEvents.push({ type: 'debug', label: 'arch_result', content: `len=${accumulatedText.length} preview=${accumulatedText.substring(0, 200)}` });
     } catch (llmError) {
       const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
       console.error('[api/architecture/plan] LLM call failed:', errMsg);
