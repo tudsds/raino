@@ -46,8 +46,8 @@ export class KimiProvider implements LLMProvider {
     this.client = new OpenAI({
       apiKey: process.env.KIMI_API_KEY ?? '',
       baseURL: process.env.KIMI_API_BASE_URL ?? KIMI_DEFAULT_BASE_URL,
-      timeout: 45_000,
-      maxRetries: 0,
+      timeout: 120_000,
+      maxRetries: 1,
     });
   }
 

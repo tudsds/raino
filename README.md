@@ -18,6 +18,10 @@
   <a href="README.zh-CN.md">中文</a> &middot; <a href="README.ja.md">日本語</a> &middot; <a href="README.ko.md">한국어</a> &middot; <a href="docs/">Docs</a>
 </p>
 
+<p align="center">
+  🌐 <a href="https://raino-site.vercel.app">Website</a> &middot; <a href="https://raino-site.vercel.app/zh">中文站</a> &middot; <a href="https://raino-site.vercel.app/ja">日本語サイト</a> &middot; <a href="https://raino-site.vercel.app/ko">한국어 사이트</a>
+</p>
+
 ---
 
 ## What is Raino?
@@ -62,7 +66,7 @@ Most AI hardware tools today are either glorified chatbots that hallucinate part
 ### Platform Features
 
 - **Two-app architecture** -- A marketing site for discovery and a product studio for design work.
-- **Pixel-art cyberpunk design system** -- Custom React component library with retro-futuristic typography (Press Start 2P, VT323).
+- **iOS 26 Liquid Glass design system** -- Custom React component library with glassmorphism, Noto Serif typography, and fluid animations.
 - **Real supplier integration** -- DigiKey, Mouser, and JLCPCB adapters with live pricing, stock, and MOQ data.
 - **Mock adapter layer** -- Permanent, honest fallbacks that let the entire system run without any credentials.
 - **Audit trail** -- Every workflow decision, part selection, and degraded-mode fallback is logged and inspectable.
@@ -174,7 +178,7 @@ Every quote includes a full list of assumptions. When any component price comes 
 │                                                              │
 │  ┌─────────────────────────────────────────────────────┐     │
 │  │                 packages/ui                           │     │
-│  │  Pixel-art cyberpunk design system (React + TW v4)  │     │
+│  │  iOS 26 Liquid Glass design system (React + TW v4)   │     │
 │  └─────────────────────────────────────────────────────┘     │
 │                                                              │
 │  ┌─────────────────────────────────────────────────────┐     │
@@ -211,7 +215,7 @@ For full architectural documentation, see `docs/architecture/`.
 | Layer         | Technology                                              |
 | ------------- | ------------------------------------------------------- |
 | Frontend      | Next.js 15, React 19, Tailwind CSS v4                   |
-| Design System | @raino/ui (pixel-art cyberpunk, Press Start 2P + VT323) |
+| Design System | @raino/ui (iOS 26 Liquid Glass, Noto Serif) |
 | Backend       | Next.js Route Handlers, Server Actions, Supabase        |
 | Database      | Supabase Postgres, Prisma ORM, pgvector                 |
 | Auth          | Supabase Auth (magic link)                              |
@@ -237,7 +241,7 @@ raino/
 │   ├── llm/                 # Kimi K2.5 model gateway
 │   ├── rag/                 # Chunking, embeddings, pgvector retrieval
 │   ├── agents/              # Workflow state machine, orchestration
-│   ├── ui/                  # Pixel-art cyberpunk design system
+│   ├── ui/                  # iOS 26 Liquid Glass design system
 │   ├── kicad-worker-client/ # KiCad CLI contracts and client interface
 │   └── supplier-clients/    # Supplier adapter interfaces + factory
 ├── services/
@@ -270,7 +274,7 @@ raino/
 | `@raino/llm`                 | Kimi K2.5 gateway, structured output, retry logic      | `packages/llm`                 |
 | `@raino/rag`                 | Engineering-aware chunking, pgvector retrieval         | `packages/rag`                 |
 | `@raino/agents`              | Workflow state machine, agent prompts, orchestration   | `packages/agents`              |
-| `@raino/ui`                  | Pixel-art cyberpunk design system                      | `packages/ui`                  |
+| `@raino/ui`                  | iOS 26 Liquid Glass design system                     | `packages/ui`                  |
 | `@raino/kicad-worker-client` | KiCad CLI command contracts, job types                 | `packages/kicad-worker-client` |
 | `@raino/supplier-clients`    | DigiKey, Mouser, JLCPCB adapter interfaces + factory   | `packages/supplier-clients`    |
 | `ingest-worker`              | 8-stage document ingestion pipeline                    | `services/ingest-worker`       |
