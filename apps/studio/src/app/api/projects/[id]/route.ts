@@ -41,6 +41,13 @@ export async function GET(
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
+    // Fetch intake messages for the project
+    const { data: intakeMessages } = await supabase
+      .from('intake_messages')
+      .select('id, role, content, created_at, thinking')
+      .eq('project_id', id)
+      .order('created_at', { ascending: true });
+
     const result = toCamelCase(project) as Record<string, unknown>;
     if (!result.currentStep) {
       const STATUS_TO_STEP: Record<string, number> = {
@@ -52,6 +59,12 @@ export async function GET(
       result.currentStep = STATUS_TO_STEP[status] ?? 0;
       result.totalSteps = 12;
     }
+
+    // Include intake messages mapped to camelCase
+    result.intakeMessages = (intakeMessages ?? []).map((msg: Record<string, unknown>) =>
+      toCamelCase(msg)
+    );
+
     return NextResponse.json(result);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
