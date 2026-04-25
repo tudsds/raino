@@ -79,11 +79,15 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         }, 10_000);
 
         try {
-          const provider = new KimiProvider();
+          const provider = new KimiProvider(50_000);
           const gateway = new LLMGateway(provider, { maxRetries: 1 });
 
           for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 2048 })) {
             if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+          }
+
+          if (!accumulatedText.trim()) {
+            throw new Error('LLM returned no content — the AI service may be overloaded. Please try again.');
           }
         } catch (llmError) {
           const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);

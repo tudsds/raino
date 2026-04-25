@@ -38,7 +38,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     let clarificationContent: string;
     try {
-      const provider = new KimiProvider();
+      const provider = new KimiProvider(50_000);
       const gateway = new LLMGateway(provider);
       const messages = templateToMessages('clarification', {
         projectContext: intakeMessages,

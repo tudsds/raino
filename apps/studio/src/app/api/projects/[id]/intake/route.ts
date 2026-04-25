@@ -89,7 +89,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         let assistantContent = '';
 
         try {
-          const provider = new KimiProvider();
+          const provider = new KimiProvider(50_000);
           const gateway = new LLMGateway(provider, { maxRetries: 2 });
 
           for await (const event of gateway.chatStream(messages, { maxTokens: 2048 })) {
