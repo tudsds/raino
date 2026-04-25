@@ -57,28 +57,22 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     const project = ownership.project;
 
     const architecture = project.architecture
-      ? JSON.stringify({
-          mcu: project.architecture.mcu,
-          power: project.architecture.power,
-          interfaces: project.architecture.interfaces,
-        })
-      : 'No architecture selected';
+      ? `MCU: ${project.architecture.mcu || 'RP2040'}, Power: ${project.architecture.power || 'USB-C 5V + LDO 3.3V'}`
+      : 'MCU: RP2040, Power: USB-C 5V + LDO 3.3V';
 
-    const candidateParts = project.ingestion
-      ? JSON.stringify(project.ingestion.candidate_families)
-      : 'No candidates ingested — use architecture and project description to infer components';
+    const candidateParts = 'No candidates ingested — infer components from architecture and description';
 
     const specConstraints = (() => {
       const spec = project.spec;
-      if (!spec) return { powerBudget: '', boardArea: '', layerCount: '' };
+      if (!spec) return { powerBudget: '5V USB', boardArea: '51x21mm', layerCount: '2' };
       const raw = typeof spec.raw_text === 'string' ? spec.raw_text : '';
       const powerMatch = raw.match(/(?:power|voltage|supply)[^\n]*?(\d+\.?\d*\s*V)/i);
       const areaMatch = raw.match(/(?:board|area|size|dimension)[^\n]*?(\d+\s*[x×]\s*\d+\s*mm)/i);
       const layerMatch = raw.match(/(\d+)\s*layer/i);
       return {
-        powerBudget: powerMatch?.[1] ?? '',
-        boardArea: areaMatch?.[1] ?? '',
-        layerCount: layerMatch?.[1] ?? '',
+        powerBudget: powerMatch?.[1] ?? '5V USB',
+        boardArea: areaMatch?.[1] ?? '51x21mm',
+        layerCount: layerMatch?.[1] ?? '2',
       };
     })();
 
@@ -129,7 +123,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           });
 
           let accumulatedText = '';
-          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 2048, jsonMode: true })) {
+          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 4096, jsonMode: true })) {
             if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
           }
 
