@@ -71,7 +71,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
     try {
       const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider, { maxRetries: 0 });
+      const gateway = new LLMGateway(provider, { maxRetries: 2 });
       const messages = templateToMessages('spec_compilation', {
         intakeMessages,
         clarificationAnswers: '',

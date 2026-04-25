@@ -25,7 +25,9 @@ function isRetryable(error: unknown): boolean {
     if (
       error.message.includes('ECONNRESET') ||
       error.message.includes('ETIMEDOUT') ||
-      error.message.includes('fetch failed')
+      error.message.includes('fetch failed') ||
+      error.message.includes('timed out') ||
+      error.message.includes('Timed out')
     ) {
       return true;
     }

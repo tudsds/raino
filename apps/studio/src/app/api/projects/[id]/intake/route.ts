@@ -59,7 +59,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     let assistantContent: string;
     try {
       const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider, { maxRetries: 0 });
+      const gateway = new LLMGateway(provider, { maxRetries: 2 });
       const templateMessages = templateToMessages('intake', {
         message,
         files: attachments?.join(', ') ?? '',

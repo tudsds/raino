@@ -35,7 +35,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     let archData: z.infer<typeof ArchitectureOutputSchema>;
     try {
       const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider, { maxRetries: 0 });
+      const gateway = new LLMGateway(provider, { maxRetries: 2 });
       const messages = templateToMessages('architecture_selection', {
         spec: specText,
         requirementCount: '0',
