@@ -39,6 +39,13 @@ apps/studio/data/
 test-results/
 EOF
 
+.playwright-mcp/
+.sisyphus/evidence/
+.sisyphus/notepads/
+phase0-raino-dashboard.png
+raino-studio-landing.png
+vercel-deployment-status.png
+
 # Prisma generated client - committed to git for reliable Vercel builds
 # packages/db/src/generated/
 !packages/db/dist/generated/

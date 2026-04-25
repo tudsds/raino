@@ -4,6 +4,7 @@ import { requireAuth } from '@/lib/auth/require-auth';
 import { verifyProjectOwnership, updateProjectStatus } from '@/lib/data/project-queries';
 import { getSupabaseAdmin } from '@/lib/db/supabase-admin';
 import { KimiProvider, LLMGateway, templateToMessages } from '@raino/llm';
+import type { LLMMessage } from '@raino/llm';
 import { createAuditEntry } from '@/lib/data/audit-queries';
 
 export const maxDuration = 60;
@@ -50,15 +51,30 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     if (userMsgError) throw new Error(`Failed to save user message: ${userMsgError.message}`);
 
+    const { data: historyMessages } = await db
+      .from('intake_messages')
+      .select('role, content')
+      .eq('project_id', id)
+      .order('created_at', { ascending: true });
+
     let assistantContent: string;
     try {
       const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider);
-      const messages = templateToMessages('intake', {
+      const gateway = new LLMGateway(provider, { maxRetries: 1 });
+      const templateMessages = templateToMessages('intake', {
         message,
         files: attachments?.join(', ') ?? '',
         fileList: attachments?.join('\n') ?? '',
       });
+
+      const priorHistory: LLMMessage[] = (historyMessages ?? [])
+        .filter((m: { role: string; content: string }) => m.role === 'user' || m.role === 'assistant')
+        .map((m: { role: string; content: string }) => ({
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+        }));
+
+      const messages: LLMMessage[] = [...templateMessages.slice(0, 1), ...priorHistory, ...templateMessages.slice(1)];
       const response = await gateway.chat(messages);
       assistantContent = response.content;
     } catch {
