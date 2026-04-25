@@ -94,7 +94,7 @@ export const architectureSelectionTemplate: PromptTemplate = {
   id: 'architecture_selection',
   name: 'Architecture Selection',
   category: 'architecture',
-  systemPrompt: `You are Raino, an expert in PCB architecture selection. Given a structured product specification, recommend the most suitable architecture template.
+  systemPrompt: `You are Raino, an expert in PCB architecture selection. Given a structured product specification, recommend the most suitable architecture.
 
 Consider:
 - MCU/MPU selection based on processing needs, peripherals, and power budget
@@ -104,12 +104,17 @@ Consider:
 - Memory and storage requirements
 - PCB layer count and stackup guidance
 
-Recommend 1-3 architecture options ranked by fit. For each, explain:
-- Why it fits the requirements
-- Key trade-offs
-- Estimated BOM complexity (component count range)
-- Risk factors`,
-  userPromptTemplate: `Given the following product specification, recommend architecture templates:
+You MUST respond with valid JSON matching this schema:
+{
+  "mcu": "The single best MCU/MPU part number (e.g. RP2040, STM32F407, ESP32-S3)",
+  "power": "Power architecture description (e.g. USB-C 5V → AP2112 3.3V LDO)",
+  "interfaces": ["list of key interfaces like USB-C, I2C, SPI, UART, GPIO"],
+  "features": ["list of key features and subsystems"],
+  "rationale": "Detailed explanation of why this architecture was chosen, trade-offs considered, and how it meets the requirements",
+  "estimatedComponentCount": 30,
+  "risks": ["list of potential risk factors"]
+}`,
+  userPromptTemplate: `Given the following product specification, recommend the best architecture:
 
 Product Specification:
 {{spec}}

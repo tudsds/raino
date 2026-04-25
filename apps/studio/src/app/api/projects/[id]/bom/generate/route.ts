@@ -59,7 +59,21 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
     const candidateParts = project.ingestion
       ? JSON.stringify(project.ingestion.candidate_families)
-      : 'No candidates ingested';
+      : 'No candidates ingested — use architecture and project description to infer components';
+
+    const specConstraints = (() => {
+      const spec = project.spec;
+      if (!spec) return { powerBudget: '', boardArea: '', layerCount: '' };
+      const raw = typeof spec.raw_text === 'string' ? spec.raw_text : '';
+      const powerMatch = raw.match(/(?:power|voltage|supply)[^\n]*?(\d+\.?\d*\s*V)/i);
+      const areaMatch = raw.match(/(?:board|area|size|dimension)[^\n]*?(\d+\s*[x×]\s*\d+\s*mm)/i);
+      const layerMatch = raw.match(/(\d+)\s*layer/i);
+      return {
+        powerBudget: powerMatch?.[1] ?? '',
+        boardArea: areaMatch?.[1] ?? '',
+        layerCount: layerMatch?.[1] ?? '',
+      };
+    })();
 
     let bomGuidance: string;
     let bomRows: Array<{
@@ -82,9 +96,9 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       const messages = templateToMessages('bom_generation', {
         architecture,
         candidateParts,
-        powerBudget: '',
-        boardArea: '',
-        layerCount: '',
+        powerBudget: specConstraints.powerBudget,
+        boardArea: specConstraints.boardArea,
+        layerCount: specConstraints.layerCount,
       });
       const structured = await gateway.chatStructured(messages, BOMOutputSchema);
       bomGuidance = structured.notes ?? 'BOM generated from LLM estimates.';
