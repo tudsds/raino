@@ -104,9 +104,25 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
             const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
             const parsed = JSON.parse(jsonStr);
             const validated = ArchitectureOutputSchema.safeParse(parsed);
-            archData = validated.success ? validated.data : fallbackArchitecture;
+            if (validated.success) {
+              archData = validated.data;
+            } else {
+              archData = {
+                mcu: parsed.mcu ?? 'RP2040',
+                power: parsed.power ?? '',
+                interfaces: Array.isArray(parsed.interfaces) ? parsed.interfaces : [],
+                features: Array.isArray(parsed.features) ? parsed.features : [],
+                rationale: accumulatedText.substring(0, 3000),
+              };
+            }
           } catch {
-            archData = fallbackArchitecture;
+            archData = {
+              mcu: 'RP2040',
+              power: '',
+              interfaces: [],
+              features: [],
+              rationale: accumulatedText.substring(0, 3000),
+            };
           }
         } else {
           archData = fallbackArchitecture;
