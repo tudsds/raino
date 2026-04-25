@@ -86,8 +86,8 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         let structuredInterfaces: z.infer<typeof InterfaceSpecSchema>[] = [];
 
         try {
-          const provider = new KimiProvider();
-          const gateway = new LLMGateway(provider, { maxRetries: 2 });
+          const provider = new KimiProvider(30_000);
+          const gateway = new LLMGateway(provider, { maxRetries: 0 });
           const messages = templateToMessages('spec_compilation', {
             intakeMessages,
             clarificationAnswers: '',
