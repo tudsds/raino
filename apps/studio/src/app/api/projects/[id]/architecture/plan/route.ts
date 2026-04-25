@@ -67,29 +67,30 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     const encoder = new TextEncoder();
     const db = getSupabaseAdmin();
 
-    // LLM call OUTSIDE ReadableStream to isolate async context issues
     let accumulatedText = '';
-    const diagEvents: { type: string; label: string; content: string }[] = [];
-
-    try {
-      const provider = new KimiProvider();
-      const gateway = new LLMGateway(provider, { maxRetries: 1 });
-
-      for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 8192 })) {
-        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
-      }
-      diagEvents.push({ type: 'debug', label: 'arch_result', content: `len=${accumulatedText.length} preview=${accumulatedText.substring(0, 200)}` });
-    } catch (llmError) {
-      const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
-      console.error('[api/architecture/plan] LLM call failed:', errMsg);
-      diagEvents.push({ type: 'error', label: 'llm_error', content: errMsg });
-    }
 
     const stream = new ReadableStream({
       async start(controller) {
         controller.enqueue(encoder.encode(sseEncode({ type: 'progress', status: 'generating' })));
-        for (const evt of diagEvents) {
-          controller.enqueue(encoder.encode(sseEncode(evt)));
+
+        // Keepalive: send SSE comments every 10s to prevent Vercel function timeout
+        const keepalive = setInterval(() => {
+          controller.enqueue(encoder.encode(': keepalive\n\n'));
+        }, 10_000);
+
+        try {
+          const provider = new KimiProvider();
+          const gateway = new LLMGateway(provider, { maxRetries: 1 });
+
+          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 4096 })) {
+            if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+          }
+        } catch (llmError) {
+          const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
+          console.error('[api/architecture/plan] LLM stream failed:', errMsg);
+          controller.enqueue(encoder.encode(sseEncode({ type: 'error', error: errMsg })));
+        } finally {
+          clearInterval(keepalive);
         }
 
         let archData: z.infer<typeof ArchitectureOutputSchema>;
