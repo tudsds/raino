@@ -123,7 +123,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           });
 
           let accumulatedText = '';
-          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 4096, jsonMode: true })) {
+          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 4096 })) {
             if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
           }
 
