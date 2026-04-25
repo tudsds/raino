@@ -79,7 +79,6 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
           for await (const event of gateway.chatStream(enrichedMessages, {
             maxTokens: 1024,
-            jsonMode: true,
           })) {
             if (event.type === 'content' && event.content) {
               accumulatedText += event.content;
@@ -93,7 +92,9 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         let archData: z.infer<typeof ArchitectureOutputSchema>;
         if (accumulatedText) {
           try {
-            const parsed = JSON.parse(accumulatedText);
+            const jsonMatch = accumulatedText.match(/\{[\s\S]*\}/);
+            const jsonStr = jsonMatch ? jsonMatch[0] : accumulatedText;
+            const parsed = JSON.parse(jsonStr);
             const validated = ArchitectureOutputSchema.safeParse(parsed);
             archData = validated.success ? validated.data : fallbackArchitecture;
           } catch {
