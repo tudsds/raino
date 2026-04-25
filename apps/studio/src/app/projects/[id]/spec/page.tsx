@@ -109,9 +109,20 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
     );
   }
 
-  const requirements: string[] = Array.isArray(project.spec?.requirements)
-    ? (project.spec.requirements as string[])
+  interface StructuredRequirement {
+    id?: string;
+    category?: string;
+    description: string;
+    priority?: string;
+    rationale?: string;
+  }
+
+  const rawReqs: unknown[] = Array.isArray(project.spec?.requirements)
+    ? (project.spec.requirements as unknown[])
     : [];
+  const requirements: StructuredRequirement[] = rawReqs.map((r) =>
+    typeof r === 'string' ? { description: r } : (r as StructuredRequirement),
+  );
   const isCompiled = requirements.length > 0 || !!project.spec?.rawText;
 
   const tabs = [
@@ -211,7 +222,7 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
               {requirements.length > 0 ? (
                 <ul className="space-y-3">
                   {requirements.map((req, index) => (
-                    <li key={index} className="flex items-start gap-3">
+                    <li key={req.id ?? index} className="flex items-start gap-3">
                       <div className="w-5 h-5 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] flex items-center justify-center flex-shrink-0 mt-0.5">
                         <svg
                           className="w-3 h-3 text-[#22c55e]"
@@ -227,7 +238,22 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                           />
                         </svg>
                       </div>
-                      <span className="text-[#94A3B8]">{req}</span>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-[#94A3B8]">{req.description}</span>
+                        {req.priority && (
+                          <span className={`ml-2 text-xs px-1.5 py-0.5 rounded ${
+                            req.priority === 'must' ? 'bg-[rgba(239,83,80,0.15)] text-[#ef5350]' :
+                            req.priority === 'should' ? 'bg-[rgba(255,183,77,0.15)] text-[#ffb74d]' :
+                            'bg-[rgba(100,116,139,0.15)] text-[#64748B]'
+                          }`}>{req.priority}</span>
+                        )}
+                        {req.category && (
+                          <span className="ml-2 text-xs text-[#64748B]">[{req.category}]</span>
+                        )}
+                        {req.rationale && (
+                          <p className="text-xs text-[#64748B] mt-1">{req.rationale}</p>
+                        )}
+                      </div>
                     </li>
                   ))}
                 </ul>

@@ -47,6 +47,12 @@ export async function GET(
       .eq('project_id', id)
       .order('created_at', { ascending: true });
 
+    const { data: specRow } = await supabase
+      .from('specs')
+      .select('id, requirements, constraints, interfaces, raw_text, compiled_at')
+      .eq('project_id', id)
+      .maybeSingle();
+
     const result = toCamelCase(project) as Record<string, unknown>;
     if (!result.currentStep) {
       const STATUS_TO_STEP: Record<string, number> = {
@@ -62,6 +68,10 @@ export async function GET(
     result.intakeMessages = (intakeMessages ?? []).map((msg: Record<string, unknown>) =>
       toCamelCase(msg)
     );
+
+    if (specRow) {
+      result.spec = toCamelCase(specRow);
+    }
 
     return NextResponse.json(result);
   } catch (error: unknown) {
