@@ -75,14 +75,12 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
         try {
           const provider = new KimiProvider();
-          const gateway = new LLMGateway(provider, { maxRetries: 2 });
+          const gateway = new LLMGateway(provider, { maxRetries: 1 });
 
           const response = await gateway.chat(enrichedMessages, { maxTokens: 1024 });
           accumulatedText = response.content;
-          controller.enqueue(encoder.encode(sseEncode({ type: 'debug', msg: `chat() returned ${accumulatedText.length} chars` })));
         } catch (llmError) {
-          const errMsg = llmError instanceof Error ? llmError.message : String(llmError);
-          controller.enqueue(encoder.encode(sseEncode({ type: 'debug', msg: `LLM error: ${errMsg}` })));
+          console.error('[api/architecture/plan] LLM call failed:', llmError);
           accumulatedText = '';
         }
 
