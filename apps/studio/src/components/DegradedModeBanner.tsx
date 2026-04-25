@@ -14,18 +14,18 @@ export function DegradedModeBanner({ message, severity = 'amber' }: DegradedMode
 
   const colors = {
     amber: {
-      border: '#ffaa00',
-      glow: 'rgba(255, 170, 0, 0.6)',
-      bg: 'rgba(255, 170, 0, 0.08)',
-      text: '#ffaa00',
-      icon: '#ffaa00',
+      border: '#FF9800',
+      glow: 'rgba(255, 152, 0, 0.6)',
+      bg: 'rgba(255, 152, 0, 0.08)',
+      text: '#FF9800',
+      icon: '#FF9800',
     },
     red: {
-      border: '#ff3366',
-      glow: 'rgba(255, 51, 102, 0.6)',
-      bg: 'rgba(255, 51, 102, 0.08)',
-      text: '#ff3366',
-      icon: '#ff3366',
+      border: '#EF5350',
+      glow: 'rgba(239, 83, 80, 0.6)',
+      bg: 'rgba(239, 83, 80, 0.08)',
+      text: '#EF5350',
+      icon: '#EF5350',
     },
   };
 
@@ -33,11 +33,11 @@ export function DegradedModeBanner({ message, severity = 'amber' }: DegradedMode
 
   return (
     <div
-      className="flex items-start gap-3 px-4 py-3 mb-6"
+      className="flex items-start gap-3 px-4 py-3 mb-6 rounded-xl backdrop-blur-xl"
       style={{
         backgroundColor: c.bg,
-        border: `2px solid ${c.border}`,
-        boxShadow: `0 0 8px ${c.glow}`,
+        border: `1px solid ${c.border}`,
+        boxShadow: `0 8px 32px ${c.glow}`,
       }}
     >
       <svg
@@ -61,7 +61,7 @@ export function DegradedModeBanner({ message, severity = 'amber' }: DegradedMode
       </p>
       <button
         onClick={() => setDismissed(true)}
-        className="flex-shrink-0 p-1 hover:opacity-80 transition-opacity"
+        className="flex-shrink-0 p-1 hover:opacity-80 transition-opacity duration-300"
         aria-label="Dismiss"
       >
         <svg className="w-4 h-4" fill="none" stroke={c.icon} viewBox="0 0 24 24" strokeWidth={2}>

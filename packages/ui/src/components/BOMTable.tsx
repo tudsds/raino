@@ -39,29 +39,29 @@ export function BOMTable({ rows, isEstimate, onRowClick }: BOMTableProps) {
     <div className="w-full overflow-x-auto">
       <table className="w-full text-base font-[family-name:var(--font-body)] border-collapse">
         <thead>
-          <tr className="border-b-2 border-[#27272a]">
-            <th className="text-left py-3 px-4 text-[#71717a] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border-2 border-[#27272a]">
+          <tr className="border-b border-white/[0.12]">
+            <th className="text-left py-3 px-4 text-[#64748B] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border border-white/[0.08]">
               Ref
             </th>
-            <th className="text-left py-3 px-4 text-[#71717a] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border-2 border-[#27272a]">
+            <th className="text-left py-3 px-4 text-[#64748B] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border border-white/[0.08]">
               Value
             </th>
-            <th className="text-left py-3 px-4 text-[#71717a] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border-2 border-[#27272a]">
+            <th className="text-left py-3 px-4 text-[#64748B] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border border-white/[0.08]">
               MPN
             </th>
-            <th className="text-left py-3 px-4 text-[#71717a] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border-2 border-[#27272a]">
+            <th className="text-left py-3 px-4 text-[#64748B] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border border-white/[0.08]">
               Manufacturer
             </th>
-            <th className="text-right py-3 px-4 text-[#71717a] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border-2 border-[#27272a]">
+            <th className="text-right py-3 px-4 text-[#64748B] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border border-white/[0.08]">
               Qty
             </th>
-            <th className="text-right py-3 px-4 text-[#71717a] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border-2 border-[#27272a]">
+            <th className="text-right py-3 px-4 text-[#64748B] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border border-white/[0.08]">
               Unit Price
             </th>
-            <th className="text-center py-3 px-4 text-[#71717a] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border-2 border-[#27272a]">
+            <th className="text-center py-3 px-4 text-[#64748B] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border border-white/[0.08]">
               Risk
             </th>
-            <th className="text-left py-3 px-4 text-[#71717a] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border-2 border-[#27272a]">
+            <th className="text-left py-3 px-4 text-[#64748B] font-[family-name:var(--font-heading)] uppercase text-xs tracking-wider border border-white/[0.08]">
               Lifecycle
             </th>
           </tr>
@@ -71,35 +71,35 @@ export function BOMTable({ rows, isEstimate, onRowClick }: BOMTableProps) {
             <tr
               key={index}
               className={cn(
-                'border-b-2 border-[#27272a]/50 transition-colors',
-                onRowClick && 'cursor-pointer hover:bg-[#1a1a24]',
+                'border-b border-white/[0.06] transition-colors duration-300',
+                onRowClick && 'cursor-pointer hover:bg-white/[0.04]',
               )}
               onClick={() => onRowClick?.(index)}
             >
-              <td className="py-3 px-4 text-[#e4e4e7] font-[family-name:var(--font-mono)] border-2 border-[#27272a]">
+              <td className="py-3 px-4 text-[#E2E8F0] font-[family-name:var(--font-mono)] text-sm border border-white/[0.08]">
                 {row.reference}
               </td>
-              <td className="py-3 px-4 text-[#a1a1aa] border-2 border-[#27272a]">{row.value}</td>
-              <td className="py-3 px-4 text-[#00f0ff] font-[family-name:var(--font-mono)] text-sm border-2 border-[#27272a]">
+              <td className="py-3 px-4 text-[#94A3B8] border border-white/[0.08]">{row.value}</td>
+              <td className="py-3 px-4 text-[#1565C0] font-[family-name:var(--font-mono)] text-sm border border-white/[0.08]">
                 {row.mpn}
               </td>
-              <td className="py-3 px-4 text-[#a1a1aa] border-2 border-[#27272a]">
+              <td className="py-3 px-4 text-[#94A3B8] border border-white/[0.08]">
                 {row.manufacturer}
               </td>
-              <td className="py-3 px-4 text-[#e4e4e7] text-right font-[family-name:var(--font-mono)] border-2 border-[#27272a]">
+              <td className="py-3 px-4 text-[#E2E8F0] text-right font-[family-name:var(--font-mono)] border border-white/[0.08]">
                 {row.quantity}
               </td>
-              <td className="py-3 px-4 text-right font-[family-name:var(--font-mono)] border-2 border-[#27272a]">
-                <span className={cn(row.unitPrice === null && isEstimate && 'text-[#ffaa00]')}>
+              <td className="py-3 px-4 text-right font-[family-name:var(--font-mono)] border border-white/[0.08]">
+                <span className={cn(row.unitPrice === null && isEstimate && 'text-[#FF9800]')}>
                   {formatCurrency(row.unitPrice)}
                 </span>
               </td>
-              <td className="py-3 px-4 text-center border-2 border-[#27272a]">
+              <td className="py-3 px-4 text-center border border-white/[0.08]">
                 <Badge variant={riskBadgeVariant[row.riskLevel]} size="sm">
                   {row.riskLevel.charAt(0).toUpperCase() + row.riskLevel.slice(1)}
                 </Badge>
               </td>
-              <td className="py-3 px-4 text-[#a1a1aa] capitalize border-2 border-[#27272a]">
+              <td className="py-3 px-4 text-[#94A3B8] capitalize border border-white/[0.08]">
                 {row.lifecycle}
               </td>
             </tr>

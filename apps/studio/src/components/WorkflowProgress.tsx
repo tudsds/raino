@@ -24,15 +24,15 @@ export default function WorkflowProgress({ progress, showSteps = false }: Workfl
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between text-base font-[family-name:var(--font-body)]">
-        <span className="text-[#71717a]">Progress</span>
-        <span className="text-[#00f0ff] font-[family-name:var(--font-body)] font-bold">
+        <span className="text-[#64748B]">Progress</span>
+        <span className="text-[#1565C0] font-[family-name:var(--font-body)] font-bold">
           {progress}%
         </span>
       </div>
 
-      <div className="h-3 bg-[#1a1a24] overflow-hidden border border-[#27272a]">
+      <div className="h-3 bg-[#0D2137] overflow-hidden border border-white/[0.12] rounded-lg">
         <div
-          className="h-full progress-neon transition-all duration-100"
+          className="h-full bg-[#1565C0] transition-all duration-300 rounded-lg"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -46,17 +46,15 @@ export default function WorkflowProgress({ progress, showSteps = false }: Workfl
             return (
               <div
                 key={step}
-                className={`text-center ${index < 11 ? 'step-connector' : ''} ${
-                  isCompleted ? 'step-connector-completed' : ''
-                }`}
+                className="text-center"
               >
                 <div
-                  className={`w-8 h-8 mx-auto flex items-center justify-center text-xs font-[family-name:var(--font-heading)] mb-1 ${
+                  className={`w-8 h-8 mx-auto flex items-center justify-center text-xs font-[family-name:var(--font-heading)] mb-1 rounded-lg ${
                     isCompleted
-                      ? 'bg-[#00ff88] text-[#0a0a0f]'
+                      ? 'bg-[#4CAF50] text-white'
                       : isCurrent
-                        ? 'bg-[#00f0ff] text-[#0a0a0f]'
-                        : 'bg-[#1a1a24] text-[#71717a] border-2 border-[#27272a]'
+                        ? 'bg-[#1565C0] text-white'
+                        : 'bg-[#0D2137] text-[#64748B] border border-white/[0.12]'
                   }`}
                 >
                   {isCompleted ? (
@@ -74,7 +72,7 @@ export default function WorkflowProgress({ progress, showSteps = false }: Workfl
                 </div>
                 <span
                   className={`text-[10px] font-[family-name:var(--font-body)] ${
-                    isCompleted || isCurrent ? 'text-[#e4e4e7]' : 'text-[#71717a]'
+                    isCompleted || isCurrent ? 'text-[#E2E8F0]' : 'text-[#64748B]'
                   }`}
                 >
                   {step}

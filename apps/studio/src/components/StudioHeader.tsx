@@ -7,23 +7,23 @@ export default async function StudioHeader() {
   const user = await getCurrentUser();
 
   return (
-    <header className="border-b-2 border-[#27273a] bg-[#0a0a0f]/80 sticky top-0 z-50">
+    <header className="border-b border-white/[0.12] bg-[#0A1929]/80 backdrop-blur-xl sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#00f0ff] to-[#8b5cf6] flex items-center justify-center">
-              <span className="text-[#0a0a0f] font-bold text-xl font-[family-name:var(--font-heading)]">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#1565C0] to-[#6191D3] rounded-xl flex items-center justify-center">
+              <span className="text-white font-bold text-xl font-[family-name:var(--font-heading)]">
                 R
               </span>
             </div>
             <div>
-              <h1 className="text-xl font-bold gradient-text">Raino Studio</h1>
-              <p className="text-xs text-[#a1a1aa]">Agentic PCB Design Platform</p>
+              <h1 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#1565C0] to-[#6191D3]">Raino Studio</h1>
+              <p className="text-xs text-[#94A3B8]">Agentic PCB Design Platform</p>
             </div>
           </Link>
         </div>
         <div className="flex items-center gap-6">
-          <Link href="/" className="text-[#e4e4e7] hover:text-[#00f0ff] transition-colors">
+          <Link href="/" className="text-[#E2E8F0] hover:text-[#1565C0] transition-colors duration-300">
             Dashboard
           </Link>
           <LanguageSwitcher />
@@ -32,7 +32,7 @@ export default async function StudioHeader() {
           ) : (
             <Link
               href="/login"
-              className="border-2 border-[#00f0ff] text-[#00f0ff] px-4 py-2 font-[family-name:var(--font-body)] text-base hover:bg-[#00f0ff] hover:text-[#0a0a0f] transition-all duration-100"
+              className="border border-[#1565C0] text-[#1565C0] px-4 py-2 font-[family-name:var(--font-body)] text-base hover:bg-[#1565C0] hover:text-white transition-all duration-300 rounded-lg"
             >
               Sign In
             </Link>

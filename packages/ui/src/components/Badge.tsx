@@ -15,15 +15,15 @@ export function Badge({
   children,
   ...props
 }: BadgeProps) {
-  const baseStyles = 'inline-flex items-center font-[family-name:var(--font-body)]';
+  const baseStyles = 'inline-flex items-center font-[family-name:var(--font-body)] rounded-lg';
 
   const variantStyles = {
-    default: 'bg-[#27272a] text-[#a1a1aa] border-2 border-[#3f3f46]',
-    success: 'bg-[#00ff88]/10 text-[#00ff88] border-2 border-[#00ff88]',
-    warning: 'bg-[#ffaa00]/10 text-[#ffaa00] border-2 border-[#ffaa00]',
-    error: 'bg-[#ff3366]/10 text-[#ff3366] border-2 border-[#ff3366]',
-    info: 'bg-[#00f0ff]/10 text-[#00f0ff] border-2 border-[#00f0ff]',
-    neon: 'bg-[#00f0ff]/10 text-[#00f0ff] border-2 border-[#00f0ff] shadow-[0_0_10px_rgba(0,240,255,0.3)]',
+    default: 'bg-white/[0.06] text-[#94A3B8] border border-white/[0.12] backdrop-blur-sm',
+    success: 'bg-[#4CAF50]/10 text-[#4CAF50] border border-[#4CAF50]/30 backdrop-blur-sm',
+    warning: 'bg-[#FF9800]/10 text-[#FF9800] border border-[#FF9800]/30 backdrop-blur-sm',
+    error: 'bg-[#EF5350]/10 text-[#EF5350] border border-[#EF5350]/30 backdrop-blur-sm',
+    info: 'bg-[#1565C0]/10 text-[#1565C0] border border-[#1565C0]/30 backdrop-blur-sm',
+    neon: 'bg-[#1565C0]/10 text-[#1565C0] border border-[#1565C0]/30 shadow-[0_8px_32px_rgba(0,0,0,0.20)] backdrop-blur-sm',
   };
 
   const sizeStyles = {

@@ -109,9 +109,9 @@ export default function QuoteEmailModal({
       <div className="space-y-6">
         {status === 'success' ? (
           <div className="text-center py-4">
-            <div className="w-16 h-16 mx-auto mb-4 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] flex items-center justify-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-[rgba(76,175,80,0.15)] border border-[rgba(76,175,80,0.3)] rounded-xl flex items-center justify-center">
               <svg
-                className="w-8 h-8 text-[#22c55e]"
+                className="w-8 h-8 text-[#4CAF50]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -124,8 +124,8 @@ export default function QuoteEmailModal({
                 />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-[#e4e4e7] mb-2">Email Sent Successfully</h3>
-            <p className="text-sm text-[#a1a1aa]">
+            <h3 className="text-lg font-semibold text-[#E2E8F0] mb-2">Email Sent Successfully</h3>
+            <p className="text-sm text-[#94A3B8]">
               Your design files have been sent for a professional quote.
             </p>
             <div className="mt-6">
@@ -136,42 +136,42 @@ export default function QuoteEmailModal({
           </div>
         ) : (
           <>
-            <p className="text-sm text-[#a1a1aa]">
+            <p className="text-sm text-[#94A3B8]">
               Would you like us to send your design files to a manufacturer for a professional
               quote?
             </p>
 
             <div className="space-y-2">
-              <label className="text-xs text-[#64748b] uppercase tracking-wider">Your Email</label>
+              <label className="text-xs text-[#64748B] uppercase tracking-wider">Your Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full px-3 py-2 bg-[#1a1a24] border border-[#27273a] text-[#e4e4e7] text-sm placeholder-[#64748b] focus:outline-none focus:border-[#00f0ff] transition-colors"
+                className="w-full px-3 py-2 bg-[#0D2137] border border-white/[0.12] text-[#E2E8F0] text-sm placeholder-[#64748B] focus:outline-none focus:border-[#1565C0] transition-colors duration-300 rounded-lg"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs text-[#64748b] uppercase tracking-wider">
+              <label className="text-xs text-[#64748B] uppercase tracking-wider">
                 Select Files to Attach
               </label>
               <div className="space-y-1">
                 {artifacts.length === 0 ? (
-                  <p className="text-sm text-[#64748b]">No downloadable artifacts available yet.</p>
+                  <p className="text-sm text-[#64748B]">No downloadable artifacts available yet.</p>
                 ) : (
                   artifacts.map((artifact) => (
                     <label
                       key={artifact.id}
-                      className="flex items-center gap-3 p-2 hover:bg-[#1a1a24]/50 cursor-pointer transition-colors"
+                      className="flex items-center gap-3 p-2 hover:bg-white/[0.04] cursor-pointer transition-colors duration-300 rounded-lg"
                     >
                       <input
                         type="checkbox"
                         checked={selectedArtifacts.has(artifact.id)}
                         onChange={() => toggleArtifact(artifact.id)}
-                        className="w-4 h-4 accent-[#00f0ff] bg-[#1a1a24] border-[#27273a]"
+                        className="w-4 h-4 accent-[#1565C0] bg-[#0D2137] border-white/[0.12]"
                       />
-                      <span className="text-sm text-[#e4e4e7]">
+                      <span className="text-sm text-[#E2E8F0]">
                         {artifactTypeLabels[artifact.type] || artifact.name}
                       </span>
                     </label>
@@ -181,8 +181,8 @@ export default function QuoteEmailModal({
             </div>
 
             {status === 'error' && (
-              <div className="p-3 bg-[rgba(239,68,68,0.1)] border border-[rgba(239,68,68,0.3)]">
-                <p className="text-sm text-[#ef4444]">{errorMessage}</p>
+              <div className="p-3 bg-[rgba(239,83,80,0.1)] border border-[rgba(239,83,80,0.3)] rounded-lg">
+                <p className="text-sm text-[#EF5350]">{errorMessage}</p>
               </div>
             )}
 

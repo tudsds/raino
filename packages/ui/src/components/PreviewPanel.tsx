@@ -25,10 +25,10 @@ export function PreviewPanel({
 
   return (
     <Card variant="elevated" className="overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-3 border-b-2 border-[#27272a]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.12]">
         <div className="flex items-center gap-2">
           <svg
-            className="w-4 h-4 text-[#00f0ff]"
+            className="w-4 h-4 text-[#1565C0]"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -58,17 +58,17 @@ export function PreviewPanel({
               />
             )}
           </svg>
-          <span className="text-base font-[family-name:var(--font-heading)] text-[#e4e4e7] uppercase text-xs tracking-wider">
+          <span className="text-base font-[family-name:var(--font-heading)] text-[#E2E8F0] uppercase text-xs tracking-wider">
             {typeLabels[type]}
           </span>
         </div>
       </div>
 
-      <div className="relative aspect-video bg-[#0a0a0f] flex items-center justify-center">
+      <div className="relative aspect-video bg-[#0A1929] flex items-center justify-center">
         {loading && (
           <div className="flex flex-col items-center gap-3">
-            <div className="w-8 h-8 border-2 border-[#27272a] border-t-[#00f0ff] animate-spin" />
-            <span className="text-base text-[#71717a] font-[family-name:var(--font-body)]">
+            <div className="w-8 h-8 border-2 border-white/[0.12] border-t-[#1565C0] animate-spin rounded-full" />
+            <span className="text-base text-[#64748B] font-[family-name:var(--font-body)]">
               Loading preview...
             </span>
           </div>
@@ -77,7 +77,7 @@ export function PreviewPanel({
         {error && !loading && (
           <div className="flex flex-col items-center gap-3 text-center px-4">
             <svg
-              className="w-10 h-10 text-[#ff3366]"
+              className="w-10 h-10 text-[#EF5350]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -89,7 +89,7 @@ export function PreviewPanel({
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
               />
             </svg>
-            <span className="text-base text-[#ff3366] font-[family-name:var(--font-body)]">
+            <span className="text-base text-[#EF5350] font-[family-name:var(--font-body)]">
               {error}
             </span>
           </div>
@@ -100,12 +100,11 @@ export function PreviewPanel({
             src={imageUrl}
             alt={typeLabels[type]}
             className="max-w-full max-h-full object-contain"
-            style={{ imageRendering: 'pixelated' }}
           />
         )}
 
         {!imageUrl && !modelUrl && !loading && !error && (
-          <div className="flex flex-col items-center gap-3 text-[#71717a]">
+          <div className="flex flex-col items-center gap-3 text-[#64748B]">
             <svg
               className="w-12 h-12 opacity-50"
               fill="none"
@@ -127,10 +126,10 @@ export function PreviewPanel({
 
         {modelUrl && !loading && !error && type === 'pcb3d' && (
           <div className="flex flex-col items-center gap-2">
-            <span className="text-base text-[#00f0ff] font-[family-name:var(--font-body)]">
+            <span className="text-base text-[#1565C0] font-[family-name:var(--font-body)]">
               3D Model Ready
             </span>
-            <span className="text-sm text-[#71717a] font-[family-name:var(--font-mono)]">
+            <span className="text-sm text-[#64748B] font-[family-name:var(--font-mono)]">
               {modelUrl}
             </span>
           </div>

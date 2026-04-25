@@ -15,24 +15,24 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-[#0a0a0f] circuit-grid px-4">
+    <div className="min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-[#0A1929] via-[#0D2137] to-[#0A1929] px-4">
       <div className="text-center max-w-xl">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-[#111118] border-2 border-[#ff3366] mb-8">
-          <span className="text-3xl text-[#ff3366] font-[family-name:var(--font-heading)]">!</span>
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-white/[0.06] backdrop-blur-xl border border-[#EF5350] rounded-xl mb-8">
+          <span className="text-3xl text-[#EF5350] font-bold">!</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-[#e4e4e7] mb-4 font-[family-name:var(--font-heading)] leading-relaxed">
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#E2E8F0] mb-4 leading-relaxed">
           Something Went Wrong
         </h1>
-        <p className="text-lg text-[#a1a1aa] mb-4 font-[family-name:var(--font-body)]">
+        <p className="text-lg text-[#94A3B8] mb-4">
           An unexpected error occurred while loading this page.
         </p>
         {error.message && (
-          <div className="mb-8 px-4 py-3 bg-[#111118] border-2 border-[#27272a] text-left">
-            <p className="text-sm text-[#71717a] font-[family-name:var(--font-body)] break-words">
+          <div className="mb-8 px-4 py-3 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl text-left">
+            <p className="text-sm text-[#64748B] break-words">
               {error.message}
             </p>
             {error.digest && (
-              <p className="text-xs text-[#71717a] font-[family-name:var(--font-body)] mt-2">
+              <p className="text-xs text-[#64748B] mt-2">
                 Digest: {error.digest}
               </p>
             )}
@@ -41,13 +41,13 @@ export default function Error({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={reset}
-            className="px-8 py-4 bg-[#00f0ff] text-[#0a0a0f] font-[family-name:var(--font-body)] text-lg font-semibold hover:neon-glow transition-all duration-300"
+            className="px-8 py-4 bg-[#1565C0] text-white font-semibold rounded-xl hover:bg-[#1976D2] transition-all duration-300"
           >
             Try Again
           </button>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#111118] border-2 border-[#27272a] text-[#e4e4e7] font-[family-name:var(--font-body)] text-lg hover:border-[#00f0ff] hover:text-[#00f0ff] transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] text-[#E2E8F0] rounded-xl hover:bg-white/[0.10] hover:border-white/[0.20] transition-all duration-300"
           >
             <span>←</span>
             Back to Home

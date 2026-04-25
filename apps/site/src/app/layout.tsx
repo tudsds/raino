@@ -18,11 +18,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#0a0a0f] text-[#e4e4e7] antialiased">
+      <body className="min-h-screen bg-[#0A1929] text-[#E2E8F0] antialiased">
         <Navbar />
         {children}
         <Footer />

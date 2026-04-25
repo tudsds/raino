@@ -24,8 +24,8 @@ export function Tabs({ tabs, defaultTab, onChange, variant = 'default' }: TabsPr
     <div className="w-full">
       <div
         className={cn(
-          'flex border-b-2',
-          variant === 'neon' ? 'border-[#00f0ff]/30' : 'border-[#27272a]',
+          'flex border-b',
+          variant === 'neon' ? 'border-[#1565C0]/30' : 'border-white/[0.12]',
         )}
       >
         {tabs.map((tab) => {
@@ -35,12 +35,12 @@ export function Tabs({ tabs, defaultTab, onChange, variant = 'default' }: TabsPr
               key={tab.id}
               onClick={() => handleTabChange(tab.id)}
               className={cn(
-                'relative px-4 py-3 text-base font-[family-name:var(--font-heading)] uppercase tracking-wider transition-all duration-100',
+                'relative px-4 py-3 text-base font-[family-name:var(--font-heading)] uppercase tracking-wider transition-all duration-300',
                 isActive
                   ? variant === 'neon'
-                    ? 'text-[#00f0ff]'
-                    : 'text-[#e4e4e7]'
-                  : 'text-[#71717a] hover:text-[#a1a1aa]',
+                    ? 'text-[#1565C0]'
+                    : 'text-[#E2E8F0]'
+                  : 'text-[#64748B] hover:text-[#94A3B8]',
               )}
               style={{ fontSize: '0.6rem' }}
             >
@@ -48,10 +48,10 @@ export function Tabs({ tabs, defaultTab, onChange, variant = 'default' }: TabsPr
               {isActive && (
                 <span
                   className={cn(
-                    'absolute bottom-0 left-0 right-0 h-1',
+                    'absolute bottom-0 left-0 right-0 h-0.5 rounded-full',
                     variant === 'neon'
-                      ? 'bg-[#00f0ff] shadow-[0_0_10px_rgba(0,240,255,0.8)]'
-                      : 'bg-[#00f0ff]',
+                      ? 'bg-[#1565C0]'
+                      : 'bg-[#1565C0]',
                   )}
                 />
               )}

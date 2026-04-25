@@ -8,6 +8,7 @@ export interface GlowingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   intensity?: 'low' | 'medium' | 'high';
 }
 
+/** @deprecated Use GlassCard instead */
 export function GlowingCard({
   glowColor = 'cyan',
   intensity = 'medium',
@@ -16,15 +17,15 @@ export function GlowingCard({
   ...props
 }: GlowingCardProps) {
   const colorMap = {
-    cyan: '#00f0ff',
-    purple: '#8b5cf6',
-    magenta: '#ff00aa',
+    cyan: '#1565C0',
+    purple: '#6191D3',
+    magenta: '#1565C0',
   };
 
   const intensityMap = {
-    low: 0.3,
-    medium: 0.5,
-    high: 0.8,
+    low: 0.15,
+    medium: 0.25,
+    high: 0.4,
   };
 
   const alpha = intensityMap[intensity];
@@ -32,26 +33,24 @@ export function GlowingCard({
 
   return (
     <div
-      className={cn('relative bg-[#111118] overflow-hidden', className)}
+      className={cn(
+        'relative bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl overflow-hidden',
+        className,
+      )}
       style={{
-        border: `2px solid ${color}`,
-        boxShadow: `
-          0 0 0 2px ${color}${Math.round(alpha * 40)
-            .toString(16)
-            .padStart(2, '0')},
-          0 0 10px ${color}${Math.round(alpha * 80)
-            .toString(16)
-            .padStart(2, '0')}
-        `,
+        borderColor: `${color}${Math.round(alpha * 255)
+          .toString(16)
+          .padStart(2, '0')}`,
+        boxShadow: `0 8px 32px rgba(0, 0, 0, 0.20)`,
       }}
       {...props}
     >
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: `linear-gradient(135deg, ${color}${Math.round(alpha * 20)
+          background: `linear-gradient(135deg, ${color}${Math.round(alpha * 255)
             .toString(16)
-            .padStart(2, '0')} 0%, transparent 50%, ${color}${Math.round(alpha * 10)
+            .padStart(2, '0')} 0%, transparent 50%, ${color}${Math.round((alpha * 0.5) * 255)
             .toString(16)
             .padStart(2, '0')} 100%)`,
         }}
@@ -60,3 +59,5 @@ export function GlowingCard({
     </div>
   );
 }
+
+export const GlassCard = GlowingCard;

@@ -19,31 +19,31 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    'inline-flex items-center justify-center transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] font-[family-name:var(--font-body)]';
+    'inline-flex items-center justify-center transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A1929] font-[family-name:var(--font-body)] rounded-lg';
 
   const variantStyles = {
     primary: [
-      'bg-[#0a0a0f] border-2 border-[#00f0ff] text-[#00f0ff]',
-      'hover:bg-[#00f0ff]/10',
-      'focus-visible:ring-[#00f0ff]',
+      'bg-[#1565C0] border-2 border-[#1565C0] text-white',
+      'hover:bg-[#1565C0]/90',
+      'focus-visible:ring-[#1565C0]',
       disabled ? 'opacity-50 cursor-not-allowed' : '',
     ],
     secondary: [
-      'bg-[#0a0a0f] border-2 border-[#8b5cf6] text-[#8b5cf6]',
-      'hover:bg-[#8b5cf6]/10',
-      'focus-visible:ring-[#8b5cf6]',
+      'bg-white/[0.06] backdrop-blur-xl border-2 border-white/[0.12] text-[#E2E8F0]',
+      'hover:bg-white/[0.10] hover:border-white/[0.20]',
+      'focus-visible:ring-[#6191D3]',
       disabled ? 'opacity-50 cursor-not-allowed' : '',
     ],
     ghost: [
-      'bg-transparent border-2 border-transparent text-[#a1a1aa]',
-      'hover:text-[#e4e4e7] hover:border-[#27272a]',
-      'focus-visible:ring-[#71717a]',
+      'bg-transparent border-2 border-transparent text-[#94A3B8]',
+      'hover:text-[#E2E8F0] hover:border-white/[0.12]',
+      'focus-visible:ring-[#64748B]',
       disabled ? 'opacity-50 cursor-not-allowed' : '',
     ],
     danger: [
-      'bg-[#0a0a0f] border-2 border-[#ff3366] text-[#ff3366]',
-      'hover:bg-[#ff3366]/10',
-      'focus-visible:ring-[#ff3366]',
+      'bg-[#EF5350]/10 border-2 border-[#EF5350] text-[#EF5350]',
+      'hover:bg-[#EF5350]/20',
+      'focus-visible:ring-[#EF5350]',
       disabled ? 'opacity-50 cursor-not-allowed' : '',
     ],
   };
@@ -57,16 +57,16 @@ export function Button({
   const glowStyles = {
     primary:
       glow && !disabled
-        ? 'hover:shadow-[0_0_0_2px_rgba(0,240,255,0.3),0_0_10px_rgba(0,240,255,0.5)]'
+        ? 'hover:shadow-[0_8px_32px_rgba(0,0,0,0.24)] hover:-translate-y-0.5'
         : '',
     secondary:
       glow && !disabled
-        ? 'hover:shadow-[0_0_0_2px_rgba(139,92,246,0.3),0_0_10px_rgba(139,92,246,0.5)]'
+        ? 'hover:shadow-[0_8px_32px_rgba(0,0,0,0.24)] hover:-translate-y-0.5'
         : '',
     ghost: '',
     danger:
       glow && !disabled
-        ? 'hover:shadow-[0_0_0_2px_rgba(255,51,102,0.3),0_0_10px_rgba(255,51,102,0.5)]'
+        ? 'hover:shadow-[0_8px_32px_rgba(0,0,0,0.24)] hover:-translate-y-0.5'
         : '',
   };
 

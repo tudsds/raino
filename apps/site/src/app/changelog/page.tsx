@@ -24,7 +24,7 @@ const releases = [
     version: '0.5.0',
     date: '2025-04-19',
     status: 'Current',
-    color: '#00f0ff',
+    color: '#1565C0',
     changes: [
       {
         type: 'feature',
@@ -52,7 +52,7 @@ const releases = [
     version: '0.4.0',
     date: '2025-03-15',
     status: 'Released',
-    color: '#00ff88',
+    color: '#4CAF50',
     changes: [
       {
         type: 'feature',
@@ -76,7 +76,7 @@ const releases = [
       },
       {
         type: 'improvement',
-        text: 'Enhanced pixel-art cyberpunk design system in @raino/ui',
+        text: 'Enhanced liquid glass design system in @raino/ui',
       },
     ],
   },
@@ -84,7 +84,7 @@ const releases = [
     version: '0.3.0',
     date: '2025-02-01',
     status: 'Released',
-    color: '#8b5cf6',
+    color: '#6191D3',
     changes: [
       {
         type: 'feature',
@@ -112,7 +112,7 @@ const releases = [
     version: '0.2.0',
     date: '2024-12-10',
     status: 'Released',
-    color: '#ffaa00',
+    color: '#FF9800',
     changes: [
       {
         type: 'feature',
@@ -140,7 +140,7 @@ const releases = [
     version: '0.1.0',
     date: '2024-10-22',
     status: 'Released',
-    color: '#ff00aa',
+    color: '#1565C0',
     changes: [
       {
         type: 'feature',
@@ -164,17 +164,17 @@ const releases = [
       },
       {
         type: 'feature',
-        text: 'Pixel-art cyberpunk design system with Press Start 2P and VT323 fonts',
+        text: 'Liquid glass design system with Noto Serif typography',
       },
     ],
   },
 ];
 
 const typeColors: Record<string, string> = {
-  feature: '#00f0ff',
-  improvement: '#00ff88',
-  fix: '#ffaa00',
-  breaking: '#ff3366',
+  feature: '#1565C0',
+  improvement: '#4CAF50',
+  fix: '#FF9800',
+  breaking: '#EF5350',
 };
 
 const typeLabels: Record<string, string> = {
@@ -187,19 +187,19 @@ const typeLabels: Record<string, string> = {
 export default function ChangelogPage() {
   return (
     <main className="pt-16">
-      <section className="py-24 bg-[#0a0a0f] circuit-grid">
+      <section className="py-24 bg-gradient-to-b from-[#0A1929] via-[#0D2137] to-[#0A1929]">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold font-[family-name:var(--font-heading)] mb-6">
-            <span className="gradient-text">Changelog</span>
+          <h1 className="text-4xl sm:text-5xl font-bold text-[#E2E8F0] mb-6">
+            <span className="text-[#1565C0]">Changelog</span>
           </h1>
-          <p className="text-xl text-[#a1a1aa]">
+          <p className="text-xl text-[#94A3B8]">
             Version history and release notes. Track what is new, what changed, and what is coming
             next.
           </p>
         </div>
       </section>
 
-      <section className="py-24 bg-[#111118]">
+      <section className="py-24 bg-[#0D2137]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-12">
             {releases.map((release) => (
@@ -209,22 +209,22 @@ export default function ChangelogPage() {
                 style={{ borderColor: `${release.color}40` }}
               >
                 <div
-                  className="absolute -left-[5px] top-0 w-2 h-2"
+                  className="absolute -left-[5px] top-0 w-2 h-2 rounded-full"
                   style={{ backgroundColor: release.color }}
                 />
 
                 <div className="mb-4">
                   <div className="flex flex-wrap items-center gap-3">
                     <h2
-                      className="text-2xl font-bold font-[family-name:var(--font-heading)]"
+                      className="text-2xl font-bold"
                       style={{ color: release.color }}
                     >
                       v{release.version}
                     </h2>
-                    <span className="text-sm text-[#71717a] font-mono">{release.date}</span>
+                    <span className="text-sm text-[#64748B] font-[family-name:var(--font-body)]">{release.date}</span>
                     {release.status === 'Current' && (
                       <span
-                        className="px-2 py-1 text-xs font-mono border"
+                        className="px-2 py-1 text-xs font-[family-name:var(--font-body)] border rounded-lg"
                         style={{
                           color: release.color,
                           borderColor: `${release.color}40`,
@@ -241,16 +241,16 @@ export default function ChangelogPage() {
                   {release.changes.map((change, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <span
-                        className="px-2 py-0.5 text-xs font-mono mt-0.5 shrink-0 border"
+                        className="px-2 py-0.5 text-xs font-[family-name:var(--font-body)] mt-0.5 shrink-0 border rounded"
                         style={{
-                          color: typeColors[change.type] || '#a1a1aa',
-                          borderColor: `${typeColors[change.type] || '#a1a1aa'}40`,
-                          backgroundColor: `${typeColors[change.type] || '#a1a1aa'}10`,
+                          color: typeColors[change.type] || '#94A3B8',
+                          borderColor: `${typeColors[change.type] || '#94A3B8'}40`,
+                          backgroundColor: `${typeColors[change.type] || '#94A3B8'}10`,
                         }}
                       >
                         {typeLabels[change.type] || change.type}
                       </span>
-                      <span className="text-[#a1a1aa]">{change.text}</span>
+                      <span className="text-[#94A3B8]">{change.text}</span>
                     </li>
                   ))}
                 </ul>
@@ -260,43 +260,43 @@ export default function ChangelogPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-[#0a0a0f]">
+      <section className="py-24 bg-[#0A1929]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-heading)] mb-6">
-            Coming <span className="gradient-text">Soon</span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#E2E8F0] mb-6">
+            Coming <span className="text-[#1565C0]">Soon</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-            <div className="p-6 bg-[#111118] border-2 border-[#27272a]">
-              <h3 className="text-[#00f0ff] font-semibold font-[family-name:var(--font-heading)] text-sm mb-2">
+            <div className="p-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl">
+              <h3 className="text-[#1565C0] font-semibold text-sm mb-2">
                 Team Workspaces
               </h3>
-              <p className="text-sm text-[#a1a1aa]">
+              <p className="text-sm text-[#94A3B8]">
                 Collaborate on hardware projects with shared specs, review workflows, and role-based
                 permissions.
               </p>
             </div>
-            <div className="p-6 bg-[#111118] border-2 border-[#27272a]">
-              <h3 className="text-[#8b5cf6] font-semibold font-[family-name:var(--font-heading)] text-sm mb-2">
+            <div className="p-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl">
+              <h3 className="text-[#6191D3] font-semibold text-sm mb-2">
                 Custom Architecture Templates
               </h3>
-              <p className="text-sm text-[#a1a1aa]">
+              <p className="text-sm text-[#94A3B8]">
                 Upload and validate your own architecture templates for domain-specific design
                 reuse.
               </p>
             </div>
-            <div className="p-6 bg-[#111118] border-2 border-[#27272a]">
-              <h3 className="text-[#ff00aa] font-semibold font-[family-name:var(--font-heading)] text-sm mb-2">
+            <div className="p-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl">
+              <h3 className="text-[#1565C0] font-semibold text-sm mb-2">
                 Live 3D Preview
               </h3>
-              <p className="text-sm text-[#a1a1aa]">
+              <p className="text-sm text-[#94A3B8]">
                 Interactive 3D board preview in the browser, powered by KiCad generated STEP files.
               </p>
             </div>
-            <div className="p-6 bg-[#111118] border-2 border-[#27272a]">
-              <h3 className="text-[#00ff88] font-semibold font-[family-name:var(--font-heading)] text-sm mb-2">
+            <div className="p-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl">
+              <h3 className="text-[#4CAF50] font-semibold text-sm mb-2">
                 API Access
               </h3>
-              <p className="text-sm text-[#a1a1aa]">
+              <p className="text-sm text-[#94A3B8]">
                 Programmatic access to the full workflow pipeline for CI/CD and automated design
                 generation.
               </p>

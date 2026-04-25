@@ -12,15 +12,15 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, options, error, className, ...props }, ref) => {
     const baseStyles =
-      'w-full px-3 py-2 bg-[#0a0a0f] text-[#e4e4e7] border-2 border-[#27272a] transition-all focus:outline-none focus:border-[#3f3f46] hover:border-[#3f3f46] appearance-none cursor-pointer font-[family-name:var(--font-body)] text-lg';
+      'w-full px-3 py-2 bg-white/[0.06] backdrop-blur-xl text-[#E2E8F0] border border-white/[0.12] transition-all duration-300 focus:outline-none focus:border-[#1565C0] hover:border-white/[0.20] appearance-none cursor-pointer font-[family-name:var(--font-body)] text-lg rounded-lg';
 
-    const errorStyles = error ? 'border-[#ff3366] focus:border-[#ff3366]' : '';
+    const errorStyles = error ? 'border-[#EF5350] focus:border-[#EF5350]' : '';
 
     return (
       <div className="w-full">
         {label && (
           <label
-            className="block text-base font-[family-name:var(--font-heading)] text-[#a1a1aa] mb-2 uppercase tracking-wider"
+            className="block text-base font-[family-name:var(--font-heading)] text-[#94A3B8] mb-2 uppercase tracking-wider"
             style={{ fontSize: '0.6rem' }}
           >
             {label}
@@ -29,14 +29,14 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         <div className="relative">
           <select ref={ref} className={cn(baseStyles, errorStyles, className)} {...props}>
             {options.map((option) => (
-              <option key={option.value} value={option.value} className="bg-[#111118]">
+              <option key={option.value} value={option.value} className="bg-[#0D2137]">
                 {option.label}
               </option>
             ))}
           </select>
           <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
             <svg
-              className="w-4 h-4 text-[#71717a]"
+              className="w-4 h-4 text-[#64748B]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -50,7 +50,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             </svg>
           </div>
         </div>
-        {error && <p className="mt-2 text-base text-[#ff3366]">{error}</p>}
+        {error && <p className="mt-2 text-base text-[#EF5350]">{error}</p>}
       </div>
     );
   },

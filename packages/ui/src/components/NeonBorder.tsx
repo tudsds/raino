@@ -12,23 +12,23 @@ export interface NeonBorderProps extends React.HTMLAttributes<HTMLDivElement> {
 export function NeonBorder({
   color = 'cyan',
   animated = false,
-  thickness = 2,
+  thickness = 1,
   className,
   children,
   ...props
 }: NeonBorderProps) {
   const colorMap = {
     cyan: {
-      border: '#00f0ff',
-      glow: 'rgba(0, 240, 255, 0.8)',
+      border: 'rgba(255, 255, 255, 0.20)',
+      accent: '#1565C0',
     },
     purple: {
-      border: '#8b5cf6',
-      glow: 'rgba(139, 92, 246, 0.8)',
+      border: 'rgba(255, 255, 255, 0.20)',
+      accent: '#6191D3',
     },
     magenta: {
-      border: '#ff00aa',
-      glow: 'rgba(255, 0, 170, 0.8)',
+      border: 'rgba(255, 255, 255, 0.20)',
+      accent: '#1565C0',
     },
   };
 
@@ -41,7 +41,7 @@ export function NeonBorder({
     let direction = 1;
     const interval = setInterval(() => {
       setPulseIntensity((prev) => {
-        const next = prev + direction * 0.2;
+        const next = prev + direction * 0.05;
         if (next >= 1) {
           direction = -1;
           return 1;
@@ -59,16 +59,30 @@ export function NeonBorder({
 
   return (
     <div
-      className={cn('relative', className)}
+      className={cn(
+        'relative bg-white/[0.06] backdrop-blur-xl rounded-xl',
+        className,
+      )}
       style={{
         border: `${thickness}px solid ${colors.border}`,
         boxShadow: animated
-          ? `0 0 ${8 * pulseIntensity}px ${colors.glow}, 0 0 ${16 * pulseIntensity}px ${colors.glow}`
-          : `0 0 8px ${colors.glow}`,
-        transition: animated ? 'box-shadow 0.15s steps(2)' : undefined,
+          ? `0 8px 32px rgba(0, 0, 0, ${0.15 + 0.1 * pulseIntensity})`
+          : `0 8px 32px rgba(0, 0, 0, 0.20)`,
+        transition: animated ? 'box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1)' : undefined,
       }}
       {...props}
     >
+      {animated && (
+        <div
+          className="absolute inset-0 pointer-events-none rounded-xl"
+          style={{
+            border: `1px solid ${colors.accent}${Math.round(pulseIntensity * 40)
+              .toString(16)
+              .padStart(2, '0')}`,
+            transition: 'border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          }}
+        />
+      )}
       {children}
     </div>
   );

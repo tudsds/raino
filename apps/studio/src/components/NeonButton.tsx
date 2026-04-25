@@ -16,19 +16,19 @@ export default function NeonButton({
   disabled = false,
 }: NeonButtonProps) {
   const baseStyles =
-    'inline-flex items-center justify-center gap-2 px-6 py-3 font-[family-name:var(--font-body)] text-lg transition-all duration-100';
+    'inline-flex items-center justify-center gap-2 px-6 py-3 font-[family-name:var(--font-body)] text-lg transition-all duration-300 rounded-xl';
 
   const variants = {
     primary: `
-      bg-transparent border-2 border-[#00f0ff] text-[#00f0ff]
-      hover:bg-[#00f0ff] hover:text-[#0a0a0f]
-      hover:shadow-[0_0_0_2px_rgba(0,240,255,0.3),0_0_10px_rgba(0,240,255,0.5)]
-      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent
-      disabled:hover:text-[#00f0ff] disabled:hover:shadow-none
+      bg-[#1565C0] text-white
+      hover:bg-[#1976D2]
+      hover:shadow-[0_8px_32px_rgba(21,101,192,0.30)]
+      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#1565C0]
+      disabled:hover:shadow-none
     `,
     secondary: `
-      bg-[#1a1a24] border-2 border-[#27272a] text-[#e4e4e7]
-      hover:border-[#00f0ff] hover:text-[#00f0ff]
+      bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] text-[#E2E8F0]
+      hover:border-[#1565C0] hover:text-[#1565C0]
       disabled:opacity-50 disabled:cursor-not-allowed
     `,
   };

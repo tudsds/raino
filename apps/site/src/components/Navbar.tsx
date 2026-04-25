@@ -33,13 +33,13 @@ export default function Navbar({ activePath }: NavbarProps) {
 
   const linkClass = (path: string) =>
     activePath === path
-      ? 'text-[#00f0ff]'
-      : 'text-[#a1a1aa] hover:text-[#00f0ff] transition-colors';
+      ? 'text-[#1565C0]'
+      : 'text-[#94A3B8] hover:text-[#6191D3] transition-colors';
 
   const mobileLinkClass = (path: string) =>
     activePath === path
-      ? 'block px-4 py-3 text-[#00f0ff] bg-[#00f0ff]/10'
-      : 'block px-4 py-3 text-[#a1a1aa] hover:text-[#00f0ff] hover:bg-[#00f0ff]/10 transition-colors';
+      ? 'block px-4 py-3 text-[#1565C0] bg-[#1565C0]/10 rounded-lg'
+      : 'block px-4 py-3 text-[#94A3B8] hover:text-[#6191D3] hover:bg-white/[0.04] rounded-lg transition-colors';
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -56,12 +56,12 @@ export default function Navbar({ activePath }: NavbarProps) {
   }, [isOpen]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 border-b border-[#27272a]">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0A1929]/80 backdrop-blur-xl border-b border-white/[0.08]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold font-[family-name:var(--font-heading)]">
-              RA<span className="text-[#00f0ff]">I</span>NO
+            <span className="text-2xl font-bold text-[#E2E8F0]">
+              RA<span className="text-[#1565C0]">I</span>NO
             </span>
           </Link>
           <div className="hidden md:flex items-center gap-8">
@@ -74,17 +74,17 @@ export default function Navbar({ activePath }: NavbarProps) {
               href="https://github.com/tudsds/raino"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
+              className="text-[#94A3B8] hover:text-[#6191D3] transition-colors"
             >
               GitHub
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 font-[family-name:var(--font-body)] text-lg">
+            <div className="hidden sm:flex items-center gap-2 text-base">
               {languages.map((lang, idx) => (
                 <span key={lang.code} className="flex items-center gap-2">
                   {lang.code === 'en' ? (
-                    <Link href={lang.href} className="text-[#00f0ff]">
+                    <Link href={lang.href} className="text-[#1565C0]">
                       {lang.label}
                     </Link>
                   ) : (
@@ -92,23 +92,23 @@ export default function Navbar({ activePath }: NavbarProps) {
                       href={lang.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#71717a] hover:text-[#00f0ff] transition-colors"
+                      className="text-[#64748B] hover:text-[#6191D3] transition-colors"
                     >
                       {lang.label}
                     </a>
                   )}
-                  {idx < languages.length - 1 && <span className="text-[#71717a]">|</span>}
+                  {idx < languages.length - 1 && <span className="text-[#64748B]">|</span>}
                 </span>
               ))}
             </div>
             <a
               href={studioUrl}
-              className="hidden sm:inline-block px-4 py-2 bg-[#111118] border-2 border-[#00f0ff] text-[#00f0ff] hover:neon-glow transition-all duration-300 font-medium"
+              className="hidden sm:inline-block px-4 py-2 bg-[#1565C0] text-white rounded-xl hover:bg-[#1976D2] transition-all duration-300 font-medium"
             >
               Launch Studio
             </a>
             <button
-              className="md:hidden p-2 text-[#a1a1aa] hover:text-[#00f0ff] transition-colors"
+              className="md:hidden p-2 text-[#94A3B8] hover:text-[#6191D3] transition-colors"
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
               aria-expanded={isOpen}
@@ -122,15 +122,15 @@ export default function Navbar({ activePath }: NavbarProps) {
               >
                 {isOpen ? (
                   <path
-                    strokeLinecap="square"
-                    strokeLinejoin="miter"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     strokeWidth={2}
                     d="M6 18L18 6M6 6l12 12"
                   />
                 ) : (
                   <path
-                    strokeLinecap="square"
-                    strokeLinejoin="miter"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     strokeWidth={2}
                     d="M4 6h16M4 12h16M4 18h16"
                   />
@@ -143,9 +143,9 @@ export default function Navbar({ activePath }: NavbarProps) {
       {isOpen && (
         <div
           ref={menuRef}
-          className="md:hidden absolute top-16 left-0 right-0 bg-[#0a0a0f]/95 border-b border-[#27272a] backdrop-blur-sm"
+          className="md:hidden absolute top-16 left-0 right-0 bg-[#0A1929]/95 border-b border-white/[0.08] backdrop-blur-xl"
         >
-          <div className="px-4 py-2 space-y-1 font-[family-name:var(--font-body)] text-lg">
+          <div className="px-4 py-2 space-y-1 text-base">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -160,14 +160,14 @@ export default function Navbar({ activePath }: NavbarProps) {
               href="https://github.com/tudsds/raino"
               target="_blank"
               rel="noopener noreferrer"
-              className="block px-4 py-3 text-[#a1a1aa] hover:text-[#00f0ff] hover:bg-[#00f0ff]/10 transition-colors"
+              className="block px-4 py-3 text-[#94A3B8] hover:text-[#6191D3] hover:bg-white/[0.04] rounded-lg transition-colors"
               onClick={() => setIsOpen(false)}
             >
               GitHub
             </a>
             <a
               href={studioUrl}
-              className="block px-4 py-3 text-[#00f0ff] hover:bg-[#00f0ff]/10 transition-colors font-medium"
+              className="block px-4 py-3 text-[#1565C0] hover:bg-[#1565C0]/10 rounded-lg transition-colors font-medium"
               onClick={() => setIsOpen(false)}
             >
               Launch Studio

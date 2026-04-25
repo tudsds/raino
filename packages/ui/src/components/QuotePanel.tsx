@@ -39,9 +39,9 @@ export function QuotePanel({
   };
 
   const confidenceConfig = {
-    low: { label: 'Low Confidence', status: 'warning' as const, color: 'text-[#ffaa00]' },
-    medium: { label: 'Medium Confidence', status: 'pending' as const, color: 'text-[#00f0ff]' },
-    high: { label: 'High Confidence', status: 'active' as const, color: 'text-[#00ff88]' },
+    low: { label: 'Low Confidence', status: 'warning' as const, color: 'text-[#FF9800]' },
+    medium: { label: 'Medium Confidence', status: 'pending' as const, color: 'text-[#1565C0]' },
+    high: { label: 'High Confidence', status: 'active' as const, color: 'text-[#4CAF50]' },
   };
 
   const conf = confidenceConfig[confidence];
@@ -59,24 +59,24 @@ export function QuotePanel({
         )}
 
         <div className="grid grid-cols-3 gap-4">
-          <div className="text-center p-4 bg-[#0a0a0f] border-2 border-[#27272a]">
-            <p className="text-[#71717a] text-base mb-1 font-[family-name:var(--font-heading)] uppercase text-xs">
+          <div className="text-center p-4 bg-white/[0.04] border border-white/[0.12] rounded-xl">
+            <p className="text-[#64748B] text-base mb-1 font-[family-name:var(--font-heading)] uppercase text-xs">
               Low
             </p>
             <p className={cn('text-xl font-bold font-[family-name:var(--font-mono)]', conf.color)}>
               {formatCurrency(lowQuote)}
             </p>
           </div>
-          <div className="text-center p-4 bg-[#0a0a0f] border-2 border-[#00f0ff] shadow-[0_0_0_2px_rgba(0,240,255,0.3),0_0_10px_rgba(0,240,255,0.5)]">
-            <p className="text-[#00f0ff] text-base mb-1 font-[family-name:var(--font-heading)] uppercase text-xs">
+          <div className="text-center p-4 bg-white/[0.06] border border-[#1565C0]/40 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.20)]">
+            <p className="text-[#1565C0] text-base mb-1 font-[family-name:var(--font-heading)] uppercase text-xs">
               Expected
             </p>
-            <p className="text-2xl font-bold font-[family-name:var(--font-mono)] text-[#00f0ff]">
+            <p className="text-2xl font-bold font-[family-name:var(--font-mono)] text-[#1565C0]">
               {formatCurrency(midQuote)}
             </p>
           </div>
-          <div className="text-center p-4 bg-[#0a0a0f] border-2 border-[#27272a]">
-            <p className="text-[#71717a] text-base mb-1 font-[family-name:var(--font-heading)] uppercase text-xs">
+          <div className="text-center p-4 bg-white/[0.04] border border-white/[0.12] rounded-xl">
+            <p className="text-[#64748B] text-base mb-1 font-[family-name:var(--font-heading)] uppercase text-xs">
               High
             </p>
             <p className={cn('text-xl font-bold font-[family-name:var(--font-mono)]', conf.color)}>
@@ -87,16 +87,16 @@ export function QuotePanel({
 
         {assumptions.length > 0 && (
           <div className="space-y-2">
-            <p className="text-base font-[family-name:var(--font-heading)] text-[#a1a1aa] uppercase text-xs">
+            <p className="text-base font-[family-name:var(--font-heading)] text-[#94A3B8] uppercase text-xs">
               Assumptions:
             </p>
             <ul className="space-y-1">
               {assumptions.map((assumption, index) => (
                 <li
                   key={index}
-                  className="text-base text-[#71717a] flex items-start gap-2 font-[family-name:var(--font-body)]"
+                  className="text-base text-[#64748B] flex items-start gap-2 font-[family-name:var(--font-body)]"
                 >
-                  <span className="text-[#00f0ff] mt-1">▸</span>
+                  <span className="text-[#1565C0] mt-1">▸</span>
                   {assumption}
                 </li>
               ))}

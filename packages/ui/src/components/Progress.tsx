@@ -26,20 +26,20 @@ export function Progress({
   };
 
   const fillStyles = {
-    default: 'bg-[#00f0ff]',
-    neon: 'bg-[#00f0ff] shadow-[0_0_10px_rgba(0,240,255,0.8)]',
+    default: 'bg-[#1565C0] rounded-full',
+    neon: 'bg-[#1565C0] rounded-full',
   };
 
   return (
     <div className="w-full">
-      <div className={cn('w-full bg-[#27272a] overflow-hidden', sizeStyles[size])}>
+      <div className={cn('w-full bg-white/[0.08] overflow-hidden rounded-full', sizeStyles[size])}>
         <div
-          className={cn('h-full transition-all duration-100', fillStyles[variant])}
+          className={cn('h-full transition-all duration-300', fillStyles[variant])}
           style={{ width: `${percentage}%` }}
         />
       </div>
       {showLabel && (
-        <div className="flex justify-between mt-2 text-base text-[#71717a] font-[family-name:var(--font-body)]">
+        <div className="flex justify-between mt-2 text-base text-[#64748B] font-[family-name:var(--font-body)]">
           <span>{Math.round(percentage)}%</span>
           <span>
             {value} / {max}

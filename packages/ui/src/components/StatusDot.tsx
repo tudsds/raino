@@ -10,19 +10,19 @@ export interface StatusDotProps {
 
 export function StatusDot({ status, size = 'md', label }: StatusDotProps) {
   const statusColors = {
-    active: 'bg-[#00ff88]',
-    inactive: 'bg-[#71717a]',
-    warning: 'bg-[#ffaa00]',
-    error: 'bg-[#ff3366]',
-    pending: 'bg-[#00f0ff]',
+    active: 'bg-[#4CAF50]',
+    inactive: 'bg-[#64748B]',
+    warning: 'bg-[#FF9800]',
+    error: 'bg-[#EF5350]',
+    pending: 'bg-[#1565C0]',
   };
 
   const statusGlow = {
-    active: 'shadow-[0_0_8px_rgba(0,255,136,0.8)]',
+    active: '',
     inactive: '',
-    warning: 'shadow-[0_0_8px_rgba(255,170,0,0.8)]',
-    error: 'shadow-[0_0_8px_rgba(255,51,102,0.8)]',
-    pending: 'shadow-[0_0_8px_rgba(0,240,255,0.8)] animate-pixel-pulse',
+    warning: '',
+    error: '',
+    pending: 'animate-pulse',
   };
 
   const sizeStyles = {
@@ -33,9 +33,9 @@ export function StatusDot({ status, size = 'md', label }: StatusDotProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className={cn(sizeStyles[size], statusColors[status], statusGlow[status])} />
+      <span className={cn('rounded-full', sizeStyles[size], statusColors[status], statusGlow[status])} />
       {label && (
-        <span className="text-base text-[#a1a1aa] font-[family-name:var(--font-body)]">
+        <span className="text-base text-[#94A3B8] font-[family-name:var(--font-body)]">
           {label}
         </span>
       )}

@@ -23,42 +23,42 @@ const packages = [
   {
     name: '@raino/core',
     description: 'Zod schemas, validation, quote engine, domain logic',
-    color: '#00f0ff',
+    color: '#1565C0',
   },
   {
     name: '@raino/db',
     description: 'Prisma ORM, Supabase auth, storage, and pgvector clients',
-    color: '#00ff88',
+    color: '#4CAF50',
   },
   {
     name: '@raino/llm',
     description: 'Kimi K2.5 gateway, structured output, retry logic',
-    color: '#ff00aa',
+    color: '#1565C0',
   },
   {
     name: '@raino/rag',
     description: 'Chunking, embeddings, retrieval for engineering documents',
-    color: '#8b5cf6',
+    color: '#6191D3',
   },
   {
     name: '@raino/agents',
     description: 'Workflow contracts, orchestration, state machines',
-    color: '#ff3366',
+    color: '#EF5350',
   },
   {
     name: '@raino/ui',
-    description: 'Shared React components, cyberpunk design system',
-    color: '#00ffaa',
+    description: 'Shared React components, liquid glass design system',
+    color: '#4CAF50',
   },
   {
     name: '@raino/kicad-worker-client',
     description: 'KiCad CLI contracts and job types',
-    color: '#ffaa00',
+    color: '#FF9800',
   },
   {
     name: '@raino/supplier-clients',
     description: 'DigiKey, Mouser, JLCPCB adapter interfaces + factory',
-    color: '#ff6633',
+    color: '#FF9800',
   },
 ];
 
@@ -124,8 +124,8 @@ const boundaries = [
 
 function ArchitectureDiagram() {
   return (
-    <div className="bg-[#0a0a0f] border-2 border-[#27272a] p-6 font-mono text-xs sm:text-sm overflow-x-auto">
-      <pre className="text-[#a1a1aa] leading-relaxed">
+    <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-6 font-mono text-xs sm:text-sm overflow-x-auto">
+      <pre className="text-[#94A3B8] leading-relaxed">
         {`┌─────────────────────────────────────────────────────────────────┐
 │                          Users                                   │
 │                                                                  │
@@ -169,8 +169,8 @@ function ArchitectureDiagram() {
 
 function WorkflowDiagram() {
   return (
-    <div className="bg-[#0a0a0f] border-2 border-[#27272a] p-6 font-mono text-xs sm:text-sm overflow-x-auto">
-      <pre className="text-[#a1a1aa] leading-relaxed">
+    <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-6 font-mono text-xs sm:text-sm overflow-x-auto">
+      <pre className="text-[#94A3B8] leading-relaxed">
         {`┌─────────────────────────┐
 │  Natural Language       │
 │  Intake                 │
@@ -268,74 +268,73 @@ export default function ArchitecturePage() {
   return (
     <>
       <main className="pt-16">
-        <section className="py-24 bg-[#0a0a0f] circuit-grid">
+        <section className="py-24 bg-gradient-to-b from-[#0A1929] via-[#0D2137] to-[#0A1929]">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold font-[family-name:var(--font-heading)] mb-6">
-              System <span className="gradient-text">Architecture</span>
+            <h1 className="text-4xl sm:text-5xl font-bold text-[#E2E8F0] mb-6">
+              System <span className="text-[#1565C0]">Architecture</span>
             </h1>
-            <p className="text-xl text-[#a1a1aa]">
+            <p className="text-xl text-[#94A3B8]">
               Raino is built as a modular system with clear boundaries. Each component has a defined
               responsibility and explicit interfaces.
             </p>
           </div>
         </section>
 
-        <section className="py-24 bg-[#111118]">
+        <section className="py-24 bg-[#0D2137]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-8 text-center">
-              High-Level <span className="gradient-text">Overview</span>
+            <h2 className="text-3xl font-bold text-[#E2E8F0] mb-8 text-center">
+              High-Level <span className="text-[#1565C0]">Overview</span>
             </h2>
             <ArchitectureDiagram />
           </div>
         </section>
 
-        <section className="py-24 bg-[#0a0a0f]">
+        <section className="py-24 bg-[#0A1929]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-12 text-center">
-              Package <span className="gradient-text">Structure</span>
+            <h2 className="text-3xl font-bold text-[#E2E8F0] mb-12 text-center">
+              Package <span className="text-[#1565C0]">Structure</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {packages.map((pkg) => (
                 <div
                   key={pkg.name}
-                  className="p-6 bg-[#111118] border-2 border-[#27272a] hover:border-opacity-50 transition-all duration-300"
-                  style={{ borderColor: `${pkg.color}40` }}
+                  className="p-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl hover:bg-white/[0.10] hover:border-white/[0.20] transition-all duration-300"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-3 h-3" style={{ backgroundColor: pkg.color }} />
+                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: pkg.color }} />
                     <code className="text-sm font-semibold" style={{ color: pkg.color }}>
                       {pkg.name}
                     </code>
                   </div>
-                  <p className="text-[#a1a1aa] text-sm">{pkg.description}</p>
+                  <p className="text-[#94A3B8] text-sm">{pkg.description}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="py-24 bg-[#111118]">
+        <section className="py-24 bg-[#0D2137]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-12 text-center">
-              Worker <span className="gradient-text">Services</span>
+            <h2 className="text-3xl font-bold text-[#E2E8F0] mb-12 text-center">
+              Worker <span className="text-[#1565C0]">Services</span>
             </h2>
             <div className="space-y-8">
               {services.map((service) => (
-                <div key={service.name} className="p-6 bg-[#0a0a0f] border-2 border-[#27272a]">
+                <div key={service.name} className="p-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl">
                   <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                     <div className="lg:w-1/3">
-                      <code className="text-[#00f0ff] font-semibold">{service.name}</code>
-                      <p className="text-[#a1a1aa] text-sm mt-2">{service.description}</p>
+                      <code className="text-[#1565C0] font-semibold">{service.name}</code>
+                      <p className="text-[#94A3B8] text-sm mt-2">{service.description}</p>
                     </div>
                     <div className="lg:w-2/3">
                       <div className="flex flex-wrap gap-2">
                         {service.stages.map((stage, idx) => (
                           <div key={stage} className="flex items-center gap-2">
-                            <span className="px-3 py-1 bg-[#1a1a24] border-2 border-[#27272a] text-sm text-[#a1a1aa]">
+                            <span className="px-3 py-1 bg-white/[0.06] border border-white/[0.12] text-sm text-[#94A3B8] rounded-lg">
                               {stage}
                             </span>
                             {idx < service.stages.length - 1 && (
-                              <span className="text-[#71717a]">→</span>
+                              <span className="text-[#64748B]">→</span>
                             )}
                           </div>
                         ))}
@@ -348,22 +347,22 @@ export default function ArchitecturePage() {
           </div>
         </section>
 
-        <section className="py-24 bg-[#0a0a0f]">
+        <section className="py-24 bg-[#0A1929]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-12 text-center">
-              External <span className="gradient-text">Boundaries</span>
+            <h2 className="text-3xl font-bold text-[#E2E8F0] mb-12 text-center">
+              External <span className="text-[#1565C0]">Boundaries</span>
             </h2>
             <div className="space-y-6">
               {boundaries.map((boundary) => (
-                <div key={boundary.name} className="p-6 bg-[#111118] border-2 border-[#27272a]">
-                  <h3 className="text-xl font-semibold font-[family-name:var(--font-heading)] mb-3 text-[#e4e4e7]">
+                <div key={boundary.name} className="p-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl">
+                  <h3 className="text-xl font-semibold text-[#E2E8F0] mb-3">
                     {boundary.name}
                   </h3>
-                  <p className="text-[#a1a1aa] mb-4">{boundary.description}</p>
+                  <p className="text-[#94A3B8] mb-4">{boundary.description}</p>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {boundary.details.map((detail) => (
-                      <li key={detail} className="flex items-start gap-2 text-sm text-[#71717a]">
-                        <span className="text-[#00f0ff]">›</span>
+                      <li key={detail} className="flex items-start gap-2 text-sm text-[#64748B]">
+                        <span className="text-[#1565C0]">›</span>
                         <span>{detail}</span>
                       </li>
                     ))}
@@ -374,26 +373,26 @@ export default function ArchitecturePage() {
           </div>
         </section>
 
-        <section className="py-24 bg-[#111118]">
+        <section className="py-24 bg-[#0D2137]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-8 text-center">
-              Product <span className="gradient-text">Workflow</span>
+            <h2 className="text-3xl font-bold text-[#E2E8F0] mb-8 text-center">
+              Product <span className="text-[#1565C0]">Workflow</span>
             </h2>
             <WorkflowDiagram />
           </div>
         </section>
 
-        <section className="py-24 bg-[#0a0a0f]">
+        <section className="py-24 bg-[#0A1929]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-8 text-center">
-              RAG <span className="gradient-text">Scope</span>
+            <h2 className="text-3xl font-bold text-[#E2E8F0] mb-8 text-center">
+              RAG <span className="text-[#1565C0]">Scope</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="p-6 bg-[#111118] border-2 border-[#27272a]">
-                <h3 className="text-lg font-semibold font-[family-name:var(--font-heading)] mb-4 text-[#00ff88]">
+              <div className="p-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl">
+                <h3 className="text-lg font-semibold text-[#4CAF50] mb-4">
                   ✓ What RAG Is For
                 </h3>
-                <ul className="space-y-2 text-[#a1a1aa]">
+                <ul className="space-y-2 text-[#94A3B8]">
                   <li className="flex items-start gap-2">
                     <span>›</span>
                     <span>Datasheets and component specifications</span>
@@ -416,11 +415,11 @@ export default function ArchitecturePage() {
                   </li>
                 </ul>
               </div>
-              <div className="p-6 bg-[#111118] border-2 border-[#27272a]">
-                <h3 className="text-lg font-semibold font-[family-name:var(--font-heading)] mb-4 text-[#ff3366]">
+              <div className="p-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl">
+                <h3 className="text-lg font-semibold text-[#EF5350] mb-4">
                   ✗ What RAG Is NOT For
                 </h3>
-                <ul className="space-y-2 text-[#a1a1aa]">
+                <ul className="space-y-2 text-[#94A3B8]">
                   <li className="flex items-start gap-2">
                     <span>›</span>
                     <span>Live pricing data</span>
@@ -444,7 +443,7 @@ export default function ArchitecturePage() {
                 </ul>
               </div>
             </div>
-            <p className="text-center text-[#71717a] mt-8 text-sm">
+            <p className="text-center text-[#64748B] mt-8 text-sm">
               Quote source of truth is always structured supplier adapter output, never RAG
               retrieval.
             </p>
