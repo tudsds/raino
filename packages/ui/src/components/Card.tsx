@@ -7,12 +7,20 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'elevated' | 'outlined' | 'neon';
   glow?: boolean;
   glowColor?: 'cyan' | 'purple' | 'magenta';
+  glassIntensity?: 'light' | 'medium' | 'maximum';
+  glassTint?: 'default' | 'blue';
+  enableNoise?: boolean;
+  enableSpecular?: boolean;
 }
 
 export function Card({
   variant = 'default',
   glow = false,
   glowColor = 'cyan',
+  glassIntensity,
+  glassTint = 'default',
+  enableNoise = true,
+  enableSpecular = true,
   className,
   children,
   ...props
@@ -34,8 +42,21 @@ export function Card({
 
   const glowStyles = glow ? glowColorMap[glowColor] : '';
 
+  const glassIntensityMap = {
+    light: 'glass-surface',
+    medium: cn('glass-elevated', enableSpecular && 'glass-specular'),
+    maximum: cn(
+      'glass-floating',
+      enableSpecular && 'glass-specular',
+      enableNoise && 'glass-noise',
+    ),
+  };
+
+  const glassStyles = glassIntensity ? glassIntensityMap[glassIntensity] : '';
+  const glassTintStyle = glassIntensity && glassTint === 'blue' ? 'glass-blue-tint' : '';
+
   return (
-    <div className={cn(baseStyles, variantStyles[variant], glowStyles, className)} {...props}>
+    <div className={cn(baseStyles, variantStyles[variant], glowStyles, glassStyles, glassTintStyle, className)} {...props}>
       {children}
     </div>
   );

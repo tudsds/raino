@@ -6,12 +6,20 @@ import { cn } from '../styles/cn';
 export interface GlowingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   glowColor?: 'cyan' | 'purple' | 'magenta';
   intensity?: 'low' | 'medium' | 'high';
+  glassIntensity?: 'light' | 'medium' | 'maximum';
+  glassTint?: 'default' | 'blue';
+  enableNoise?: boolean;
+  enableSpecular?: boolean;
 }
 
 /** @deprecated Use GlassCard instead */
 export function GlowingCard({
   glowColor = 'cyan',
   intensity = 'medium',
+  glassIntensity,
+  glassTint = 'default',
+  enableNoise = true,
+  enableSpecular = true,
   className,
   children,
   ...props
@@ -31,10 +39,25 @@ export function GlowingCard({
   const alpha = intensityMap[intensity];
   const color = colorMap[glowColor];
 
+  const glassIntensityMap = {
+    light: 'glass-surface',
+    medium: cn('glass-elevated', enableSpecular && 'glass-specular'),
+    maximum: cn(
+      'glass-floating',
+      enableSpecular && 'glass-specular',
+      enableNoise && 'glass-noise',
+    ),
+  };
+
+  const glassStyles = glassIntensity ? glassIntensityMap[glassIntensity] : '';
+  const glassTintStyle = glassIntensity && glassTint === 'blue' ? 'glass-blue-tint' : '';
+
   return (
     <div
       className={cn(
         'relative bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl overflow-hidden',
+        glassStyles,
+        glassTintStyle,
         className,
       )}
       style={{
@@ -60,4 +83,3 @@ export function GlowingCard({
   );
 }
 
-export const GlassCard = GlowingCard;

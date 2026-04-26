@@ -15,15 +15,15 @@ export function Badge({
   children,
   ...props
 }: BadgeProps) {
-  const baseStyles = 'inline-flex items-center font-[family-name:var(--font-body)] rounded-lg';
+  const baseStyles = 'inline-flex items-center font-[family-name:var(--font-body)]';
 
   const variantStyles = {
-    default: 'bg-white/[0.06] text-[#94A3B8] border border-white/[0.12] backdrop-blur-sm',
-    success: 'bg-[#4CAF50]/10 text-[#4CAF50] border border-[#4CAF50]/30 backdrop-blur-sm',
-    warning: 'bg-[#FF9800]/10 text-[#FF9800] border border-[#FF9800]/30 backdrop-blur-sm',
-    error: 'bg-[#EF5350]/10 text-[#EF5350] border border-[#EF5350]/30 backdrop-blur-sm',
-    info: 'bg-[#1565C0]/10 text-[#1565C0] border border-[#1565C0]/30 backdrop-blur-sm',
-    neon: 'bg-[#1565C0]/10 text-[#1565C0] border border-[#1565C0]/30 shadow-[0_8px_32px_rgba(0,0,0,0.20)] backdrop-blur-sm',
+    default: 'glass-surface text-[#94A3B8]',
+    success: 'glass-blue-tint text-[#4CAF50]',
+    warning: 'glass-blue-tint text-[#FF9800]',
+    error: 'glass-blue-tint text-[#EF5350]',
+    info: 'glass-blue-tint text-[#1565C0]',
+    neon: 'glass-blue-tint text-[#1565C0] shadow-[0_8px_32px_rgba(0,0,0,0.20)]',
   };
 
   const sizeStyles = {

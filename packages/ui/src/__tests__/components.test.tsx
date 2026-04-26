@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
@@ -19,6 +19,7 @@ import { GlowingCard } from '../components/GlowingCard';
 import { QuotePanel } from '../components/QuotePanel';
 import { BOMTable } from '../components/BOMTable';
 import { PreviewPanel } from '../components/PreviewPanel';
+import { AgentAccordion } from '../components/AgentAccordion';
 
 import { cn } from '../styles/cn';
 import { theme } from '../styles/theme';
@@ -632,5 +633,97 @@ describe('PreviewPanel', () => {
     const img = container.querySelector('img');
     expect(img).not.toBeNull();
     expect(img?.getAttribute('src')).toBe('/test.svg');
+  });
+});
+
+describe('AgentAccordion', () => {
+  const steps = [
+    { label: 'Step 1', status: 'complete' as const },
+    { label: 'Step 2', status: 'running' as const, thinking: 'Analyzing...' },
+    { label: 'Step 3', status: 'pending' as const, result: '# Result\nSome **bold** text' },
+    { label: 'Step 4', status: 'error' as const, thinking: 'Failed', result: 'Error message' },
+  ];
+
+  it('renders all step labels', () => {
+    render(React.createElement(AgentAccordion, { steps }));
+    expect(screen.getByText('Step 1')).toBeDefined();
+    expect(screen.getByText('Step 2')).toBeDefined();
+    expect(screen.getByText('Step 3')).toBeDefined();
+    expect(screen.getByText('Step 4')).toBeDefined();
+  });
+
+  it('renders with correct status data attributes', () => {
+    render(React.createElement(AgentAccordion, { steps }));
+    expect(screen.getByTestId('agent-step-0').getAttribute('data-status')).toBe('complete');
+    expect(screen.getByTestId('agent-step-1').getAttribute('data-status')).toBe('running');
+    expect(screen.getByTestId('agent-step-2').getAttribute('data-status')).toBe('pending');
+    expect(screen.getByTestId('agent-step-3').getAttribute('data-status')).toBe('error');
+  });
+
+  it('steps are collapsed by default', () => {
+    render(React.createElement(AgentAccordion, { steps }));
+    expect(screen.getByTestId('agent-step-0').getAttribute('data-expanded')).toBe('false');
+    expect(screen.getByTestId('agent-step-1').getAttribute('data-expanded')).toBe('false');
+  });
+
+  it('expands step on header click', () => {
+    render(React.createElement(AgentAccordion, { steps }));
+    const header = screen.getByTestId('agent-step-header-1');
+    header.click();
+    expect(screen.getByTestId('agent-step-1').getAttribute('data-expanded')).toBe('true');
+  });
+
+  it('collapses expanded step on second click', () => {
+    render(React.createElement(AgentAccordion, { steps }));
+    const header = screen.getByTestId('agent-step-header-1');
+    header.click();
+    header.click();
+    expect(screen.getByTestId('agent-step-1').getAttribute('data-expanded')).toBe('false');
+  });
+
+  it('shows thinking text when expanded', () => {
+    render(React.createElement(AgentAccordion, { steps }));
+    screen.getByTestId('agent-step-header-1').click();
+    expect(screen.getByText('Analyzing...')).toBeDefined();
+  });
+
+  it('shows result markdown when expanded', () => {
+    render(React.createElement(AgentAccordion, { steps }));
+    screen.getByTestId('agent-step-header-2').click();
+    expect(screen.getByText('Result')).toBeDefined();
+  });
+
+  it('calls onStepClick when header is clicked', () => {
+    const onStepClick = vi.fn();
+    render(React.createElement(AgentAccordion, { steps, onStepClick }));
+    screen.getByTestId('agent-step-header-0').click();
+    expect(onStepClick).toHaveBeenCalledWith(0);
+  });
+
+  it('applies activeStep highlighting', () => {
+    const { container } = render(
+      React.createElement(AgentAccordion, { steps, activeStep: 1 }),
+    );
+    const activeHeader = container.querySelector('[data-testid="agent-step-header-1"]');
+    expect(activeHeader?.className).toContain('bg-white/[0.02]');
+  });
+
+  it('applies pulse-glass animation to running step', () => {
+    const { container } = render(React.createElement(AgentAccordion, { steps }));
+    const runningStep = container.querySelector('[data-testid="agent-step-1"]');
+    expect(runningStep?.className).toContain('animate-pulse-glass');
+  });
+
+  it('uses glass-elevated when expanded', () => {
+    render(React.createElement(AgentAccordion, { steps }));
+    screen.getByTestId('agent-step-header-0').click();
+    const step = screen.getByTestId('agent-step-0');
+    expect(step.className).toContain('glass-elevated');
+  });
+
+  it('uses glass-surface when collapsed', () => {
+    render(React.createElement(AgentAccordion, { steps }));
+    const step = screen.getByTestId('agent-step-0');
+    expect(step.className).toContain('glass-surface');
   });
 });

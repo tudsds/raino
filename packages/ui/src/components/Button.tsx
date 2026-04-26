@@ -23,9 +23,13 @@ export function Button({
 
   const variantStyles = {
     primary: [
-      'bg-[#1565C0] border-2 border-[#1565C0] text-white',
-      'hover:bg-[#1565C0]/90',
-      'focus-visible:ring-[#1565C0]',
+      'bg-[#0A1929]/75 backdrop-blur-[20px] saturate-[170%] border border-[#6191D3]/35 border-t-white/25 text-white',
+      'shadow-[0_2px_4px_rgba(10,25,41,0.45),0_8px_24px_rgba(10,25,41,0.35),0_32px_64px_rgba(10,25,41,0.2)]',
+      'hover:bg-[#0A1929]/85 hover:scale-[1.02] hover:border-[#1565C0]',
+      'hover:shadow-[0_4px_8px_rgba(10,25,41,0.55),0_12px_32px_rgba(10,25,41,0.45),0_40px_80px_rgba(10,25,41,0.25)]',
+      'active:scale-[0.98]',
+      'focus-visible:ring-[rgba(97,145,211,0.8)]',
+      'ease-[cubic-bezier(0.34,1.56,0.64,1)]',
       disabled ? 'opacity-50 cursor-not-allowed' : '',
     ],
     secondary: [

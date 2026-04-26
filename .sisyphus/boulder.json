@@ -63,6 +63,62 @@
       "agent": "Sisyphus-Junior",
       "category": "quick",
       "updated_at": "2026-04-25T23:06:57.594Z"
+    },
+    "todo:7": {
+      "task_key": "todo:7",
+      "task_label": "7",
+      "task_title": "Upgrade Card/GlowingCard with Multi-Layer Glass",
+      "session_id": "ses_23918c212ffeFwq2dGVcmXcr0p",
+      "agent": "build",
+      "updated_at": "2026-04-25T23:11:41.203Z"
+    },
+    "todo:8": {
+      "task_key": "todo:8",
+      "task_label": "8",
+      "task_title": "Upgrade Button with Glass + Spring Physics",
+      "session_id": "ses_2390fa197ffeSiEhbvStUCSX4M",
+      "agent": "build",
+      "updated_at": "2026-04-25T23:25:57.088Z"
+    },
+    "todo:9": {
+      "task_key": "todo:9",
+      "task_label": "9",
+      "task_title": "Upgrade Panel/Modal with Glass Depth",
+      "session_id": "ses_2390844aaffeXe3Ao0zqhi395F",
+      "agent": "build",
+      "updated_at": "2026-04-25T23:37:23.347Z"
+    },
+    "todo:10": {
+      "task_key": "todo:10",
+      "task_label": "10",
+      "task_title": "Upgrade Form Components (Badge/Input/Select/Textarea)",
+      "session_id": "ses_238fc43a9ffeeEtezoMfMORNIC",
+      "agent": "build",
+      "updated_at": "2026-04-25T23:52:48.205Z"
+    },
+    "todo:11": {
+      "task_key": "todo:11",
+      "task_label": "11",
+      "task_title": "Extract + Upgrade Diagram Components to @raino/ui/diagrams",
+      "session_id": "ses_238ef9a1bffet6jv69yvq6gvJC",
+      "agent": "build",
+      "updated_at": "2026-04-25T23:57:13.797Z"
+    },
+    "todo:12": {
+      "task_key": "todo:12",
+      "task_label": "12",
+      "task_title": "Create LiquidGlassCard Wrapper (Framer Motion LazyMotion)",
+      "session_id": "ses_238e2ddfcffe28bVGnIZeYdZNt",
+      "agent": "build",
+      "updated_at": "2026-04-26T00:11:50.383Z"
+    },
+    "todo:13": {
+      "task_key": "todo:13",
+      "task_label": "13",
+      "task_title": "Create AgentAccordion Component",
+      "session_id": "ses_238de4533ffetsznkgj4dJO902",
+      "agent": "build",
+      "updated_at": "2026-04-26T00:22:57.952Z"
     }
   }
 }

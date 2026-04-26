@@ -10,6 +10,9 @@ export type { ButtonProps } from './components/Button';
 export { Card } from './components/Card';
 export type { CardProps } from './components/Card';
 
+export { LiquidGlassCard } from './components/LiquidGlassCard';
+export type { LiquidGlassCardProps } from './components/LiquidGlassCard';
+
 export { Panel } from './components/Panel';
 export type { PanelProps } from './components/Panel';
 
@@ -55,4 +58,20 @@ export type { BOMTableProps } from './components/BOMTable';
 export { PreviewPanel } from './components/PreviewPanel';
 export type { PreviewPanelProps } from './components/PreviewPanel';
 
+export { AgentAccordion } from './components/AgentAccordion';
+export type { AgentAccordionProps, AgentStep } from './components/AgentAccordion';
+
 export { GlassProvider } from './components/Filters';
+
+export {
+  GlassCard,
+  ConnectionLine,
+  ArchitectureDiagram,
+  WorkflowDiagram,
+} from './components/diagrams';
+export type {
+  GlassCardProps,
+  ConnectionLineProps,
+  ArchitectureDiagramProps,
+  WorkflowDiagramProps,
+} from './components/diagrams';

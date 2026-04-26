@@ -573,7 +573,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: YES — `fix(studio): complete STATUS_TO_STEP mapping for all 13 pipeline statuses`
 
-- [ ] 7. Upgrade Card/GlowingCard with Multi-Layer Glass
+- [x] 7. Upgrade Card/GlowingCard with Multi-Layer Glass
 
   **What to do**:
   - Enhance `packages/ui/src/components/Card.tsx` with additive glass props:
@@ -630,7 +630,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 2)
 
-- [ ] 8. Upgrade Button with Glass + Spring Physics
+- [x] 8. Upgrade Button with Glass + Spring Physics
 
   **What to do**:
   - Enhance `packages/ui/src/components/Button.tsx` with glass styling
@@ -674,7 +674,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 2)
 
-- [ ] 9. Upgrade Panel/Modal with Glass Depth
+- [x] 9. Upgrade Panel/Modal with Glass Depth
 
   **What to do**:
   - Enhance `Panel.tsx` with glass-elevated styling and depth-3 shadows
@@ -715,7 +715,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 2)
 
-- [ ] 10. Upgrade Form Components (Badge/Input/Select/Textarea)
+- [x] 10. Upgrade Form Components (Badge/Input/Select/Textarea)
 
   **What to do**:
   - Enhance Badge, Input, Select, Textarea with glass-surface styling
@@ -759,7 +759,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 2)
 
-- [ ] 11. Extract + Upgrade Diagram Components to @raino/ui/diagrams
+- [x] 11. Extract + Upgrade Diagram Components to @raino/ui/diagrams
 
   **What to do**:
   - Create `packages/ui/src/components/diagrams/` directory
@@ -809,7 +809,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 2)
 
-- [ ] 12. Create LiquidGlassCard Wrapper (Framer Motion LazyMotion)
+- [x] 12. Create LiquidGlassCard Wrapper (Framer Motion LazyMotion)
 
   **What to do**:
   - Create `packages/ui/src/components/LiquidGlassCard.tsx`
@@ -862,7 +862,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 2)
 
-- [ ] 13. Create AgentAccordion Component
+- [x] 13. Create AgentAccordion Component
 
   **What to do**:
   - Create `packages/ui/src/components/AgentAccordion.tsx`

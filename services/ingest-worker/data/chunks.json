@@ -11,7 +11,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -27,7 +27,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -43,7 +43,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "5V"
     }
@@ -60,7 +60,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB"
@@ -80,7 +80,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -96,7 +96,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -112,7 +112,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -128,7 +128,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -144,7 +144,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -160,7 +160,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -176,7 +176,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -192,7 +192,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -208,7 +208,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "LQFP100"
     }
@@ -225,7 +225,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -241,7 +241,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -257,7 +257,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -273,7 +273,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -289,7 +289,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -305,7 +305,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -321,7 +321,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -337,7 +337,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -353,7 +353,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB",
@@ -373,7 +373,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -389,7 +389,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -405,7 +405,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -421,7 +421,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "5V"
     }
@@ -438,7 +438,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB"
@@ -457,7 +457,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB"
@@ -476,7 +476,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "ADC"
@@ -496,7 +496,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -512,7 +512,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -528,7 +528,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -544,7 +544,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -560,7 +560,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "LQFP100"
     }
@@ -577,7 +577,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "LQFP100"
     }
@@ -594,7 +594,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -610,7 +610,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -626,7 +626,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -642,7 +642,7 @@
       "documentType": "datasheet",
       "revision": "Rev 5",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB"
@@ -662,7 +662,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -678,7 +678,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -694,7 +694,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -710,7 +710,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -726,7 +726,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "I2C"
@@ -745,7 +745,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "I2C"
@@ -764,7 +764,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "ADC"
@@ -783,7 +783,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "ADC"
@@ -802,7 +802,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB"
@@ -821,7 +821,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -837,7 +837,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -853,7 +853,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -869,7 +869,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -885,7 +885,7 @@
       "documentType": "errata",
       "revision": "Rev 3",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -901,7 +901,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -917,7 +917,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB",
@@ -938,7 +938,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB",
@@ -959,7 +959,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -975,7 +975,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -991,7 +991,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1007,7 +1007,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1023,7 +1023,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB",
@@ -1045,7 +1045,7 @@
       "documentType": "package_doc",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "LQFP100"
     }
@@ -1062,7 +1062,7 @@
       "documentType": "package_doc",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "LQFP100"
     }
@@ -1079,7 +1079,7 @@
       "documentType": "package_doc",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1095,7 +1095,7 @@
       "documentType": "package_doc",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1111,7 +1111,7 @@
       "documentType": "package_doc",
       "revision": "1.0",
       "sourceUrl": "fixture://STMicroelectronics/STM32F407VGT6/package_doc",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1127,7 +1127,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1143,7 +1143,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1159,7 +1159,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "5V"
     }
@@ -1176,7 +1176,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "ADC"
@@ -1196,7 +1196,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1212,7 +1212,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1228,7 +1228,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1244,7 +1244,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1260,7 +1260,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1276,7 +1276,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1292,7 +1292,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1308,7 +1308,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1324,7 +1324,7 @@
       "documentType": "datasheet",
       "revision": "Rev 4",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1340,7 +1340,7 @@
       "documentType": "errata",
       "revision": "Rev 2",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1356,7 +1356,7 @@
       "documentType": "errata",
       "revision": "Rev 2",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1372,7 +1372,7 @@
       "documentType": "errata",
       "revision": "Rev 2",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "I2C"
@@ -1391,7 +1391,7 @@
       "documentType": "errata",
       "revision": "Rev 2",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1407,7 +1407,7 @@
       "documentType": "errata",
       "revision": "Rev 2",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1423,7 +1423,7 @@
       "documentType": "errata",
       "revision": "Rev 2",
       "sourceUrl": "fixture://STMicroelectronics/STM32F401CCU6/errata",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1439,7 +1439,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "Module-WROOM",
       "applicableInterfaces": [
@@ -1459,7 +1459,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1475,7 +1475,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1491,7 +1491,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1507,7 +1507,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "3.3V"
     }
@@ -1524,7 +1524,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "BLE"
@@ -1543,7 +1543,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1559,7 +1559,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB",
@@ -1580,7 +1580,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB",
@@ -1601,7 +1601,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1617,7 +1617,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1633,7 +1633,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "I2S"
@@ -1652,7 +1652,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB",
@@ -1672,7 +1672,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1688,7 +1688,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1704,7 +1704,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1720,7 +1720,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "Module-WROOM",
       "voltageDomain": "$1V"
@@ -1738,7 +1738,7 @@
       "documentType": "app_note",
       "revision": "1.0",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8R8/app_note",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB",
@@ -1760,7 +1760,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "Module-WROOM",
       "applicableInterfaces": [
@@ -1780,7 +1780,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1796,7 +1796,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1812,7 +1812,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1828,7 +1828,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "3.3V"
     }
@@ -1845,7 +1845,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "BLE"
@@ -1864,7 +1864,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1880,7 +1880,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "Module-WROOM"
     }
@@ -1897,7 +1897,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "Module-WROOM"
     }
@@ -1914,7 +1914,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.5",
       "sourceUrl": "fixture://Espressif/ESP32-S3-WROOM-1-N8/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1930,7 +1930,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "$&"
     }
@@ -1947,7 +1947,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "5V"
     }
@@ -1964,7 +1964,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -1980,7 +1980,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "5V"
     }
@@ -1997,7 +1997,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2013,7 +2013,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "$&",
       "voltageDomain": "5V"
@@ -2031,7 +2031,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2047,7 +2047,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2063,7 +2063,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "package": "$&"
     }
@@ -2080,7 +2080,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2096,7 +2096,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2112,7 +2112,7 @@
       "documentType": "datasheet",
       "revision": "Rev J",
       "sourceUrl": "fixture://Texas Instruments/LM7805CT/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "5V"
     }
@@ -2129,7 +2129,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.2",
       "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "secondary",
       "applicableInterfaces": [
         "USB"
@@ -2148,7 +2148,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.2",
       "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "secondary"
     }
   },
@@ -2164,7 +2164,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.2",
       "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "secondary",
       "applicableInterfaces": [
         "USB"
@@ -2184,7 +2184,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.2",
       "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "secondary",
       "applicableInterfaces": [
         "USB"
@@ -2203,7 +2203,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.2",
       "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "secondary"
     }
   },
@@ -2219,7 +2219,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.2",
       "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "secondary",
       "applicableInterfaces": [
         "USB"
@@ -2238,7 +2238,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.2",
       "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "secondary",
       "applicableInterfaces": [
         "USB"
@@ -2257,7 +2257,7 @@
       "documentType": "datasheet",
       "revision": "Rev 1.2",
       "sourceUrl": "fixture://Amphenol/USB4105-GF-A/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "secondary"
     }
   },
@@ -2273,7 +2273,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB"
@@ -2293,7 +2293,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2309,7 +2309,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "5V"
     }
@@ -2326,7 +2326,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2342,7 +2342,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB"
@@ -2361,7 +2361,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "5V"
     }
@@ -2378,7 +2378,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB"
@@ -2397,7 +2397,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "applicableInterfaces": [
         "USB"
@@ -2417,7 +2417,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2433,7 +2433,7 @@
       "documentType": "datasheet",
       "revision": "Rev 3",
       "sourceUrl": "fixture://NXP/PRTR5V0U2X/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2449,7 +2449,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2465,7 +2465,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2481,7 +2481,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2497,7 +2497,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2513,7 +2513,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2529,7 +2529,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2545,7 +2545,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical",
       "voltageDomain": "3.3V"
     }
@@ -2562,7 +2562,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2578,7 +2578,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   },
@@ -2594,7 +2594,7 @@
       "documentType": "datasheet",
       "revision": "Rev 2",
       "sourceUrl": "fixture://Abracon/ABM8-16.000MHZ-B2-T/datasheet",
-      "fetchTimestamp": 1777157510434,
+      "fetchTimestamp": 1777161939186,
       "trustLevel": "canonical"
     }
   }

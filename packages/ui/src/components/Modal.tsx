@@ -34,11 +34,15 @@ export function Modal({ open, onClose, title, children, size = 'md' }: ModalProp
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="absolute inset-0"
+        style={{ background: 'rgba(10, 25, 41, 0.6)', backdropFilter: 'blur(8px)' }}
+        onClick={onClose}
+      />
 
       <div
         className={cn(
-          'relative w-full mx-4 bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] shadow-[0_8px_32px_rgba(0,0,0,0.20)] rounded-2xl',
+          'relative w-full mx-4 glass-floating glass-specular',
           sizeStyles[size],
         )}
       >

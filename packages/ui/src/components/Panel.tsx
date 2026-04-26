@@ -19,7 +19,7 @@ export function Panel({
   children,
   ...props
 }: PanelProps) {
-  const baseStyles = 'overflow-hidden rounded-2xl';
+  const baseStyles = 'overflow-hidden rounded-2xl glass-elevated glass-specular';
 
   const variantStyles = {
     default: 'bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] shadow-[0_8px_32px_rgba(0,0,0,0.20)]',
