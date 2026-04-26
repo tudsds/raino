@@ -82,7 +82,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           const provider = new KimiProvider(50_000);
           const gateway = new LLMGateway(provider, { maxRetries: 1 });
 
-          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 2048, jsonMode: true })) {
+          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 2048 })) {
             if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
           }
 
@@ -92,7 +92,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         } catch (llmError) {
           const errMsg = llmError instanceof Error ? `${llmError.message}` : String(llmError);
           console.error('[api/architecture/plan] LLM stream failed:', errMsg);
-          controller.enqueue(encoder.encode(sseEncode({ type: 'error', error: errMsg })));
+          // Don't send error to client - we'll use fallback instead
         } finally {
           clearInterval(keepalive);
         }
