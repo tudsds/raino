@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import ArchitecturePageClient from './ArchitecturePageClient';
+import { DegradedModePage } from '@/components/DegradedModePage';
 
 interface ArchitecturePageProps {
   params: Promise<{ id: string }>;
@@ -10,6 +11,19 @@ interface ArchitecturePageProps {
 
 export default async function ArchitecturePage({ params }: ArchitecturePageProps) {
   const { id } = await params;
+
+  const hasSupabase = !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!hasSupabase) {
+    return (
+      <DegradedModePage
+        title="Architecture Plan"
+        description="Supabase credentials are not configured. The architecture plan requires a database connection."
+        projectId={id}
+        stepHint="Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to enable architecture planning."
+      />
+    );
+  }
+
   const db = getSupabaseAdmin();
 
   const { data: project } = await db

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import ShortlistPageClient from './ShortlistPageClient';
+import { DegradedModePage } from '@/components/DegradedModePage';
 
 interface ShortlistPageProps {
   params: Promise<{ id: string }>;
@@ -17,6 +18,19 @@ interface CandidateFamily {
 
 export default async function ShortlistPage({ params }: ShortlistPageProps) {
   const { id } = await params;
+
+  const hasSupabase = !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!hasSupabase) {
+    return (
+      <DegradedModePage
+        title="Candidate Shortlist"
+        description="Supabase credentials are not configured. The shortlist requires a database connection."
+        projectId={id}
+        stepHint="Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to enable part shortlisting."
+      />
+    );
+  }
+
   const db = getSupabaseAdmin();
 
   const { data: project } = await db

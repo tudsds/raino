@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import ValidatePageClient from './ValidatePageClient';
+import { DegradedModePage } from '@/components/DegradedModePage';
 
 interface ValidatePageProps {
   params: Promise<{ id: string }>;
@@ -22,6 +23,19 @@ function ResultBadge({ passed }: { passed: boolean }) {
 
 export default async function ValidatePage({ params }: ValidatePageProps) {
   const { id } = await params;
+
+  const hasSupabase = !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!hasSupabase) {
+    return (
+      <DegradedModePage
+        title="Validation"
+        description="Supabase credentials are not configured. Validation requires a database connection."
+        projectId={id}
+        stepHint="Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to enable validation."
+      />
+    );
+  }
+
   const db = getSupabaseAdmin();
 
   const { data: project } = await db

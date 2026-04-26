@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getAdapterStatus } from '@raino/supplier-clients';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import { DegradedModeBanner } from '@/components/DegradedModeBanner';
+import { DegradedModePage } from '@/components/DegradedModePage';
 import { getCurrentUser } from '@/lib/auth/get-current-user';
 import { getArtifacts } from '@/lib/data/artifact-queries';
 import QuoteActions from '@/components/QuoteActions';
@@ -53,6 +54,19 @@ function ConfidenceBand({ label, value, color, size = 'md' }: { label: string; v
 
 export default async function QuotePage({ params }: QuotePageProps) {
   const { id } = await params;
+
+  const hasSupabase = !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!hasSupabase) {
+    return (
+      <DegradedModePage
+        title="Rough Quote"
+        description="Supabase credentials are not configured. Quote generation requires a database connection."
+        projectId={id}
+        stepHint="Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to enable quote generation."
+      />
+    );
+  }
+
   const db = getSupabaseAdmin();
   const { data: project } = await db
     .from('projects')

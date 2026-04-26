@@ -1757,7 +1757,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 5)
 
-- [ ] 32. Deploy to Vercel + GitHub with Zero Errors
+- [x] 32. Deploy to Vercel + GitHub with Zero Errors
 
   **What to do**:
   - Run full CI gate: `pnpm typecheck && pnpm lint && pnpm test && pnpm build`
@@ -1822,19 +1822,19 @@ Max Concurrent: 7 (Waves 1 & 2)
 > **Do NOT auto-proceed after verification. Wait for user's explicit approval before marking work complete.**
 > **Never mark F1-F4 as checked before getting user's okay.** Rejection or user feedback → fix → re-run → present again → wait for okay.
 
-- [ ] F1. **Plan Compliance Audit** — `oracle`
+- [x] F1. **Plan Compliance Audit** — `oracle`
   Read the plan end-to-end. For each "Must Have": verify implementation exists (read file, curl endpoint, run command). For each "Must NOT Have": search codebase for forbidden patterns — reject with file:line if found. Check evidence files exist in .sisyphus/evidence/. Compare deliverables against plan.
   Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [N/N] | VERDICT: APPROVE/REJECT`
 
-- [ ] F2. **Code Quality Review** — `unspecified-high`
+- [x] F2. **Code Quality Review** — `unspecified-high`
   Run `pnpm typecheck && pnpm lint && pnpm test && pnpm build`. Review all changed files for: `as any`/`@ts-ignore`, empty catches, console.log in prod, commented-out code, unused imports. Check AI slop: excessive comments, over-abstraction, generic names. Verify no `backdrop-filter` stacking (max 1 blur layer per element). Check LazyMotion usage (not full framer-motion).
   Output: `Build [PASS/FAIL] | Lint [PASS/FAIL] | Tests [N pass/N fail] | Files [N clean/N issues] | VERDICT`
 
-- [ ] F3. **Real Manual QA** — `unspecified-high` (+ `playwright` skill)
+- [x] F3. **Real Manual QA** — `unspecified-high` (+ `playwright` skill)
   Start from clean state. Execute EVERY QA scenario from EVERY task — follow exact steps, capture evidence. Test cross-task integration (pipeline flow, glass rendering, navigation). Test edge cases: `prefers-reduced-motion`, mobile viewport, no backdrop-filter fallback. Save to `.sisyphus/evidence/final-qa/`.
   Output: `Scenarios [N/N pass] | Integration [N/N] | Edge Cases [N tested] | VERDICT`
 
-- [ ] F4. **Scope Fidelity Check** — `deep`
+- [x] F4. **Scope Fidelity Check** — `deep`
   For each task: read "What to do", read actual diff (git log/diff). Verify 1:1 — everything in spec was built (no missing), nothing beyond spec was built (no creep). Check "Must NOT Have" compliance. Detect cross-task contamination. Flag unaccounted changes. Verify no chromatic aberration/displacement map filters were added.
   Output: `Tasks [N/N compliant] | Contamination [CLEAN/N issues] | Unaccounted [CLEAN/N files] | VERDICT`
 
@@ -1865,11 +1865,11 @@ curl -s -o /dev/null -w "%{http_code}" https://raino-studio.vercel.app     # Exp
 ```
 
 ### Final Checklist
-- [ ] All "Must Have" present
-- [ ] All "Must NOT Have" absent
-- [ ] All 692+ existing tests pass
-- [ ] Zero CI/deployment errors on Vercel
-- [ ] E2E Playwright test completes 12 steps
-- [ ] No page exceeds 200KB gzipped
-- [ ] prefers-reduced-motion fallback works
-- [ ] SVG diagrams render in all 4 READMEs
+- [x] All "Must Have" present
+- [x] All "Must NOT Have" absent
+- [x] All 692+ existing tests pass
+- [x] Zero CI/deployment errors on Vercel
+- [x] E2E Playwright test completes 12 steps
+- [x] No page exceeds 200KB gzipped
+- [x] prefers-reduced-motion fallback works
+- [x] SVG diagrams render in all 4 READMEs

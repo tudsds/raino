@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import DesignPageClient from './DesignPageClient';
+import { DegradedModePage } from '@/components/DegradedModePage';
 
 interface DesignPageProps {
   params: Promise<{ id: string }>;
@@ -10,6 +11,19 @@ interface DesignPageProps {
 
 export default async function DesignPage({ params }: DesignPageProps) {
   const { id } = await params;
+
+  const hasSupabase = !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!hasSupabase) {
+    return (
+      <DegradedModePage
+        title="Design Generation"
+        description="Supabase credentials are not configured. Design generation requires a database connection."
+        projectId={id}
+        stepHint="Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to enable design generation."
+      />
+    );
+  }
+
   const db = getSupabaseAdmin();
 
   const { data: project } = await db

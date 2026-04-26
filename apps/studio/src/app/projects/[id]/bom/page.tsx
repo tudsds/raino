@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatusBadge, { type Status } from '@/components/StatusBadge';
 import { DegradedModeBanner } from '@/components/DegradedModeBanner';
+import { DegradedModePage } from '@/components/DegradedModePage';
 import BOMPageClient from './BOMPageClient';
 
 interface BOMPageProps {
@@ -26,6 +27,19 @@ function RiskBadge({ level }: { level: string }) {
 
 export default async function BOMPage({ params }: BOMPageProps) {
   const { id } = await params;
+
+  const hasSupabase = !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!hasSupabase) {
+    return (
+      <DegradedModePage
+        title="Bill of Materials"
+        description="Supabase credentials are not configured. The BOM requires a database connection."
+        projectId={id}
+        stepHint="Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to enable BOM generation."
+      />
+    );
+  }
+
   const db = getSupabaseAdmin();
   const { data: project } = await db
     .from('projects')
