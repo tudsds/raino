@@ -86,7 +86,7 @@ Clarification answers:
 
 Produce a complete, structured specification.`,
   variables: ['intakeMessages', 'clarificationAnswers'],
-  maxTokens: 4096,
+  maxTokens: 2048,
   temperature: 0.2,
 };
 

@@ -12,6 +12,61 @@ function sseEncode(data: Record<string, unknown>): string {
   return `data: ${JSON.stringify(data)}\n\n`;
 }
 
+interface IntakeMessage {
+  role: string;
+  content: string;
+}
+
+function summarizeIntakeMessages(messages: IntakeMessage[]): string {
+  if (!messages || messages.length === 0) return '';
+
+  const userMessages: string[] = [];
+  const assistantRequirements: string[] = [];
+
+  for (const msg of messages) {
+    const content = msg.content?.trim() ?? '';
+    if (!content) continue;
+
+    if (msg.role === 'user') {
+      if (content.length < 10 || /^\s*(yes|no|ok|sure|thanks|thank you)\s*$/i.test(content)) {
+        continue;
+      }
+      userMessages.push(content);
+    } else if (msg.role === 'assistant') {
+      const lines = content.split('\n');
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.endsWith('?')) continue;
+        if (/^(what|how|can you|would you|please|could you|do you)/i.test(trimmed)) continue;
+        const hasRequirementKeyword = /(?:need|require|must|should|will|voltage|current|power|size|board|connector|interface|protocol|frequency|speed|temperature|dimension)/i.test(trimmed);
+        const hasQuantity = /\d+(?:\s*(?:V|A|W|Hz|MHz|GHz|mm|cm|inch|°C|°F))?/.test(trimmed);
+        if (trimmed.length > 20 && (hasRequirementKeyword || hasQuantity)) {
+          assistantRequirements.push(trimmed);
+        }
+      }
+    }
+  }
+
+  const uniqueUserMessages = userMessages.filter((um) => {
+    const umLower = um.toLowerCase();
+    return !assistantRequirements.some((ar) => ar.toLowerCase().includes(umLower.slice(0, 40)));
+  });
+
+  const parts: string[] = [];
+
+  if (assistantRequirements.length > 0) {
+    parts.push('=== Extracted Requirements ===');
+    parts.push(...assistantRequirements.slice(0, 30));
+  }
+
+  if (uniqueUserMessages.length > 0) {
+    parts.push('=== User Provided Details ===');
+    parts.push(...uniqueUserMessages.slice(0, 10));
+  }
+
+  return parts.join('\n');
+}
+
 const RequirementSchema = z.object({
   id: z.string(),
   category: z.enum([
@@ -68,13 +123,15 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     }
 
     const project = ownership.project;
-    const intakeMessages = project.intakeMessages.map((m: { role: string; content: string }) => `${m.role}: ${m.content}`).join('\n');
+    const rawIntakeMessages = project.intakeMessages as IntakeMessage[];
+    const summarizedIntake = summarizeIntakeMessages(rawIntakeMessages);
+    const rawIntakeLength = rawIntakeMessages.map((m) => `${m.role}: ${m.content}`).join('\n').length;
 
-    console.log('[api/spec/compile] Project:', id, 'intakeMessages count:', project.intakeMessages.length, 'intakeMessages length:', intakeMessages.length);
+    console.log('[api/spec/compile] Project:', id, 'intakeMessages count:', rawIntakeMessages.length, 'raw intake length:', rawIntakeLength, 'summarized length:', summarizedIntake.length, 'compression ratio:', rawIntakeLength > 0 ? Math.round((1 - summarizedIntake.length / rawIntakeLength) * 100) + '%' : 'N/A');
     console.log('[api/spec/compile] KIMI_API_KEY set:', !!process.env.KIMI_API_KEY, 'KIMI_API_BASE_URL:', process.env.KIMI_API_BASE_URL ?? '(default)');
 
-    if (!intakeMessages.trim()) {
-      console.error('[api/spec/compile] No intake messages found for project:', id);
+    if (!summarizedIntake.trim()) {
+      console.error('[api/spec/compile] No intake content found for project:', id);
       return new Response(JSON.stringify({ error: 'No intake messages found. Please complete the intake conversation first.' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
@@ -103,25 +160,29 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
 
           const gateway = new LLMGateway(provider, { maxRetries: 2 });
           const messages = templateToMessages('spec_compilation', {
-            intakeMessages,
+            intakeMessages: summarizedIntake,
             clarificationAnswers: '',
           });
 
-          console.log('[api/spec/compile] Messages count:', messages.length, 'system prompt length:', messages[0]?.content?.length ?? 0, 'user prompt length:', messages[1]?.content?.length ?? 0);
+          const totalPromptLength = messages.reduce((sum, m) => sum + (m.content?.length ?? 0), 0);
+          console.log('[api/spec/compile] Messages count:', messages.length, 'total prompt length:', totalPromptLength, 'system prompt length:', messages[0]?.content?.length ?? 0, 'user prompt length:', messages[1]?.content?.length ?? 0);
 
+          const streamStartTime = Date.now();
           let accumulatedText = '';
           let chunkCount = 0;
-          for await (const evt of gateway.chatStream(messages, { maxTokens: 4096 })) {
+          for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
             if (evt.type === 'content' && evt.content) {
               accumulatedText += evt.content;
               chunkCount++;
             }
             if (evt.type === 'done') {
-              console.log('[api/spec/compile] Stream done event received. Chunks:', chunkCount, 'accumulatedText length:', accumulatedText.length);
+              const elapsedMs = Date.now() - streamStartTime;
+              console.log('[api/spec/compile] Stream done event received. Chunks:', chunkCount, 'accumulatedText length:', accumulatedText.length, 'elapsedMs:', elapsedMs);
             }
           }
 
-          console.log('[api/spec/compile] Stream completed. accumulatedText length:', accumulatedText.length, 'chunkCount:', chunkCount);
+          const totalElapsedMs = Date.now() - streamStartTime;
+          console.log('[api/spec/compile] Stream completed. accumulatedText length:', accumulatedText.length, 'chunkCount:', chunkCount, 'totalElapsedMs:', totalElapsedMs);
 
           if (!accumulatedText.trim()) {
             throw new Error('LLM returned no content — the AI service may be overloaded. Please try again.');
