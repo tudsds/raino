@@ -16,8 +16,14 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    const body = await request.json().catch(() => ({}));
-    const mode = body.mode ?? 'fixture';
+    let body: Record<string, unknown> = {};
+    try {
+      body = await request.json();
+    } catch (err) {
+      // Defensive fallback: empty body defaults mode to 'fixture'
+      console.error('[ingest/run] Failed to parse request JSON:', err);
+    }
+    const mode = (body.mode as 'fixture' | 'live' | 'degraded') ?? 'fixture';
 
     const db = getSupabaseAdmin();
     const { data: manifest, error: manifestError } = await db
