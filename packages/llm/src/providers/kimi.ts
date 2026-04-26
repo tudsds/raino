@@ -110,6 +110,7 @@ export class KimiProvider implements LLMProvider {
       { signal: abortController.signal },
     );
 
+    let streamError: unknown;
     try {
       for await (const chunk of stream) {
         const delta = chunk.choices[0]?.delta;
@@ -127,8 +128,14 @@ export class KimiProvider implements LLMProvider {
           };
         }
       }
+    } catch (err) {
+      streamError = err;
     } finally {
       clearTimeout(overallTimeout);
+    }
+
+    if (streamError) {
+      throw streamError;
     }
 
     yield { type: 'done' };

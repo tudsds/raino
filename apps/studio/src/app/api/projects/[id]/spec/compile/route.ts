@@ -70,6 +70,17 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     const project = ownership.project;
     const intakeMessages = project.intakeMessages.map((m: { role: string; content: string }) => `${m.role}: ${m.content}`).join('\n');
 
+    console.log('[api/spec/compile] Project:', id, 'intakeMessages count:', project.intakeMessages.length, 'intakeMessages length:', intakeMessages.length);
+    console.log('[api/spec/compile] KIMI_API_KEY set:', !!process.env.KIMI_API_KEY, 'KIMI_API_BASE_URL:', process.env.KIMI_API_BASE_URL ?? '(default)');
+
+    if (!intakeMessages.trim()) {
+      console.error('[api/spec/compile] No intake messages found for project:', id);
+      return new Response(JSON.stringify({ error: 'No intake messages found. Please complete the intake conversation first.' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const encoder = new TextEncoder();
 
     const stream = new ReadableStream({
@@ -86,17 +97,31 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
         let structuredInterfaces: z.infer<typeof InterfaceSpecSchema>[] = [];
 
         try {
-          const provider = new KimiProvider(50_000);
+          const provider = new KimiProvider(120_000);
+          const isAvailable = await provider.isAvailable();
+          console.log('[api/spec/compile] Provider available:', isAvailable);
+
           const gateway = new LLMGateway(provider, { maxRetries: 2 });
           const messages = templateToMessages('spec_compilation', {
             intakeMessages,
             clarificationAnswers: '',
           });
 
+          console.log('[api/spec/compile] Messages count:', messages.length, 'system prompt length:', messages[0]?.content?.length ?? 0, 'user prompt length:', messages[1]?.content?.length ?? 0);
+
           let accumulatedText = '';
-          for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
-            if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+          let chunkCount = 0;
+          for await (const evt of gateway.chatStream(messages, { maxTokens: 4096 })) {
+            if (evt.type === 'content' && evt.content) {
+              accumulatedText += evt.content;
+              chunkCount++;
+            }
+            if (evt.type === 'done') {
+              console.log('[api/spec/compile] Stream done event received. Chunks:', chunkCount, 'accumulatedText length:', accumulatedText.length);
+            }
           }
+
+          console.log('[api/spec/compile] Stream completed. accumulatedText length:', accumulatedText.length, 'chunkCount:', chunkCount);
 
           if (!accumulatedText.trim()) {
             throw new Error('LLM returned no content — the AI service may be overloaded. Please try again.');
