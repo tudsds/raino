@@ -1,0 +1,25 @@
+{
+  "site": {
+    "title": "Raino — 智能代理 PCB 设计平台",
+    "description": "受限、可审计、可溯源的硬件设计与制造交付系统",
+    "launchStudio": "启动 Studio",
+    "getStarted": "立即开始",
+    "viewOnGithub": "在 GitHub 上查看",
+    "backToHome": "返回首页",
+    "readTheDocs": "阅读文档",
+    "tryTheWorkflow": "试用工作流",
+    "seeTheWorkflow": "查看工作流",
+    "readMore": "阅读更多"
+  },
+  "nav": {
+    "home": "首页",
+    "features": "功能",
+    "showcase": "展示",
+    "integrations": "集成",
+    "architecture": "架构",
+    "workflow": "工作流",
+    "docs": "文档",
+    "changelog": "更新日志",
+    "trust": "信任"
+  }
+}

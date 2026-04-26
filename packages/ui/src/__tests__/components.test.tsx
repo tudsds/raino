@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 
 import { Button } from '../components/Button';
@@ -669,34 +669,34 @@ describe('AgentAccordion', () => {
   it('expands step on header click', () => {
     render(React.createElement(AgentAccordion, { steps }));
     const header = screen.getByTestId('agent-step-header-1');
-    header.click();
+    fireEvent.click(header);
     expect(screen.getByTestId('agent-step-1').getAttribute('data-expanded')).toBe('true');
   });
 
   it('collapses expanded step on second click', () => {
     render(React.createElement(AgentAccordion, { steps }));
     const header = screen.getByTestId('agent-step-header-1');
-    header.click();
-    header.click();
+    fireEvent.click(header);
+    fireEvent.click(header);
     expect(screen.getByTestId('agent-step-1').getAttribute('data-expanded')).toBe('false');
   });
 
   it('shows thinking text when expanded', () => {
     render(React.createElement(AgentAccordion, { steps }));
-    screen.getByTestId('agent-step-header-1').click();
+    fireEvent.click(screen.getByTestId('agent-step-header-1'));
     expect(screen.getByText('Analyzing...')).toBeDefined();
   });
 
   it('shows result markdown when expanded', () => {
     render(React.createElement(AgentAccordion, { steps }));
-    screen.getByTestId('agent-step-header-2').click();
-    expect(screen.getByText('Result')).toBeDefined();
+    fireEvent.click(screen.getByTestId('agent-step-header-2'));
+    expect(screen.getByRole('heading', { name: 'Result' })).toBeDefined();
   });
 
   it('calls onStepClick when header is clicked', () => {
     const onStepClick = vi.fn();
     render(React.createElement(AgentAccordion, { steps, onStepClick }));
-    screen.getByTestId('agent-step-header-0').click();
+    fireEvent.click(screen.getByTestId('agent-step-header-0'));
     expect(onStepClick).toHaveBeenCalledWith(0);
   });
 
@@ -716,7 +716,7 @@ describe('AgentAccordion', () => {
 
   it('uses glass-elevated when expanded', () => {
     render(React.createElement(AgentAccordion, { steps }));
-    screen.getByTestId('agent-step-header-0').click();
+    fireEvent.click(screen.getByTestId('agent-step-header-0'));
     const step = screen.getByTestId('agent-step-0');
     expect(step.className).toContain('glass-elevated');
   });

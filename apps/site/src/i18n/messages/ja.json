@@ -1,0 +1,25 @@
+{
+  "site": {
+    "title": "Raino — エージェント型 PCB ワークフロープラットフォーム",
+    "description": "制約付き、監査可能、ソース追跡可能なハードウェア設計および製造引き渡しシステム",
+    "launchStudio": "Studio を起動",
+    "getStarted": "始めましょう",
+    "viewOnGithub": "GitHub で見る",
+    "backToHome": "ホームに戻る",
+    "readTheDocs": "ドキュメントを読む",
+    "tryTheWorkflow": "ワークフローを試す",
+    "seeTheWorkflow": "ワークフローを見る",
+    "readMore": "続きを読む"
+  },
+  "nav": {
+    "home": "ホーム",
+    "features": "機能",
+    "showcase": "ショーケース",
+    "integrations": "統合",
+    "architecture": "アーキテクチャ",
+    "workflow": "ワークフロー",
+    "docs": "ドキュメント",
+    "changelog": "変更履歴",
+    "trust": "信頼"
+  }
+}

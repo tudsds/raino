@@ -47,7 +47,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`dark ${notoSerif.variable}`}>
-      <body className="bg-[#0A1929] text-[#E2E8F0] antialiased">
+      <body className="bg-[#0A1929] text-[#E2E8F0] antialiased font-sans">
         <GlassProvider>
           <div className="relative flex min-h-screen flex-col">
             <Header session={session} />

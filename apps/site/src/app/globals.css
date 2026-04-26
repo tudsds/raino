@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '@raino/ui/styles/glass.css';
+@import '@raino/ui/src/styles/glass.css';
 
 :root {
   /* DEPRECATED: These tokens now live in packages/ui/src/styles/theme.ts.
@@ -44,44 +44,6 @@ body {
 /* Subtle gradient background */
 .bg-gradient-subtle {
   background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary), var(--bg-primary));
-}
-
-/* Glass card base */
-.glass-card {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.20);
-}
-
-/* Glass card hover */
-.glass-card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-card-hover:hover {
-  background: rgba(255, 255, 255, 0.10);
-  border-color: rgba(255, 255, 255, 0.20);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.24);
-}
-
-/* Glass navbar */
-.glass-navbar {
-  background: rgba(10, 25, 41, 0.80);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Glass footer */
-.glass-footer {
-  background: rgba(10, 25, 41, 0.90);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Animations */

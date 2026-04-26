@@ -1,0 +1,22 @@
+{
+  "mcu": "RP2040",
+  "power": "USB-C 5V → AP2112-3.3 LDO → 3.3V rail (MCU, flash, peripherals)",
+  "interfaces": ["USB-C 2.0", "QSPI Flash", "GPIO (26 pins)", "ADC (4 channels)", "I2C", "SPI", "UART", "PWM", "SWD Debug"],
+  "features": [
+    "RP2040 dual-core Cortex-M0+ at 133 MHz",
+    "16MB W25Q128 QSPI flash",
+    "USB-C data and power input",
+    "AP2112-3.3 LDO for clean 3.3V rail",
+    "WS2812B RGB status LED on GPIO pin",
+    "Boot/select button",
+    "26 GPIO via castellated edge pads",
+    "SWD debug header pads"
+  ],
+  "rationale": "The RP2040 provides excellent price-to-performance ratio with dual cores, flexible PIO state machines, and a mature SDK ecosystem. The AP2112 LDO was chosen for its low dropout voltage and 600mA output, sufficient for the RP2040 plus flash and LED. USB-C replaces the legacy micro-B connector for modern convenience. The W25Q128 provides 16MB of flash, the standard capacity for Pico-compatible boards.",
+  "estimatedComponentCount": 25,
+  "risks": [
+    "RP2040 stock availability may be constrained during high-demand periods",
+    "USB-C connector requires precise soldering — consider designing for selective soldering",
+    "QSPI signal integrity at 133 MHz requires controlled trace impedance on 2-layer board"
+  ]
+}

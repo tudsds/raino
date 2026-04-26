@@ -77,7 +77,7 @@ export default function ArchitecturePageClient({ params, hasArchitecture }: Arch
         <button
           onClick={handleGenerate}
           disabled={loading}
-          className="border border-[#1565C0] text-[#1565C0] px-6 py-2.5 text-sm font-medium hover:bg-[#1565C0] hover:text-[#0A1929] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="glass-elevated px-6 py-2.5 text-sm font-medium text-white hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
           {loading ? statusText ?? 'Generating Architecture...' : 'Generate Architecture Plan'}
         </button>
@@ -86,17 +86,17 @@ export default function ArchitecturePageClient({ params, hasArchitecture }: Arch
         <button
           onClick={handleGenerate}
           disabled={loading}
-          className="border border-[#2A4A6B] text-[#94A3B8] px-4 py-2 text-sm hover:border-[#1565C0] hover:text-[#1565C0] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="glass-surface px-4 py-2 text-sm text-[#94A3B8] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
           {loading ? statusText ?? 'Regenerating...' : 'Regenerate Architecture'}
         </button>
       )}
       {message && (
         <div
-          className={`px-4 py-2 text-sm font-[family-name:var(--font-body)] border ${
+          className={`glass-elevated px-4 py-2 text-sm font-[family-name:var(--font-body)] ${
             message.type === 'success'
-              ? 'border-[#4CAF50] text-[#4CAF50] bg-[rgba(76,175,80,0.13)]'
-              : 'border-[#ff4444] text-[#ff4444] bg-[rgba(239,83,80,0.13)]'
+              ? 'border-[#4CAF50] text-[#4CAF50]'
+              : 'border-[#ff4444] text-[#ff4444]'
           }`}
         >
           {message.text}

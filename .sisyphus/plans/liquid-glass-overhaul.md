@@ -912,7 +912,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: YES — `feat(ui): Liquid Glass design system — 7 components with depth, noise, springs`
 
-- [ ] 14. Overhaul raino-site Layout (Navbar + Footer + Globals)
+- [x] 14. Overhaul raino-site Layout (Navbar + Footer + Globals)
 
   **What to do**:
   - Update `apps/site/src/app/layout.tsx`: add GlassProvider from Filters.tsx, ensure Noto Serif via `next/font/google`
@@ -967,7 +967,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 3A)
 
-- [ ] 15. Overhaul raino-site Homepage
+- [x] 15. Overhaul raino-site Homepage
 
   **What to do**:
   - Redesign `apps/site/src/app/page.tsx` with Liquid Glass brand register
@@ -1018,7 +1018,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 3A)
 
-- [ ] 16. Overhaul raino-site /features Page
+- [x] 16. Overhaul raino-site /features Page
 
   **What to do**:
   - Apply Liquid Glass styling to `apps/site/src/app/features/page.tsx`
@@ -1057,7 +1057,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 3A)
 
-- [ ] 17. Overhaul raino-site /architecture Page
+- [x] 17. Overhaul raino-site /architecture Page
 
   **What to do**:
   - Apply Liquid Glass styling to `apps/site/src/app/architecture/page.tsx`
@@ -1100,7 +1100,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 3A)
 
-- [ ] 18. Overhaul raino-site Remaining Pages + next-intl Setup
+- [x] 18. Overhaul raino-site Remaining Pages + next-intl Setup
 
   **What to do**:
   - Apply Liquid Glass to remaining site pages: /workflow, /docs, /integrations, /showcase, /changelog, /trust
@@ -1150,7 +1150,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: YES — `feat(site): iOS 26 Liquid Glass overhaul + next-intl setup`
 
-- [ ] 19. Overhaul raino-studio Layout (Header + Globals)
+- [x] 19. Overhaul raino-studio Layout (Header + Globals)
 
   **What to do**:
   - Update `apps/studio/src/app/layout.tsx`: add GlassProvider, ensure Noto Serif via `next/font/google`
@@ -1198,7 +1198,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 3B)
 
-- [ ] 20. Overhaul raino-studio Intake Page with Agent Accordion
+- [x] 20. Overhaul raino-studio Intake Page with Agent Accordion
 
   **What to do**:
   - Update `apps/studio/src/app/projects/[id]/intake/page.tsx`
@@ -1247,7 +1247,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 3B)
 
-- [ ] 21. Overhaul raino-studio Spec + Architecture Pages
+- [x] 21. Overhaul raino-studio Spec + Architecture Pages
 
   **What to do**:
   - Update `apps/studio/src/app/projects/[id]/spec/page.tsx`: glass-surface containers, glass-elevated spec cards
@@ -1286,7 +1286,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 3B)
 
-- [ ] 22. Overhaul raino-studio BOM + Design + Validate + Quote Pages
+- [x] 22. Overhaul raino-studio BOM + Design + Validate + Quote Pages
 
   **What to do**:
   - Update BOM page: glass-elevated table, glass-badge risk indicators, glass-styled action buttons
@@ -1331,7 +1331,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 3B)
 
-- [ ] 23. Build Shortlist/Candidates Pipeline Page (Step 4)
+- [x] 23. Build Shortlist/Candidates Pipeline Page (Step 4)
 
   **What to do**:
   - Create `apps/studio/src/app/projects/[id]/shortlist/page.tsx`
@@ -1380,7 +1380,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 3B)
 
-- [ ] 24. Build Ingestion Progress Pipeline Page (Step 5)
+- [x] 24. Build Ingestion Progress Pipeline Page (Step 5)
 
   **What to do**:
   - Create `apps/studio/src/app/projects/[id]/ingestion/page.tsx`
@@ -1431,7 +1431,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: YES — `feat(studio): iOS 26 Liquid Glass overhaul + Shortlist + Ingestion pages`
 
-- [ ] 25. Generate SVG Architecture Diagram Images
+- [x] 25. Generate SVG Architecture Diagram Images
 
   **What to do**:
   - Use Playwright to screenshot the React GlassCard diagram components from the live `/architecture` page
@@ -1477,7 +1477,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 4)
 
-- [ ] 26. Update All 4 README.md Files with SVG + Language Links
+- [x] 26. Update All 4 README.md Files with SVG + Language Links
 
   **What to do**:
   - Update `README.md` (English):
@@ -1524,7 +1524,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 4)
 
-- [ ] 27. Set up next-intl English Message Catalogs for Site
+- [x] 27. Set up next-intl English Message Catalogs for Site
 
   **What to do**:
   - Complete the English message catalog: `apps/site/src/i18n/messages/en.json`
@@ -1569,7 +1569,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: YES — `docs: SVG architecture diagrams + README updates + next-intl English catalogs`
 
-- [ ] 28. Create Mock LLM Adapter for Deterministic Testing
+- [x] 28. Create Mock LLM Adapter for Deterministic Testing
 
   **What to do**:
   - Create `apps/studio/src/lib/llm/mock-adapter.ts`
@@ -1617,7 +1617,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 5)
 
-- [ ] 29. E2E Playwright Test: Full 12-Step Pipeline
+- [x] 29. E2E Playwright Test: Full 12-Step Pipeline
 
   **What to do**:
   - Create Playwright E2E test that exercises the entire pipeline:
@@ -1671,7 +1671,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 5)
 
-- [ ] 30. E2E Playwright Test: Multi-Language Site Verification
+- [x] 30. E2E Playwright Test: Multi-Language Site Verification
 
   **What to do**:
   - Create Playwright test navigating to each site page in each locale:
@@ -1718,7 +1718,7 @@ Max Concurrent: 7 (Waves 1 & 2)
 
   **Commit**: NO (groups with Wave 5)
 
-- [ ] 31. Bundle Size Audit + Performance Optimization
+- [x] 31. Bundle Size Audit + Performance Optimization
 
   **What to do**:
   - Run `pnpm build` and check output sizes

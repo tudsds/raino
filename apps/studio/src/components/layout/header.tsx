@@ -7,8 +7,16 @@ interface HeaderProps {
 
 export function Header({ session }: HeaderProps) {
   return (
-    <header className="border-b border-white/[0.12] bg-[#0A1929]/80 backdrop-blur-xl sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <header
+      className="sticky top-0 z-50"
+      style={{
+        background: 'rgba(10, 25, 41, 0.85)',
+        backdropFilter: 'blur(20px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+        borderBottom: '1px solid rgba(97, 145, 211, 0.35)',
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-[#1565C0] to-[#6191D3] rounded-xl flex items-center justify-center">

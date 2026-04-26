@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 750" width="100%" height="auto">
+  <defs>
+    <!-- Background gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#0D2137"/>
+      <stop offset="100%" stop-color="#0A1929"/>
+    </radialGradient>
+
+    <!-- Glass card gradient -->
+    <linearGradient id="glass-default" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.60)"/>
+    </linearGradient>
+
+    <!-- Glass card gradient (accent) -->
+    <linearGradient id="glass-accent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(21,101,192,0.18)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.65)"/>
+    </linearGradient>
+
+    <!-- Glass card gradient (external) -->
+    <linearGradient id="glass-external" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(100,116,139,0.10)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.55)"/>
+    </linearGradient>
+
+    <!-- Connection line gradient -->
+    <linearGradient id="conn-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#6191D3"/>
+    </linearGradient>
+
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-6%" y="-8%" width="112%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#0A1929" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="750" fill="url(#bg-grad)"/>
+
+  <!-- Title -->
+  <text x="450" y="50" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="26" font-weight="bold">
+    Architectural Layers
+  </text>
+  <text x="450" y="78" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="13">
+    Clean separation of concerns across the stack
+  </text>
+
+  <!-- ========== LAYER 1: PRESENTATION ========== -->
+  <g transform="translate(80, 120)" filter="url(#shadow)">
+    <rect x="0" y="0" width="740" height="120" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <!-- Layer label -->
+    <rect x="0" y="0" width="120" height="120" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.35)" stroke-width="1"/>
+    <text x="60" y="45" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Presentation</text>
+    <text x="60" y="62" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Layer</text>
+    <text x="60" y="82" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">What users see</text>
+
+    <!-- Components -->
+    <g transform="translate(140, 20)">
+      <rect x="0" y="0" width="280" height="80" rx="8" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+      <text x="140" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="13" font-weight="bold">apps/site</text>
+      <text x="140" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Marketing website — discovery, features, architecture</text>
+      <text x="140" y="62" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">Next.js 15 · React 19 · Tailwind v4</text>
+    </g>
+
+    <g transform="translate(435, 20)">
+      <rect x="0" y="0" width="280" height="80" rx="8" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+      <text x="140" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="13" font-weight="bold">apps/studio</text>
+      <text x="140" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Product app — intake, BOM, quotes, previews</text>
+      <text x="140" y="62" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">Next.js 15 · Supabase Auth · Server Actions</text>
+    </g>
+  </g>
+
+  <!-- Line: Presentation -> Application -->
+  <g>
+    <line x1="450" y1="240" x2="450" y2="258" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <polygon points="450,265 445,257 455,257" fill="#6191D3" opacity="0.7"/>
+  </g>
+
+  <!-- ========== LAYER 2: APPLICATION ========== -->
+  <g transform="translate(80, 280)" filter="url(#shadow)">
+    <rect x="0" y="0" width="740" height="100" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <!-- Layer label -->
+    <rect x="0" y="0" width="120" height="100" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.35)" stroke-width="1"/>
+    <text x="60" y="38" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Application</text>
+    <text x="60" y="55" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Layer</text>
+    <text x="60" y="75" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Business logic</text>
+
+    <!-- Components -->
+    <g transform="translate(140, 16)">
+      <rect x="0" y="0" width="220" height="68" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="110" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">API Routes</text>
+      <text x="110" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">REST + LLM gateway endpoints</text>
+      <text x="110" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Route handlers (Next.js App Router)</text>
+    </g>
+
+    <g transform="translate(375, 16)">
+      <rect x="0" y="0" width="220" height="68" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="110" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Server Actions</text>
+      <text x="110" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Mutations + auth-protected flows</text>
+      <text x="110" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Supabase SSR + session refresh</text>
+    </g>
+
+    <g transform="translate(610, 16)">
+      <rect x="0" y="0" width="180" height="68" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="90" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">LLM Gateway</text>
+      <text x="90" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Kimi K2.5 via OpenAI SDK</text>
+      <text x="90" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/llm</text>
+    </g>
+  </g>
+
+  <!-- Line: Application -> Domain -->
+  <g>
+    <line x1="450" y1="380" x2="450" y2="398" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <polygon points="450,405 445,397 455,397" fill="#6191D3" opacity="0.7"/>
+  </g>
+
+  <!-- ========== LAYER 3: DOMAIN ========== -->
+  <g transform="translate(80, 420)" filter="url(#shadow)">
+    <rect x="0" y="0" width="740" height="120" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <!-- Layer label -->
+    <rect x="0" y="0" width="120" height="120" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.35)" stroke-width="1"/>
+    <text x="60" y="45" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Domain</text>
+    <text x="60" y="62" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Layer</text>
+    <text x="60" y="82" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Business rules</text>
+
+    <!-- Components -->
+    <g transform="translate(140, 16)">
+      <rect x="0" y="0" width="160" height="88" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="80" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Zod Schemas</text>
+      <text x="80" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Spec · BOM · Quote</text>
+      <text x="80" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Validation</text>
+      <text x="80" y="72" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/core</text>
+    </g>
+
+    <g transform="translate(315, 16)">
+      <rect x="0" y="0" width="160" height="88" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="80" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Quote Engine</text>
+      <text x="80" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Confidence bands</text>
+      <text x="80" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Assumption log</text>
+      <text x="80" y="72" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/core</text>
+    </g>
+
+    <g transform="translate(490, 16)">
+      <rect x="0" y="0" width="160" height="88" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="80" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Orchestration</text>
+      <text x="80" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Workflow state machine</text>
+      <text x="80" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Agent contracts</text>
+      <text x="80" y="72" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/agents</text>
+    </g>
+
+    <g transform="translate(665, 16)">
+      <rect x="0" y="0" width="130" height="88" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="65" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">RAG</text>
+      <text x="65" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Chunk · Embed</text>
+      <text x="65" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Retrieve</text>
+      <text x="65" y="72" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/rag</text>
+    </g>
+  </g>
+
+  <!-- Line: Domain -> Infrastructure -->
+  <g>
+    <line x1="450" y1="540" x2="450" y2="558" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <polygon points="450,565 445,557 455,557" fill="#6191D3" opacity="0.7"/>
+  </g>
+
+  <!-- ========== LAYER 4: INFRASTRUCTURE ========== -->
+  <g transform="translate(80, 580)" filter="url(#shadow)">
+    <rect x="0" y="0" width="740" height="120" rx="12" fill="url(#glass-external)" stroke="rgba(100,116,139,0.30)" stroke-width="1.5"/>
+    <!-- Layer label -->
+    <rect x="0" y="0" width="120" height="120" rx="12" fill="url(#glass-external)" stroke="rgba(100,116,139,0.35)" stroke-width="1"/>
+    <text x="60" y="45" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Infrastructure</text>
+    <text x="60" y="62" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">Layer</text>
+    <text x="60" y="82" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">External systems</text>
+
+    <!-- Components -->
+    <g transform="translate(140, 16)">
+      <rect x="0" y="0" width="210" height="88" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="105" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Supabase</text>
+      <text x="105" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Auth · Postgres · Storage</text>
+      <text x="105" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">pgvector · RLS · Prisma</text>
+      <text x="105" y="72" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/db</text>
+    </g>
+
+    <g transform="translate(365, 16)">
+      <rect x="0" y="0" width="210" height="88" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="105" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">KiCad CLI</text>
+      <text x="105" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Schematic + Layout + Export</text>
+      <text x="105" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">GPL Boundary · No code embedded</text>
+      <text x="105" y="72" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/kicad-worker-client</text>
+    </g>
+
+    <g transform="translate(590, 16)">
+      <rect x="0" y="0" width="210" height="88" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="105" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Suppliers</text>
+      <text x="105" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">DigiKey · Mouser · JLCPCB</text>
+      <text x="105" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Live + mock adapters (fixture mode)</text>
+      <text x="105" y="72" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/supplier-clients</text>
+    </g>
+  </g>
+
+  <!-- Bottom note -->
+  <text x="450" y="740" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">
+    Infrastructure layer uses adapter pattern with permanent fixture fallbacks.
+  </text>
+</svg>

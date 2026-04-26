@@ -1,9 +1,16 @@
 import type { Metadata } from 'next';
-import {
-  GlassCard,
-  ArchitectureDiagram,
-  WorkflowDiagram,
-} from '@raino/ui';
+import dynamic from 'next/dynamic';
+import { GlassCard } from '@raino/ui';
+
+const ArchitectureDiagram = dynamic(
+  () => import('@raino/ui/diagrams').then((mod) => mod.ArchitectureDiagram),
+  { loading: () => <div className="h-96 animate-pulse bg-white/[0.03] rounded-2xl" /> },
+);
+
+const WorkflowDiagram = dynamic(
+  () => import('@raino/ui/diagrams').then((mod) => mod.WorkflowDiagram),
+  { loading: () => <div className="h-96 animate-pulse bg-white/[0.03] rounded-2xl" /> },
+);
 
 export const metadata: Metadata = {
   title: 'Raino — Architecture',
@@ -131,8 +138,8 @@ export default function ArchitecturePage() {
   return (
     <>
       <main className="pt-16">
-        <section className="py-24 bg-gradient-to-b from-[#0A1929] via-[#0D2137] to-[#0A1929]">
-          <div className="max-w-4xl mx-auto px-4 text-center">
+        <section className="py-24 px-4">
+          <div className="max-w-4xl mx-auto glass-surface rounded-2xl p-8 sm:p-12 text-center">
             <h1 className="text-4xl sm:text-5xl font-bold text-white font-serif mb-6">
               System <span className="text-[#1565C0]">Architecture</span>
             </h1>
@@ -143,8 +150,8 @@ export default function ArchitecturePage() {
           </div>
         </section>
 
-        <section className="py-24 bg-[#0D2137]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto glass-surface rounded-2xl p-8 sm:p-12">
             <h2 className="text-3xl font-bold text-white font-serif mb-12 text-center">
               High-Level <span className="text-[#1565C0]">Overview</span>
             </h2>
@@ -152,16 +159,19 @@ export default function ArchitecturePage() {
           </div>
         </section>
 
-        <section className="py-24 bg-[#0A1929]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto glass-surface rounded-2xl p-8 sm:p-12">
             <h2 className="text-3xl font-bold text-white font-serif mb-12 text-center">
               Package <span className="text-[#1565C0]">Structure</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {packages.map((pkg) => (
-                <GlassCard key={pkg.name} className="p-6" tint="default">
+                <GlassCard key={pkg.name} className="p-6" glassIntensity="floating">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-3 h-3 rounded-full bg-[#1565C0]" />
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: pkg.color }}
+                    />
                     <code className="text-sm font-semibold text-[#6191D3]">{pkg.name}</code>
                   </div>
                   <p className="text-[#64748B] text-sm">{pkg.description}</p>
@@ -171,14 +181,14 @@ export default function ArchitecturePage() {
           </div>
         </section>
 
-        <section className="py-24 bg-[#0D2137]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto glass-surface rounded-2xl p-8 sm:p-12">
             <h2 className="text-3xl font-bold text-white font-serif mb-12 text-center">
               Worker <span className="text-[#1565C0]">Services</span>
             </h2>
             <div className="space-y-8">
               {services.map((service) => (
-                <GlassCard key={service.name} className="p-6" tint="default">
+                <GlassCard key={service.name} className="p-6" glassIntensity="floating">
                   <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                     <div className="lg:w-1/3">
                       <code className="text-[#1565C0] font-semibold">{service.name}</code>
@@ -205,14 +215,14 @@ export default function ArchitecturePage() {
           </div>
         </section>
 
-        <section className="py-24 bg-[#0A1929]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto glass-surface rounded-2xl p-8 sm:p-12">
             <h2 className="text-3xl font-bold text-white font-serif mb-12 text-center">
               External <span className="text-[#1565C0]">Boundaries</span>
             </h2>
             <div className="space-y-6">
               {boundaries.map((boundary) => (
-                <GlassCard key={boundary.name} className="p-6" tint="external">
+                <GlassCard key={boundary.name} className="p-6" tint="external" glassIntensity="floating">
                   <h3 className="text-xl font-semibold text-white font-serif mb-3">
                     {boundary.name}
                   </h3>
@@ -231,8 +241,8 @@ export default function ArchitecturePage() {
           </div>
         </section>
 
-        <section className="py-24 bg-[#0D2137]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto glass-surface rounded-2xl p-8 sm:p-12">
             <h2 className="text-3xl font-bold text-white font-serif mb-12 text-center">
               Product <span className="text-[#1565C0]">Workflow</span>
             </h2>
@@ -240,13 +250,13 @@ export default function ArchitecturePage() {
           </div>
         </section>
 
-        <section className="py-24 bg-[#0A1929]">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto glass-surface rounded-2xl p-8 sm:p-12">
             <h2 className="text-3xl font-bold text-white font-serif mb-8 text-center">
               RAG <span className="text-[#1565C0]">Scope</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <GlassCard className="p-6" tint="default">
+              <GlassCard className="p-6" glassIntensity="floating">
                 <h3 className="text-lg font-semibold text-[#6191D3] font-serif mb-4">
                   ✓ What RAG Is For
                 </h3>
@@ -273,7 +283,7 @@ export default function ArchitecturePage() {
                   </li>
                 </ul>
               </GlassCard>
-              <GlassCard className="p-6" tint="external">
+              <GlassCard className="p-6" tint="external" glassIntensity="floating">
                 <h3 className="text-lg font-semibold text-[#64748B] font-serif mb-4">
                   ✗ What RAG Is NOT For
                 </h3>

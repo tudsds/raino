@@ -1,0 +1,111 @@
+{
+  "components": [
+    {
+      "ref": "U1",
+      "value": "RP2040",
+      "mpn": "RP2040",
+      "manufacturer": "Raspberry Pi",
+      "package": "QFN-56",
+      "quantity": 1,
+      "unitPrice": 1.10,
+      "lifecycle": "active",
+      "risk": "low",
+      "description": "Dual-core ARM Cortex-M0+ MCU at 133MHz with 264KB SRAM and programmable IO"
+    },
+    {
+      "ref": "U2",
+      "value": "W25Q128JVS",
+      "mpn": "W25Q128JVSIM",
+      "manufacturer": "Winbond",
+      "package": "SOIC-8",
+      "quantity": 1,
+      "unitPrice": 0.52,
+      "lifecycle": "active",
+      "risk": "low",
+      "description": "16MB QSPI NOR flash for program storage",
+      "alternates": [
+        { "mpn": "MX25L12833F", "manufacturer": "Macronix", "reason": "Pin-compatible alternative" },
+        { "mpn": "SST26VF016B", "manufacturer": "Microchip", "reason": "Drop-in replacement with SQI support" }
+      ]
+    },
+    {
+      "ref": "U3",
+      "value": "AP2112-3.3",
+      "mpn": "AP2112K-3.3TRG1",
+      "manufacturer": "Diodes Inc",
+      "package": "SOT-23-5",
+      "quantity": 1,
+      "unitPrice": 0.18,
+      "lifecycle": "active",
+      "risk": "low",
+      "description": "600mA low-dropout 3.3V voltage regulator",
+      "alternates": [
+        { "mpn": "TLV1117LV33DCYR", "manufacturer": "TI", "reason": "Higher current alternative" }
+      ]
+    },
+    {
+      "ref": "J1",
+      "value": "USB-C 16-pin",
+      "mpn": "1054500101",
+      "manufacturer": "Molex",
+      "package": "USB-C SMD",
+      "quantity": 1,
+      "unitPrice": 0.45,
+      "lifecycle": "active",
+      "risk": "low",
+      "description": "USB Type-C receptacle, 16-pin, through-hole/SMD hybrid",
+      "alternates": [
+        { "mpn": "124018324516A", "manufacturer": "Amphenol", "reason": "Lower cost alternative" }
+      ]
+    },
+    {
+      "ref": "D1",
+      "value": "WS2812B-Mini",
+      "mpn": "WS2812B-Mini",
+      "manufacturer": "Worldsemi",
+      "package": "3535",
+      "quantity": 1,
+      "unitPrice": 0.08,
+      "lifecycle": "active",
+      "risk": "low",
+      "description": "Integrated RGB LED with built-in controller"
+    },
+    {
+      "ref": "R1",
+      "value": "27Ω",
+      "mpn": "RC0402JR-0727RL",
+      "manufacturer": "Yageo",
+      "package": "0402",
+      "quantity": 2,
+      "unitPrice": 0.001,
+      "lifecycle": "active",
+      "risk": "low",
+      "description": "USB D+/D- series termination resistors"
+    },
+    {
+      "ref": "C1-C4",
+      "value": "100nF",
+      "mpn": "CL05B104KO5NNNC",
+      "manufacturer": "Samsung",
+      "package": "0402",
+      "quantity": 4,
+      "unitPrice": 0.002,
+      "lifecycle": "active",
+      "risk": "low",
+      "description": "Decoupling capacitors for RP2040 power pins"
+    },
+    {
+      "ref": "C5",
+      "value": "10µF",
+      "mpn": "CL05A106MQ5NUNC",
+      "manufacturer": "Samsung",
+      "package": "0402",
+      "quantity": 2,
+      "unitPrice": 0.01,
+      "lifecycle": "active",
+      "risk": "low",
+      "description": "Bulk decoupling capacitors for LDO input/output"
+    }
+  ],
+  "notes": "BOM generated from mock fixture data. All prices are estimates. RP2040 pricing based on 1k volume. Total component cost does not include PCB fabrication or assembly labor."
+}

@@ -1,0 +1,842 @@
+{
+  "site": {
+    "title": "Raino — Agentic PCB & PCBA Workflow Platform",
+    "description": "Constrained, auditable, source-traceable hardware design and manufacturing handoff system",
+    "launchStudio": "Launch Studio",
+    "getStarted": "Get Started",
+    "viewOnGithub": "View on GitHub",
+    "backToHome": "Back to Home",
+    "readTheDocs": "Read the Docs",
+    "tryTheWorkflow": "Try the Workflow",
+    "seeTheWorkflow": "See the Workflow",
+    "readMore": "Read more"
+  },
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "showcase": "Showcase",
+    "integrations": "Integrations",
+    "architecture": "Architecture",
+    "workflow": "Workflow",
+    "docs": "Docs",
+    "changelog": "Changelog",
+    "trust": "Trust",
+    "github": "GitHub",
+    "launchStudio": "Launch Studio"
+  },
+  "footer": {
+    "tagline": "Agentic PCB & PCBA workflow platform. Constrained, auditable, source-traceable hardware design.",
+    "product": "Product",
+    "resources": "Resources",
+    "studio": "Studio",
+    "documentation": "Documentation",
+    "issues": "Issues",
+    "copyright": "© 2024-2026 Raino. MIT Licensed.",
+    "kicadDisclaimer": "KiCad is a trademark of the KiCad Project. Not affiliated."
+  },
+  "home": {
+    "hero": {
+      "badge": "MIT Licensed · Open Source",
+      "title": "Design PCBs with {accent}",
+      "titleAccent": "Structured Intelligence",
+      "description": "Raino converts fuzzy hardware intent into structured specs, selects approved architectures, and generates KiCad projects with full audit trails.",
+      "getStarted": "Get Started",
+      "viewOnGithub": "View on GitHub"
+    },
+    "stats": {
+      "workflowSteps": "Workflow Steps",
+      "workflowStepsValue": "12",
+      "workflowStepsDesc": "From intent to manufacturing handoff",
+      "architectureTemplates": "Architecture Templates",
+      "architectureTemplatesValue": "Constrained",
+      "architectureTemplatesDesc": "Approved templates with formal sufficiency gates",
+      "output": "Output",
+      "outputValue": "KiCad",
+      "outputDesc": "Production-ready schematics and layouts"
+    },
+    "features": {
+      "title": "Everything You Need to {accent}",
+      "titleAccent": "Ship Hardware",
+      "description": "From natural language to manufacturing handoff. Raino handles the entire workflow with constrained agents and formal verification.",
+      "intake": {
+        "title": "Natural Language Intake",
+        "description": "Describe hardware in plain language. Raino understands your intent and asks clarifying questions to build a complete specification."
+      },
+      "specs": {
+        "title": "Structured Specifications",
+        "description": "Fuzzy intent becomes precise specs. Every requirement is captured, validated, and traced through the entire workflow."
+      },
+      "architectures": {
+        "title": "Approved Architectures",
+        "description": "Constrained architecture selection ensures designs stay within validated templates. No unconstrained autopilot."
+      },
+      "bom": {
+        "title": "Intelligent BOM",
+        "description": "Full bill of materials with sourcing data, alternates, and risk indicators. Every part traceable to its source."
+      },
+      "kicad": {
+        "title": "KiCad Generation",
+        "description": "Automated schematic and PCB generation. Raino produces production-ready KiCad projects, not suggestions."
+      },
+      "handoff": {
+        "title": "Manufacturing Handoff",
+        "description": "Previews, downloads, rough quotes, and optional PCBA handoff. Everything you need to go from design to production."
+      }
+    },
+    "testimonials": {
+      "title": "Loved by {accent}",
+      "titleAccent": "Engineers",
+      "description": "Teams using Raino report faster iteration, fewer schematic errors, and clearer communication between hardware and software engineers.",
+      "quote1": "Raino cut our early-stage schematic time from two weeks to three days. The structured spec meant our senior engineer reviewed intent, not pinouts.",
+      "author1": "Engineering Lead",
+      "company1": "Industrial IoT Startup",
+      "quote2": "The BOM with real alternates saved us during the 2023 chip shortage. Raino had already flagged lifecycle risks before we even ordered.",
+      "author2": "Hardware Engineer",
+      "company2": "Robotics Company",
+      "quote3": "I described a motor driver in a paragraph and got a KiCad project with ERC passing. The clarifying questions caught a voltage level mismatch I would have missed.",
+      "author3": "Founder",
+      "company3": "Agricultural Sensor Platform"
+    },
+    "integrations": {
+      "title": "Powered By {accent}",
+      "titleAccent": "Best-in-Class Tools",
+      "description": "Raino integrates with industry-standard suppliers, databases, and design tools. Every connection has honest fallback modes.",
+      "viewAll": "View all integrations",
+      "kimi": "Kimi",
+      "supabase": "Supabase",
+      "digikey": "DigiKey",
+      "mouser": "Mouser",
+      "jlcpcb": "JLCPCB",
+      "kicad": "KiCad",
+      "llm": "LLM",
+      "database": "Database",
+      "supplier": "Supplier",
+      "fabrication": "Fabrication",
+      "eda": "EDA"
+    },
+    "architecture": {
+      "title": "System {accent}",
+      "titleAccent": "Architecture",
+      "description": "Raino is built as a modular system with clear boundaries. The marketing site and product studio communicate with worker services through well-defined APIs.",
+      "viewFull": "View full architecture",
+      "marketingSite": "Marketing site — Public-facing information and documentation",
+      "productStudio": "Product studio — Design workflow application",
+      "corePackages": "Core packages — Schemas, validation, domain logic, RAG, LLM gateway",
+      "workerServices": "Worker services — Ingest, design, quote, audit",
+      "externalBoundaries": "External boundaries — Supabase, KiCad CLI, supplier APIs"
+    },
+    "howItWorks": {
+      "title": "How It {accent}",
+      "titleAccent": "Works",
+      "description": "A 12-step workflow from natural language to manufacturing handoff. Every step has formal validation and audit trails.",
+      "step1Title": "Natural Language Intake",
+      "step1Desc": "Describe your hardware in plain language",
+      "step2Title": "Clarifying Questions",
+      "step2Desc": "Raino resolves ambiguities before proceeding",
+      "step3Title": "Structured Specification",
+      "step3Desc": "Formal requirements with validation",
+      "step4Title": "Architecture Selection",
+      "step4Desc": "Approved template matched to your needs",
+      "step5Title": "Part Family Selection",
+      "step5Desc": "Candidate components with sourcing data",
+      "step6Title": "Document Ingestion",
+      "step6Desc": "Datasheets, errata, and app notes analyzed",
+      "step7Title": "Supplier Metadata",
+      "step7Desc": "Real prices, stock, and MOQs from suppliers",
+      "step8Title": "RAG Reasoning",
+      "step8Desc": "Engineering knowledge informs design decisions",
+      "step9Title": "BOM Generation",
+      "step9Desc": "Full BOM with alternates and risk indicators",
+      "step10Title": "KiCad Project",
+      "step10Desc": "Production-ready schematic and PCB files",
+      "step11Title": "Validation & Export",
+      "step11Desc": "ERC/DRC checks and manufacturing exports",
+      "step12Title": "Quote & Handoff",
+      "step12Desc": "Rough quote with confidence bands"
+    },
+    "openSource": {
+      "title": "Open {accent}",
+      "titleAccent": "Source",
+      "description": "Raino is MIT licensed. The entire codebase is available on GitHub. Contribute, fork, or deploy your own instance.",
+      "viewOnGithub": "View on GitHub",
+      "mitLicense": "MIT License",
+      "repositoryStats": "Repository Stats",
+      "license": "License",
+      "monorepo": "Monorepo",
+      "architecture": "Architecture",
+      "typescript": "TypeScript",
+      "language": "Language",
+      "nextjs": "Next.js 15",
+      "framework": "Framework"
+    }
+  },
+  "features": {
+    "hero": {
+      "title": "Features",
+      "description": "Every capability in Raino is designed for production hardware workflows. No gimmicks. No autopilot. Just structured engineering."
+    },
+    "cta": {
+      "title": "Ready to build something?",
+      "description": "Raino guides you from a description to manufacturing-ready outputs. Every step is constrained, traceable, and production-focused.",
+      "button": "Open Raino Studio"
+    },
+    "feature1": {
+      "title": "Natural Language Intake",
+      "subtitle": "Describe hardware in plain language",
+      "description": "Start with a simple description of what you want to build. Raino parses natural language input to extract hardware requirements, pin constraints, power budgets, and connectivity needs.",
+      "capabilities": {
+        "cap1": "Multi-turn clarifying question loop",
+        "cap2": "Constraint extraction from descriptions",
+        "cap3": "Ambiguity detection and resolution",
+        "cap4": "Requirement validation and scoring"
+      },
+      "useCase": "A hardware engineer describes a sensor board with 5V input, I2C interface, and specific dimensions. Raino asks clarifying questions about sensor type, sampling rate, and environmental constraints."
+    },
+    "feature2": {
+      "title": "Structured Specifications",
+      "subtitle": "Fuzzy intent becomes precise specs",
+      "description": "Every requirement is captured in a structured format with validation rules. Specifications are versioned, traceable, and linked to their source rationale.",
+      "capabilities": {
+        "cap1": "Formal requirement schemas",
+        "cap2": "Validation against architecture constraints",
+        "cap3": "Version control and diff tracking",
+        "cap4": "Traceability to source rationale"
+      },
+      "useCase": "The engineer reviews the structured specification generated from their description. Each requirement shows its source (which part of the original description) and confidence score."
+    },
+    "feature3": {
+      "title": "Approved Architectures",
+      "subtitle": "Constrained architecture selection",
+      "description": "Raino does not generate unconstrained designs. Instead, it matches your requirements against a library of pre-validated architecture templates.",
+      "capabilities": {
+        "cap1": "Template library with validation rules",
+        "cap2": "Requirement-to-template matching",
+        "cap3": "Architecture constraint enforcement",
+        "cap4": "Traceability to source requirements"
+      },
+      "useCase": "Based on the sensor board requirements, Raino recommends the \"Low-Power Sensor Node\" template, which includes validated power management and communication subcircuits."
+    },
+    "feature4": {
+      "title": "Intelligent BOM",
+      "subtitle": "Full bill of materials with sourcing",
+      "description": "The BOM includes every component with procurement data from real suppliers, alternates for each line item, and risk indicators for availability and lifecycle.",
+      "capabilities": {
+        "cap1": "Real supplier price queries (DigiKey, Mouser, JLCPCB)",
+        "cap2": "Alternate part suggestions with compatibility checks",
+        "cap3": "Lifecycle and availability risk scoring",
+        "cap4": "Footprint mapping and validation"
+      },
+      "useCase": "The BOM shows the recommended accelerometer with prices from three suppliers, two alternates with trade-off analysis, and a warning that one alternate is not recommended for new designs."
+    },
+    "feature5": {
+      "title": "KiCad Generation",
+      "subtitle": "Automated schematic and PCB generation",
+      "description": "Raino generates production-ready KiCad projects including schematic sheets, PCB layout, design rules, and manufacturing outputs.",
+      "capabilities": {
+        "cap1": "Schematic generation from architecture templates",
+        "cap2": "PCB layout with design rule checking",
+        "cap3": "ERC/DRC validation and error reporting",
+        "cap4": "Gerber, drill, and pick-and-place exports"
+      },
+      "useCase": "After reviewing the BOM, Raino generates the KiCad project. The schematic shows the sensor interface circuit, power regulation, and microcontroller connections. The PCB layout respects the dimensional constraints."
+    },
+    "feature6": {
+      "title": "Manufacturing Handoff",
+      "subtitle": "From design to production",
+      "description": "Generate manufacturing bundles with previews, rough quotes, and optional handoff to PCBA services.",
+      "capabilities": {
+        "cap1": "Interactive 2D and 3D previews",
+        "cap2": "Manufacturing bundle generation (ZIP)",
+        "cap3": "Rough quote with confidence bands",
+        "cap4": "Optional PCBA quote request"
+      },
+      "useCase": "The engineer reviews the 3D preview of the assembled board, downloads the manufacturing bundle, and gets a rough quote of $45-65 per unit at 100 quantity with medium confidence."
+    },
+    "useCaseExample": "Use Case Example",
+    "capabilities": "Capabilities",
+    "featureNumber": "Feature {number}"
+  },
+  "architecture": {
+    "hero": {
+      "title": "System {accent}",
+      "titleAccent": "Architecture",
+      "description": "Raino is built as a modular system with clear boundaries. Each component has a defined responsibility and explicit interfaces."
+    },
+    "overview": {
+      "title": "High-Level {accent}",
+      "titleAccent": "Overview"
+    },
+    "packages": {
+      "title": "Package {accent}",
+      "titleAccent": "Structure",
+      "rainoCore": "Zod schemas, validation, quote engine, domain logic",
+      "rainoDb": "Prisma ORM, Supabase auth, storage, and pgvector clients",
+      "rainoLlm": "Kimi K2.5 gateway, structured output, retry logic",
+      "rainoRag": "Chunking, embeddings, retrieval for engineering documents",
+      "rainoAgents": "Workflow contracts, orchestration, state machines",
+      "rainoUi": "Shared React components, liquid glass design system",
+      "rainoKicadWorkerClient": "KiCad CLI contracts and job types",
+      "rainoSupplierClients": "DigiKey, Mouser, JLCPCB adapter interfaces + factory"
+    },
+    "services": {
+      "title": "Worker {accent}",
+      "titleAccent": "Services",
+      "ingestWorker": {
+        "name": "ingest-worker",
+        "description": "8-stage document ingestion pipeline for datasheets, errata, and application notes"
+      },
+      "designWorker": {
+        "name": "design-worker",
+        "description": "KiCad project generation from approved architecture templates and BOM"
+      },
+      "quoteWorker": {
+        "name": "quote-worker",
+        "description": "Rough quote calculation with confidence bands and assumption tracking"
+      },
+      "auditWorker": {
+        "name": "audit-worker",
+        "description": "Traces, manifests, provenance tracking for every design decision"
+      }
+    },
+    "boundaries": {
+      "title": "External {accent}",
+      "titleAccent": "Boundaries",
+      "kicad": {
+        "name": "KiCad (GPL Boundary)",
+        "description": "KiCad is an external GPL-licensed EDA tool. Raino communicates through CLI commands only. No KiCad source code is embedded.",
+        "detail1": "Communication via kicad-cli commands",
+        "detail2": "Job types defined in @raino/kicad-worker-client",
+        "detail3": "Generated designs have separate license considerations",
+        "detail4": "ERC/DRC validation on generated outputs"
+      },
+      "suppliers": {
+        "name": "Supplier Adapters",
+        "description": "Interface + Adapter pattern for DigiKey, Mouser, and JLCPCB. No live credentials assumed.",
+        "detail1": "Pluggable adapter interfaces",
+        "detail2": "Fixture mode with labeled estimates",
+        "detail3": "No direct database connections",
+        "detail4": "Clear degraded-mode reporting"
+      },
+      "rag": {
+        "name": "RAG System",
+        "description": "Retrieval-augmented generation for engineering knowledge. NOT for live pricing or stock data.",
+        "detail1": "Engineering document chunking and embedding",
+        "detail2": "Provenance tracking for every retrieval",
+        "detail3": "Supabase pgvector storage",
+        "detail4": "Explicit fixture/mock modes"
+      }
+    },
+    "workflow": {
+      "title": "Product {accent}",
+      "titleAccent": "Workflow"
+    },
+    "ragScope": {
+      "title": "RAG {accent}",
+      "titleAccent": "Scope",
+      "whatRagIsFor": "What RAG Is For",
+      "for1": "Datasheets and component specifications",
+      "for2": "Errata documents from manufacturers",
+      "for3": "Application notes and reference designs",
+      "for4": "Package outlines and land patterns",
+      "for5": "Engineering knowledge retrieval",
+      "whatRagIsNotFor": "What RAG Is NOT For",
+      "not1": "Live pricing data",
+      "not2": "Stock availability",
+      "not3": "Minimum order quantities",
+      "not4": "Order placement",
+      "not5": "Any rapidly-changing data",
+      "quoteNote": "Quote source of truth is always structured supplier adapter output, never RAG retrieval."
+    }
+  },
+  "workflow": {
+    "hero": {
+      "title": "The {accent}",
+      "titleAccent": "Workflow",
+      "description": "From natural language to manufacturing handoff. Twelve structured steps with formal validation and full audit trails."
+    },
+    "steps": {
+      "step1": {
+        "title": "Natural Language Intake",
+        "description": "Describe your hardware in plain language. Raino parses intent, constraints, and requirements from your input."
+      },
+      "step2": {
+        "title": "Clarifying Questions",
+        "description": "Raino resolves ambiguities through a multi-turn question loop before proceeding to formal specs."
+      },
+      "step3": {
+        "title": "Structured Specification",
+        "description": "Fuzzy intent becomes a formal, validated specification with traceability to every requirement."
+      },
+      "step4": {
+        "title": "Architecture Selection",
+        "description": "Your requirements are matched against a library of pre-validated architecture templates."
+      },
+      "step5": {
+        "title": "Part Family Selection",
+        "description": "Candidate components are selected with sourcing data, alternates, and risk indicators."
+      },
+      "step6": {
+        "title": "Document Ingestion",
+        "description": "Datasheets, errata, and application notes are fetched, parsed, chunked, and embedded."
+      },
+      "step7": {
+        "title": "Supplier Metadata Resolution",
+        "description": "Real supplier adapters query DigiKey, Mouser, and JLCPCB for prices, stock, and MOQs."
+      },
+      "step8": {
+        "title": "RAG-Assisted Reasoning",
+        "description": "Engineering knowledge is retrieved from documents to inform component and design decisions."
+      },
+      "step9": {
+        "title": "BOM Generation",
+        "description": "A full KiCad-ready bill of materials is generated with alternates and confidence scoring."
+      },
+      "step10": {
+        "title": "KiCad Project Generation",
+        "description": "Production-ready schematic and PCB files are generated from the approved architecture."
+      },
+      "step11": {
+        "title": "Preview & Download",
+        "description": "Interactive previews, manufacturing bundles, and downloadable artifacts are produced."
+      },
+      "step12": {
+        "title": "Quote & Handoff",
+        "description": "Receive a rough quote with confidence bands and optionally request a PCBA handoff."
+      }
+    },
+    "cta": {
+      "title": "Ready to {accent}?",
+      "titleAccent": "Try It",
+      "description": "Launch the Raino studio and run through the workflow with your own hardware idea.",
+      "tryWorkflow": "Try the Workflow",
+      "readDocs": "Read the Docs"
+    }
+  },
+  "integrations": {
+    "hero": {
+      "title": "{accent}",
+      "titleAccent": "Integrations",
+      "description": "Raino connects to the tools you already use. Every integration has a clear contract, honest fallback modes, and no silent degraded behavior."
+    },
+    "status": {
+      "active": "Active",
+      "externalBoundary": "External Boundary"
+    },
+    "degradedMode": "Degraded Mode",
+    "capabilities": "Capabilities",
+    "philosophy": {
+      "title": "Integration {accent}",
+      "titleAccent": "Philosophy",
+      "description": "Raino never pretends a live connection exists when it is using fixture data. Every degraded-mode path is inspectable through the audit trail. Mock adapters are permanent, honest fallbacks — not temporary scaffolding.",
+      "clearContracts": {
+        "title": "Clear Contracts",
+        "description": "Every adapter implements a strict interface. Inputs and outputs are Zod-validated."
+      },
+      "honestFallbacks": {
+        "title": "Honest Fallbacks",
+        "description": "When credentials are missing, the system falls back to fixture data and says so."
+      },
+      "auditEverything": {
+        "title": "Audit Everything",
+        "description": "Every adapter call, every fallback, every error is logged and inspectable."
+      }
+    },
+    "kimiK25": {
+      "name": "Kimi K2.5",
+      "category": "Large Language Model",
+      "description": "Raino uses Kimi K2.5 via the OpenAI-compatible API at moonshot.ai for natural language intake, clarifying questions, and structured reasoning. Every LLM call includes Zod-validated structured output and exponential backoff retry.",
+      "fallback": "LLM calls fail gracefully with user-visible error messages",
+      "cap1": "Natural language intake and parsing",
+      "cap2": "Multi-turn clarifying question generation",
+      "cap3": "RAG-assisted engineering reasoning",
+      "cap4": "Structured JSON output with Zod validation"
+    },
+    "supabase": {
+      "name": "Supabase",
+      "category": "Database & Auth",
+      "description": "Supabase provides Postgres with Row-Level Security, magic-link authentication, pgvector for embeddings, and storage for generated artifacts. Prisma ORM coexists with Supabase RLS for type-safe database access.",
+      "fallback": "Degraded mode: no persistence, auth prompts shown",
+      "cap1": "Postgres with Row-Level Security",
+      "cap2": "Magic-link authentication",
+      "cap3": "pgvector for embedding storage",
+      "cap4": "File storage for KiCad projects and exports"
+    },
+    "digikey": {
+      "name": "DigiKey",
+      "category": "Component Supplier",
+      "description": "The DigiKey adapter queries real-time pricing, stock levels, and minimum order quantities through the DigiKey API. Every response includes source attribution and confidence scoring.",
+      "fallback": "Fixture mode with labeled estimates from historical data",
+      "cap1": "Real-time price queries",
+      "cap2": "Stock level and MOQ data",
+      "cap3": "Lifecycle status checks",
+      "cap4": "Alternate part suggestions"
+    },
+    "mouser": {
+      "name": "Mouser",
+      "category": "Component Supplier",
+      "description": "The Mouser adapter provides cross-referenced pricing and availability data. When both DigiKey and Mouser are configured, Raino selects the best source per component and flags discrepancies.",
+      "fallback": "Fixture mode with labeled estimates from historical data",
+      "cap1": "Cross-referenced pricing",
+      "cap2": "Availability and lead times",
+      "cap3": "Multi-source comparison",
+      "cap4": "Discrepancy flagging"
+    },
+    "jlcpcb": {
+      "name": "JLCPCB",
+      "category": "PCB Fabrication",
+      "description": "The JLCPCB adapter queries PCB fabrication pricing, assembly costs, and component availability from the JLCPCB parts library. Supports both bare PCB and PCBA quote requests.",
+      "fallback": "Fixture mode with labeled estimates from historical data",
+      "cap1": "PCB fabrication pricing",
+      "cap2": "PCB assembly cost estimates",
+      "cap3": "JLC parts library matching",
+      "cap4": "PCBA handoff quote requests"
+    },
+    "kicad": {
+      "name": "KiCad",
+      "category": "EDA Tool",
+      "description": "KiCad is an external GPL-licensed EDA tool. Raino communicates through the KiCad CLI only. No KiCad source code is embedded. Generated projects include schematics, PCB layouts, design rules, and manufacturing exports.",
+      "fallback": "KiCad generation skipped; user notified with clear message",
+      "cap1": "Schematic generation via CLI",
+      "cap2": "PCB layout with DRC rules",
+      "cap3": "Gerber and drill exports",
+      "cap4": "Pick-and-place file generation"
+    }
+  },
+  "docs": {
+    "hero": {
+      "title": "{accent}",
+      "titleAccent": "Documentation",
+      "description": "Get started with Raino, explore the architecture, and dive into the details."
+    },
+    "gettingStarted": {
+      "title": "Getting {accent}",
+      "titleAccent": "Started",
+      "clone": {
+        "title": "Clone",
+        "command": "git clone https://github.com/tudsds/raino.git",
+        "description": "Clone the repository to your local machine."
+      },
+      "install": {
+        "title": "Install",
+        "command": "cd raino && pnpm install",
+        "description": "Install all dependencies across the monorepo."
+      },
+      "configure": {
+        "title": "Configure",
+        "command": "cp .env.example .env.local",
+        "description": "Copy the environment template and fill in your credentials."
+      },
+      "run": {
+        "title": "Run",
+        "command": "pnpm dev",
+        "description": "Start the marketing site and studio in development mode."
+      },
+      "fullInstructions": "For full setup instructions, environment variables, and troubleshooting:",
+      "viewReadme": "View README on GitHub"
+    },
+    "sections": {
+      "title": "Documentation {accent}",
+      "titleAccent": "Sections",
+      "architecture": {
+        "title": "Architecture",
+        "description": "System architecture, package structure, and worker services."
+      },
+      "api": {
+        "title": "API",
+        "description": "API reference for routes, server actions, and worker contracts."
+      },
+      "deployment": {
+        "title": "Deployment",
+        "description": "Guides for deploying to Vercel, Supabase setup, and environment variables."
+      },
+      "security": {
+        "title": "Security",
+        "description": "Security model, RLS policies, auth flow, and credential handling."
+      },
+      "ingestion": {
+        "title": "Ingestion",
+        "description": "Document ingestion pipeline, chunking, embeddings, and RAG."
+      },
+      "ux": {
+        "title": "UX",
+        "description": "Design language, liquid glass aesthetic, and component patterns."
+      },
+      "readDocs": "Read docs"
+    }
+  },
+  "showcase": {
+    "hero": {
+      "title": "Projects Built with {accent}",
+      "titleAccent": "Raino",
+      "description": "Real hardware projects generated from natural language descriptions. Each one passed ERC/DRC and shipped with a manufacturing-ready bundle."
+    },
+    "deliverables": "Raino Deliverables",
+    "quoteEst": "Quote estimate:",
+    "testimonials": {
+      "title": "Loved by {accent}",
+      "titleAccent": "Engineers",
+      "description": "Teams using Raino report faster iteration, fewer schematic errors, and clearer communication between hardware and software engineers.",
+      "quote1": "Raino cut our early-stage schematic time from two weeks to three days. The structured spec meant our senior engineer reviewed intent, not pinouts.",
+      "author1": "Engineering Lead",
+      "company1": "Industrial IoT Startup",
+      "quote2": "The BOM with real alternates saved us during the 2023 chip shortage. Raino had already flagged lifecycle risks before we even ordered.",
+      "author2": "Hardware Engineer",
+      "company2": "Robotics Company",
+      "quote3": "I described a motor driver in a paragraph and got a KiCad project with ERC passing. The clarifying questions caught a voltage level mismatch I would have missed.",
+      "author3": "Founder",
+      "company3": "Agricultural Sensor Platform"
+    },
+    "cta": {
+      "title": "Ready to Build {accent}?",
+      "titleAccent": "Your Project",
+      "description": "Describe your hardware idea in plain language and let Raino generate a structured spec, KiCad project, and manufacturing bundle.",
+      "launchStudio": "Launch Studio",
+      "seeWorkflow": "See the Workflow"
+    },
+    "project1": {
+      "title": "Low-Power Sensor Node",
+      "category": "Environmental Monitoring",
+      "description": "A battery-operated sensor board with temperature, humidity, and air quality sensing. Raino generated the full KiCad project from a plain-language description including power budget and communication constraints.",
+      "spec1": "STM32L072KZ microcontroller",
+      "spec2": "I2C sensor array",
+      "spec3": "40 x 30 mm",
+      "spec4": "6-month battery life",
+      "del1": "KiCad project",
+      "del2": "Gerber exports",
+      "del3": "BOM with alternates",
+      "del4": "Rough quote: $18-24/unit"
+    },
+    "project2": {
+      "title": "BLDC Motor Driver",
+      "category": "Motor Control",
+      "description": "Three-phase brushless DC motor controller with current sensing and over-temperature protection. Raino selected an approved architecture template and matched driver ICs to the torque requirements.",
+      "spec1": "DRV8323RS gate driver",
+      "spec2": "Current sense: 0.01 ohm shunt",
+      "spec3": "50 x 40 mm",
+      "spec4": "24V / 10A peak",
+      "del1": "KiCad project",
+      "del2": "ERC/DRC passed",
+      "del3": "BOM with 3 alternates",
+      "del4": "Rough quote: $32-45/unit"
+    },
+    "project3": {
+      "title": "USB-C PD Hub",
+      "category": "Power Delivery",
+      "description": "Multi-port USB-C power delivery hub with dynamic load balancing. Raino resolved ambiguities about port configurations and power profiles through the clarifying question loop.",
+      "spec1": "FUSB302B PD controller",
+      "spec2": "4 downstream ports",
+      "spec3": "80 x 50 mm",
+      "spec4": "100W total output",
+      "del1": "KiCad project",
+      "del2": "Pick-and-place file",
+      "del3": "BOM with sourcing data",
+      "del4": "Rough quote: $28-38/unit"
+    },
+    "project4": {
+      "title": "Precision Load Cell Interface",
+      "category": "Signal Conditioning",
+      "description": "High-resolution load cell amplifier with 24-bit ADC and digital filtering. Raino ingested the ADC datasheet and validated the analog front-end against noise and drift specifications.",
+      "spec1": "HX711 24-bit ADC",
+      "spec2": "Wheatstone bridge input",
+      "spec3": "35 x 25 mm",
+      "spec4": "0.1 mg resolution",
+      "del1": "KiCad project",
+      "del2": "Gerber + drill",
+      "del3": "BOM with lifecycle checks",
+      "del4": "Rough quote: $12-16/unit"
+    },
+    "project5": {
+      "title": "LoRaWAN Gateway Module",
+      "category": "Wireless Communication",
+      "description": "Sub-GHz LoRa transceiver module with onboard antenna matching and FCC pre-certified RF layout. Raino matched the RF architecture template to the frequency band and output power requirements.",
+      "spec1": "SX1262 transceiver",
+      "spec2": "868 / 915 MHz",
+      "spec3": "45 x 30 mm",
+      "spec4": "+22 dBm output",
+      "del1": "KiCad project",
+      "del2": "Antenna matching report",
+      "del3": "BOM with RF parts",
+      "del4": "Rough quote: $22-30/unit"
+    },
+    "project6": {
+      "title": "Capacitive Touch Controller",
+      "category": "Human Interface",
+      "description": "Multi-channel capacitive touch sensing board with haptic feedback driver. Raino generated the touch electrode layout and validated trace lengths against the controller datasheet.",
+      "spec1": "CY8CMBR3116 controller",
+      "spec2": "12 touch channels",
+      "spec3": "50 x 35 mm",
+      "spec4": "I2C + interrupt output",
+      "del1": "KiCad project",
+      "del2": "ERC/DRC passed",
+      "del3": "BOM with 2 alternates",
+      "del4": "Rough quote: $15-20/unit"
+    }
+  },
+  "changelog": {
+    "hero": {
+      "title": "{accent}",
+      "titleAccent": "Changelog",
+      "description": "Version history and release notes. Track what is new, what changed, and what is coming next."
+    },
+    "current": "Current",
+    "released": "Released",
+    "types": {
+      "feature": "Feature",
+      "improvement": "Improvement",
+      "fix": "Fix",
+      "breaking": "Breaking"
+    },
+    "comingSoon": {
+      "title": "Coming {accent}",
+      "titleAccent": "Soon"
+    },
+    "roadmap": {
+      "teamWorkspaces": {
+        "title": "Team Workspaces",
+        "description": "Collaborate on hardware projects with shared specs, review workflows, and role-based permissions."
+      },
+      "customTemplates": {
+        "title": "Custom Architecture Templates",
+        "description": "Upload and validate your own architecture templates for domain-specific design reuse."
+      },
+      "live3dPreview": {
+        "title": "Live 3D Preview",
+        "description": "Interactive 3D board preview in the browser, powered by KiCad generated STEP files."
+      },
+      "apiAccess": {
+        "title": "API Access",
+        "description": "Programmatic access to the full workflow pipeline for CI/CD and automated design generation."
+      }
+    },
+    "release050": {
+      "version": "0.5.0",
+      "date": "2025-04-19",
+      "change1": "Added marketing site pages: Showcase, Integrations, Changelog, and Trust",
+      "change2": "Enhanced homepage with \"Loved by Engineers\" testimonials section",
+      "change3": "Added integration logos grid to homepage",
+      "change4": "Improved mobile navigation with hamburger menu and click-outside-to-close",
+      "change5": "All pages now have unique titles and Open Graph meta tags"
+    },
+    "release040": {
+      "version": "0.4.0",
+      "date": "2025-03-15",
+      "change1": "Added Prisma ORM and Supabase persistence layer in @raino/db",
+      "change2": "Implemented magic-link authentication via Supabase Auth",
+      "change3": "Added Kimi K2.5 LLM gateway with structured output and retry logic",
+      "change4": "Migrated RAG system to Supabase pgvector for embedding storage",
+      "change5": "Upgraded supplier clients with real API adapters + factory pattern",
+      "change6": "Enhanced liquid glass design system in @raino/ui"
+    },
+    "release030": {
+      "version": "0.3.0",
+      "date": "2025-02-01",
+      "change1": "Added quote-worker with confidence bands and assumption tracking",
+      "change2": "Implemented audit-worker for provenance and trace logging",
+      "change3": "Added DigiKey and Mouser supplier adapter interfaces",
+      "change4": "Refactored core schemas for stricter validation and better error messages",
+      "change5": "Fixed BOM alternate part compatibility checking edge cases"
+    },
+    "release020": {
+      "version": "0.2.0",
+      "date": "2024-12-10",
+      "change1": "Added design-worker for KiCad project generation via CLI",
+      "change2": "Implemented ingest-worker 8-stage document pipeline",
+      "change3": "Added JLCPCB supplier adapter for PCB fabrication quotes",
+      "change4": "Replaced mock embeddings with OpenAI-compatible embedding provider",
+      "change5": "Expanded README documentation with multi-language support"
+    },
+    "release010": {
+      "version": "0.1.0",
+      "date": "2024-10-22",
+      "change1": "Initial release of Raino with core workflow pipeline",
+      "change2": "Natural language intake with clarifying question loop",
+      "change3": "Structured specification generation with validation",
+      "change4": "Architecture template matching and constraint enforcement",
+      "change5": "Marketing site and product studio Next.js apps",
+      "change6": "Liquid glass design system with Noto Serif typography"
+    }
+  },
+  "trust": {
+    "hero": {
+      "title": "Trust & {accent}",
+      "titleAccent": "Security",
+      "description": "Raino is built on transparency. Open source, honest fallbacks, and no surprises."
+    },
+    "practices": {
+      "title": "Security {accent}",
+      "titleAccent": "Practices",
+      "description": "Raino follows security best practices at every layer. From code to deployment, your data and designs are protected."
+    },
+    "practice1": {
+      "title": "MIT Licensed",
+      "description": "The entire Raino codebase is MIT licensed. You can inspect, fork, modify, and deploy your own instance without restrictions."
+    },
+    "practice2": {
+      "title": "Open Source",
+      "description": "Every line of code is on GitHub. There are no black boxes, no proprietary algorithms, and no hidden data processing."
+    },
+    "practice3": {
+      "title": "No Tracking",
+      "description": "Raino does not use analytics cookies, tracking pixels, or third-party telemetry. Your design data stays on your infrastructure."
+    },
+    "practice4": {
+      "title": "Row-Level Security",
+      "description": "Supabase RLS policies ensure users can only access their own data. Every database query is filtered by authenticated identity."
+    },
+    "practice5": {
+      "title": "No Secrets in Code",
+      "description": "API keys and credentials are never committed to the repository. Environment variables are validated at startup with clear error messages."
+    },
+    "practice6": {
+      "title": "Audit Trail",
+      "description": "Every design decision, part selection, and workflow step is logged. You can trace any output back to its inputs and rationale."
+    },
+    "commitments": {
+      "title": "Our {accent}",
+      "titleAccent": "Commitments",
+      "description": "These are not marketing claims. They are architectural constraints built into the system."
+    },
+    "commitment1": {
+      "title": "No Fake Integrations",
+      "description": "Raino never fabricates live pricing, stock data, or API responses. When using fixture data, every value is clearly labeled as an estimate. You never have to guess whether the data you see is live or synthetic."
+    },
+    "commitment2": {
+      "title": "No Silent Fallbacks",
+      "description": "When the system falls back to degraded mode, you are told explicitly. There are no silent downgrades, no hidden mock switches, and no pretense that fixture data comes from a live API."
+    },
+    "commitment3": {
+      "title": "No Ghost Parts",
+      "description": "Every part number in a BOM traces back to a supplier datasheet, a catalog page, or a clearly labeled fixture estimate. There are no hallucinated components with made-up specifications."
+    },
+    "commitment4": {
+      "title": "Human in the Loop",
+      "description": "Critical ambiguity stops the workflow. The system asks you before proceeding. You are the final authority on your own design, not the LLM."
+    },
+    "privacy": {
+      "title": "Privacy {accent}",
+      "titleAccent": "Policy",
+      "dataCollection": {
+        "title": "Data Collection",
+        "description": "Raino collects only the data necessary to run the hardware design workflow: your natural language descriptions, structured specifications, and generated design artifacts. We do not collect browsing history, device fingerprints, or behavioral analytics."
+      },
+      "dataStorage": {
+        "title": "Data Storage",
+        "description": "When you self-host Raino, all data stays on your Supabase instance. When using a hosted instance, data is stored in your dedicated project with RLS policies preventing cross-tenant access. We do not share data with third parties."
+      },
+      "llmData": {
+        "title": "LLM Data Handling",
+        "description": "Natural language descriptions are sent to the Kimi K2.5 API for parsing and reasoning. Raino does not send LLM providers any personally identifiable information beyond what you type into the intake form. Structured output is validated before storage."
+      },
+      "yourRights": {
+        "title": "Your Rights",
+        "description": "You can export, modify, or delete your data at any time through the studio interface. Because Raino is open source, you can also run a complete data purge directly against your database."
+      }
+    },
+    "openSource": {
+      "title": "Open {accent}",
+      "titleAccent": "Source",
+      "description": "Trust is verified, not claimed. The entire Raino codebase is available on GitHub for inspection, audit, and contribution.",
+      "inspectCode": "Inspect the Code on GitHub"
+    }
+  }
+}

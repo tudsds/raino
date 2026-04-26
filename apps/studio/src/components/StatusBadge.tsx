@@ -30,95 +30,95 @@ interface StatusBadgeProps {
 const statusConfig: Record<Status, { label: string; className: string }> = {
   draft: {
     label: 'Draft',
-    className: 'bg-white/[0.06] text-[#94A3B8] border border-white/[0.12]',
+    className: 'glass-surface text-[#94A3B8]',
   },
   intake: {
     label: 'Intake',
-    className: 'bg-[rgba(21,101,192,0.15)] text-[#6191D3] border border-[rgba(21,101,192,0.3)]',
+    className: 'glass-blue-tint text-[#6191D3]',
   },
   clarifying: {
     label: 'Clarifying',
-    className: 'bg-[rgba(21,101,192,0.15)] text-[#6191D3] border border-[rgba(21,101,192,0.3)]',
+    className: 'glass-blue-tint text-[#6191D3]',
   },
   spec_compiled: {
     label: 'Spec Compiled',
-    className: 'bg-[rgba(21,101,192,0.15)] text-[#6191D3] border border-[rgba(21,101,192,0.3)]',
+    className: 'glass-blue-tint text-[#6191D3]',
   },
   specification: {
     label: 'Specification',
-    className: 'bg-[rgba(21,101,192,0.15)] text-[#6191D3] border border-[rgba(21,101,192,0.3)]',
+    className: 'glass-blue-tint text-[#6191D3]',
   },
   architecture_planned: {
     label: 'Architecture',
-    className: 'bg-[rgba(21,101,192,0.15)] text-[#6191D3] border border-[rgba(21,101,192,0.3)]',
+    className: 'glass-blue-tint text-[#6191D3]',
   },
   candidates_discovered: {
     label: 'Candidates',
-    className: 'bg-[rgba(21,101,192,0.15)] text-[#6191D3] border border-[rgba(21,101,192,0.3)]',
+    className: 'glass-blue-tint text-[#6191D3]',
   },
   ingested: {
     label: 'Ingested',
-    className: 'bg-[rgba(21,101,192,0.15)] text-[#6191D3] border border-[rgba(21,101,192,0.3)]',
+    className: 'glass-blue-tint text-[#6191D3]',
   },
   bom_generated: {
     label: 'BOM Ready',
-    className: 'bg-[rgba(21,101,192,0.15)] text-[#6191D3] border border-[rgba(21,101,192,0.3)]',
+    className: 'glass-blue-tint text-[#6191D3]',
   },
   design_pending: {
     label: 'Design Pending',
-    className: 'bg-[rgba(255,152,0,0.15)] text-[#FF9800] border border-[rgba(255,152,0,0.3)]',
+    className: 'glass-surface text-[#FF9800]',
   },
   design_generated: {
     label: 'Design',
-    className: 'bg-[rgba(255,152,0,0.15)] text-[#FF9800] border border-[rgba(255,152,0,0.3)]',
+    className: 'glass-surface text-[#FF9800]',
   },
   design: {
     label: 'Design',
-    className: 'bg-[rgba(255,152,0,0.15)] text-[#FF9800] border border-[rgba(255,152,0,0.3)]',
+    className: 'glass-surface text-[#FF9800]',
   },
   validated: {
     label: 'Validated',
-    className: 'bg-[rgba(76,175,80,0.15)] text-[#4CAF50] border border-[rgba(76,175,80,0.3)]',
+    className: 'glass-surface text-[#4CAF50]',
   },
   validation: {
     label: 'Validation',
-    className: 'bg-[rgba(255,152,0,0.15)] text-[#FF9800] border border-[rgba(255,152,0,0.3)]',
+    className: 'glass-surface text-[#FF9800]',
   },
   exported: {
     label: 'Exported',
-    className: 'bg-[rgba(76,175,80,0.15)] text-[#4CAF50] border border-[rgba(76,175,80,0.3)]',
+    className: 'glass-surface text-[#4CAF50]',
   },
   quoted: {
     label: 'Quoted',
-    className: 'bg-[rgba(76,175,80,0.15)] text-[#4CAF50] border border-[rgba(76,175,80,0.3)]',
+    className: 'glass-surface text-[#4CAF50]',
   },
   quoting: {
     label: 'Quoting',
-    className: 'bg-[rgba(255,152,0,0.15)] text-[#FF9800] border border-[rgba(255,152,0,0.3)]',
+    className: 'glass-surface text-[#FF9800]',
   },
   completed: {
     label: 'Completed',
-    className: 'bg-[rgba(76,175,80,0.15)] text-[#4CAF50] border border-[rgba(76,175,80,0.3)]',
+    className: 'glass-surface text-[#4CAF50]',
   },
   handed_off: {
     label: 'Handed Off',
-    className: 'bg-[rgba(76,175,80,0.15)] text-[#4CAF50] border border-[rgba(76,175,80,0.3)]',
+    className: 'glass-surface text-[#4CAF50]',
   },
   'handed-off': {
     label: 'Handed Off',
-    className: 'bg-[rgba(76,175,80,0.15)] text-[#4CAF50] border border-[rgba(76,175,80,0.3)]',
+    className: 'glass-surface text-[#4CAF50]',
   },
   active: {
     label: 'Active',
-    className: 'bg-[rgba(21,101,192,0.15)] text-[#6191D3] border border-[rgba(21,101,192,0.3)]',
+    className: 'glass-blue-tint text-[#6191D3]',
   },
   in_review: {
     label: 'In Review',
-    className: 'bg-[rgba(255,152,0,0.15)] text-[#FF9800] border border-[rgba(255,152,0,0.3)]',
+    className: 'glass-surface text-[#FF9800]',
   },
   archived: {
     label: 'Archived',
-    className: 'bg-white/[0.06] text-[#94A3B8] border border-white/[0.12]',
+    className: 'glass-surface text-[#94A3B8]',
   },
 };
 

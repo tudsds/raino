@@ -119,6 +119,59 @@
       "session_id": "ses_238de4533ffetsznkgj4dJO902",
       "agent": "build",
       "updated_at": "2026-04-26T00:22:57.952Z"
+    },
+    "todo:14": {
+      "task_key": "todo:14",
+      "task_label": "14",
+      "task_title": "Overhaul raino-site Layout (Navbar + Footer + Globals)",
+      "session_id": "ses_238d2fc6cffexxrhtOqn651h0s",
+      "agent": "build",
+      "updated_at": "2026-04-26T00:51:17.330Z"
+    },
+    "todo:15": {
+      "task_key": "todo:15",
+      "task_label": "15",
+      "task_title": "Overhaul raino-site Homepage",
+      "session_id": "ses_2389e2b67ffe0LZ7CFs8FsX8B2",
+      "agent": "Sisyphus-Junior",
+      "category": "visual-engineering",
+      "updated_at": "2026-04-26T01:25:05.832Z"
+    },
+    "todo:23": {
+      "task_key": "todo:23",
+      "task_label": "23",
+      "task_title": "Build Shortlist/Candidates Pipeline Page (Step 4)",
+      "session_id": "ses_238780fd0ffeh55nJLAFej3vv1",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-04-26T02:31:51.341Z"
+    },
+    "todo:25": {
+      "task_key": "todo:25",
+      "task_label": "25",
+      "task_title": "Generate SVG Architecture Diagram Images",
+      "session_id": "ses_2385c5182ffeYv3hZBDpdEEIXa",
+      "agent": "Sisyphus-Junior",
+      "category": "visual-engineering",
+      "updated_at": "2026-04-26T03:04:56.752Z"
+    },
+    "todo:29": {
+      "task_key": "todo:29",
+      "task_label": "29",
+      "task_title": "E2E Playwright Test: Full 12-Step Pipeline",
+      "session_id": "ses_2383d750dffe71bh2qL1gREpFR",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-04-26T03:29:04.447Z"
+    },
+    "todo:31": {
+      "task_key": "todo:31",
+      "task_label": "31",
+      "task_title": "Bundle Size Audit + Performance Optimization",
+      "session_id": "ses_2382968d1ffeA5qGX3WFUzlIMq",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-04-26T03:51:00.633Z"
     }
   }
 }

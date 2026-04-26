@@ -10,7 +10,7 @@ export interface ArchitectureDiagramProps {
 export function ArchitectureDiagram({ className }: ArchitectureDiagramProps) {
   return (
     <div className={`flex flex-col items-center gap-0 max-w-5xl mx-auto ${className || ''}`}>
-      <GlassCard className="px-8 py-4 w-full max-w-xs text-center" tint="accent" glassIntensity="elevated">
+      <GlassCard className="px-8 py-4 w-full max-w-xs text-center" tint="accent" glassIntensity="floating">
         <div className="text-white font-serif text-lg font-semibold">Users</div>
         <div className="text-[#64748B] text-xs mt-1">Engineers · Makers · Teams</div>
       </GlassCard>
@@ -18,7 +18,7 @@ export function ArchitectureDiagram({ className }: ArchitectureDiagramProps) {
       <ConnectionLine />
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full items-center">
-        <GlassCard className="px-6 py-4 text-center" glassIntensity="surface">
+        <GlassCard className="px-6 py-4 text-center" glassIntensity="floating">
           <div className="text-white font-mono text-sm font-semibold">apps/site</div>
           <div className="text-[#6191D3] text-xs mt-1">Marketing</div>
           <div className="text-[#64748B] text-xs">Port 3000</div>
@@ -32,7 +32,7 @@ export function ArchitectureDiagram({ className }: ArchitectureDiagramProps) {
           </div>
         </div>
 
-        <GlassCard className="px-6 py-4 text-center" glassIntensity="surface">
+        <GlassCard className="px-6 py-4 text-center" glassIntensity="floating">
           <div className="text-white font-mono text-sm font-semibold">apps/studio</div>
           <div className="text-[#6191D3] text-xs mt-1">Product App</div>
           <div className="text-[#64748B] text-xs">Port 3001</div>
@@ -45,7 +45,7 @@ export function ArchitectureDiagram({ className }: ArchitectureDiagramProps) {
 
       <ConnectionLine />
 
-      <GlassCard className="px-8 py-5 w-full max-w-lg text-center" tint="accent" glassIntensity="elevated">
+      <GlassCard className="px-8 py-5 w-full max-w-lg text-center" tint="accent" glassIntensity="floating">
         <div className="text-white font-mono text-sm font-semibold">packages/core</div>
         <div className="text-[#6191D3] text-xs mt-2">
           Schemas · Validation · Quote Engine · Domain Logic
@@ -64,7 +64,7 @@ export function ArchitectureDiagram({ className }: ArchitectureDiagramProps) {
           { name: 'packages/kicad', label: 'KiCad CLI', sub: 'kicad-worker-client' },
           { name: 'packages/supplier', label: 'Suppliers', sub: 'supplier-clients' },
         ].map((pkg) => (
-          <GlassCard key={pkg.name} className="px-4 py-3 text-center" glassIntensity="surface">
+          <GlassCard key={pkg.name} className="px-4 py-3 text-center" glassIntensity="floating">
             <div className="text-white font-mono text-xs font-semibold">{pkg.name}</div>
             <div className="text-[#6191D3] text-xs mt-1">{pkg.label}</div>
             <div className="text-[#64748B] text-[10px] mt-0.5">{pkg.sub}</div>
@@ -74,7 +74,7 @@ export function ArchitectureDiagram({ className }: ArchitectureDiagramProps) {
 
       <ConnectionLine />
 
-      <GlassCard className="px-6 py-4 w-full" glassIntensity="surface">
+      <GlassCard className="px-6 py-4 w-full" glassIntensity="floating">
         <div className="text-white font-mono text-sm font-semibold text-center mb-3">
           Worker Services
         </div>
@@ -85,35 +85,36 @@ export function ArchitectureDiagram({ className }: ArchitectureDiagramProps) {
             { name: 'quote-worker', color: '#1565C0' },
             { name: 'audit-worker', color: '#6191D3' },
           ].map((svc) => (
-            <div
+            <GlassCard
               key={svc.name}
-              className="px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-center"
+              className="px-3 py-2 text-center"
+              glassIntensity="surface"
             >
               <div className="text-white text-xs font-mono">{svc.name}</div>
-            </div>
+            </GlassCard>
           ))}
         </div>
       </GlassCard>
 
       <ConnectionLine />
 
-      <GlassCard className="px-6 py-5 w-full" tint="external" glassIntensity="elevated">
+      <GlassCard className="px-6 py-5 w-full" tint="external" glassIntensity="floating">
         <div className="text-white font-serif text-sm font-semibold text-center mb-4">
           External Boundaries
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="px-4 py-3 rounded-lg bg-[#0A1929]/60 border border-[#64748B]/[0.15] text-center">
+          <GlassCard className="px-4 py-3 text-center" glassIntensity="surface">
             <div className="text-white text-xs font-mono font-semibold">Supabase</div>
             <div className="text-[#64748B] text-[10px] mt-1">Auth · Postgres · pgvector</div>
-          </div>
-          <div className="px-4 py-3 rounded-lg bg-[#0A1929]/60 border border-[#64748B]/[0.15] text-center">
+          </GlassCard>
+          <GlassCard className="px-4 py-3 text-center" glassIntensity="surface">
             <div className="text-white text-xs font-mono font-semibold">KiCad CLI</div>
             <div className="text-[#64748B] text-[10px] mt-1">GPL Boundary</div>
-          </div>
-          <div className="px-4 py-3 rounded-lg bg-[#0A1929]/60 border border-[#64748B]/[0.15] text-center">
+          </GlassCard>
+          <GlassCard className="px-4 py-3 text-center" glassIntensity="surface">
             <div className="text-white text-xs font-mono font-semibold">Suppliers</div>
             <div className="text-[#64748B] text-[10px] mt-1">DigiKey · Mouser · JLCPCB</div>
-          </div>
+          </GlassCard>
         </div>
       </GlassCard>
     </div>

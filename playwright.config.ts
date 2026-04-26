@@ -10,7 +10,7 @@ export default defineConfig({
   projects: [
     {
       name: 'site',
-      testMatch: /site.*\.spec\.ts/,
+      testMatch: /(site|multilingual).*\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:3000' },
     },
     {
@@ -27,7 +27,7 @@ export default defineConfig({
       timeout: 120000,
     },
     {
-      command: 'pnpm dev --filter @raino/studio',
+      command: 'MOCK_LLM=true pnpm dev --filter @raino/studio',
       port: 3001,
       reuseExistingServer: true,
       timeout: 120000,

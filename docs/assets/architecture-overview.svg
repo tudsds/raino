@@ -1,0 +1,237 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1300" width="100%" height="auto">
+  <defs>
+    <!-- Background gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#0D2137"/>
+      <stop offset="100%" stop-color="#0A1929"/>
+    </radialGradient>
+
+    <!-- Glass card gradient (accent/floating) -->
+    <linearGradient id="glass-accent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(21,101,192,0.18)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.65)"/>
+    </linearGradient>
+
+    <!-- Glass card gradient (default) -->
+    <linearGradient id="glass-default" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.60)"/>
+    </linearGradient>
+
+    <!-- Glass card gradient (external) -->
+    <linearGradient id="glass-external" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(100,116,139,0.10)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.55)"/>
+    </linearGradient>
+
+    <!-- Connection line gradient -->
+    <linearGradient id="conn-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#6191D3"/>
+    </linearGradient>
+
+    <!-- Horizontal connection line gradient -->
+    <linearGradient id="conn-h-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(21,101,192,0)"/>
+      <stop offset="50%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="rgba(21,101,192,0)"/>
+    </linearGradient>
+
+    <!-- Drop shadow for depth -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0A1929" flood-opacity="0.50"/>
+    </filter>
+
+    <!-- Glass card reusable shape -->
+    <rect id="card-shape" rx="12" ry="12" width="100%" height="100%"/>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="1300" fill="url(#bg-grad)"/>
+
+  <!-- Title -->
+  <text x="450" y="50" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="26" font-weight="bold">
+    System Architecture
+  </text>
+  <text x="450" y="78" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="13">
+    Modular system with defined boundaries and explicit interfaces
+  </text>
+
+  <!-- ========== USERS ========== -->
+  <g transform="translate(350, 110)" filter="url(#shadow)">
+    <rect x="0" y="0" width="200" height="60" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.40)" stroke-width="1.5"/>
+    <text x="100" y="26" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Users</text>
+    <text x="100" y="46" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Engineers · Makers · Teams</text>
+  </g>
+
+  <!-- Line: Users -> Apps -->
+  <g>
+    <line x1="450" y1="170" x2="450" y2="190" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <polygon points="450,198 445,188 455,188" fill="#6191D3" opacity="0.7"/>
+  </g>
+
+  <!-- ========== APPS ROW ========== -->
+  <!-- apps/site -->
+  <g transform="translate(60, 210)" filter="url(#shadow)">
+    <rect x="0" y="0" width="220" height="80" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="110" y="28" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">apps/site</text>
+    <text x="110" y="48" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Marketing</text>
+    <text x="110" y="66" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">Port 3000</text>
+  </g>
+
+  <!-- CTA Arrow -->
+  <g transform="translate(300, 235)">
+    <line x1="0" y1="20" x2="280" y2="20" stroke="url(#conn-h-grad)" stroke-width="1.5"/>
+    <polygon points="290,20 280,16 280,24" fill="#6191D3" opacity="0.6"/>
+    <text x="145" y="14" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10" font-weight="bold">CTA</text>
+  </g>
+
+  <!-- apps/studio -->
+  <g transform="translate(620, 210)" filter="url(#shadow)">
+    <rect x="0" y="0" width="220" height="80" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="110" y="28" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">apps/studio</text>
+    <text x="110" y="48" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Product App</text>
+    <text x="110" y="66" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">Port 3001</text>
+  </g>
+
+  <!-- Line: Apps -> Core -->
+  <g>
+    <line x1="450" y1="310" x2="450" y2="335" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <polygon points="450,343 445,333 455,333" fill="#6191D3" opacity="0.7"/>
+  </g>
+  <text x="450" y="328" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">Route Handlers + Server Actions</text>
+
+  <!-- ========== CORE ========== -->
+  <g transform="translate(200, 355)" filter="url(#shadow)">
+    <rect x="0" y="0" width="500" height="70" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.40)" stroke-width="1.5"/>
+    <text x="250" y="28" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">packages/core</text>
+    <text x="250" y="50" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Schemas · Validation · Quote Engine · Domain Logic</text>
+  </g>
+
+  <!-- Line: Core -> Packages -->
+  <g>
+    <line x1="450" y1="425" x2="450" y2="450" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <polygon points="450,458 445,448 455,448" fill="#6191D3" opacity="0.7"/>
+  </g>
+
+  <!-- ========== PACKAGES ROW ========== -->
+  <g transform="translate(40, 475)" filter="url(#shadow)">
+    <rect x="0" y="0" width="112" height="70" rx="10" fill="url(#glass-default)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+    <text x="56" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11" font-weight="bold">packages/db</text>
+    <text x="56" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">ORM + Auth</text>
+    <text x="56" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/db</text>
+  </g>
+
+  <g transform="translate(166, 475)" filter="url(#shadow)">
+    <rect x="0" y="0" width="112" height="70" rx="10" fill="url(#glass-default)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+    <text x="56" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11" font-weight="bold">packages/llm</text>
+    <text x="56" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Kimi Gateway</text>
+    <text x="56" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/llm</text>
+  </g>
+
+  <g transform="translate(292, 475)" filter="url(#shadow)">
+    <rect x="0" y="0" width="112" height="70" rx="10" fill="url(#glass-default)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+    <text x="56" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11" font-weight="bold">packages/rag</text>
+    <text x="56" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Retrieval</text>
+    <text x="56" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/rag</text>
+  </g>
+
+  <g transform="translate(418, 475)" filter="url(#shadow)">
+    <rect x="0" y="0" width="112" height="70" rx="10" fill="url(#glass-default)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+    <text x="56" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11" font-weight="bold">packages/agents</text>
+    <text x="56" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Orchestration</text>
+    <text x="56" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/agents</text>
+  </g>
+
+  <g transform="translate(544, 475)" filter="url(#shadow)">
+    <rect x="0" y="0" width="112" height="70" rx="10" fill="url(#glass-default)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+    <text x="56" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11" font-weight="bold">packages/ui</text>
+    <text x="56" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Design System</text>
+    <text x="56" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">@raino/ui</text>
+  </g>
+
+  <g transform="translate(670, 475)" filter="url(#shadow)">
+    <rect x="0" y="0" width="90" height="70" rx="10" fill="url(#glass-default)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+    <text x="45" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="10" font-weight="bold">kicad-w-c</text>
+    <text x="45" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">KiCad CLI</text>
+    <text x="45" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">worker-client</text>
+  </g>
+
+  <g transform="translate(776, 475)" filter="url(#shadow)">
+    <rect x="0" y="0" width="90" height="70" rx="10" fill="url(#glass-default)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+    <text x="45" y="22" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="10" font-weight="bold">supplier-c</text>
+    <text x="45" y="40" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Suppliers</text>
+    <text x="45" y="56" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">clients</text>
+  </g>
+
+  <!-- Line: Packages -> Workers -->
+  <g>
+    <line x1="450" y1="555" x2="450" y2="580" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <polygon points="450,588 445,578 455,578" fill="#6191D3" opacity="0.7"/>
+  </g>
+
+  <!-- ========== WORKER SERVICES ========== -->
+  <g transform="translate(40, 605)" filter="url(#shadow)">
+    <rect x="0" y="0" width="820" height="100" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="410" y="26" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Worker Services</text>
+
+    <!-- Inner service cards -->
+    <g transform="translate(30, 42)">
+      <rect x="0" y="0" width="175" height="42" rx="8" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+      <text x="87" y="25" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11">ingest-worker</text>
+    </g>
+    <g transform="translate(225, 42)">
+      <rect x="0" y="0" width="175" height="42" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+      <text x="87" y="25" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11">design-worker</text>
+    </g>
+    <g transform="translate(420, 42)">
+      <rect x="0" y="0" width="175" height="42" rx="8" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+      <text x="87" y="25" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11">quote-worker</text>
+    </g>
+    <g transform="translate(615, 42)">
+      <rect x="0" y="0" width="175" height="42" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.25)" stroke-width="1"/>
+      <text x="87" y="25" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11">audit-worker</text>
+    </g>
+  </g>
+
+  <!-- Line: Workers -> External -->
+  <g>
+    <line x1="450" y1="715" x2="450" y2="740" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <polygon points="450,748 445,738 455,738" fill="#6191D3" opacity="0.7"/>
+  </g>
+
+  <!-- ========== EXTERNAL BOUNDARIES ========== -->
+  <g transform="translate(40, 765)" filter="url(#shadow)">
+    <rect x="0" y="0" width="820" height="140" rx="12" fill="url(#glass-external)" stroke="rgba(100,116,139,0.30)" stroke-width="1.5"/>
+    <text x="410" y="28" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">External Boundaries</text>
+
+    <!-- Supabase -->
+    <g transform="translate(30, 48)">
+      <rect x="0" y="0" width="240" height="72" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="120" y="26" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Supabase</text>
+      <text x="120" y="46" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">Auth · Postgres · Storage · pgvector</text>
+      <text x="120" y="62" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Row-Level Security</text>
+    </g>
+
+    <!-- KiCad -->
+    <g transform="translate(290, 48)">
+      <rect x="0" y="0" width="240" height="72" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="120" y="26" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">KiCad CLI</text>
+      <text x="120" y="46" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">External GPL Boundary</text>
+      <text x="120" y="62" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">No code embedded</text>
+    </g>
+
+    <!-- Suppliers -->
+    <g transform="translate(550, 48)">
+      <rect x="0" y="0" width="240" height="72" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+      <text x="120" y="26" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Suppliers</text>
+      <text x="120" y="46" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">DigiKey · Mouser · JLCPCB</text>
+      <text x="120" y="62" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Adapter interfaces + factory</text>
+    </g>
+  </g>
+
+  <!-- Bottom spacing -->
+  <text x="450" y="950" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="11">
+    KiCad is an external GPL-licensed tool. Raino communicates via CLI only.
+  </text>
+</svg>

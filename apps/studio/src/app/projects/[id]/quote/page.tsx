@@ -9,245 +9,269 @@ import { getArtifacts } from '@/lib/data/artifact-queries';
 import QuoteActions from '@/components/QuoteActions';
 
 interface QuotePageProps {
- params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>;
 }
 
 function ConfidenceBadge({ level }: { level: string }) {
- const styles: Record<string, string> = {
- high: 'bg-[rgba(34,197,94,0.15)] text-[#22c55e] border-[rgba(34,197,94,0.3)]',
- medium: 'bg-[rgba(245,158,11,0.15)] text-[#f59e0b] border-[rgba(245,158,11,0.3)]',
- low: 'bg-[rgba(239,68,68,0.15)] text-[#ef4444] border-[rgba(239,68,68,0.3)]',
- };
- const styleClass = styles[level] ?? styles.medium;
+  const textColors: Record<string, string> = {
+    high: 'text-[#4CAF50]',
+    medium: 'text-[#FF9800]',
+    low: 'text-[#EF5350]',
+  };
+  const textColor = textColors[level] ?? textColors.medium;
 
- return (
- <span className={`px-3 py-1 text-xs font-medium border ${styleClass}`}>
- {level.charAt(0).toUpperCase() + level.slice(1)} Confidence
- </span>
- );
+  return (
+    <span className={`inline-flex items-center px-3 py-1 text-xs font-medium glass-surface ${textColor}`}>
+      {level.charAt(0).toUpperCase() + level.slice(1)} Confidence
+    </span>
+  );
+}
+
+function ConfidenceBand({ label, value, color, size = 'md' }: { label: string; value: number; color: string; size?: 'sm' | 'md' | 'lg' }) {
+  const sizeClasses = {
+    sm: 'text-2xl',
+    md: 'text-3xl',
+    lg: 'text-4xl',
+  };
+
+  return (
+    <div className="glass-surface p-6 text-center relative overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{ backgroundColor: color }}
+      />
+      <p className="text-sm text-[#64748b] mb-2 relative z-10">{label}</p>
+      <p
+        className={`font-bold font-[family-name:var(--font-body)] relative z-10 ${sizeClasses[size]}`}
+        style={{ color }}
+      >
+        ${value.toLocaleString()}
+      </p>
+    </div>
+  );
 }
 
 export default async function QuotePage({ params }: QuotePageProps) {
- const { id } = await params;
- const db = getSupabaseAdmin();
- const { data: project } = await db
- .from('projects')
- .select('*')
- .eq('id', id)
- .maybeSingle();
+  const { id } = await params;
+  const db = getSupabaseAdmin();
+  const { data: project } = await db
+    .from('projects')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
 
- const { data: quotes } = project ? await db
- .from('quotes')
- .select('*')
- .eq('project_id', id)
- .order('created_at', { ascending: false }) : { data: [] };
+  const { data: quotes } = project ? await db
+    .from('quotes')
+    .select('*')
+    .eq('project_id', id)
+    .order('created_at', { ascending: false }) : { data: [] };
 
- if (!project) {
- notFound();
- }
+  if (!project) {
+    notFound();
+  }
 
- const quoteRow = (quotes ?? [])[0];
- const breakdown = Array.isArray(quoteRow?.breakdown)
- ? (quoteRow.breakdown as Array<{ label: string; value: number }>)
- : [];
- const assumptions = Array.isArray(quoteRow?.assumptions)
- ? (quoteRow.assumptions as string[])
- : [];
+  const quoteRow = (quotes ?? [])[0];
+  const breakdown = Array.isArray(quoteRow?.breakdown)
+    ? (quoteRow.breakdown as Array<{ label: string; value: number }>)
+    : [];
+  const assumptions = Array.isArray(quoteRow?.assumptions)
+    ? (quoteRow.assumptions as string[])
+    : [];
 
- const user = await getCurrentUser();
- const userEmail = user?.email ?? '';
+  const user = await getCurrentUser();
+  const userEmail = user?.email ?? '';
 
- const artifacts = await getArtifacts(id);
- const artifactOptions = artifacts.map((a) => {
- const url =
- a.storage_bucket && a.storage_key && process.env.NEXT_PUBLIC_SUPABASE_URL
- ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${a.storage_bucket}/${a.storage_key}`
- : a.file_path;
- return {
- id: a.id,
- name: a.file_name,
- type: a.artifact_type,
- url,
- };
- });
+  const artifacts = await getArtifacts(id);
+  const artifactOptions = artifacts.map((a) => {
+    const url =
+      a.storage_bucket && a.storage_key && process.env.NEXT_PUBLIC_SUPABASE_URL
+        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${a.storage_bucket}/${a.storage_key}`
+        : a.file_path;
+    return {
+      id: a.id,
+      name: a.file_name,
+      type: a.artifact_type,
+      url,
+    };
+  });
 
- const adapterStatus = getAdapterStatus();
- const statusEntries = [
- { name: 'DigiKey', ...adapterStatus.digikey },
- { name: 'Mouser', ...adapterStatus.mouser },
- { name: 'JLCPCB', ...adapterStatus.jlcpcb },
- ] as const;
- const mockSuppliers = statusEntries.filter((s) => s.mode === 'mock').map((s) => s.name);
- const liveSuppliers = statusEntries.filter((s) => s.mode === 'live').map((s) => s.name);
+  const adapterStatus = getAdapterStatus();
+  const statusEntries = [
+    { name: 'DigiKey', ...adapterStatus.digikey },
+    { name: 'Mouser', ...adapterStatus.mouser },
+    { name: 'JLCPCB', ...adapterStatus.jlcpcb },
+  ] as const;
+  const mockSuppliers = statusEntries.filter((s) => s.mode === 'mock').map((s) => s.name);
+  const liveSuppliers = statusEntries.filter((s) => s.mode === 'live').map((s) => s.name);
 
- const tabs = [
- { id: 'overview', label: 'Overview', href: `/projects/${id}` },
- { id: 'intake', label: 'Intake', href: `/projects/${id}/intake` },
- { id: 'spec', label: 'Spec', href: `/projects/${id}/spec` },
- { id: 'architecture', label: 'Architecture', href: `/projects/${id}/architecture` },
- { id: 'bom', label: 'BOM', href: `/projects/${id}/bom` },
- { id: 'previews', label: 'Previews', href: `/projects/${id}/previews` },
- { id: 'downloads', label: 'Downloads', href: `/projects/${id}/downloads` },
- { id: 'quote', label: 'Quote', href: `/projects/${id}/quote`, active: true },
- ];
+  const tabs = [
+    { id: 'overview', label: 'Overview', href: `/projects/${id}` },
+    { id: 'intake', label: 'Intake', href: `/projects/${id}/intake` },
+    { id: 'spec', label: 'Spec', href: `/projects/${id}/spec` },
+    { id: 'architecture', label: 'Architecture', href: `/projects/${id}/architecture` },
+    { id: 'bom', label: 'BOM', href: `/projects/${id}/bom` },
+    { id: 'previews', label: 'Previews', href: `/projects/${id}/previews` },
+    { id: 'downloads', label: 'Downloads', href: `/projects/${id}/downloads` },
+    { id: 'quote', label: 'Quote', href: `/projects/${id}/quote`, active: true },
+  ];
 
- return (
- <div className="min-h-screen bg-[#0A1929]">
- <header className="border-b border-[#1E3A5F] bg-[#0A1929]/80 sticky top-0 z-50">
- <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
- <div className="flex items-center gap-4">
- <Link
- href={`/projects/${id}`}
- className="text-[#94A3B8] hover:text-[#E2E8F0] transition-colors"
- >
- <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path
- strokeLinecap="round"
- strokeLinejoin="round"
- strokeWidth={2}
- d="M10 19l-7-7m0 0l7-7m-7 7h18"
- />
- </svg>
- </Link>
- <div>
- <h1 className="text-xl font-bold text-[#E2E8F0]">Rough Quote</h1>
- <p className="text-xs text-[#94A3B8] font-[family-name:var(--font-body)]">{id}</p>
- </div>
- </div>
- <div className="flex items-center gap-4">
- {quoteRow && <ConfidenceBadge level={quoteRow.confidence} />}
- <StatusBadge status={project.status as Status} />
- </div>
- </div>
- </header>
+  return (
+    <div className="min-h-screen bg-[#0A1929]">
+      <header className="border-b border-white/[0.12] bg-[#0A1929]/80 backdrop-blur-xl sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Link
+              href={`/projects/${id}`}
+              className="text-[#94A3B8] hover:text-[#E2E8F0] transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                />
+              </svg>
+            </Link>
+            <div>
+              <h1 className="text-xl font-bold text-[#E2E8F0]">Rough Quote</h1>
+              <p className="text-xs text-[#94A3B8] font-[family-name:var(--font-body)]">{id}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            {quoteRow && <ConfidenceBadge level={quoteRow.confidence} />}
+            <StatusBadge status={project.status as Status} />
+          </div>
+        </div>
+      </header>
 
- <div className="border-b border-[#1E3A5F] bg-[#132F4C]/50">
- <div className="max-w-7xl mx-auto px-6">
- <nav className="flex gap-1">
- {tabs.map((tab) => (
- <Link
- key={tab.id}
- href={tab.href}
- className={`px-4 py-3 text-sm font-medium transition-all border-b-2 ${
- tab.active
- ? 'text-[#1565C0] border-[#1565C0]'
- : 'text-[#94A3B8] border-transparent hover:text-[#E2E8F0] hover:border-[#2A4A6B]'
- }`}
- >
- {tab.label}
- </Link>
- ))}
- </nav>
- </div>
- </div>
+      <div className="border-b border-white/[0.12] bg-[#132F4C]/50">
+        <div className="max-w-7xl mx-auto px-6">
+          <nav className="flex gap-1">
+            {tabs.map((tab) => (
+              <Link
+                key={tab.id}
+                href={tab.href}
+                className={`px-4 py-3 text-sm font-medium transition-all border-b-2 ${
+                  tab.active
+                    ? 'text-[#1565C0] border-[#1565C0]'
+                    : 'text-[#94A3B8] border-transparent hover:text-[#E2E8F0] hover:border-white/[0.12]'
+                }`}
+              >
+                {tab.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </div>
 
- <main className="max-w-7xl mx-auto px-6 py-8">
- {mockSuppliers.length > 0 && (
- <DegradedModeBanner
- message={`Supplier pricing: ${liveSuppliers.join(', ') || 'none'} live; ${mockSuppliers.join(', ')} using fixture estimates.`}
- severity={mockSuppliers.length === 3 ? 'red' : 'amber'}
- />
- )}
- {!quoteRow ? (
- <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-8 text-center">
- <h2 className="text-lg font-semibold text-[#E2E8F0] mb-2">No Quote Generated</h2>
- <p className="text-[#64748b]">
- Complete the design workflow to generate a rough quote.
- </p>
- </div>
- ) : (
- <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
- <div className="lg:col-span-2 space-y-6">
- <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-8">
- <h2 className="text-lg font-semibold text-[#E2E8F0] mb-6">Price Estimate</h2>
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        {mockSuppliers.length > 0 && (
+          <DegradedModeBanner
+            message={`Supplier pricing: ${liveSuppliers.join(', ') || 'none'} live; ${mockSuppliers.join(', ')} using fixture estimates.`}
+            severity={mockSuppliers.length === 3 ? 'red' : 'amber'}
+          />
+        )}
+        {!quoteRow ? (
+          <div className="glass-surface p-8 text-center">
+            <h2 className="text-lg font-semibold text-[#E2E8F0] mb-2">No Quote Generated</h2>
+            <p className="text-[#64748b]">
+              Complete the design workflow to generate a rough quote.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-6">
+              <div className="glass-elevated glass-specular p-8">
+                <h2 className="text-lg font-semibold text-[#E2E8F0] mb-6">Price Estimate</h2>
 
- <div className="grid grid-cols-3 gap-4 mb-8">
- <div className="text-center p-6 bg-[#132F4C] border border-[#1E3A5F]">
- <p className="text-sm text-[#64748b] mb-2">Low Estimate</p>
- <p className="text-3xl font-bold text-[#22c55e] font-[family-name:var(--font-body)]">
- ${Number(quoteRow.low_quote).toLocaleString()}
- </p>
- </div>
- <div className="text-center p-6 bg-gradient-to-b from-[#1565C0]/10 to-[#6191D3]/10 border border-[#1565C0]/30">
- <p className="text-sm text-[#1565C0] mb-2">Mid Estimate</p>
- <p className="text-4xl font-bold text-[#1565C0] font-[family-name:var(--font-body)]">
- ${Number(quoteRow.mid_quote).toLocaleString()}
- </p>
- </div>
- <div className="text-center p-6 bg-[#132F4C] border border-[#1E3A5F]">
- <p className="text-sm text-[#64748b] mb-2">High Estimate</p>
- <p className="text-3xl font-bold text-[#f59e0b] font-[family-name:var(--font-body)]">
- ${Number(quoteRow.high_quote).toLocaleString()}
- </p>
- </div>
- </div>
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  <ConfidenceBand
+                    label="Low Estimate"
+                    value={Number(quoteRow.low_quote)}
+                    color="#4CAF50"
+                    size="sm"
+                  />
+                  <ConfidenceBand
+                    label="Mid Estimate"
+                    value={Number(quoteRow.mid_quote)}
+                    color="#1565C0"
+                    size="lg"
+                  />
+                  <ConfidenceBand
+                    label="High Estimate"
+                    value={Number(quoteRow.high_quote)}
+                    color="#FF9800"
+                    size="sm"
+                  />
+                </div>
 
- <div className="space-y-3">
- {breakdown.map((item) => (
- <div
- key={item.label}
- className="flex justify-between items-center py-2 border-b border-[#1E3A5F] last:border-0"
- >
- <span className="text-[#94A3B8]">{item.label}</span>
- <span className="text-[#E2E8F0] font-[family-name:var(--font-body)]">
- ${item.value.toLocaleString()}
- </span>
- </div>
- ))}
- <div className="flex justify-between items-center pt-4 border-t-2 border-[#1E3A5F]">
- <span className="text-lg font-semibold text-[#E2E8F0]">Mid Estimate Total</span>
- <span className="text-2xl font-bold text-[#1565C0] font-[family-name:var(--font-body)]">
- ${Number(quoteRow.mid_quote).toLocaleString()}
- </span>
- </div>
- </div>
- </div>
+                <div className="space-y-3">
+                  {breakdown.map((item) => (
+                    <div
+                      key={item.label}
+                      className="flex justify-between items-center py-2 border-b border-white/[0.08] last:border-0"
+                    >
+                      <span className="text-[#94A3B8]">{item.label}</span>
+                      <span className="text-[#E2E8F0] font-[family-name:var(--font-body)]">
+                        ${item.value.toLocaleString()}
+                      </span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between items-center pt-4 border-t-2 border-white/[0.12]">
+                    <span className="text-lg font-semibold text-[#E2E8F0]">Mid Estimate Total</span>
+                    <span className="text-2xl font-bold text-[#1565C0] font-[family-name:var(--font-body)]">
+                      ${Number(quoteRow.mid_quote).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
- <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-6">
- <h2 className="text-lg font-semibold text-[#E2E8F0] mb-4">Assumptions</h2>
- <ul className="space-y-2">
- {assumptions.map((assumption, index) => (
- <li key={index} className="flex items-start gap-3 text-sm text-[#94A3B8]">
- <span className="text-[#1565C0] mt-0.5">&#x2022;</span>
- {assumption}
- </li>
- ))}
- </ul>
- </div>
- </div>
+              <div className="glass-surface p-6">
+                <h2 className="text-lg font-semibold text-[#E2E8F0] mb-4">Assumptions</h2>
+                <ul className="space-y-2">
+                  {assumptions.map((assumption, index) => (
+                    <li key={index} className="flex items-start gap-3 text-sm text-[#94A3B8]">
+                      <span className="text-[#1565C0] mt-0.5">&#x2022;</span>
+                      {assumption}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
 
- <div className="space-y-6">
- <QuoteActions projectId={id} defaultEmail={userEmail} artifacts={artifactOptions} />
+            <div className="space-y-6">
+              <QuoteActions projectId={id} defaultEmail={userEmail} artifacts={artifactOptions} />
 
- <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-6">
- <h3 className="text-sm font-medium text-[#94A3B8] mb-4 uppercase tracking-wider">
- Quote Details
- </h3>
- <div className="space-y-3 text-sm">
- <div className="flex justify-between">
- <span className="text-[#64748b]">Confidence</span>
- <ConfidenceBadge level={quoteRow.confidence} />
- </div>
- <div className="flex justify-between">
- <span className="text-[#64748b]">Quote ID</span>
- <span className="text-[#E2E8F0] font-[family-name:var(--font-body)]">{quoteRow.id}</span>
- </div>
- <div className="flex justify-between">
- <span className="text-[#64748b]">Generated</span>
- <span className="text-[#E2E8F0]">
- {new Date(quoteRow.created_at).toLocaleDateString()}
- </span>
- </div>
- <div className="flex justify-between">
- <span className="text-[#64748b]">Quantity</span>
- <span className="text-[#E2E8F0]">{quoteRow.quantity}</span>
- </div>
- </div>
- </div>
- </div>
- </div>
- )}
- </main>
- </div>
- );
+              <div className="glass-surface glass-specular p-6">
+                <h3 className="text-sm font-medium text-[#94A3B8] mb-4 uppercase tracking-wider">
+                  Quote Details
+                </h3>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#64748b]">Confidence</span>
+                    <ConfidenceBadge level={quoteRow.confidence} />
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#64748b]">Quote ID</span>
+                    <span className="text-[#E2E8F0] font-[family-name:var(--font-body)]">{quoteRow.id}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#64748b]">Generated</span>
+                    <span className="text-[#E2E8F0]">
+                      {new Date(quoteRow.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#64748b]">Quantity</span>
+                    <span className="text-[#E2E8F0]">{quoteRow.quantity}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
 }

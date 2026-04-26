@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <a href="README.zh-CN.md">中文</a> &middot; <a href="README.ja.md">日本語</a> &middot; <a href="README.ko.md">한국어</a> &middot; <a href="docs/">Docs</a>
+  <a href="README.md">English</a> &middot; <a href="README.zh-CN.md">中文</a> &middot; <a href="README.ja.md">日本語</a> &middot; <a href="README.ko.md">한국어</a> &middot; <a href="docs/">Docs</a>
 </p>
 
 <p align="center">
@@ -111,9 +111,7 @@ pnpm test:e2e                       # End-to-end tests only
 
 Raino guides a hardware project through twelve stages. Each stage has a formal sufficiency gate. The pipeline does not advance until the current stage's inputs are complete, consistent, and approved.
 
-```
-Idea → Clarify → Specify → Architect → Shortlist → Ingest → Resolve → Reason → BOM → KiCad → Check → Quote
-```
+![Pipeline](docs/assets/architecture-pipeline.svg)
 
 1. **Natural Language Intake** -- You describe what you want to build in plain English.
 2. **Clarifying Question Loop** -- The LLM asks follow-up questions to pin down requirements.
@@ -155,44 +153,7 @@ Every quote includes a full list of assumptions. When any component price comes 
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        Users                                 │
-│                                                              │
-│  ┌──────────────┐              ┌──────────────────────┐      │
-│  │  apps/site   │              │    apps/studio       │      │
-│  │  Marketing   │───CTA──────▶│    Product App       │      │
-│  │  raino-site  │              │    raino-studio      │      │
-│  └──────────────┘              └──────┬───────────────┘      │
-│                                       │                      │
-│                         Route Handlers │ Server Actions       │
-│                         + LLM Gateway  │ + Supabase Client    │
-│                                       ▼                      │
-│  ┌─────────────────────────────────────────────────────┐     │
-│  │                 packages/core                         │     │
-│  │  Schemas · Validation · Quote Engine · Domain Logic   │     │
-│  └──┬──────┬──────┬──────┬──────┬──────┬──────┬────────┘    │
-│     │      │      │      │      │      │      │               │
-│  packages/  packages/  packages/  packages/  packages/  packages/
-│  agents      rag     kicad-w-c  supplier-c  db       llm        │
-│                                                              │
-│  ┌─────────────────────────────────────────────────────┐     │
-│  │                 packages/ui                           │     │
-│  │  iOS 26 Liquid Glass design system (React + TW v4)   │     │
-│  └─────────────────────────────────────────────────────┘     │
-│                                                              │
-│  ┌─────────────────────────────────────────────────────┐     │
-│  │                 Worker Services                        │     │
-│  │  ingest-worker · design-worker · quote-worker · audit  │     │
-│  └─────────────────────────────────────────────────────┘     │
-│                                                              │
-│  ┌─────────────────────────────────────────────────────┐     │
-│  │                 External Boundaries                   │     │
-│  │  Supabase (Auth + Postgres + Storage + pgvector)      │     │
-│  │  KiCad CLI (GPL) · DigiKey · Mouser · JLCPCB         │     │
-│  └─────────────────────────────────────────────────────┘     │
-└─────────────────────────────────────────────────────────────┘
-```
+![Architecture](docs/assets/architecture-overview.svg)
 
 ### Architectural Boundaries
 

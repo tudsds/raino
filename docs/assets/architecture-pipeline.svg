@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1500" width="100%" height="auto">
+  <defs>
+    <!-- Background gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#0D2137"/>
+      <stop offset="100%" stop-color="#0A1929"/>
+    </radialGradient>
+
+    <!-- Glass card gradient -->
+    <linearGradient id="glass-default" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.60)"/>
+    </linearGradient>
+
+    <!-- Glass card gradient (accent) -->
+    <linearGradient id="glass-accent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(21,101,192,0.18)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.65)"/>
+    </linearGradient>
+
+    <!-- Connection line gradient -->
+    <linearGradient id="conn-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#6191D3"/>
+    </linearGradient>
+
+    <!-- Arrow definition -->
+    <g id="arrow-down">
+      <polygon points="0,0 -5,-8 5,-8" fill="#6191D3" opacity="0.7"/>
+    </g>
+
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="14" flood-color="#0A1929" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="1500" fill="url(#bg-grad)"/>
+
+  <!-- Title -->
+  <text x="400" y="50" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="26" font-weight="bold">
+    The 12-Stage Pipeline
+  </text>
+  <text x="400" y="78" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="13">
+    Every stage has a formal sufficiency gate
+  </text>
+
+  <!-- ========== STAGE 1: Idea ========== -->
+  <g transform="translate(250, 120)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.40)" stroke-width="1.5"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">1</text>
+    <text x="50" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Idea</text>
+    <text x="50" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Natural language intake</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="184" x2="400" y2="200" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="208"/>
+  </g>
+
+  <!-- ========== STAGE 2: Clarify ========== -->
+  <g transform="translate(250, 228)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">2</text>
+    <text x="50" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Clarify</text>
+    <text x="50" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Follow-up question loop</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="292" x2="400" y2="308" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="316"/>
+  </g>
+
+  <!-- ========== STAGE 3: Specify ========== -->
+  <g transform="translate(250, 336)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">3</text>
+    <text x="50" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Specify</text>
+    <text x="50" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Structured product spec (Zod)</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="400" x2="400" y2="416" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="424"/>
+  </g>
+
+  <!-- ========== STAGE 4: Architect ========== -->
+  <g transform="translate(250, 444)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">4</text>
+    <text x="50" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Architect</text>
+    <text x="50" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Architecture template selection</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="508" x2="400" y2="524" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="532"/>
+  </g>
+
+  <!-- ========== STAGE 5: Shortlist ========== -->
+  <g transform="translate(250, 552)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">5</text>
+    <text x="50" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Shortlist</text>
+    <text x="50" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Candidate part family selection</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="616" x2="400" y2="632" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="640"/>
+  </g>
+
+  <!-- ========== STAGE 6: Ingest ========== -->
+  <g transform="translate(250, 660)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">6</text>
+    <text x="50" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Ingest</text>
+    <text x="50" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Document ingestion pipeline (8 stages)</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="724" x2="400" y2="740" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="748"/>
+  </g>
+
+  <!-- ========== STAGE 7: Resolve ========== -->
+  <g transform="translate(250, 768)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">7</text>
+    <text x="50" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Resolve</text>
+    <text x="50" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Supplier metadata (price · stock · MOQ)</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="832" x2="400" y2="848" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="856"/>
+  </g>
+
+  <!-- ========== STAGE 8: Reason ========== -->
+  <g transform="translate(250, 876)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">8</text>
+    <text x="50" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Reason</text>
+    <text x="50" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">RAG-assisted engineering validation</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="940" x2="400" y2="956" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="964"/>
+  </g>
+
+  <!-- ========== STAGE 9: BOM ========== -->
+  <g transform="translate(250, 984)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.35)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">9</text>
+    <text x="50" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">BOM</text>
+    <text x="50" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Full BOM with alternates per line</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="1048" x2="400" y2="1064" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="1072"/>
+  </g>
+
+  <!-- ========== STAGE 10: KiCad ========== -->
+  <g transform="translate(250, 1092)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">10</text>
+    <text x="60" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">KiCad</text>
+    <text x="60" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Schematic + layout generation (CLI)</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="1156" x2="400" y2="1172" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="1180"/>
+  </g>
+
+  <!-- ========== STAGE 11: Check ========== -->
+  <g transform="translate(250, 1200)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">11</text>
+    <text x="60" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Check</text>
+    <text x="60" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">ERC · DRC · Gerber export</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <g>
+    <line x1="400" y1="1264" x2="400" y2="1280" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="1288"/>
+  </g>
+
+  <!-- ========== STAGE 12: Quote ========== -->
+  <g transform="translate(250, 1308)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="64" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.40)" stroke-width="1.5"/>
+    <text x="20" y="28" fill="#1565C0" font-family="Arial, sans-serif" font-size="16" font-weight="bold">12</text>
+    <text x="60" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Quote</text>
+    <text x="60" y="44" fill="#6191D3" font-family="Arial, sans-serif" font-size="10">Rough cost estimate + confidence bands</text>
+    <text x="250" y="44" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Sufficiency Gate</text>
+  </g>
+
+  <!-- Side legend -->
+  <g transform="translate(580, 120)">
+    <rect x="0" y="0" width="180" height="64" rx="10" fill="none" stroke="rgba(97,145,211,0.15)" stroke-width="1" stroke-dasharray="4 4"/>
+    <text x="90" y="22" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Sufficiency Gate</text>
+    <text x="90" y="40" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">Each stage blocks</text>
+    <text x="90" y="54" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="9">until inputs pass.</text>
+  </g>
+
+  <!-- Bottom note -->
+  <text x="400" y="1410" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="11">
+    Pipeline pauses on ambiguity. Human confirms critical decisions before advancing.
+  </text>
+</svg>

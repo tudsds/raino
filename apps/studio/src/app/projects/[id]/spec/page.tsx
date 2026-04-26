@@ -142,7 +142,7 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
 
   return (
     <div className="min-h-screen bg-[#0A1929]">
-      <header className="border-b border-[#1E3A5F] bg-[#0A1929]/80 sticky top-0 z-50">
+      <header className="glass-elevated sticky top-0 z-50 border-b border-[rgba(97,145,211,0.35)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -165,18 +165,18 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
           </div>
           <div className="flex items-center gap-4">
             <button
-                onClick={handleCompile}
-                disabled={compiling}
-                className="px-4 py-2 text-sm font-medium border border-[#1565C0] text-[#1565C0] hover:bg-[#1565C0] hover:text-[#0A1929] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {compiling ? 'Compiling...' : hasValidSpec ? 'Recompile' : 'Compile Spec'}
-              </button>
+              onClick={handleCompile}
+              disabled={compiling}
+              className="glass-elevated px-4 py-2 text-sm font-medium text-white hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+              {compiling ? 'Compiling...' : hasValidSpec ? 'Recompile' : 'Compile Spec'}
+            </button>
             {hasValidSpec ? (
-              <span className="px-3 py-1.5 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-xs text-[#22c55e] font-medium">
+              <span className="glass-blue-tint px-3 py-1.5 text-xs text-[#22c55e] font-medium rounded-lg backdrop-blur-xl">
                 Compiled
               </span>
             ) : (
-              <span className="px-3 py-1.5 bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] text-xs text-[#f59e0b] font-medium">
+              <span className="glass-surface px-3 py-1.5 text-xs text-[#f59e0b] font-medium rounded-lg backdrop-blur-xl">
                 Pending
               </span>
             )}
@@ -185,7 +185,7 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
         </div>
       </header>
 
-      <div className="border-b border-[#1E3A5F] bg-[#132F4C]/50">
+      <div className="glass-surface border-x-0 border-b border-[rgba(97,145,211,0.25)] rounded-none">
         <div className="max-w-7xl mx-auto px-6">
           <nav className="flex gap-1">
             {tabs.map((tab) => (
@@ -208,10 +208,10 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
       <main className="max-w-7xl mx-auto px-6 py-8">
         {compileMessage && (
           <div
-            className={`mb-6 px-4 py-3 text-sm font-[family-name:var(--font-body)] border ${
+            className={`mb-6 px-4 py-3 text-sm font-[family-name:var(--font-body)] glass-elevated ${
               compileMessage.type === 'success'
-                ? 'border-[#4CAF50] text-[#4CAF50] bg-[rgba(76,175,80,0.13)]'
-                : 'border-[#ff4444] text-[#ff4444] bg-[rgba(239,83,80,0.13)]'
+                ? 'border-[#4CAF50] text-[#4CAF50]'
+                : 'border-[#ff4444] text-[#ff4444]'
             }`}
           >
             {compileMessage.text}
@@ -219,13 +219,13 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
         )}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-6">
+            <div className="glass-elevated p-6">
               <h2 className="text-lg font-semibold text-[#E2E8F0] mb-4">Compiled Requirements</h2>
               {requirements.length > 0 ? (
                 <ul className="space-y-3">
                   {requirements.map((req, index) => (
-                    <li key={req.id ?? index} className="flex items-start gap-3">
-                      <div className="w-5 h-5 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <li key={req.id ?? index} className="glass-surface p-3 flex items-start gap-3">
+                      <div className="glass-blue-tint w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5 rounded">
                         <svg
                           className="w-3 h-3 text-[#22c55e]"
                           fill="none"
@@ -244,9 +244,9 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                         <span className="text-[#94A3B8]">{req.description}</span>
                         {req.priority && (
                           <span className={`ml-2 text-xs px-1.5 py-0.5 rounded ${
-                            req.priority === 'must' ? 'bg-[rgba(239,83,80,0.15)] text-[#ef5350]' :
-                            req.priority === 'should' ? 'bg-[rgba(255,183,77,0.15)] text-[#ffb74d]' :
-                            'bg-[rgba(100,116,139,0.15)] text-[#64748B]'
+                            req.priority === 'must' ? 'glass-blue-tint text-[#ef5350]' :
+                            req.priority === 'should' ? 'glass-surface text-[#ffb74d]' :
+                            'glass-surface text-[#64748B]'
                           }`}>{req.priority}</span>
                         )}
                         {req.category && (
@@ -271,10 +271,10 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
               )}
             </div>
 
-            <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-6">
+            <div className="glass-surface p-6">
               <h2 className="text-lg font-semibold text-[#E2E8F0] mb-4">Specification Status</h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between py-2 border-b border-[#1E3A5F]">
+                <div className="flex items-center justify-between py-2 border-b border-[rgba(97,145,211,0.25)]">
                   <span className="text-[#94A3B8]">Compilation Status</span>
                   <span
                     className={`text-sm font-medium ${
@@ -284,11 +284,11 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                     {hasValidSpec ? 'Complete' : 'Pending'}
                   </span>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-[#1E3A5F]">
+                <div className="flex items-center justify-between py-2 border-b border-[rgba(97,145,211,0.25)]">
                   <span className="text-[#94A3B8]">Requirements Extracted</span>
                   <span className="text-[#1565C0] font-[family-name:var(--font-body)]">{requirements.length}</span>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-[#1E3A5F]">
+                <div className="flex items-center justify-between py-2 border-b border-[rgba(97,145,211,0.25)]">
                   <span className="text-[#94A3B8]">Ready for Architecture</span>
                   <span
                     className={`text-sm font-medium ${
@@ -303,7 +303,7 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
           </div>
 
           <div className="space-y-6">
-            <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-6">
+            <div className="glass-surface p-6">
               <h3 className="text-sm font-medium text-[#94A3B8] mb-4 uppercase tracking-wider">
                 Project Info
               </h3>
@@ -325,7 +325,7 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
               </div>
             </div>
 
-            <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.12] rounded-xl p-6">
+            <div className="glass-surface p-6">
               <h3 className="text-sm font-medium text-[#94A3B8] mb-4 uppercase tracking-wider">
                 Next Steps
               </h3>
@@ -334,11 +334,11 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                   <>
                     <Link
                       href={`/projects/${id}/architecture`}
-                      className="flex items-center gap-3 p-3 bg-[rgba(21, 101, 192,0.05)] border border-[rgba(21, 101, 192,0.2)] hover:border-[#1565C0] transition-colors"
+                      className="glass-elevated flex items-center gap-3 p-3 hover:scale-[1.01] transition-transform"
                     >
-                      <div className="w-8 h-8 bg-gradient-to-r from-[#1565C0] to-[#6191D3] flex items-center justify-center">
+                      <div className="w-8 h-8 glass-blue-tint flex items-center justify-center rounded">
                         <svg
-                          className="w-4 h-4 text-[#0A1929]"
+                          className="w-4 h-4 text-[#6191D3]"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -358,9 +358,9 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                     </Link>
                     <Link
                       href={`/projects/${id}/bom`}
-                      className="flex items-center gap-3 p-3 bg-[#132F4C] border border-[#1E3A5F] hover:border-[#2A4A6B] transition-colors"
+                      className="glass-surface flex items-center gap-3 p-3 hover:scale-[1.01] transition-transform"
                     >
-                      <div className="w-8 h-8 bg-[#1E3A5F] flex items-center justify-center">
+                      <div className="w-8 h-8 glass-surface flex items-center justify-center rounded">
                         <svg
                           className="w-4 h-4 text-[#94A3B8]"
                           fill="none"
@@ -384,9 +384,9 @@ export default function SpecPage({ params }: { params: Promise<{ id: string }> }
                 ) : (
                   <Link
                     href={`/projects/${id}/intake`}
-                    className="flex items-center gap-3 p-3 bg-[rgba(245,158,11,0.05)] border border-[rgba(245,158,11,0.2)] hover:border-[#f59e0b] transition-colors"
+                    className="glass-elevated flex items-center gap-3 p-3 hover:scale-[1.01] transition-transform"
                   >
-                    <div className="w-8 h-8 bg-[rgba(245,158,11,0.15)] border border-[rgba(245,158,11,0.3)] flex items-center justify-center">
+                    <div className="w-8 h-8 glass-surface flex items-center justify-center rounded">
                       <svg
                         className="w-4 h-4 text-[#f59e0b]"
                         fill="none"

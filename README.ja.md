@@ -8,6 +8,10 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub](https://img.shields.io/badge/repository-tudsds%2Fraino-181717.svg)](https://github.com/tudsds/raino)
 
+<p align="center">
+  <a href="README.md">English</a> &middot; <a href="README.zh-CN.md">中文</a> &middot; <a href="README.ja.md">日本語</a> &middot; <a href="README.ko.md">한국어</a> &middot; <a href="docs/">ドキュメント</a>
+</p>
+
 ---
 
 ## Raino とは
@@ -60,6 +64,14 @@ raino/
 | テスト         | Vitest                                                            |
 | ビルド         | Turborepo, pnpm workspaces                                        |
 | デプロイ       | Vercel（モノレポ、2 アプリ）                                      |
+
+## システムアーキテクチャ
+
+![Architecture](docs/assets/architecture-overview.svg)
+
+## ワークフローパイプライン
+
+![Pipeline](docs/assets/architecture-pipeline.svg)
 
 ## 低下/フィクスチャモード
 

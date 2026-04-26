@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1400" width="100%" height="auto">
+  <defs>
+    <!-- Background gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="25%" r="75%">
+      <stop offset="0%" stop-color="#0D2137"/>
+      <stop offset="100%" stop-color="#0A1929"/>
+    </radialGradient>
+
+    <!-- Glass card gradient -->
+    <linearGradient id="glass-default" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.60)"/>
+    </linearGradient>
+
+    <!-- Glass card gradient (accent) -->
+    <linearGradient id="glass-accent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(21,101,192,0.18)"/>
+      <stop offset="100%" stop-color="rgba(10,25,41,0.65)"/>
+    </linearGradient>
+
+    <!-- Connection line gradient (vertical) -->
+    <linearGradient id="conn-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#6191D3"/>
+    </linearGradient>
+
+    <!-- Arrow definition -->
+    <g id="arrow-down">
+      <polygon points="0,0 -5,-8 5,-8" fill="#6191D3" opacity="0.7"/>
+    </g>
+
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="14" flood-color="#0A1929" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="1400" fill="url(#bg-grad)"/>
+
+  <!-- Title -->
+  <text x="400" y="50" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="26" font-weight="bold">
+    Data Flow
+  </text>
+  <text x="400" y="78" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="13">
+    From user input to manufacturing quote
+  </text>
+
+  <!-- ========== FLOW STEPS ========== -->
+
+  <!-- Step 1: User -->
+  <g transform="translate(250, 120)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.40)" stroke-width="1.5"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="15" font-weight="bold">User</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Describes hardware in plain language</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="176" x2="400" y2="192" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="200"/>
+  </g>
+
+  <!-- Step 2: Intake -->
+  <g transform="translate(250, 220)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Intake</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Natural language parsing + initial classification</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="276" x2="400" y2="292" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="300"/>
+  </g>
+
+  <!-- Step 3: Clarify -->
+  <g transform="translate(250, 320)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Clarify</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Follow-up questions resolve ambiguity</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="376" x2="400" y2="392" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="400"/>
+  </g>
+
+  <!-- Step 4: Spec -->
+  <g transform="translate(250, 420)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Spec</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Structured product specification (Zod validated)</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="476" x2="400" y2="492" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="500"/>
+  </g>
+
+  <!-- Step 5: Architect -->
+  <g transform="translate(250, 520)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Architect</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Matches spec to approved architecture templates</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="576" x2="400" y2="592" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="600"/>
+  </g>
+
+  <!-- Step 6: Shortlist -->
+  <g transform="translate(250, 620)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Shortlist</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Candidate part families selected</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="676" x2="400" y2="692" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="700"/>
+  </g>
+
+  <!-- Step 7: Ingest -->
+  <g transform="translate(250, 720)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Ingest</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Datasheets, errata, and app notes ingested</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="776" x2="400" y2="792" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="800"/>
+  </g>
+
+  <!-- Step 8: BOM -->
+  <g transform="translate(250, 820)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.35)" stroke-width="1"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">BOM</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Bill of materials with alternates for every line</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="876" x2="400" y2="892" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="900"/>
+  </g>
+
+  <!-- Step 9: KiCad -->
+  <g transform="translate(250, 920)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">KiCad</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Schematic + layout generated via KiCad CLI</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="976" x2="400" y2="992" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="1000"/>
+  </g>
+
+  <!-- Step 10: Validate -->
+  <g transform="translate(250, 1020)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-default)" stroke="rgba(97,145,211,0.30)" stroke-width="1"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Validate</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">ERC/DRC checks + Gerber export</text>
+  </g>
+
+  <!-- Arrow -->
+  <g>
+    <line x1="400" y1="1076" x2="400" y2="1092" stroke="url(#conn-grad)" stroke-width="1.5"/>
+    <use href="#arrow-down" x="400" y="1100"/>
+  </g>
+
+  <!-- Step 11: Quote -->
+  <g transform="translate(250, 1120)" filter="url(#shadow)">
+    <rect x="0" y="0" width="300" height="56" rx="12" fill="url(#glass-accent)" stroke="rgba(97,145,211,0.40)" stroke-width="1.5"/>
+    <text x="150" y="24" text-anchor="middle" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Quote</text>
+    <text x="150" y="44" text-anchor="middle" fill="#6191D3" font-family="Arial, sans-serif" font-size="11">Rough cost estimate with confidence bands</text>
+  </g>
+
+  <!-- Sufficiency gate note -->
+  <g transform="translate(580, 120)">
+    <rect x="0" y="0" width="190" height="1056" rx="10" fill="none" stroke="rgba(97,145,211,0.15)" stroke-width="1" stroke-dasharray="4 4"/>
+    <text x="95" y="30" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Sufficiency Gates</text>
+    <text x="95" y="50" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">Pipeline pauses at</text>
+    <text x="95" y="66" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">each stage until</text>
+    <text x="95" y="82" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">inputs are complete</text>
+    <text x="95" y="98" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="10">and consistent.</text>
+
+    <!-- Gate markers -->
+    <text x="95" y="200" text-anchor="middle" fill="#1565C0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">1</text>
+    <text x="95" y="300" text-anchor="middle" fill="#1565C0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">2</text>
+    <text x="95" y="400" text-anchor="middle" fill="#1565C0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">3</text>
+    <text x="95" y="500" text-anchor="middle" fill="#1565C0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">4</text>
+    <text x="95" y="600" text-anchor="middle" fill="#1565C0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">5</text>
+    <text x="95" y="700" text-anchor="middle" fill="#1565C0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">6</text>
+    <text x="95" y="800" text-anchor="middle" fill="#1565C0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">7</text>
+    <text x="95" y="900" text-anchor="middle" fill="#1565C0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">8</text>
+    <text x="95" y="1000" text-anchor="middle" fill="#1565C0" font-family="Arial, sans-serif" font-size="18" font-weight="bold">9</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(60, 1240)">
+    <rect x="0" y="0" width="300" height="40" rx="8" fill="url(#glass-default)" stroke="rgba(97,145,211,0.20)" stroke-width="1"/>
+    <rect x="15" y="15" width="30" height="10" rx="4" fill="url(#glass-accent)"/>
+    <text x="55" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11">= Critical milestone</text>
+    <rect x="150" y="15" width="30" height="10" rx="4" fill="url(#glass-default)"/>
+    <text x="190" y="24" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="11">= Standard stage</text>
+  </g>
+</svg>

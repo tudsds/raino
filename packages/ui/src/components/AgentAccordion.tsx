@@ -140,6 +140,7 @@ function SimpleMarkdown({ content }: { content: string }) {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    if (line === undefined) continue;
 
     if (line.startsWith('```')) {
       if (inCodeBlock) {
@@ -165,9 +166,11 @@ function SimpleMarkdown({ content }: { content: string }) {
     const headerMatch = line.match(/^(#{1,3})\s+(.+)$/);
     if (headerMatch) {
       flushList();
+      if (headerMatch[1] === undefined || headerMatch[2] === undefined) continue;
       const level = headerMatch[1].length;
       const text = headerMatch[2];
-      const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+      if (text === undefined) continue;
+      const Tag = `h${level}` as keyof React.JSX.IntrinsicElements;
       const sizeClass = level === 1 ? 'text-lg' : level === 2 ? 'text-base' : 'text-sm';
       elements.push(
         <Tag key={`h${i}`} className={cn(sizeClass, 'font-bold text-[#E2E8F0] mt-3 mb-1')}>
@@ -183,9 +186,11 @@ function SimpleMarkdown({ content }: { content: string }) {
       const newListType = ulMatch ? 'ul' : 'ol';
       if (listType && listType !== newListType) flushList();
       listType = newListType;
+      const matchText = ulMatch?.[1] ?? olMatch?.[1];
+      if (matchText === undefined) continue;
       listItems.push(
         <li key={`li-${i}`} className="ml-4 mb-1">
-          {parseInline((ulMatch || olMatch)![1])}
+          {parseInline(matchText)}
         </li>
       );
       continue;

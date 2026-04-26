@@ -8,6 +8,10 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub](https://img.shields.io/badge/repository-tudsds%2Fraino-181717.svg)](https://github.com/tudsds/raino)
 
+<p align="center">
+  <a href="README.md">English</a> &middot; <a href="README.zh-CN.md">中文</a> &middot; <a href="README.ja.md">日本語</a> &middot; <a href="README.ko.md">한국어</a> &middot; <a href="docs/">文档</a>
+</p>
+
 ---
 
 ## Raino 是什么？
@@ -60,6 +64,14 @@ raino/
 | 测试   | Vitest                                                |
 | 构建   | Turborepo, pnpm workspaces                            |
 | 部署   | Vercel（monorepo，两个应用）                          |
+
+## 系统架构
+
+![Architecture](docs/assets/architecture-overview.svg)
+
+## 工作流流水线
+
+![Pipeline](docs/assets/architecture-pipeline.svg)
 
 ## 降级/固件模式
 

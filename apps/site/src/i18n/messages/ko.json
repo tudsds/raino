@@ -1,0 +1,25 @@
+{
+  "site": {
+    "title": "Raino — 에이전트 기반 PCB 워크플로우 플랫폼",
+    "description": "제약적이고 감사 가능하며 소스 추적 가능한 하드웨어 설계 및 제조 인계 시스템",
+    "launchStudio": "Studio 실행",
+    "getStarted": "시작하기",
+    "viewOnGithub": "GitHub에서 보기",
+    "backToHome": "홈으로 돌아가기",
+    "readTheDocs": "문서 읽기",
+    "tryTheWorkflow": "워크플로우 체험",
+    "seeTheWorkflow": "워크플로우 보기",
+    "readMore": "더 읽기"
+  },
+  "nav": {
+    "home": "홈",
+    "features": "기능",
+    "showcase": "쇼케이스",
+    "integrations": "통합",
+    "architecture": "아키텍처",
+    "workflow": "워크플로우",
+    "docs": "문서",
+    "changelog": "변경 로그",
+    "trust": "신뢰"
+  }
+}
