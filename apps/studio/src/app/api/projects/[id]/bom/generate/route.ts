@@ -123,12 +123,12 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
           });
 
           let accumulatedText = '';
-          for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 4096, jsonMode: true })) {
-            if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
-          }
-
-          if (!accumulatedText.trim()) {
-            throw new Error('LLM returned no content — the AI service may be overloaded. Please try again.');
+          try {
+            for await (const evt of gateway.chatStream(enrichedMessages, { maxTokens: 2048 })) {
+              if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+            }
+          } catch (llmError) {
+            console.error('[api/bom/generate] LLM stream failed:', llmError);
           }
 
           if (accumulatedText) {

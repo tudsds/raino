@@ -46,8 +46,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       });
 
       let accumulatedText = '';
-      for await (const evt of gateway.chatStream(messages, { maxTokens: 2048, jsonMode: true })) {
-        if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+      try {
+        for await (const evt of gateway.chatStream(messages, { maxTokens: 2048 })) {
+          if (evt.type === 'content' && evt.content) accumulatedText += evt.content;
+        }
+      } catch (llmError) {
+        console.error('[api/clarify] LLM stream failed:', llmError);
       }
       clarificationContent =
         accumulatedText || 'Clarification service returned no content. Please try again.';
